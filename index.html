@@ -1,0 +1,41 @@
+<!--index.html-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <title>Lister BETA Release 3</title>
+</head>
+
+<body>
+
+  <div id="menuBar">
+    <button title="5/29/2022" id="toTopBtn">Lister BETA Release 4</button>
+    <button title='Settings' id="settingsBtn"></button>
+    <button title='Refresh' id="refreshBtn"></button>
+    <button title="New List" id="newListBtn"></button>
+    <button title='Minimize to Tray' id="closeBtn"></button>
+    <button title='Minimize' id="minimizeBtn"></button>
+  </div>
+  <br>
+  <div style='display: none;' id="settings">
+    <h1 style="color:#d5d5d5;">Settings</h1>
+    <div class='settingsDiv'">
+      <h3 style=" display: inline-block;">Always on top</h3>
+      <label class="switch">
+        <input id='alwaysOnTopCheckbox' type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+
+  </div>
+  <div id="lists"></div>
+
+  <!-- You can also require other files to run in this process -->
+  <script src="renderer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "lister",
+  "main": "main.js",
+  "icon": "assets/icon.png",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^18.2.4"
+  },
+  "dependencies": {
+    "electron-packager": "^15.5.1"
+  }
+}

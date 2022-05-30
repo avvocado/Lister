@@ -1,0 +1,37 @@
+index.html
+  main html file
+
+preload.js
+
+script.js
+  js file attached to the html
+
+main.js
+  js file to run electron
+
+windows notifications
+  new Notification("notification title", {
+    body: "notification body",
+    icon: "image.png",
+  })
+
+inline event handlers 
+  Instead of:
+    <button onclick='myFunction()'>Button</button>
+  Do:
+    document.getElementById("myBtn").addEventListener('click', myFunction);
+  Or
+    document.getElementById("myBtn").addEventListener('click', function(){/*code here */});
+
+open devtools
+  win.webContents.openDevTools()
+
+flashing orange taskbar icon
+  win.flashFrame(true)
+
+remove menu at the top
+  win.setMenu(null)
+
+
+export 
+  npx electron-packager C:\Users\devin\Documents\Programming\Electron\firstElectronApp Lister --platform= --arch=x64 --icon=assets/icon.png
