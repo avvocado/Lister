@@ -74,7 +74,6 @@
 - deleting lists
 
 ### FEATURES PUSHED IN BETA 3
-
 - adding links
 - fixed bug where hovering over status dot would push item title
 - completed items get sent to the bottom
