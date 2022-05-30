@@ -5,21 +5,21 @@
    viewBox="0 0 24 24"
    fill="none"
    version="1.1"
-   id="svg4"
-   sodipodi:docname="close.svg"
+   id="svg385"
+   sodipodi:docname="minimizeHover.svg"
    inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs8">
+     id="defs389">
     <inkscape:path-effect
        effect="fillet_chamfer"
-       id="path-effect1289"
+       id="path-effect1310"
        is_visible="true"
        lpeversion="1"
-       nodesatellites_param="F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1"
+       nodesatellites_param="F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1 @ F,0,0,1,0,1,0,1"
        unit="px"
        method="auto"
        mode="F"
@@ -33,7 +33,7 @@
        hide_knots="false" />
   </defs>
   <sodipodi:namedview
-     id="namedview6"
+     id="namedview387"
      pagecolor="#505050"
      bordercolor="#ffffff"
      borderopacity="1"
@@ -50,11 +50,11 @@
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg4" />
+     inkscape:current-layer="svg385" />
   <path
-     d="m 16.882893,5.7071068 -4.175786,4.1757864 a 1,1 0 0 1 -1.414214,0 L 7.1171068,5.7071068 a 1,1 0 0 0 -1.4142136,0 0.99702501,0.99702501 89.828781 0 0 0.00421,1.41 l 4.1757864,4.1757862 a 1,1 90 0 1 0,1.414214 l -4.1757864,4.175786 a 1,1 90 0 0 0,1.414214 0.99702501,0.99702501 179.82878 0 0 1.41,-0.0042 l 4.1757862,-4.175786 a 1,1 0 0 1 1.414214,0 l 4.175786,4.175786 a 1,1 0 0 0 1.414214,0 0.99702501,0.99702501 89.828781 0 0 -0.0042,-1.41 l -4.175786,-4.175786 a 1,1 90 0 1 0,-1.414214 l 4.175786,-4.1757862 a 1,1 90 0 0 0,-1.4142136 0.99702501,0.99702501 179.82878 0 0 -1.41,0.00421 z"
-     fill="#404351"
-     id="path2"
-     inkscape:path-effect="#path-effect1289"
-     inkscape:original-d="M17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41L17.59 5Z" />
+     d="m 5,12 a 1,1 135 0 1 1,-1 l 12,0 a 1,1 45 0 1 1,1 1,1 135 0 1 -1,1 H 6 A 1,1 45 0 1 5,12 Z"
+     fill="#b1b1b1"
+     id="path383"
+     inkscape:path-effect="#path-effect1310"
+     inkscape:original-d="M5 13V11H19V13H5Z" />
 </svg>

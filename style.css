@@ -4,10 +4,11 @@ body {
 }
 
 :root {
-  --bg1: #181b23;
-  --bg2: #21232b;
-  --bg3: #292b33;
-  --bg4: #32343d;
+  --bg1: #11141C;
+  --bg2: #181B23;
+  --bg3: #21232b;
+  --bg4: #292b33;
+  --bg5: #32343D;
   --green: #219973;
   --yellow: #e2b86a;
   --blue: #578ed1;
@@ -50,7 +51,7 @@ button {
   background-image: url("assets/trash.svg");
 }
 .deleteListBtn:hover {
-  background-image: url("assets/trashRed.svg");
+  background-image: url("assets/trashColor.svg");
   background-color: var(--bg3);
 }
 .collapseBtn {
@@ -69,14 +70,14 @@ button {
   background-image: url("assets/arrowUp.svg");
 }
 .collapseBtn.up:hover {
-  background-image: url("assets/arrowUpHover.svg");
+  background-image: url("assets/arrowUp1.svg");
   background-color: var(--bg3);
 }
 .collapseBtn.down {
   background-image: url("assets/arrowDown.svg");
 }
 .collapseBtn.down:hover {
-  background-image: url("assets/arrowDownHover.svg");
+  background-image: url("assets/arrowDown1.svg");
   background-color: var(--bg3);
 }
 
@@ -87,7 +88,7 @@ button {
 }
 
 .listTitleDiv {
-  cursor: pointer;
+  margin-top: 24px;
   transition: 100ms;
   background-color: var(--bg2);
   padding: 8px 12px;
@@ -104,10 +105,9 @@ button {
 .listTitle {
   transition: 100ms;
   display: inline-block;
-  color: #d5d5d5;
+  color: #6A6D7A;
   width: 740px;
   border-radius: 3px;
-  cursor: text;
 }
 
 .sublistDiv {
@@ -126,7 +126,7 @@ button {
   transition: 100ms;
   border-radius: 3px;
   width: 180px;
-  color: #c4c4c4;
+  color: #6A6D7A;
 }
 .sublistTitleDiv p:focus {
   background-color: var(--bg3);
@@ -140,7 +140,7 @@ button {
   float: right;
   border-radius: 3px;
   background-repeat: no-repeat;
-  background-image: url('assets/plus1.svg');
+  background-image: url('assets/plus.svg');
   background-size: 23px 23px;
   background-position: center;
   transform: translateY(-4px) translateX(6px);
@@ -149,7 +149,7 @@ button {
 
 .newItemToTopBtn:hover{
   background-color: var(--bg3);
-  background-image: url('assets/plusHover1.svg');
+  background-image: url('assets/plus1.svg');
 
 }
 .item {
@@ -164,7 +164,7 @@ button {
 }
 
 .itemTitle {
-  color: #b1b1b1;
+  color: #818491;
   font-size: 16px;
   display: inline-block;
   background-color: var(--bg2);
@@ -190,25 +190,24 @@ button {
   border-radius: 3px;
 }
 .moreBtn:hover {
-  background-image: url("assets/settingsHover.svg");
+  background-image: url("assets/settings1.svg");
 }
 
 .itemSettingsDiv {
-  width: 100%;
+  width: 260px;
   margin-top: 8px;
-  margin-left: -4px;
-  border-radius: 4px;
-  margin-right: 16px;
+  padding-top: 4px;
+  margin-left: -10px;
+  border-top: 2px solid var(--bg3);
 }
 .itemSettingsDiv button {
   background-repeat: no-repeat;
   background-size: 20px 20px;
   background-color: var(--bg2);
   background-position: center;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   transition: 10ms;
-  margin-right: 4px;
   border-radius: 3px;
   transition: 100ms;
 }
@@ -220,9 +219,24 @@ button {
 .addDescBtn {
   background-image: url("assets/text.svg");
 }
+.addDescBtn:hover {
+  background-image: url("assets/textColor.svg");
+}
 
+.setPriorityBtn{
+  background-image: url('assets/star.svg');
+}
+.setPriorityBtn.active{
+  background-image: url('assets/starColor.svg');
+}
+.setPriorityBtn:hover{
+  background-image: url('assets/starColor.svg');
+}
 .addLinkBtn{
   background-image: url("assets/link.svg");
+}
+.addLinkBtn:hover{
+  background-image: url("assets/linkColor.svg");
 }
 
 .addLinkInput {
@@ -234,7 +248,12 @@ button {
 }
 
 .deleteItemBtn {
-  background-image: url("assets/trashRed.svg");
+  background-image: url("assets/trashColor.svg");
+}
+
+.deleteItemBtn:hover{
+  background-image: url("assets/trash1.svg");
+  background-color: var(--red) !important;
 }
 
 .itemMedia {
@@ -246,14 +265,21 @@ button {
 
 .uploadMediaBtn {
   background-image: url("assets/upload.svg");
+  margin-left: 4px; 
+}
+.uploadMediaBtn:hover{
+  background-image: url("assets/uploadColor.svg");
 }
 .delMediaBtn {
-  background-image: url("assets/trashRed.svg");
+  background-image: url("assets/trash.svg");
+}
+.delMediaBtn:hover{
+  background-image: url("assets/trashColor.svg");
 }
 
 .itemDescription {
   font-size: 14px;
-  color: #8c8c8c;
+  color: #6A6D7A;
   background-color: var(--bg2);
   margin-top: 6px;
   border-radius: 4px;
@@ -272,6 +298,13 @@ button {
 }
 .reminderBtn.active {
   background-image: url("assets/bellActive.svg");
+}
+
+.reminderBtn:hover {
+  background-image: url("assets/bellColor.svg");
+}
+.reminderBtn.active:hover {
+  background-image: url("assets/bellActiveColor.svg");
 }
 
 .reminderDiv {
@@ -303,7 +336,7 @@ button {
 }
 
 .creationDateText {
-  color: #65676d;
+  color: #404351;
   font-size: 12px;
   margin-top: 4px;
 }
@@ -350,6 +383,31 @@ button {
 }
 .statusBtn.s3 {
   background-color: var(--green);
+}
+
+.statusBtn.s0.priority {
+  background-image: url('assets/star0.svg');
+  background-color: var(--bg2);
+  background-size: 100%;
+  border-radius: 0;
+}
+.statusBtn.s1.priority {
+  background-image: url('assets/star1.svg');
+  background-color: var(--bg2);
+  background-size: 100%;
+  border-radius: 0;
+}
+.statusBtn.s2.priority {
+  background-image: url('assets/star2.svg');
+  background-color: var(--bg2);
+  background-size: 100%;
+  border-radius: 0;
+}
+.statusBtn.s3.priority {
+  background-image: url('assets/star3.svg');
+  background-color: var(--bg2);
+  background-size: 100%;
+  border-radius: 0;
 }
 
 .item.s0 {
@@ -414,7 +472,7 @@ button {
 
 #closeBtn:hover {
   background-color: var(--red);
-  background-image: url("assets/closeHover.svg");
+  background-image: url("assets/close2.svg");
 }
 
 #minimizeBtn {
@@ -425,7 +483,7 @@ button {
 
 #minimizeBtn:hover {
   background-color: var(--bg4);
-  background-image: url("assets/minimizeHover.svg");
+  background-image: url("assets/minimize1.svg");
 }
 
 .tooltip {
@@ -447,9 +505,16 @@ button {
 .openMediaFolderBtn {
   background-image: url("assets/folder.svg");
 }
+.openMediaFolderBtn:hover {
+  background-image: url("assets/folderColor.svg");
+}
 
 .duplicateItemBtn{
   background-image: url("assets/duplicate.svg");
+}
+
+.duplicateItemBtn:hover{
+  background-image: url("assets/duplicateColor.svg");
 }
 
 #refreshBtn {
@@ -462,7 +527,7 @@ button {
 
 #refreshBtn:hover {
   background-color: var(--bg4);
-  background-image: url("assets/refreshHover.svg");
+  background-image: url("assets/refresh1.svg");
 }
 
 #newListBtn {
@@ -470,11 +535,11 @@ button {
   background-size: 16px 16px;
   background-position: center;
   float: left;
-  background-image: url("assets/plus.svg");
+  background-image: url("assets/plus1.svg");
 }
 #newListBtn:hover {
   background-color: var(--bg4);
-  background-image: url("assets/plusHover.svg");
+  background-image: url("assets/plus2.svg");
 }
 #settingsBtn {
   background-repeat: no-repeat;
@@ -485,7 +550,7 @@ button {
 }
 #settingsBtn:hover {
   background-color: var(--bg4);
-  background-image: url("assets/settingsHover1.svg");
+  background-image: url("assets/settings2.svg");
 }
 
 #settings {
@@ -495,7 +560,6 @@ button {
   margin-left: 12px;
   border-radius: 4px;
   padding: 8px 12px;
-  color: #8c8c8c;
 }
 
 #settings p {
@@ -505,20 +569,21 @@ button {
 }
 
 #settings h1 {
-  margin-bottom: 8px;
+  display: inline;
   font-size: 18px;
-  color: #c4c4c4;
+  color: #818491;
   font-weight: 1;
 }
 #settings h3 {
   font-size: 16px;
   font-weight: 1;
-  color: #b1b1b1;
+  color: #6A6D7A;
 }
 
 .settingsDiv {
   background-color: var(--bg3);
   padding: 8px 12px;
+  margin-top: 8px;
   border-radius: 3px;
 }
 
@@ -542,7 +607,7 @@ button {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #404351;
+  background-color: var(--bg5);
   transition: 200ms;
 }
 
@@ -592,4 +657,22 @@ a {
   height: 20px;
   margin-right: -1px;
   transform: translateY(6px) translateX(-3px);
+}
+
+#closeSettings {
+  background-image: url('assets/close.svg');
+  width: 20px;
+  height: 20px;
+  background-size: 100%;
+  float: right;
+  background-color: var(--bg2);
+}
+
+#closeSettings:hover{
+  background-image: url('assets/close1.svg');
+
+}
+
+#top {
+  color: #6A6D7A;
 }

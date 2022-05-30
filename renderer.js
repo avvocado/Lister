@@ -12,6 +12,9 @@ document.getElementById("minimizeBtn").addEventListener("click", function () {
 document.getElementById("refreshBtn").addEventListener("click", function () {
   window.api.send('toMain', 'refresh', null);
 });
+document.getElementById("closeSettings").addEventListener("click", function () {
+  document.getElementById('settings').style.display = 'none'
+});
 
 document.getElementById("newListBtn").addEventListener("click", function () {
   let newIndex = parseInt(Object.keys(list).length)
@@ -55,7 +58,6 @@ var currImgIndex = [0, 0, 0]
 
 // basic Windows notification with title, body, and media
 function notification(title, body, img) {
-  console.log(img)
   if (img == null || img == '' || img.endsWith('ogg') || img.endsWith('wav') || img.endsWith('mp3')) {
     // no media or is audio file
     img = "assets/icon.png"
@@ -76,6 +78,26 @@ function init() {
   // uses toMain, which sends data to the main process
   window.api.send("toMain", 'requestJSON', null);
   // wait for main to send back the json
+  let d = new Date()
+
+
+  if (d.getHours() >= 5 && d.getHours() < 12) {
+    // 5am-midday
+    document.getElementById('hello').innerHTML = 'Good Morning'
+  }
+  if (d.getHours() >= 12 && d.getHours() < 17) {
+    // midday-5pm
+    document.getElementById('hello').innerHTML = 'Good Afternoon'
+  }
+  if (d.getHours() >= 17 && d.getHours() < 22) {
+    // 5pm-10pm
+    document.getElementById('hello').innerHTML = 'Good Evening'
+  }
+  if (d.getHours() >= 22 && d.getHours() < 5) {
+    // 10pm-5am
+    document.getElementById('hello').innerHTML = 'Good Night'
+  }
+
 }
 
 // receiving info from main process
@@ -203,6 +225,9 @@ function generateList() {
         // status button
         button = document.createElement('button')
         button.classList = 'statusBtn'
+        if (list[l][i][e]['priority'] == true) {
+          button.classList = 'statusBtn priority'
+        }
         button.onmouseup = function (event) {
           if (event.button == 2) {
             // right click
@@ -221,7 +246,7 @@ function generateList() {
             if (list[l][i][e]['status'] < 3) {
               list[l][i][e]['status'] += 1
               writeJSON(list)
-              if (list[l][i][e]['status'] == 3) {
+              if (list[l][i][e]['status'] == 3 && list[l][i][e]['priority'] == false) {
                 // completed
                 let temp = list[l][i][e]
                 removeItem(l, i, e)
@@ -235,6 +260,9 @@ function generateList() {
 
           }
           this.className = 'statusBtn'
+          if (list[l][i][e]['priority'] == true) {
+            this.classList = 'statusBtn priority'
+          }
 
           this.classList.add("s" + (list[l][i][e]['status']).toString())
           this.parentElement.className = 'item'
@@ -260,8 +288,6 @@ function generateList() {
           button.title = 'Completed'
         }
 
-
-        button.className = 'statusBtn'
         button.classList.add("s" + (list[l][i][e]['status']).toString());
         itemDiv.classList.add(("s" + (list[l][i][e]['status']).toString()));
         itemDiv.append(button)
@@ -310,7 +336,6 @@ function generateList() {
         openMediaFolderBtn = handleTooltip(openMediaFolderBtn, openMediaFolderBtnTooltip)
         openMediaFolderBtn.onclick = function () {
           window.api.send('toMain', 'openPath', list[l][i][e]['media'][0]);
-
         }
         openMediaFolderBtnDiv.append(openMediaFolderBtnTooltip)
         openMediaFolderBtnDiv.append(openMediaFolderBtn)
@@ -389,6 +414,42 @@ function generateList() {
         addDescBtn = handleTooltip(addDescBtn, addDescBtnTooltip)
         addDescBtnDiv.append(addDescBtnTooltip)
         addDescBtnDiv.append(addDescBtn)
+
+        let setPriorityBtnDiv = document.createElement('div')
+        let setPriorityBtn = document.createElement('button')
+        if (list[l][i][e]['priority'] == true) {
+          setPriorityBtn.className = 'setPriorityBtn active'
+        } else {
+          setPriorityBtn.className = 'setPriorityBtn'
+        }
+        let setPriorityBtnTooltip = createTooltip('Set Priority', 26)
+        setPriorityBtn.onclick = function () {
+          // edit list
+          list[l][i][e].priority = !list[l][i][e].priority
+          if (list[l][i][e].priority == true) {
+            // save item
+            temp = list[l][i][e]
+            // remove item
+            removeItem(l, i, e)
+            // re add to top
+            let lastElem = Object.keys(list[l][i]).length - 2
+
+            for (let j = lastElem; j >= 0; j--) {
+              // move all items down
+              list[l][i][j + 1] = list[l][i][j]
+            }
+            // add new item in index 0
+            let d = new Date()
+            list[l][i][0] = temp
+
+          }
+          writeJSON(list)
+          generateList()
+
+        }
+        setPriorityBtn = handleTooltip(setPriorityBtn, setPriorityBtnTooltip)
+        setPriorityBtnDiv.append(setPriorityBtnTooltip)
+        setPriorityBtnDiv.append(setPriorityBtn)
 
         let itemDescription = document.createElement('p')
         itemDescription.contentEditable = true
@@ -599,7 +660,7 @@ function generateList() {
         // ADD MEDIA BUTTON
         let mediaBtnDiv = document.createElement('div')
         let mediaBtn = create('button', 'uploadMediaBtn', '')
-        let mediaBtnTooltip = createTooltip('Upload Media', 20)
+        let mediaBtnTooltip = createTooltip('Upload Media', 14)
         mediaBtn.onclick = function () {
           window.api.send("toMain", "uploadMedia", null);
           // wait for main to send back the media name
@@ -612,8 +673,10 @@ function generateList() {
         // DELETE ITEM BUTTON
         let delItemBtn = document.createElement('button')
         delItemBtn.className = 'deleteItemBtn'
-        delItemBtnDiv = document.createElement('div')
-        let delItemBtnTooltip = createTooltip('Delete Item', 24)
+        let delItemBtnDiv = document.createElement('div')
+        delItemBtnDiv.style.float = 'right'
+        delItemBtnDiv.style.marginRight = '8px'
+        let delItemBtnTooltip = createTooltip('Delete Item', 28)
         delItemBtn.onclick = function () {
           removeItem(l, i, e)
         }
@@ -634,6 +697,7 @@ function generateList() {
         itemSettingsDiv.append(addLinkBtnDiv)
 
         itemSettingsDiv.append(addDescBtnDiv)
+        itemSettingsDiv.append(setPriorityBtnDiv)
         itemSettingsDiv.append(reminderBtnDiv)
         itemSettingsDiv.append(duplicateItemBtnDiv)
         itemSettingsDiv.append(delItemBtnDiv)
@@ -674,6 +738,7 @@ function newItemToEnd(l, i) {
     media: [],
     description: "",
     status: 1,
+    priority: false,
     link: "",
     creationDate: d.getTime(),
     reminder: {
@@ -706,6 +771,7 @@ function newItemToTop(l, i) {
     media: [],
     description: "",
     status: 1,
+    priority: false,
     link: "",
     creationDate: d.getTime(),
     reminder: {

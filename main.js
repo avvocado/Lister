@@ -36,7 +36,7 @@ const createWindow = () => {
       }
     }
   ]));
-  tray.setToolTip('Lister BETA Release 4')
+  tray.setToolTip('Lister BETA Release 5')
 
 
   // Create the browser window.
