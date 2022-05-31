@@ -1,8 +1,6 @@
 # Lister
 
-## TODOS
-
-### IMPORTANT TODOS
+### TODOS
 
 - reminder div styling is bad
 - style audio items
@@ -55,8 +53,17 @@
 - delete file from media folder if no items are using it
 - resizing/scaling
 - inserting icons into item titles
+- goodnight text is broken
+- save collapse state in list.json
+- no space on days ago, results in "2days ago"
+- make status dot get bigger/smaller on hover/click
+- change "new item to top" to "new item at top" in button title
+- have full path to media on media element title 
+  - instead of "image.png", say "C:Users/user1/Programs/Lister/media/image.png"
+- checklists in item description
 
-## URGENT/BUGS
+
+### URGENT/BUGS
 - creating second instances with first one in tray does not focus it, only focuses if second instance is minimized
 - if you have a priority item and then add item to top, the new item will be above it
 
@@ -104,3 +111,4 @@
   - text is darker
   - svgs have rounded corners
   
+### FEATURES PUSHED IN BETA 6
