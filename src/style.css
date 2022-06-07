@@ -1,20 +1,19 @@
 body {
   background-color: var(--bg1);
-  font-family: sans-serif;
 }
 
-#app{
+#app {
   display: none;
 }
 
 :root {
   --bg1: #121319;
   --bg2: #191a21;
-  --bg3: #1e1f29;
-  --bg4: #222430;
-  --bg5: #2d2e38;
+  --bg3: #1f2028;
+  --bg4: #23242d;
+  --bg5: #2a2b35;
   --green: #009966;
-  --green1: #64a684;
+  --selectionGreen: #64a684;
   --yellow: #e2b86a;
   --blue: #578ed1;
   --red: #c6354d;
@@ -24,6 +23,7 @@ body {
   margin: 0;
   padding: 0 0;
   border: none;
+  font-family: Helvetica;
 }
 
 input {
@@ -35,7 +35,6 @@ input {
 }
 
 #lists {
-  color: white;
   margin-left: 12px;
   margin-top: 12px;
   margin-bottom: 32px;
@@ -728,11 +727,10 @@ a {
   font-size: 14px;
   padding: 4px 4px;
   margin-bottom: 0;
-
 }
 .mainListContent.block .block.text .text {
   overflow-x: auto;
-  color: #535663;
+  color: #404351;
   background-color: var(--bg1);
 }
 .mainListContent.block .block.text .text:focus {
@@ -741,9 +739,8 @@ a {
 }
 
 .mainListContent.block .block.code {
-  font-family: Consolas;
   margin-bottom: 8px;
-  color: #535663;
+  color: #404351;
   font-size: 14px;
 }
 
@@ -790,7 +787,6 @@ a {
 
 .copyBtnDiv {
   position: absolute;
-  font-family: sans-serif;
   transform: translateX(-56px) translateY(4px);
   right: 0;
 }
@@ -806,10 +802,6 @@ a {
   background-image: url("../assets/trash.svg");
 }
 
-.delBlockBtnDiv {
-  font-family: sans-serif;
-}
-
 .delBlockBtn:hover {
   background-color: var(--bg2) !important;
   background-image: url("../assets/trashColor.svg");
@@ -819,6 +811,8 @@ a {
   border-radius: 3px;
   white-space: nowrap;
   background-color: var(--bg2);
+  font-family: Consolas !important;
+
   overflow-x: auto;
   padding-bottom: 6px;
 }
@@ -1053,7 +1047,7 @@ a {
   color: #606472;
   background-color: var(--bg3);
 }
-.alert p{
+.alert p {
   display: inline-block;
 }
 .alert.error {
@@ -1071,11 +1065,11 @@ a {
 .alert.info {
   border-left: 6px solid var(--blue);
 }
-.alert img{
+.alert img {
   width: 16px;
   margin-right: 4px;
   height: 16px;
-  transform: translateY(4px)
+  transform: translateY(4px);
 }
 
 @keyframes fadein {
@@ -1100,5 +1094,5 @@ a {
 }
 
 ::selection {
-  background: var(--green1);
+  background: var(--selectionGreen);
 }

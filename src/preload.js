@@ -17,12 +17,9 @@ const {
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld(
   "api", {
-  send: (channel, data) => {
+  send: (channel, data, data1) => {
     // whitelist channels
-    let validChannels = ['alwaysOnTop','writeSettings', 'trayIcon', 'openFile','openPath', 'requestDirname','requestSettings', 'refresh', 'minimize', 'requestList', 'writeJSON', 'close', 'uploadMedia'];
-    if (validChannels.includes(channel)) {
-      ipcRenderer.send(channel, data);
-    }
+    ipcRenderer.send(channel, data, data1);
   },
   receive: (channel, func) => {
     let validChannels = ["toRenderer"];

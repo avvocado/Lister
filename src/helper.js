@@ -313,7 +313,7 @@ function newList(type) {
       "lastEdited": 0
     }
   }
-  selectedList = Object.keys(list).length - 2
+  selectedList = Object.keys(list).length - 1
   console.log(selectedList)
   writeJSON(list)
   generateList()

@@ -11,6 +11,7 @@ const {
 } = require("electron");
 const path = require("path");
 const fs = require("fs");
+const { createHash } = require('crypto')
 
 let win
 
@@ -144,11 +145,16 @@ ipcMain.on("writeJSON", (evt, args) => {
 
 ipcMain.on("writeSettings", (evt, args) => {
   console.log(args)
+  
   fs.writeFile(path.join(__dirname, '../', '/resources/', 'settings.json'), args, err => {
     if (err) {
       console.log(err)
     }
   })
+})
+
+ipcMain.on("refresh", (evt, args) => {
+  win.reload()
 })
 
 ipcMain.on("requestDirname", (evt, args) => {
