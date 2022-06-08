@@ -44,7 +44,7 @@ input {
   background-image: url("../assets/trashColor.svg");
 }
 .listSettingsDiv {
-  margin-top: -8px;
+  margin-top: 16px;
 }
 .listSettingsDiv button {
   transform: translateY(4px);
@@ -426,25 +426,26 @@ body::-webkit-scrollbar {
 }
 
 #menuBar {
-  height: 20px;
-  width: 100%;
+  height: 32px;
+  width: 732px;
+  margin-left: 180px;
   background-color: var(--bg2);
   position: fixed;
   -webkit-app-region: drag;
   transition: 100ms;
-  z-index: 100;
+  z-index: 99;
 }
 
 #menuBar button {
   -webkit-app-region: no-drag;
   background-color: var(--bg2);
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   background-position: center;
   transition: 100ms;
 }
 #closeBtn {
-  background-size: 100%;
+  background-size: 22px 22px;
   float: right;
   background-image: url("../assets/close.svg");
 }
@@ -455,7 +456,7 @@ body::-webkit-scrollbar {
 }
 
 #minimizeBtn {
-  background-size: 100%;
+  background-size: 24px 24px;
   float: right;
   background-image: url("../assets/minimize.svg");
 }
@@ -730,7 +731,7 @@ a {
 }
 .mainListContent.block .block.text .text {
   overflow-x: auto;
-  color: #404351;
+  color:#6a6d7a;
   background-color: var(--bg1);
 }
 .mainListContent.block .block.text .text:focus {

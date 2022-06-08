@@ -50,7 +50,7 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js')
     },
     autoHideMenuBar: true,
-    resizable: false,
+    resizable: true,
     frame: false,
     icon: path.join(__dirname, '../', "/assets", '/icons', "icon.png"),
     backgroundColor: '#121319',
