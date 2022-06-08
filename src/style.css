@@ -144,7 +144,6 @@ input {
 }
 .sublistTitleDiv input:focus {
   background-color: var(--bg3);
-  
 }
 
 .newItemToTopBtn {
@@ -207,7 +206,7 @@ input {
 }
 .moreBtn:hover {
   background-color: var(--bg3);
-  background-image: url("../assets/settings2.svg");
+  background-image: url("../assets/settings1.svg");
 }
 
 .itemSettingsDiv {
@@ -469,6 +468,7 @@ body::-webkit-scrollbar {
   color: #8c8c8c;
   background-color: var(--bg3);
   white-space: nowrap;
+  user-select: none;
   display: none;
   padding: 4px 8px;
   border-radius: 4px;
@@ -519,7 +519,7 @@ body::-webkit-scrollbar {
 
 #settings p {
   margin: 0;
-  margin-top: 4px;
+  margin-top: 8px;
   color: #404351;
   font-size: 14px;
 }
@@ -540,7 +540,7 @@ body::-webkit-scrollbar {
 .settingsDiv {
   margin-bottom: 8px;
   margin-top: 6px;
-  padding: 8px 8px;
+  padding: 12px 12px;
   background-color: var(--bg2);
   border-radius: 4px;
 }
@@ -687,6 +687,12 @@ a {
   border-radius: 3px;
 }
 .listTypeIcon {
+  width: 18px;
+  float: right;
+  height: 18px;
+}
+
+.lockIcon {
   width: 18px;
   float: right;
   height: 18px;
@@ -1020,8 +1026,7 @@ a {
   z-index: 99999;
 }
 
-#info .infoDiv {
-  background-color: var(--bg3);
+.alert {
   padding: 8px 16px;
   box-shadow: 0 0 20px 0.5px var(--bg1);
   border-radius: 4px;
@@ -1030,6 +1035,22 @@ a {
   width: auto;
   white-space: nowrap;
   color: #606472;
+  background-color: var(--bg3);
+}
+.alert.error {
+  border-left: 6px solid var(--red);
+}
+.alert.success {
+  border-left: 6px solid var(--green);
+}
+.alert.neutral {
+  border-left: 6px solid var(--bg3);
+}
+.alert.warning {
+  border-left: 6px solid var(--yellow);
+}
+.alert.other {
+  border-left: 6px solid var(--blue);
 }
 
 @keyframes fadein {

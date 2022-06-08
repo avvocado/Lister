@@ -331,15 +331,21 @@ function writeSettings(data) {
 }
 
 
-// helper to show information
+// helper to show alerts
 // params: text, description, duration
-function showInfo(text, dur) {
-  let infoDiv = create('div', 'infoDiv')
+function showAlert(text, dur, type) {
+  let alertDiv = create('div', 'alert ' + type)
   let textElem = create('p', 'text')
   textElem.innerHTML = text
-  infoDiv.append(textElem)
-  document.getElementById('info').append(infoDiv)
-  setTimeout(() => {
-    infoDiv.remove()
-  }, dur)
+  alertDiv.append(textElem)
+  document.getElementById('info').append(alertDiv)
+  let timeout = setTimeout(func, dur)
+  alertDiv.onclick = function () {
+    this.remove()
+    clearTimeout(timeout)
+  }
+  function func() {
+    alertDiv.remove()
+
+  }
 }

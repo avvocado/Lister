@@ -41,6 +41,7 @@ document.getElementById("minimizeBtn").addEventListener("click", function () {
 
 document.getElementById("newListBtn").addEventListener("click", function () {
   let type = document.getElementById('listType').value
+  showAlert('Created New List', + 2000, "success")
   newList(type)
 });
 
@@ -168,10 +169,8 @@ function generateList() {
   lists.innerHTML = ''
   document.getElementById('homepageBtns').innerHTML = ''
 
-  document.getElementById('listsTitle').innerHTML = "LISTS (" + Object.keys(list).length + ")"
-
   for (let l = 0; l < Object.keys(list).length; l++) {
-  let tdate = new Date(list[l]['creationDate'])
+    let tdate = new Date(list[l]['creationDate'])
 
     // for each list
     let lockedDiv
@@ -203,7 +202,7 @@ function generateList() {
         } else {
           // incorrect password
           pswd.select()
-          showInfo('Incorrect Password', 1000)
+          showAlert('Incorrect Password', 2000, 'error')
         }
       }
       pswd.onkeydown = function (e) {
@@ -243,10 +242,8 @@ function generateList() {
 
     let homepageBtnDiv = create('div', 'homepageBtnDiv')
     let homepageBtn = create('button', 'homepageBtn')
-    let icon = create('img', 'listTypeIcon')
-    icon.src = '../assets/' + list[l]['type'] + "List.svg"
+
     let p = create('p', '')
-    p.innerHTML = list[l]['name']
     homepageBtn.innerHTML = 'Open List'
     homepageBtn.onclick = function () {
       sideListBtn.click()
@@ -262,7 +259,18 @@ function generateList() {
     listCreationDate1.innerHTML = months[tdate.getMonth()] + ' ' + tdate.getDate() + ", " + (tdate.getHours() % 12 || 12) + ":" + tdate.getMinutes().toString().padStart(2, '0') + " " + mod1
 
 
-    homepageBtnDiv.append(icon)
+    if (list[l]['locked'] == true) {
+      p.innerHTML = "Locked List"
+      let lockIcn = create('img', 'lockIcon')
+      lockIcn.src = '../assets/lock.svg'
+      homepageBtnDiv.append(lockIcn)
+    } else {
+      p.innerHTML = list[l]['name']
+      let icon = create('img', 'listTypeIcon')
+      icon.src = '../assets/' + list[l]['type'] + "List.svg"
+      homepageBtnDiv.append(icon)
+    }
+
 
     homepageBtnDiv.append(p)
     homepageBtnDiv.append(homepageBtn)
@@ -344,6 +352,7 @@ function generateList() {
 
     let deleteListBtn = create('button', 'deleteListBtn')
     deleteListBtn.onclick = function () {
+      showAlert('Deleted "' + list[l]['name'] + '"', + 2000, "success")
       removeList(l)
     }
     deleteListBtn = handleTooltip(deleteListBtn, deleteListBtnTooltip)
