@@ -115,8 +115,7 @@ input {
   display: inline-block;
   color: #606472;
   width: 692px;
-  padding: 4px 8px;
-  padding-left: 2px;
+  padding: 4px 8px 2px 4px;
   background-color: var(--bg1);
   border-radius: 3px;
   margin-top: 4px;
@@ -155,7 +154,6 @@ input {
   height: 26px;
   background-color: var(--bg2);
   float: right;
-  border-radius: 3px;
   background-repeat: no-repeat;
   background-image: url("../assets/plus.svg");
   background-size: 23px 23px;
@@ -164,13 +162,10 @@ input {
 }
 
 .newItemToTopBtn:hover {
-  background-color: var(--bg3);
   background-image: url("../assets/plus1.svg");
 }
 .item {
-  padding: 0 10px;
-  padding-top: 10px;
-  padding-bottom: 4px;
+  padding: 10px 10px 2px 10px;
   background-color: var(--bg2);
   margin-bottom: 8px;
   width: 200px;
@@ -185,7 +180,7 @@ input {
   background-color: var(--bg2);
   vertical-align: top;
   border-radius: 3px;
-  width: 146px;
+  width: 152px;
   transition: 100ms;
   padding: 2px 2px;
   transform: translateY(-4px);
@@ -200,16 +195,13 @@ input {
   height: 24px;
   background-color: var(--bg2);
   float: right;
-  border-radius: 3px;
   background-repeat: no-repeat;
   background-size: 16px 16px;
   background-position: center;
   transform: translateY(-5px) translateX(4px);
   background-image: url("../assets/settings.svg");
-  transition: 100ms;
 }
 .moreBtn:hover {
-  background-color: var(--bg3);
   background-image: url("../assets/settings1.svg");
 }
 
@@ -310,7 +302,7 @@ input {
   transition: 100ms;
   width: auto;
   margin-bottom: 4px;
-  padding: 4px 4px;
+  padding: 0 4px 4px 4px;
   padding-top: 0;
 }
 
@@ -771,7 +763,7 @@ a {
 }
 
 .copyBtn {
-  background-color: var(--bg2) !important;
+  background-color: transparent !important;
   transition: 100ms;
   margin-right: 0 !important;
   background-image: url("../assets/copy.svg");
@@ -784,7 +776,6 @@ a {
 }
 
 .copyBtn:hover {
-  background-color: var(--bg3) !important;
   background-image: url("../assets/copy1.svg");
 }
 
@@ -857,15 +848,14 @@ a {
 }
 /* block */
 .sideListBtn.block {
-  background-image: url("../assets/blockList.svg");
+  background-image: url("../assets/textList.svg");
 }
 .sideListBtn.block.active {
-  background-image: url("../assets/blockList1.svg");
+  background-image: url("../assets/textList1.svg");
 }
 /* block & unlocked */
 .sideListBtn.block.unlocked.active {
-  background-image: url("../assets/unlock1.svg"),
-    url("../assets/blockList1.svg");
+  background-image: url("../assets/unlock1.svg"), url("../assets/textList1.svg");
   background-position: 116px 6px, 140px 6px;
 }
 
@@ -972,10 +962,11 @@ a {
 }
 
 #side p {
+  font-weight: bold;
   color: #404351;
   margin-bottom: 2px;
   user-select: none;
-  margin-top: 16px;
+  margin-top: 12px;
   margin-left: 8px;
   font-size: 12px;
 }
@@ -987,7 +978,7 @@ a {
 
 #settingsBtn {
   font-size: 16px;
-  padding: 4px 8px;
+  padding: 6px 8px;
 }
 
 #newListBtn {
@@ -1019,19 +1010,15 @@ a {
 #info {
   position: absolute;
   text-align: center;
-  margin: 32px 480px;
+  margin: 40px 455px;
   z-index: 99999;
 }
 
 .alert {
-  padding: 8px;
-  padding-right: 8px;
-  padding-left: 4px;
-  padding-top: 4px;
-  box-shadow: 0 0 20px 0.5px var(--bg1);
+  padding: 6px 16px 8px 8px;
   border-radius: 4px;
   margin-bottom: 8px;
-  font-size: 12px;
+  font-size: 16px;
   width: auto;
   white-space: nowrap;
   color: #606472;
@@ -1039,6 +1026,7 @@ a {
 }
 .alert p {
   display: inline-block;
+  margin-left: 4px;
 }
 .alert.error {
   border-left: 6px solid var(--red);
@@ -1056,10 +1044,10 @@ a {
   border-left: 6px solid var(--blue);
 }
 .alert img {
-  width: 16px;
+  width: 18px;
   margin-right: 4px;
-  height: 16px;
-  transform: translateY(4px);
+  height: 18px;
+  transform: translateY(3px);
 }
 
 @keyframes fadein {

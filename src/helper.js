@@ -363,60 +363,12 @@ function showAlert(text, dur, type) {
 }
 
 
-function gotoPage(me, l, listDiv, lockedDiv, listContent, pswd) {
-  // -2 = no page selected
-  // -1 = settings
-  // >=0 = lists
-
-  for (let p = 0; p < document.getElementsByClassName('sideListBtn').length; p++) {
-    document.getElementsByClassName('sideListBtn')[p].classList.remove('active')
+function getAmPm(time) {
+  let mod = ''
+  if (time.getHours() > 11) {
+    mod = 'PM'
+  } else {
+    mod = 'AM'
   }
-  me.classList.add('active')
-  for (let k = 0; k < document.getElementsByClassName('listDiv').length; k++) {
-    document.getElementsByClassName('listDiv')[k].style.display = 'none'
-  }
-  document.getElementById('settings').style.display = 'none'
-  document.getElementById('noListSelected').style.display = 'none'
-
-  if (selectedList != l) {
-    listDiv.style.animation = 'fadein 500ms'
-  }
-  listDiv.style.display = null
-
-
-  if (list[l]['locked'] == true) {
-    // if you're entering a locked list, relock it
-
-    if (selectedList != l) {
-      lockedDiv.style.display = 'block'
-      listContent.style.display = 'none'
-      pswd.focus()
-    }
-    // you're going to the same list & its unlocked, bypass the lock
-    if (l == selectedList) {
-      console.log('bypassed lock')
-      lockedDiv.style.display = 'none'
-      listContent.style.display = null
-      me.innerHTML = list[l]['name']
-      me.classList.remove('locked')
-      me.classList.add('unlocked')
-    }
-
-  }
-  console.log('coming from list: ' + selectedList + ", going to list: " + l)
-  try {
-    if (selectedList >= 0 && list[selectedList]['locked'] == true && selectedList != l) {
-      // leaving a locked list, just change the title of sidelist btn to locked list
-      document.querySelectorAll('.sideListBtn')[selectedList + 1].innerHTML = 'Locked List'
-      document.querySelectorAll('.sideListBtn')[selectedList + 1].classList.remove('unlocked')
-      document.querySelectorAll('.sideListBtn')[selectedList + 1].classList.add('locked')
-      document.querySelectorAll('.listDiv')[selectedList].children[0].children[1].value = ''
-      //                         .listDiv                .lockedDiv  .pswdInput
-    }
-  } catch {
-    console.log('deleted a list')
-  }
-
-  selectedList = l
-
+  return (mod)
 }
