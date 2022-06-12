@@ -3,10 +3,6 @@ body {
   font-family: sans-serif;
 }
 
-#app{
-  display: none;
-}
-
 :root {
   --bg1: #121319;
   --bg2: #191a21;
@@ -104,7 +100,7 @@ input {
 .mainListContent.default {
   display: flex;
   flex-direction: row;
-  margin-top: 4px;
+  margin-top: 12px;
 }
 
 .listTitle:focus {
@@ -148,6 +144,7 @@ input {
 }
 .sublistTitleDiv input:focus {
   background-color: var(--bg3);
+  
 }
 
 .newItemToTopBtn {
@@ -210,7 +207,7 @@ input {
 }
 .moreBtn:hover {
   background-color: var(--bg3);
-  background-image: url("../assets/settings1.svg");
+  background-image: url("../assets/settings2.svg");
 }
 
 .itemSettingsDiv {
@@ -340,7 +337,7 @@ input {
   width: 32px;
   height: 32px;
   transition: 100ms;
-  color: #2d303c;
+  color: #32343d;
   font-size: 24px;
 }
 
@@ -472,7 +469,6 @@ body::-webkit-scrollbar {
   color: #8c8c8c;
   background-color: var(--bg3);
   white-space: nowrap;
-  user-select: none;
   display: none;
   padding: 4px 8px;
   border-radius: 4px;
@@ -523,7 +519,7 @@ body::-webkit-scrollbar {
 
 #settings p {
   margin: 0;
-  margin-top: 8px;
+  margin-top: 4px;
   color: #404351;
   font-size: 14px;
 }
@@ -544,7 +540,7 @@ body::-webkit-scrollbar {
 .settingsDiv {
   margin-bottom: 8px;
   margin-top: 6px;
-  padding: 12px 12px;
+  padding: 8px 8px;
   background-color: var(--bg2);
   border-radius: 4px;
 }
@@ -696,12 +692,6 @@ a {
   height: 18px;
 }
 
-.lockIcon {
-  width: 18px;
-  float: right;
-  height: 18px;
-}
-
 #homePageDiv #homepageBtns .homepageBtnDiv p {
   margin: 0;
   font-size: 16px;
@@ -721,6 +711,7 @@ a {
   background-color: var(--bg1);
   margin: 0;
   padding-bottom: 2px;
+  margin-top: 8px;
   border-radius: 4px;
 }
 
@@ -728,7 +719,6 @@ a {
   font-size: 14px;
   padding: 4px 4px;
   margin-bottom: 0;
-
 }
 .mainListContent.block .block.text .text {
   overflow-x: auto;
@@ -820,7 +810,6 @@ a {
   white-space: nowrap;
   background-color: var(--bg2);
   overflow-x: auto;
-  padding-bottom: 6px;
 }
 
 .blockSettingsDiv {
@@ -905,14 +894,15 @@ a {
   background-color: var(--bg3);
 }
 
-.listDate {
-  color: #2d303c;
-  font-size: 12px;
-  user-select: none;
-  margin-left: 8px;
+.listCreationDate {
+  color: #404351;
+  font-size: 14px;
   display: inline-block;
   margin-top: 8px;
+  user-select: none;
+  margin-left: 8px;
 }
+
 .pswdInput {
   background-color: var(--bg2);
   transition: 100ms;
@@ -941,14 +931,6 @@ a {
   background-color: var(--bg3);
 }
 
-#noListSelected {
-  text-align: center;
-  margin-top: 128px;
-  user-select: none;
-  color: var(--bg4);
-  font-size: 32px;
-}
-
 .lockedDiv {
   text-align: center;
   margin-top: 128px;
@@ -958,8 +940,7 @@ a {
   color: #404351;
 }
 .lockedTitle {
-  color: #404351;
-  user-select: none;
+  color: #606472;
 }
 
 .lockListBtn {
@@ -1039,11 +1020,9 @@ a {
   z-index: 99999;
 }
 
-.alert {
-  padding: 8px;
-  padding-right: 8px;
-  padding-left: 4px;
-  padding-top: 4px;
+#info .infoDiv {
+  background-color: var(--bg3);
+  padding: 8px 16px;
   box-shadow: 0 0 20px 0.5px var(--bg1);
   border-radius: 4px;
   margin-bottom: 8px;
@@ -1051,31 +1030,6 @@ a {
   width: auto;
   white-space: nowrap;
   color: #606472;
-  background-color: var(--bg3);
-}
-.alert p{
-  display: inline-block;
-}
-.alert.error {
-  border-left: 6px solid var(--red);
-}
-.alert.success {
-  border-left: 6px solid var(--green);
-}
-.alert.normal {
-  border-left: 6px solid var(--bg3);
-}
-.alert.warning {
-  border-left: 6px solid var(--yellow);
-}
-.alert.info {
-  border-left: 6px solid var(--blue);
-}
-.alert img{
-  width: 16px;
-  margin-right: 4px;
-  height: 16px;
-  transform: translateY(4px)
 }
 
 @keyframes fadein {

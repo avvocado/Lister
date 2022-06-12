@@ -93,4 +93,9 @@
 - minimize to tray changed to just close the app, tray is still there
 - icons in side menu to show user what list type it is
 - hides the list type when it's locked
-- added alerts with 3 states, error, success, and neutral with red, green, and gray backgrounds
+- added alerts
+  - 5 states: success, error, info, normal, warning
+- small popups at the top of the screen, still need to properly center them
+- removed the home page
+- last edit is now saved
+- when you make a new list it will open it

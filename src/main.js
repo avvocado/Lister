@@ -53,8 +53,7 @@ const createWindow = () => {
     resizable: true,
     frame: false,
     icon: path.join(__dirname, '../', "/assets", '/icons', "icon.png"),
-    backgroundColor: '#181B23',
-    show: false,
+    backgroundColor: '#121319',
     darkTheme: true,
   })
 
@@ -63,12 +62,6 @@ const createWindow = () => {
   win.loadFile(__dirname + '/index.html')
 
   // open devtools
-
-  // show window when is completely loaded, so it isn't plain white while waiting to load
-  win.once('ready-to-show', () => {
-    win.show()
-    console.log('done loading main window, now showing it')
-  })
 
   if (process.platform === 'win32') {
     app.setAppUserModelId(app.name);

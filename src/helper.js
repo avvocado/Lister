@@ -135,16 +135,17 @@ function removeList(l) {
     }
   }
 
+  selectedList = -2
   writeJSON(list)
   generateList()
 }
 
 
 // helper to create elements
-// params: element type, class name
+// params: element type, parameters as object
 function create(type, className) {
   let temp = document.createElement(type)
-  if (className != '') {
+  if (className) {
     temp.className = className
   }
   return (temp)
@@ -160,7 +161,7 @@ function createTooltip(text, xoffset, above) {
   if (above == true) {
     tooltip.style.transform = 'translateY(-26px) translateX(-' + xoffset + 'px)'
   } else {
-    tooltip.style.transform = 'translateY(38px) translateX(-' + xoffset + 'px)'
+    tooltip.style.transform = 'translateY(34px) translateX(-' + xoffset + 'px)'
   }
   return (tooltip)
 }
@@ -171,6 +172,10 @@ function createTooltip(text, xoffset, above) {
 // eg: "9 hours ago", "in 3 weeks"
 function timeAgo(now, date) {
   var time = ''
+  if (now - date > -1000 && now - date < 1000) {
+    // within 1 second
+    time = 'Now'
+  }
   if (now - date > 1000 * 60 * 60 * 24 * 30) {
     // months ago, uses 30 days per month
     let time1 = Math.floor((now - date) / (1000 * 60 * 60 * 24 * 30))
@@ -292,7 +297,8 @@ function newList(type) {
       "name": "New List",
       "type": "default",
       "creationDate": d.getTime(),
-      "locked": false
+      "locked": false,
+      "lastEdited": 0
     }
   } else if (type == 'block') {
     list[newIndex] = {
@@ -303,10 +309,12 @@ function newList(type) {
       "name": "New Block List",
       "type": "block",
       "creationDate": d.getTime(),
-      "locked": false
+      "locked": false,
+      "lastEdited": 0
     }
   }
-
+  selectedList = Object.keys(list).length - 2
+  console.log(selectedList)
   writeJSON(list)
   generateList()
 }
@@ -314,8 +322,8 @@ function newList(type) {
 // returns how many children there are inside the list
 // params: list index
 function getListChildren(l) {
-  // creationdate, type, locked, name
-  return (Object.keys(list[l]).length - 4)
+  // creationdate, type, locked, name, last edit date
+  return (Object.keys(list[l]).length - 5)
 }
 
 
@@ -336,6 +344,11 @@ function writeSettings(data) {
 function showAlert(text, dur, type) {
   let alertDiv = create('div', 'alert ' + type)
   let textElem = create('p', 'text')
+  if (type != 'normal') {
+    let icon = create('img', type)
+    icon.src = '../assets/' + type + ".svg"
+    alertDiv.append(icon)
+  }
   textElem.innerHTML = text
   alertDiv.append(textElem)
   document.getElementById('info').append(alertDiv)
@@ -346,6 +359,5 @@ function showAlert(text, dur, type) {
   }
   function func() {
     alertDiv.remove()
-
   }
 }
