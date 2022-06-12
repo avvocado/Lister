@@ -33,5 +33,9 @@ remove menu at the top
   win.setMenu(null)
 
 
-export 
-  npx electron-packager C:\Users\devin\Documents\Programming\Electron\firstElectronApp Lister --platform= --arch=x64 --icon=assets/icon.png
+packager
+  WINDOWS
+npx electron-packager C:\Users\devin\Documents\Programming\Electron\firstElectronApp Lister --platform= --arch=x64 --icon=assets/icon.png
+
+  MACOS
+npx electron-packager /Users/devin/Documents/Programming/lister-master/ Lister --platform= darwin--arch=x64 --icon=assets/icons/icon

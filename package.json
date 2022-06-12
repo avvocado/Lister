@@ -1,7 +1,7 @@
 {
   "name": "lister",
-  "main": "main.js",
-  "icon": "assets/icon.png",
+  "main": "src/main.js",
+  "icon": "assets/icons/icon.png",
   "scripts": {
     "start": "electron ."
   },
