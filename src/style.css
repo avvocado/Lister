@@ -34,6 +34,12 @@ input {
   outline: none;
 }
 
+*[contenteditable="true"]:empty:before {
+  content: "...";
+  pointer-events: none;
+  color:#2d303c;
+}
+
 #lists {
   margin-left: 12px;
   margin-top: 12px;
@@ -67,7 +73,13 @@ input {
   background-image: url("../assets/trash1.svg");
   background-color: var(--red) !important;
 }
-
+.newSublistBtn {
+  background-size: 22px 22px !important;
+  background-image: url("../assets/plus.svg");
+}
+.newSublistBtn:hover {
+  background-image: url("../assets/plusColor.svg");
+}
 .listDiv {
   margin-right: 12px;
 }
@@ -84,7 +96,6 @@ input {
   padding-left: 0;
   background-color: var(--bg1);
   border-radius: 3px;
-  margin-top: 4px;
   font-size: 24px;
   font-weight: 500;
 }
@@ -108,37 +119,41 @@ input {
   color: #404351;
 }
 
-.newItemToTopBtn {
+.sublistTitleDiv button {
   width: 20px;
   height: 20px;
   background-color: var(--bg2);
   float: right;
-  background-repeat: no-repeat;
-  background-image: url("../assets/plus.svg");
-  background-size: 16px 16px;
   background-position: center;
   transform: translateY(-4px);
   border-radius: 3px;
-  margin-right: 4px;
   transition: 100ms;
+  background-size: 16px 16px;
+}
+
+.newItemToTopBtn {
+  background-repeat: no-repeat;
+  background-image: url("../assets/plus.svg");
+  background-size: 16px 16px;
+  margin-right: 4px;
 }
 
 .newItemToTopBtn:hover {
   background-image: url("../assets/plus1.svg");
   background-color: var(--bg3);
 }
-.collapseSublistBtn {
-  width: 20px;
-  height: 20px;
-  background-color: var(--bg2);
-  float: right;
+
+.delSublistBtn {
   background-repeat: no-repeat;
+  background-image: url("../assets/trashColor.svg");
   background-size: 16px 16px;
-  background-position: center;
-  border-radius: 3px;
-  transition: 100ms;
-  transform: translateY(-4px);
+  margin-left: 4px;
 }
+.delSublistBtn:hover {
+  background-color: var(--red);
+  background-image: url("../assets/trash1.svg");
+}
+
 .collapseSublistBtn.up {
   background-image: url("../assets/arrowUp.svg");
 }
@@ -164,7 +179,7 @@ input {
 }
 
 .item .title {
-  color: #535663;
+  color:#4f5363;
   font-size: 16px;
   display: inline-block;
   background-color: var(--bg2);
@@ -181,7 +196,7 @@ input {
   background-repeat: no-repeat;
   background-size: 20px 20px;
   background-position: center;
-  transform: translateY(-8px) translateX(5px);
+  transform: translateY(-7px) translateX(6px);
   background-image: url("../assets/settings.svg");
 }
 
@@ -220,14 +235,14 @@ input {
   background-image: url("../assets/textColor.svg");
 }
 
-.setPriorityBtn {
+.setStarredBtn {
   background-image: url("../assets/star.svg");
   background-size: 18px 18px !important;
 }
-.setPriorityBtn.active {
-  background-image: url("../assets/starColor.svg");
+.setStarredBtn.active {
+  background-image: url("../assets/starColorFilled.svg");
 }
-.setPriorityBtn:hover {
+.setStarredBtn:hover {
   background-image: url("../assets/starColor.svg");
 }
 .addLinkBtn {
@@ -286,16 +301,14 @@ input {
   line-height: 14px;
   width: auto;
   margin: 0 0 4px 0;
-  border-left: 2px solid var(--bg4);
+  border-left: 2px solid var(--bg5);
   padding: 0 4px 2px 8px;
 }
 
 .creationDateText {
   color: #2d303c;
   font-size: 12px;
-  margin-top: 4px;
-  margin-left: 8px;
-  margin-bottom: 6px;
+  margin: 0 0 4px 8px;
   user-select: none;
 }
 
@@ -324,37 +337,13 @@ input {
   background-color: var(--green);
 }
 
-.statusBtn.s0.priority {
-  background-image: url("../assets/star0.svg");
-  background-color: var(--bg2);
-  background-size: 100%;
-  border-radius: 0;
-}
-.statusBtn.s1.priority {
-  background-image: url("../assets/star1.svg");
-  background-color: var(--bg2);
-  background-size: 100%;
-  border-radius: 0;
-}
-.statusBtn.s2.priority {
-  background-image: url("../assets/star2.svg");
-  background-color: var(--bg2);
-  background-size: 100%;
-  border-radius: 0;
-}
-.statusBtn.s3.priority {
-  background-image: url("../assets/star3.svg");
-  background-color: var(--bg2);
-  background-size: 100%;
-  border-radius: 0;
-}
-
 .item.s0 {
   border-left: 6px solid var(--blue);
 }
 
 .item.s1 {
-  border-left: 6px solid var(--red);
+  /* ! should be red normally */
+  border-left: 6px solid var(--green);
 }
 
 .item.s2 {
@@ -365,6 +354,27 @@ input {
   border-left: 6px solid var(--green);
 }
 
+.item.s0.starred {
+  border: 1px solid var(--blue);
+  border-left: 6px solid var(--blue);
+  width: calc((100vw - 160px - 71px));
+}
+.item.s1.starred {
+  /* ! should be red normally */
+  border: 1px solid var(--green);
+  border-left: 6px solid var(--green);
+  width: calc((100vw - 160px - 71px));
+}
+.item.s2.starred {
+  border: 1px solid var(--yellow);
+  border-left: 6px solid var(--yellow);
+  width: calc((100vw - 160px - 71px));
+}
+.item.s3.starred {
+  border: 1px solid var(--green);
+  border-left: 6px solid var(--green);
+  width: calc((100vw - 160px - 71px));
+}
 body::-webkit-scrollbar {
   /* hide scrollbar */
   display: none;
@@ -731,7 +741,7 @@ a {
   background-image: url("../assets/trashColor.svg");
 }
 .mainListContent.text .block.code .text {
-  padding: 8px 12px;
+  padding: 8px 10px;
   border-radius: 3px;
   white-space: nowrap;
   background-color: var(--bg2);

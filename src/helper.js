@@ -14,84 +14,38 @@ function handleTooltip(item, tool) {
   return (item)
 }
 
-
-// new item at the end of a block list
-// params: list index, sublist index
-function newItemToEnd(l, i) {
-  // l = main list
-  // i = sublist
-  d = new Date
-  currentKeys = Object.keys(list[l][i]).length - 1 // -1 because "name" is one
-  list[l][i][currentKeys] = ({
-    title: "Title",
-    media: [],
-    description: "",
-    status: 1,
-    priority: false,
-    link: "",
-    creationDate: d.getTime(),
-    reminder: {
-      time: 0
-    }
-  }) // + 1 to add next index
-  writeJSON(list)
-  generateList()
+// creates a new sublist
+function newSublist(l) {
+  list[l]['children'].push({
+    "name": "SUBLIST",
+    "children": []
+  })
 }
-
 
 // deletes a block in text list
-// params: list index, text index
 function deleteBlock(l, a) {
-  // amount of items between a and the end of the sublist
-  let aToEnd = (getListChildren(l)) - (a + 1)
-  if (aToEnd == 0) {
-    delete (list[l][a])
-  } else {
-    for (let j = 0; j < aToEnd; j++) {
-      let index = j + 1 + a
-      // index in the sublist of the items that need to be moved
-      list[l][index - 1] = list[l][index]
-      delete (list[l][index])
-    }
-  }
-
+  list[l]['children'].splice(a, 1);
   writeJSON(list)
   generateList()
 }
 
-// move items down from a starting point in block list
-// params: list index, sublist index, first item to move
-function moveItemsDown(l, i, start) {
-  let lastElem = Object.keys(list[l][i]).length - 3
-  for (let j = lastElem; j >= start; j--) {
-    // move all items down
-    list[l][i][j + 1] = list[l][i][j]
-  }
-  delete (list[l][i][start])
-}
-
-
-// new item at top in block list
-// params: list index, sublist index
+// creates a new item at the top of a block list
 function newItemToTop(l, i) {
-  let lastElem = Object.keys(list[l][i]).length - 2
+  let lastElem = list[l]['children'][i]['children'].length - 1
   for (let j = lastElem; j >= 0; j--) {
     // move all items down
-    list[l][i][j + 1] = list[l][i][j]
+    list[l]['children'][i]['children'][j + 1] = list[l]['children'][i]['children'][j]
   }
   // add new item in index 0
   let d = new Date()
-  list[l][i][0] = ({
-    title: "Title",
+  list[l]['children'][i]['children'][0] = ({
+    title: "",
     media: [],
     description: "",
     status: 1,
-    priority: false,
+    starred: false,
     link: "",
     creationDate: d.getTime(),
-    reminder: {
-      time: 0
-    }
   })
   writeJSON(list)
   generateList()
@@ -99,28 +53,14 @@ function newItemToTop(l, i) {
 
 
 // delete item in block list
-// params: list index, sublist index, item index
 function removeItem(l, i, e) {
-  // amount of items between e and the end of the sublist
-  let eToEnd = (Object.keys(list[l][i]).length - 1) - (e + 1)
-  if (eToEnd == 0) {
-    delete (list[l][i][e])
-  } else {
-    for (let j = 0; j < eToEnd; j++) {
-      let index = j + 1 + e
-      // index in the sublist of the items that need to be moved
-      list[l][i][index - 1] = list[l][i][index]
-      delete (list[l][i][index])
-    }
-  }
-
+  list[l]['children'][i]['children'].splice(e, 1);
   writeJSON(list)
   generateList()
 }
 
 
 // delete a list
-// params: list index
 function removeList(l) {
   let lToEnd = (Object.keys(list).length - 1) - l
   if (lToEnd == 0) {
@@ -141,7 +81,6 @@ function removeList(l) {
 
 
 // helper to create elements
-// params: element type, parameters as object
 function create(type, className) {
   let temp = document.createElement(type)
   if (className) {
@@ -152,7 +91,6 @@ function create(type, className) {
 
 
 // creates a tooltip element
-// params: tooltip text, x offset, if it's above or below
 function createTooltip(text, xoffset, above) {
   let tooltip = document.createElement('p')
   tooltip.innerHTML = text
@@ -164,6 +102,108 @@ function createTooltip(text, xoffset, above) {
   }
   return (tooltip)
 }
+
+// creates a new list at the bottom
+// params: list type
+function newList(type) {
+  let d = new Date()
+  let newIndex = parseInt(Object.keys(list).length)
+  if (type == 'block') {
+    list[newIndex] = {
+      "children": [
+        { "name": "SUBLIST", "children": [] },
+        { "name": "SUBLIST", "children": [] },
+        { "name": "SUBLIST", "children": [] }
+      ],
+      "name": "New List",
+      "type": "block",
+      "creationDate": d.getTime(),
+      "locked": false,
+      "lastEdited": 0
+    }
+  } else if (type == 'text') {
+    list[newIndex] = {
+      "children": [{ "data": "", "type": "text" }],
+      "name": "New Text List",
+      "type": "text",
+      "creationDate": d.getTime(),
+      "locked": false,
+      "lastEdited": 0
+    }
+  }
+  selectedList = Object.keys(list).length - 1
+  console.log(selectedList)
+  writeJSON(list)
+  generateList()
+}
+
+// returns how many children there are inside the list
+// params: list index
+function getListChildren(l) {
+  // creationdate, type, locked, name, last edit date
+  return (Object.keys(list[l]).length - 5)
+}
+
+
+// writing list.json
+function writeJSON(data) {
+  window.api.send('writeJSON', JSON.stringify(data))
+}
+
+
+// writing settings.json
+function writeSettings(data) {
+  window.api.send('writeSettings', JSON.stringify(data))
+}
+
+
+// show alerts
+function showAlert(text, dur, type) {
+  let alertDiv = create('div', 'alert ' + type)
+  let textElem = create('p', 'text')
+  if (type != 'normal') {
+    let icon = create('img', type)
+    icon.src = '../assets/' + type + ".svg"
+    alertDiv.append(icon)
+  }
+  textElem.innerHTML = text
+  alertDiv.append(textElem)
+  document.getElementById('info').append(alertDiv)
+  let timeout = setTimeout(func, dur)
+  function func() {
+    alertDiv.remove()
+  }
+}
+
+// takes in an hour 0-24 and returns if that's am or pm in 12 hour time
+function getAmPm(time) {
+  let mod = ''
+  if (time.getHours() > 11) {
+    mod = 'PM'
+  } else {
+    mod = 'AM'
+  }
+  return (mod)
+}
+
+// sends item to the top of that sublist
+function sendItemToTop(l, i, e) {
+  list[l]['children'][i]['children'].unshift(list[l]['children'][i]['children'].splice(e, 1)[0]);
+}
+
+// deletes a sublist
+function deleteSublist(l, a) {
+  list[l]['children'].splice(a, 1);
+  writeJSON(list)
+  generateList()
+}
+
+
+
+
+
+
+
 
 
 // params: current time (ms), past/future time (ms)
@@ -275,95 +315,4 @@ function timeAgo(now, date) {
 
   return (time)
 
-}
-
-
-// creates a new list at the bottom
-// params: list type
-function newList(type) {
-  let d = new Date()
-  let newIndex = parseInt(Object.keys(list).length)
-  if (type == 'block') {
-    list[newIndex] = {
-      "0": {
-        "name": "SUBLIST",
-      },
-      "1": {
-        "name": "SUBLIST",
-      }, "2": {
-        "name": "SUBLIST",
-      },
-      "name": "New List",
-      "type": "block",
-      "creationDate": d.getTime(),
-      "locked": false,
-      "lastEdited": 0
-    }
-  } else if (type == 'text') {
-    list[newIndex] = {
-      "0": {
-        "data": "New List",
-        "type": "text"
-      },
-      "name": "New Text List",
-      "type": "text",
-      "creationDate": d.getTime(),
-      "locked": false,
-      "lastEdited": 0
-    }
-  }
-  selectedList = Object.keys(list).length - 1
-  console.log(selectedList)
-  writeJSON(list)
-  generateList()
-}
-
-// returns how many children there are inside the list
-// params: list index
-function getListChildren(l) {
-  // creationdate, type, locked, name, last edit date
-  return (Object.keys(list[l]).length - 5)
-}
-
-
-// writing list.json
-function writeJSON(data) {
-  window.api.send('writeJSON', JSON.stringify(data))
-}
-
-
-// writing settings.json
-function writeSettings(data) {
-  window.api.send('writeSettings', JSON.stringify(data))
-}
-
-
-// helper to show alerts
-// params: text, description, duration
-function showAlert(text, dur, type) {
-  let alertDiv = create('div', 'alert ' + type)
-  let textElem = create('p', 'text')
-  if (type != 'normal') {
-    let icon = create('img', type)
-    icon.src = '../assets/' + type + ".svg"
-    alertDiv.append(icon)
-  }
-  textElem.innerHTML = text
-  alertDiv.append(textElem)
-  document.getElementById('info').append(alertDiv)
-  let timeout = setTimeout(func, dur)
-  function func() {
-    alertDiv.remove()
-  }
-}
-
-
-function getAmPm(time) {
-  let mod = ''
-  if (time.getHours() > 11) {
-    mod = 'PM'
-  } else {
-    mod = 'AM'
-  }
-  return (mod)
 }
