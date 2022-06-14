@@ -1,14 +1,14 @@
 :root {
   --bg1: #121319;
   --bg2: #191a21;
-  --bg3: #1f2028;
-  --bg4: #23242d;
-  --bg5: #2a2b35;
+  --bg3: #1D1E26;
+  --bg4: #22232B;
+  --bg5: #272830;
   --green: #009966;
   --selectionGreen: #64a684;
-  --yellow: #e2b86a;
-  --blue: #578ed1;
-  --red: #c6354d;
+  --yellow: #f0be61;
+  --blue: #4a73db;
+  --red: #bf2d4b;
 }
 
 #lists {
