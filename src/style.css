@@ -1,16 +1,19 @@
 body {
   background-color: var(--bg1);
-  font-family: sans-serif;
+}
+
+#app {
+  display: none;
 }
 
 :root {
   --bg1: #121319;
   --bg2: #191a21;
-  --bg3: #1e1f29;
-  --bg4: #222430;
-  --bg5: #2d2e38;
+  --bg3: #1f2028;
+  --bg4: #23242d;
+  --bg5: #2a2b35;
   --green: #009966;
-  --green1: #64a684;
+  --selectionGreen: #64a684;
   --yellow: #e2b86a;
   --blue: #578ed1;
   --red: #c6354d;
@@ -20,6 +23,7 @@ body {
   margin: 0;
   padding: 0 0;
   border: none;
+  font-family: Helvetica;
 }
 
 input {
@@ -31,7 +35,6 @@ input {
 }
 
 #lists {
-  color: white;
   margin-left: 12px;
   margin-top: 12px;
   margin-bottom: 32px;
@@ -100,7 +103,7 @@ input {
 .mainListContent.default {
   display: flex;
   flex-direction: row;
-  margin-top: 12px;
+  margin-top: 4px;
 }
 
 .listTitle:focus {
@@ -144,7 +147,6 @@ input {
 }
 .sublistTitleDiv input:focus {
   background-color: var(--bg3);
-  
 }
 
 .newItemToTopBtn {
@@ -207,7 +209,7 @@ input {
 }
 .moreBtn:hover {
   background-color: var(--bg3);
-  background-image: url("../assets/settings2.svg");
+  background-image: url("../assets/settings1.svg");
 }
 
 .itemSettingsDiv {
@@ -337,7 +339,7 @@ input {
   width: 32px;
   height: 32px;
   transition: 100ms;
-  color: #32343d;
+  color: #2d303c;
   font-size: 24px;
 }
 
@@ -469,6 +471,7 @@ body::-webkit-scrollbar {
   color: #8c8c8c;
   background-color: var(--bg3);
   white-space: nowrap;
+  user-select: none;
   display: none;
   padding: 4px 8px;
   border-radius: 4px;
@@ -519,7 +522,7 @@ body::-webkit-scrollbar {
 
 #settings p {
   margin: 0;
-  margin-top: 4px;
+  margin-top: 8px;
   color: #404351;
   font-size: 14px;
 }
@@ -540,7 +543,7 @@ body::-webkit-scrollbar {
 .settingsDiv {
   margin-bottom: 8px;
   margin-top: 6px;
-  padding: 8px 8px;
+  padding: 12px 12px;
   background-color: var(--bg2);
   border-radius: 4px;
 }
@@ -692,6 +695,12 @@ a {
   height: 18px;
 }
 
+.lockIcon {
+  width: 18px;
+  float: right;
+  height: 18px;
+}
+
 #homePageDiv #homepageBtns .homepageBtnDiv p {
   margin: 0;
   font-size: 16px;
@@ -711,7 +720,6 @@ a {
   background-color: var(--bg1);
   margin: 0;
   padding-bottom: 2px;
-  margin-top: 8px;
   border-radius: 4px;
 }
 
@@ -722,7 +730,7 @@ a {
 }
 .mainListContent.block .block.text .text {
   overflow-x: auto;
-  color: #535663;
+  color: #404351;
   background-color: var(--bg1);
 }
 .mainListContent.block .block.text .text:focus {
@@ -731,9 +739,8 @@ a {
 }
 
 .mainListContent.block .block.code {
-  font-family: Consolas;
   margin-bottom: 8px;
-  color: #535663;
+  color: #404351;
   font-size: 14px;
 }
 
@@ -780,7 +787,6 @@ a {
 
 .copyBtnDiv {
   position: absolute;
-  font-family: sans-serif;
   transform: translateX(-56px) translateY(4px);
   right: 0;
 }
@@ -796,10 +802,6 @@ a {
   background-image: url("../assets/trash.svg");
 }
 
-.delBlockBtnDiv {
-  font-family: sans-serif;
-}
-
 .delBlockBtn:hover {
   background-color: var(--bg2) !important;
   background-image: url("../assets/trashColor.svg");
@@ -809,7 +811,10 @@ a {
   border-radius: 3px;
   white-space: nowrap;
   background-color: var(--bg2);
+  font-family: Consolas !important;
+
   overflow-x: auto;
+  padding-bottom: 6px;
 }
 
 .blockSettingsDiv {
@@ -894,15 +899,14 @@ a {
   background-color: var(--bg3);
 }
 
-.listCreationDate {
-  color: #404351;
-  font-size: 14px;
-  display: inline-block;
-  margin-top: 8px;
+.listDate {
+  color: #2d303c;
+  font-size: 12px;
   user-select: none;
   margin-left: 8px;
+  display: inline-block;
+  margin-top: 8px;
 }
-
 .pswdInput {
   background-color: var(--bg2);
   transition: 100ms;
@@ -931,6 +935,14 @@ a {
   background-color: var(--bg3);
 }
 
+#noListSelected {
+  text-align: center;
+  margin-top: 128px;
+  user-select: none;
+  color: var(--bg4);
+  font-size: 32px;
+}
+
 .lockedDiv {
   text-align: center;
   margin-top: 128px;
@@ -940,7 +952,8 @@ a {
   color: #404351;
 }
 .lockedTitle {
-  color: #606472;
+  color: #404351;
+  user-select: none;
 }
 
 .lockListBtn {
@@ -1020,9 +1033,11 @@ a {
   z-index: 99999;
 }
 
-#info .infoDiv {
-  background-color: var(--bg3);
-  padding: 8px 16px;
+.alert {
+  padding: 8px;
+  padding-right: 8px;
+  padding-left: 4px;
+  padding-top: 4px;
   box-shadow: 0 0 20px 0.5px var(--bg1);
   border-radius: 4px;
   margin-bottom: 8px;
@@ -1030,6 +1045,31 @@ a {
   width: auto;
   white-space: nowrap;
   color: #606472;
+  background-color: var(--bg3);
+}
+.alert p {
+  display: inline-block;
+}
+.alert.error {
+  border-left: 6px solid var(--red);
+}
+.alert.success {
+  border-left: 6px solid var(--green);
+}
+.alert.normal {
+  border-left: 6px solid var(--bg3);
+}
+.alert.warning {
+  border-left: 6px solid var(--yellow);
+}
+.alert.info {
+  border-left: 6px solid var(--blue);
+}
+.alert img {
+  width: 16px;
+  margin-right: 4px;
+  height: 16px;
+  transform: translateY(4px);
 }
 
 @keyframes fadein {
@@ -1054,5 +1094,5 @@ a {
 }
 
 ::selection {
-  background: var(--green1);
+  background: var(--selectionGreen);
 }

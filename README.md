@@ -64,7 +64,6 @@
   - moved files into "resources" and "src folder"
   - changed ipcRenderer system to reduce parameters
   - clicking enter inside of item title, sublist title, and list title will trigger blur
-  - settings is in two columns instead of rows
   - changed green palette
   - changed gray palette
   - new item at bottom button is smaller and circular
@@ -94,3 +93,9 @@
 - minimize to tray changed to just close the app, tray is still there
 - icons in side menu to show user what list type it is
 - hides the list type when it's locked
+- added alerts
+  - 5 states: success, error, info, normal, warning
+- small popups at the top of the screen, still need to properly center them
+- removed the home page
+- last edit is now saved
+- when you make a new list it will open it

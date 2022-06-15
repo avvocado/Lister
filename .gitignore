@@ -1,1 +1,4 @@
 node_modules/
+assets/.DS_Store
+assets/icons/.DS_Store
+.DS_Store

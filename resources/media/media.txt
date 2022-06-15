@@ -1,2 +1,1 @@
-
-this is a folder used to store all files item media uses
+this is a folder used to store all media files the user uploads

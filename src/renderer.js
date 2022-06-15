@@ -12,23 +12,6 @@ document.getElementById("password").addEventListener("blur", function () {
   }
 });
 
-document.getElementById("homeBtn").addEventListener("click", function () {
-  for (let p = 0; p < document.getElementsByClassName('sideListBtn').length; p++) {
-    document.getElementsByClassName('sideListBtn')[p].classList.remove('active')
-  }
-  this.classList.add('active')
-  for (let k = 0; k < document.getElementsByClassName('listDiv').length; k++) {
-    document.getElementsByClassName('listDiv')[k].style.display = 'none'
-
-    document.getElementById('settings').style.display = 'none'
-  }
-
-  document.getElementById('homePageDiv').style.animation = 'fadein 500ms'
-  document.getElementById('homePageDiv').style.display = null
-
-  selectedList = -2
-});
-
 document.getElementById("password").addEventListener("keydown", function (e) {
   if (e.code == 'Enter') {
     this.blur()
@@ -41,6 +24,7 @@ document.getElementById("minimizeBtn").addEventListener("click", function () {
 
 document.getElementById("newListBtn").addEventListener("click", function () {
   let type = document.getElementById('listType').value
+  showAlert('Created New List', + 2000, "success")
   newList(type)
 });
 
@@ -67,7 +51,7 @@ document.getElementById("settingsBtn").addEventListener("click", function () {
   for (let k = 0; k < document.getElementsByClassName('listDiv').length; k++) {
     document.getElementsByClassName('listDiv')[k].style.display = 'none'
   }
-  document.getElementById('homePageDiv').style.display = 'none'
+  document.getElementById('noListSelected').style.display = 'none'
 
   document.getElementById('settings').style.animation = 'fadein 500ms'
   document.getElementById('settings').style.display = null
@@ -84,6 +68,7 @@ const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 var currImgIndex = [0, 0, 0]
 var list
 var settings
+var newListIndex
 
 function init() {
 
@@ -93,11 +78,6 @@ function init() {
   window.api.send('requestSettings', '');
   window.api.send('requestDirname', '');
   // wait for main to send back the json
-  let d = new Date()
-
-
-  document.getElementById('date').innerHTML = week[d.getDay()] + ", " + months[d.getMonth()] + " " + d.getDate()
-
 }
 
 // receiving info from main process
@@ -145,33 +125,12 @@ function generateList() {
 
   document.getElementById('listBtns').innerHTML = ''
 
-
-  if (d.getHours() >= 5 && d.getHours() < 12) {
-    // 5am-midday
-    document.getElementById('hello').innerHTML = 'Good Morning'
-  }
-  if (d.getHours() >= 12 && d.getHours() < 17) {
-    // midday-5pm
-    document.getElementById('hello').innerHTML = 'Good Afternoon'
-  }
-  if (d.getHours() >= 17 && d.getHours() < 22) {
-    // 5pm-10pm
-    document.getElementById('hello').innerHTML = 'Good Evening'
-  }
-  if (d.getHours() >= 22 && d.getHours() < 5) {
-    // 10pm-5am
-    document.getElementById('hello').innerHTML = 'Good Night'
-  }
-
-
   let lists = document.getElementById('lists')
   lists.innerHTML = ''
-  document.getElementById('homepageBtns').innerHTML = ''
-
-  document.getElementById('listsTitle').innerHTML = "LISTS (" + Object.keys(list).length + ")"
 
   for (let l = 0; l < Object.keys(list).length; l++) {
-  let tdate = new Date(list[l]['creationDate'])
+    let tdate = new Date(list[l]['creationDate'])
+    let edate = new Date(list[l]['lastEdited'])
 
     // for each list
     let lockedDiv
@@ -203,7 +162,7 @@ function generateList() {
         } else {
           // incorrect password
           pswd.select()
-          showInfo('Incorrect Password', 1000)
+          showAlert('Incorrect Password', 2000, 'error')
         }
       }
       pswd.onkeydown = function (e) {
@@ -234,40 +193,14 @@ function generateList() {
     }
     listTitle.onblur = function () {
       if (this.value != ltTemp) {
+        d = new Date()
+        list[l]['lastEdited'] = d.getTime()
         list[l]['name'] = this.value
         writeJSON(list)
         generateList()
       }
     }
     listTitle.value = list[l]['name']
-
-    let homepageBtnDiv = create('div', 'homepageBtnDiv')
-    let homepageBtn = create('button', 'homepageBtn')
-    let icon = create('img', 'listTypeIcon')
-    icon.src = '../assets/' + list[l]['type'] + "List.svg"
-    let p = create('p', '')
-    p.innerHTML = list[l]['name']
-    homepageBtn.innerHTML = 'Open List'
-    homepageBtn.onclick = function () {
-      sideListBtn.click()
-    }
-    let listCreationDate1 = create('p', 'lcd1')
-    listCreationDate1.title = (timeAgo(d.getTime(), list[l]['creationDate']))
-    let mod1 = ''
-    if (tdate.getHours() > 11) {
-      mod1 = 'PM'
-    } else {
-      mod1 = 'AM'
-    }
-    listCreationDate1.innerHTML = months[tdate.getMonth()] + ' ' + tdate.getDate() + ", " + (tdate.getHours() % 12 || 12) + ":" + tdate.getMinutes().toString().padStart(2, '0') + " " + mod1
-
-
-    homepageBtnDiv.append(icon)
-
-    homepageBtnDiv.append(p)
-    homepageBtnDiv.append(homepageBtn)
-    homepageBtnDiv.append(listCreationDate1)
-    document.getElementById('homepageBtns').append(homepageBtnDiv)
 
     sideListBtn = create('button', 'sideListBtn ')
     if (list[l]['locked'] == true) {
@@ -286,10 +219,8 @@ function generateList() {
       for (let k = 0; k < document.getElementsByClassName('listDiv').length; k++) {
         document.getElementsByClassName('listDiv')[k].style.display = 'none'
       }
-      document.getElementById('homePageDiv').style.display = 'none'
       document.getElementById('settings').style.display = 'none'
-
-      document.getElementById('settings').style.display = 'none'
+      document.getElementById('noListSelected').style.display = 'none'
 
       if (selectedList != l) {
         listDiv.style.animation = 'fadein 500ms'
@@ -305,8 +236,9 @@ function generateList() {
           listContent.style.display = 'none'
           pswd.focus()
         }
-        // you're going to the same list, bypass the lock
-        if (l == selectedList && lockedDiv.style.display == '') {
+        // you're going to the same list & its unlocked, bypass the lock
+        if (l == selectedList && lockedDiv.style.display == 'none') {
+          console.log('bypassed lock')
           lockedDiv.style.display = 'none'
           listContent.style.display = null
           sideListBtn.innerHTML = list[l]['name']
@@ -315,20 +247,26 @@ function generateList() {
         }
 
       }
-      if (selectedList >= 0 && list[selectedList]['locked'] == true && selectedList != l) {
-        // leaving a locked list, just change the title of sidelist btn to locked list
-        document.querySelectorAll('.sideListBtn')[selectedList + 2].innerHTML = 'Locked List'
-        document.querySelectorAll('.sideListBtn')[selectedList + 2].classList.remove('unlocked')
-        document.querySelectorAll('.sideListBtn')[selectedList + 2].classList.add('locked')
-        document.querySelectorAll('.listDiv')[selectedList].children[0].children[1].value = ''
-        //                         .listDiv                .lockedDiv  .pswdInput      
+      console.log(selectedList + ", " + l)
+      try {
+        if (selectedList >= 0 && list[selectedList]['locked'] == true && selectedList != l) {
+          // leaving a locked list, just change the title of sidelist btn to locked list
+          document.querySelectorAll('.sideListBtn')[selectedList + 1].innerHTML = 'Locked List'
+          document.querySelectorAll('.sideListBtn')[selectedList + 1].classList.remove('unlocked')
+          document.querySelectorAll('.sideListBtn')[selectedList + 1].classList.add('locked')
+          document.querySelectorAll('.listDiv')[selectedList].children[0].children[1].value = ''
+          //                         .listDiv                .lockedDiv  .pswdInput
+        }
+      } catch {
+        console.log('deleted a list')
       }
+
       selectedList = l
     }
 
-    // list settings, creation date + buttons
+    // list settings, creation date, last edit + buttons
     let listSettingsDiv = create('div', 'listSettingsDiv')
-    let listCreationDate = create('p', 'listCreationDate')
+    let listCreationDate = create('p', 'listDate')
     listCreationDate.title = (timeAgo(d.getTime(), list[l]['creationDate']))
     let mod = ''
     if (tdate.getHours() > 11) {
@@ -336,20 +274,33 @@ function generateList() {
     } else {
       mod = 'AM'
     }
-    listCreationDate.innerHTML = months[tdate.getMonth()] + ' ' + tdate.getDate() + ", " + (tdate.getHours() % 12 || 12) + ":" + tdate.getMinutes().toString().padStart(2, '0') + " " + mod
+    listCreationDate.innerHTML = "Created: " + months[tdate.getMonth()] + ' ' + tdate.getDate() + ", " + (tdate.getHours() % 12 || 12) + ":" + tdate.getMinutes().toString().padStart(2, '0') + " " + mod
+    let lastEdited = create('p', 'listDate')
+    let mod2 = ''
+    if (edate.getHours() > 11) {
+      mod2 = 'PM'
+    } else {
+      mod2 = 'AM'
+    }
 
+    if (list[l]['lastEdited'] != 0) {
+      lastEdited.title = months[edate.getMonth()] + ' ' + edate.getDate() + ", " + (edate.getHours() % 12 || 12) + ":" + edate.getMinutes().toString().padStart(2, '0') + " " + mod2
+      lastEdited.innerHTML = "Edited: " + (timeAgo(d.getTime(), list[l]['lastEdited']))
+      lastEdited.style.marginRight = '4px'
+      listSettingsDiv.append(lastEdited)
+    }
 
     let deleteListBtnDiv = create('div', '')
-    let deleteListBtnTooltip = createTooltip('Delete List', 34, false)
+    let deleteListBtnTooltip = createTooltip('Delete List', 38, false)
 
     let deleteListBtn = create('button', 'deleteListBtn')
     deleteListBtn.onclick = function () {
+      showAlert('Deleted "' + list[l]['name'] + '"', + 2000, "success")
       removeList(l)
     }
     deleteListBtn = handleTooltip(deleteListBtn, deleteListBtnTooltip)
     deleteListBtnDiv.append(deleteListBtnTooltip)
     deleteListBtnDiv.append(deleteListBtn)
-
 
     listSettingsDiv.append(listCreationDate)
     listSettingsDiv.append(deleteListBtnDiv)
@@ -357,7 +308,7 @@ function generateList() {
     if (list[l]['locked'] == false) {
       // not locked yet
       let lockListBtnDiv = create('div', '')
-      let lockListBtnTooltip = createTooltip('Lock List', 10, false)
+      let lockListBtnTooltip = createTooltip('Lock List', 16, false)
 
       let lockListBtn = create('button', 'lockListBtn')
       lockListBtn.onclick = function () {
@@ -387,7 +338,6 @@ function generateList() {
 
     }
 
-
     listContent.append(listSettingsDiv)
 
     document.getElementById('listBtns').append(sideListBtn)
@@ -408,9 +358,12 @@ function generateList() {
         let sublistTitleDiv = create('div', 'sublistTitleDiv')
         let newItemToTopBtn = create('button', 'newItemToTopBtn')
         newItemToTopBtn.onclick = function () {
+          d = new Date()
+          list[l]['lastEdited'] = d.getTime()
           newItemToTop(l, i)
         }
         let sublistTitleP = document.createElement('input')
+
         sublistTitleP.value = list[l][i]['name']
         sublistTitleP.type = 'text'
         sublistTitleP.spellcheck = false
@@ -426,6 +379,8 @@ function generateList() {
         }
         sublistTitleP.onblur = function () {
           if (this.value != stpTemp) {
+            d = new Date()
+            list[l]['lastEdited'] = d.getTime()
             list[l][i]['name'] = this.value
             writeJSON(list)
           }
@@ -440,6 +395,8 @@ function generateList() {
         let newItemBtn = create('button', 'newItemBtn')
         newItemBtn.innerHTML = '+'
         newItemBtn.onclick = function () {
+          d = new Date()
+          list[l]['lastEdited'] = d.getTime()
           newItemToEnd(l, i)
         }
         newItemBtnContainer.append(newItemBtn)
@@ -523,6 +480,8 @@ function generateList() {
           }
           itemTitle.onblur = function () {
             if (this.innerHTML != itTemp) {
+              d = new Date()
+              list[l]['lastEdited'] = d.getTime()
               list[l][i][e]['title'] = this.innerHTML
               writeJSON(list)
             }
@@ -590,9 +549,6 @@ function generateList() {
               }
             }
 
-
-
-
             // delete media button
             delMediaBtnDiv = document.createElement('div')
             let delMediaBtnTooltip = createTooltip('Delete All Media', 36, true)
@@ -606,7 +562,6 @@ function generateList() {
             }
             delMediaBtnDiv.append(delMediaBtnTooltip)
             delMediaBtnDiv.append(delMediaBtn)
-
           }
 
           // ITEM DESCRIPTION
@@ -675,6 +630,8 @@ function generateList() {
           }
           itemDescription.onblur = function () {
             if (this.innerHTML != idTemp) {
+              d = new Date()
+              list[l]['lastEdited'] = d.getTime()
               list[l][i][e]['description'] = this.innerHTML
               writeJSON(list)
               if (this.innerHTML.replaceAll(" ", '').replaceAll("\\n", '').replaceAll('<br>', '') == '') {
@@ -682,14 +639,12 @@ function generateList() {
                 addDescBtnDiv.style.display = 'inline-block'
               }
             }
-
           }
 
           if (itemDescription.innerHTML.replaceAll(" ", '').replaceAll("\n", '').replaceAll('<br>', '') == '') {
             itemDescription.style.display = 'none'
             addDescBtnDiv.style.display = 'inline-block'
           }
-
           itemDiv.append(itemDescription)
 
           // LINK
@@ -710,7 +665,6 @@ function generateList() {
             linkDiv.append(openLinkBtn)
             itemDiv.append(linkDiv)
           }
-
 
           // CREATION DATE
           let cdate = new Date(list[l][i][e]['creationDate'])
@@ -753,6 +707,8 @@ function generateList() {
           addLinkInput.value = list[l][i][e]['link']
           addLinkInput.style.display = 'none'
           addLinkInput.onblur = function () {
+            d = new Date()
+            list[l]['lastEdited'] = d.getTime()
             this.value = (this.value).replaceAll(' ', '')
             list[l][i][e]['link'] = this.value.replaceAll('https://', '')
             writeJSON(list)
@@ -775,7 +731,6 @@ function generateList() {
           let mediaBtnTooltip
           mediaBtnTooltip = createTooltip('Upload Media', 28, true)
 
-
           mediaBtn.onclick = function () {
             window.api.send("uploadMedia", '');
             // wait for main to send back the media name
@@ -793,20 +748,19 @@ function generateList() {
           delItemBtnDiv.style.marginRight = '8px'
           let delItemBtnTooltip
           if (i == 2) {
-            delItemBtnTooltip = createTooltip('Delete Item', 42, true)
+            delItemBtnTooltip = createTooltip('Delete Item', 40, true)
             delItemBtnTooltip.style.whiteSpace = 'nowrap'
           } else {
             delItemBtnTooltip = createTooltip('Delete Item', 28, true)
           }
           delItemBtn.onclick = function () {
+            d = new Date()
+            list[l]['lastEdited'] = d.getTime()
             removeItem(l, i, e)
           }
           delItemBtn = handleTooltip(delItemBtn, delItemBtnTooltip)
-
           delItemBtnDiv.append(delItemBtnTooltip)
           delItemBtnDiv.append(delItemBtn)
-
-
           // add buttons to item settings
           itemSettingsDiv.append(mediaBtnDiv)
 
@@ -815,7 +769,6 @@ function generateList() {
             itemSettingsDiv.append(delMediaBtnDiv)
           }
           itemSettingsDiv.append(addLinkBtnDiv)
-
           itemSettingsDiv.append(addDescBtnDiv)
           itemSettingsDiv.append(setPriorityBtnDiv)
           itemSettingsDiv.append(duplicateItemBtnDiv)
@@ -824,7 +777,6 @@ function generateList() {
           itemSettingsDiv.append(addLinkInput)
           // creation date
           itemSettingsDiv.append(creationDateP)
-
           itemDiv.append(itemSettingsDiv)
           sublistContentDiv.append(itemDiv)
 
@@ -850,14 +802,15 @@ function generateList() {
           }
           textBlockP.onblur = function () {
             if (this.innerHTML != temp) {
+              d = new Date()
+              list[l]['lastEdited'] = d.getTime()
+
               list[l][a]['data'] = this.innerHTML
               writeJSON(list)
             }
-
           }
           textBlockP.innerHTML = list[l][a]['data']
           textBlockP.contentEditable = true
-
           blockDiv.append(textBlockP)
 
         } else if (list[l][a]['type'] == 'code') {
@@ -877,6 +830,8 @@ function generateList() {
           }
           codeBlockP.onblur = function () {
             if (this.innerHTML != temp) {
+              d = new Date()
+              list[l]['lastEdited'] = d.getTime()
               list[l][a]['data'] = this.innerHTML
               writeJSON(list)
             }
@@ -892,7 +847,6 @@ function generateList() {
           let deleteBlockBtnTooltip = createTooltip('Delete Block', 54, true)
           deleteBlockBtn = handleTooltip(deleteBlockBtn, deleteBlockBtnTooltip)
           deleteBlockBtnDiv.append(deleteBlockBtnTooltip)
-
           deleteBlockBtnDiv.append(deleteBlockBtn)
 
           let copyBtn = create('button', 'copyBtn')
@@ -964,10 +918,22 @@ function generateList() {
 
   }
 
-  try {
-    document.getElementsByClassName('sideListBtn')[selectedList + 2].click()
-  } catch {
+  if (selectedList == -2) {
+    // no list selected page
+    // will show when you delete a list and when you first open the app
+    document.getElementById('settings').style.display = 'none'
+    document.getElementById('noListSelected').style.display = null
+    for (let p = 0; p < document.getElementsByClassName('sideListBtn').length; p++) {
+      document.getElementsByClassName('sideListBtn')[p].classList.remove('active')
+    }
+    for (let k = 0; k < document.getElementsByClassName('listDiv').length; k++) {
+      document.getElementsByClassName('listDiv')[k].style.display = 'none'
+    }
+  document.getElementById('app').style.display = 'block'
+  } else {
+    document.getElementById('noListSelected').style.display = 'none'
     document.getElementsByClassName('sideListBtn')[selectedList + 1].click()
+
   }
 }
 
