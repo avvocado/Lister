@@ -53,7 +53,7 @@ const createWindow = () => {
     resizable: true,
     frame: false,
     icon: path.join(__dirname, '../', "/assets", '/appIcons', "icon.png"),
-    backgroundColor: '#121319',
+    backgroundColor: '#12131900',
     darkTheme: true,
   })
 
@@ -61,11 +61,7 @@ const createWindow = () => {
   // and load the index.html of the app.
   win.loadFile(__dirname + '/index.html')
 
-  // open devtools
-
-  if (process.platform === 'win32') {
-    app.setAppUserModelId(app.name);
-  }
+  app.setAppUserModelId(app.name);
 
   win.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url);
@@ -107,11 +103,22 @@ if (!gotTheLock) {
 }
 
 ipcMain.on("close", (evt, args) => {
-
-  //win.hide()
   app.quit();
 
+  //win.hide()
   // new Notification({ title: 'Lister Minimized to Tray', body: '',}).show()
+})
+
+ipcMain.on("maximize", (evt, args) => {
+  if (args == true) {
+    BrowserWindow.getFocusedWindow().maximize()
+  } else {
+    BrowserWindow.getFocusedWindow().unmaximize()
+  }
+})
+
+ipcMain.on("fullscreen", (evt, args) => {
+  BrowserWindow.fullscreen = args // ! doesn't work ???
 })
 
 ipcMain.on("minimize", (evt, args) => {

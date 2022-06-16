@@ -16,7 +16,7 @@ function handleTooltip(item, tool) {
 
 // creates a new sublist
 function newSublist(l) {
-  list[l]['children'].push({
+  list['children'][l]['children'].push({
     "name": "SUBLIST",
     "children": []
   })
@@ -24,25 +24,20 @@ function newSublist(l) {
 
 // deletes a block in text list
 function deleteBlock(l, a) {
-  list[l]['children'].splice(a, 1);
+  list['children'][l]['children'].splice(a, 1);
   writeJSON(list)
   generateList()
 }
 
 // creates a new item at the top of a block list
 function newItemToTop(l, i) {
-  let lastElem = list[l]['children'][i]['children'].length - 1
-  for (let j = lastElem; j >= 0; j--) {
-    // move all items down
-    list[l]['children'][i]['children'][j + 1] = list[l]['children'][i]['children'][j]
-  }
   // add new item in index 0
   let d = new Date()
-  list[l]['children'][i]['children'][0] = ({
+  list['children'][l]['children'][i]['children'].unshift({
     title: "",
     media: [],
     description: "",
-    status: 1,
+    color: 3,
     starred: false,
     link: "",
     creationDate: d.getTime(),
@@ -54,31 +49,40 @@ function newItemToTop(l, i) {
 
 // delete item in block list
 function removeItem(l, i, e) {
-  list[l]['children'][i]['children'].splice(e, 1);
+  list['children'][l]['children'][i]['children'].splice(e, 1);
   writeJSON(list)
   generateList()
 }
-
 
 // delete a list
 function removeList(l) {
-  let lToEnd = (Object.keys(list).length - 1) - l
-  if (lToEnd == 0) {
-    delete (list[l])
-  } else {
-    for (let j = 0; j < lToEnd; j++) {
-      let index = j + 1 + l
-      // index in the sublist of the items that need to be moved
-      list[index - 1] = list[index]
-      delete (list[index])
-    }
-  }
 
-  selectedList = -2
+  list['children'].splice(l, 1);
+
+  if (list['children'].length == 0) {
+    selectedList = -2
+    // if that was the last list
+  } else {
+    // send user to the next list
+    selectedList = list['children'].length - 1
+  }
   writeJSON(list)
   generateList()
 }
 
+function listEdited(l) {
+  d = new Date()
+  list['children'][l]['lastEdited'] = d.getTime()
+
+  let temp = list['children'][selectedList]
+
+  list['children'].sort((a, b) => Number(b.lastEdited) - Number(a.lastEdited));
+
+  selectedList = list['children'].indexOf(temp)
+
+  generateList()
+  document.querySelectorAll('.sideListBtn')[1].click()
+}
 
 // helper to create elements
 function create(type, className) {
@@ -107,9 +111,8 @@ function createTooltip(text, xoffset, above) {
 // params: list type
 function newList(type) {
   let d = new Date()
-  let newIndex = parseInt(Object.keys(list).length)
   if (type == 'block') {
-    list[newIndex] = {
+    list['children'].unshift({
       "children": [
         { "name": "SUBLIST", "children": [] },
         { "name": "SUBLIST", "children": [] },
@@ -119,17 +122,17 @@ function newList(type) {
       "type": "block",
       "creationDate": d.getTime(),
       "locked": false,
-      "lastEdited": 0
-    }
+      "lastEdited": d.getTime()
+    })
   } else if (type == 'text') {
-    list[newIndex] = {
+    list['children'].unshift({
       "children": [{ "data": "", "type": "text" }],
       "name": "New Text List",
       "type": "text",
       "creationDate": d.getTime(),
       "locked": false,
-      "lastEdited": 0
-    }
+      "lastEdited": d.getTime()
+    })
   }
   selectedList = Object.keys(list).length - 1
   console.log(selectedList)
@@ -141,7 +144,7 @@ function newList(type) {
 // params: list index
 function getListChildren(l) {
   // creationdate, type, locked, name, last edit date
-  return (Object.keys(list[l]).length - 5)
+  return (Object.keys(list['children'][l]).length - 5)
 }
 
 
@@ -188,12 +191,12 @@ function getAmPm(time) {
 
 // sends item to the top of that sublist
 function sendItemToTop(l, i, e) {
-  list[l]['children'][i]['children'].unshift(list[l]['children'][i]['children'].splice(e, 1)[0]);
+  list['children'][l]['children'][i]['children'].unshift(list['children'][l]['children'][i]['children'].splice(e, 1)[0]);
 }
 
 // deletes a sublist
 function deleteSublist(l, a) {
-  list[l]['children'].splice(a, 1);
+  list['children'][l]['children'].splice(a, 1);
   writeJSON(list)
   generateList()
 }

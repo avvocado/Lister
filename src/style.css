@@ -1,18 +1,3 @@
-* {
-  margin: 0;
-  padding: 0 0;
-  border: none;
-  font-family: Helvetica;
-}
-
-body {
-  background-color: var(--bg1);
-}
-
-#app {
-  display: none;
-}
-
 :root {
   --bg1: #121319;
   --bg2: #191a21;
@@ -24,20 +9,6 @@ body {
   --yellow: #e2b86a;
   --blue: #578ed1;
   --red: #c6354d;
-}
-
-input {
-  outline: none;
-}
-
-*[contenteditable="true"] {
-  outline: none;
-}
-
-*[contenteditable="true"]:empty:before {
-  content: "...";
-  pointer-events: none;
-  color:#2d303c;
 }
 
 #lists {
@@ -54,11 +25,10 @@ input {
 .listSettingsDiv button {
   transform: translateY(4px);
   margin-left: 4px;
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 24px;
   background-color: var(--bg1);
   border-radius: 3px;
-  background-repeat: no-repeat;
   background-size: 18px 18px;
   background-position: center;
   transition: background-color 100ms;
@@ -120,9 +90,9 @@ input {
 }
 
 .sublistTitleDiv button {
-  width: 20px;
+  width: 24px;
   height: 20px;
-  background-color: var(--bg2);
+  background-color: var(--bg1);
   float: right;
   background-position: center;
   transform: translateY(-4px);
@@ -132,7 +102,6 @@ input {
 }
 
 .newItemToTopBtn {
-  background-repeat: no-repeat;
   background-image: url("../assets/plus.svg");
   background-size: 16px 16px;
   margin-right: 4px;
@@ -140,11 +109,10 @@ input {
 
 .newItemToTopBtn:hover {
   background-image: url("../assets/plus1.svg");
-  background-color: var(--bg3);
+  background-color: var(--bg2);
 }
 
 .delSublistBtn {
-  background-repeat: no-repeat;
   background-image: url("../assets/trashColor.svg");
   background-size: 16px 16px;
   margin-left: 4px;
@@ -159,7 +127,7 @@ input {
 }
 .collapseSublistBtn.up:hover {
   background-image: url("../assets/arrowUp1.svg");
-  background-color: var(--bg3);
+  background-color: var(--bg2);
 }
 
 .collapseSublistBtn.down {
@@ -167,7 +135,7 @@ input {
 }
 .collapseSublistBtn.down:hover {
   background-image: url("../assets/arrowDown1.svg");
-  background-color: var(--bg3);
+  background-color: var(--bg2);
 }
 .item {
   padding: 10px 10px 2px 8px;
@@ -179,7 +147,7 @@ input {
 }
 
 .item .title {
-  color:#4f5363;
+  color: #4f5363;
   font-size: 16px;
   display: inline-block;
   background-color: var(--bg2);
@@ -193,7 +161,6 @@ input {
   height: 24px;
   background-color: var(--bg2);
   float: right;
-  background-repeat: no-repeat;
   background-size: 20px 20px;
   background-position: center;
   transform: translateY(-7px) translateX(6px);
@@ -213,7 +180,6 @@ input {
 }
 
 .itemSettingsDiv button {
-  background-repeat: no-repeat;
   background-size: 20px 20px;
   background-color: var(--bg2);
   background-position: center;
@@ -308,32 +274,47 @@ input {
 .creationDateText {
   color: #2d303c;
   font-size: 12px;
-  margin: 0 0 4px 8px;
+  display: inline-block;
   user-select: none;
+  margin-left: 8px;
+  transform: translateY(-8px);
 }
 
-.statusBtn {
-  height: 16px;
-  width: 16px;
-  transform: translateY(-2px);
-  border-radius: 50%;
-  margin-right: 2px;
-  vertical-align: top;
+.colorBtn {
+  height: 16px !important;
+  width: 16px !important;
+  transform: translateY(-6px);
+  border-radius: 20px !important;
   transition: 100ms;
+  border: 2px solid #00000000;
 }
 
-.statusBtn.s0 {
+.colorBtn.c0 {
+  border-color: var(--blue);
+}
+.colorBtn.c1 {
+  border-color: var(--red);
+}
+.colorBtn.c2 {
+  border-color: var(--yellow);
+}
+.colorBtn.c3 {
+  border-color: var(--green);
+}
+.colorBtn.c0:hover,
+.colorBtn.c0.active {
   background-color: var(--blue);
 }
-
-.statusBtn.s1 {
+.colorBtn.c1:hover,
+.colorBtn.c1.active {
   background-color: var(--red);
 }
-
-.statusBtn.s2 {
+.colorBtn.c2:hover,
+.colorBtn.c2.active {
   background-color: var(--yellow);
 }
-.statusBtn.s3 {
+.colorBtn.c3:hover,
+.colorBtn.c3.active {
   background-color: var(--green);
 }
 
@@ -342,8 +323,7 @@ input {
 }
 
 .item.s1 {
-  /* ! should be red normally */
-  border-left: 6px solid var(--green);
+  border-left: 6px solid var(--red);
 }
 
 .item.s2 {
@@ -360,9 +340,8 @@ input {
   width: calc((100vw - 160px - 71px));
 }
 .item.s1.starred {
-  /* ! should be red normally */
-  border: 1px solid var(--green);
-  border-left: 6px solid var(--green);
+  border: 1px solid var(--red);
+  border-left: 6px solid var(--red);
   width: calc((100vw - 160px - 71px));
 }
 .item.s2.starred {
@@ -421,6 +400,43 @@ body::-webkit-scrollbar {
   background-image: url("../assets/minimize1.svg");
 }
 
+#fullscreenBtn {
+  background-size: 14px 14px;
+  float: right;
+  background-image: url("../assets/maximize.svg");
+}
+#fullscreenBtn.unfullscreen {
+  background-image: url("../assets/unmaximize.svg");
+}
+
+#fullscreenBtn:hover {
+  background-color: var(--bg4);
+  background-image: url("../assets/maximize1.svg");
+}
+#fullscreenBtn.unfullscreen:hover {
+  background-color: var(--bg4);
+  background-image: url("../assets/unmaximize1.svg");
+}
+
+
+#maximizeBtn {
+  background-size: 14px 14px;
+  float: right;
+  background-image: url("../assets/maximize.svg");
+}
+#maximizeBtn.unmaximize {
+  background-image: url("../assets/unmaximize.svg");
+}
+
+#maximizeBtn:hover {
+  background-color: var(--bg4);
+  background-image: url("../assets/maximize1.svg");
+}
+#maximizeBtn.unmaximize:hover {
+  background-color: var(--bg4);
+  background-image: url("../assets/unmaximize1.svg");
+}
+
 .tooltip {
   position: absolute;
   font-size: 12px;
@@ -451,19 +467,6 @@ body::-webkit-scrollbar {
 
 .duplicateItemBtn:hover {
   background-image: url("../assets/duplicateColor.svg");
-}
-
-#refreshBtn {
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  float: left;
-  background-position: center;
-  background-image: url("../assets/refresh.svg");
-}
-
-#refreshBtn:hover {
-  background-color: var(--bg4);
-  background-image: url("../assets/refresh1.svg");
 }
 
 #settings {
@@ -574,7 +577,6 @@ a {
 }
 
 #openResourcesFolderBtn {
-  background-repeat: no-repeat;
   border-radius: 3px;
   float: right;
   width: 26px;
@@ -590,82 +592,6 @@ a {
 #openResourcesFolderBtn:hover {
   background-color: var(--bg4);
   background-image: url("../assets/folder1.svg");
-}
-
-#closeSettings {
-  background-image: url("../assets/close.svg");
-  width: 20px;
-  height: 20px;
-  background-size: 100%;
-  float: right;
-  background-color: var(--bg2);
-}
-
-#closeSettings:hover {
-  background-image: url("../assets/close1.svg");
-}
-
-#homePageDiv {
-  margin: 16px;
-  cursor: block;
-}
-
-#homePageDiv h1 {
-  user-select: none;
-  color: #535663;
-}
-
-#homePageDiv h3 {
-  user-select: none;
-  color: #404351;
-}
-
-#homePageDiv p {
-  margin-top: 12px;
-  color: #404351;
-}
-#homePageDiv #homepageBtns .homepageBtnDiv {
-  background-color: var(--bg2);
-  padding: 8px 8px;
-  width: 209px;
-  display: inline-block;
-  margin-left: 12px;
-  margin-bottom: 8px;
-  border-radius: 4px;
-}
-#homePageDiv #homepageBtns .homepageBtn {
-  background-color: var(--green);
-  padding: 4px 4px;
-  color: var(--bg2);
-  float: right;
-  margin-top: 24px;
-  border-radius: 3px;
-}
-.listTypeIcon {
-  width: 18px;
-  float: right;
-  height: 18px;
-}
-
-.lockIcon {
-  width: 18px;
-  float: right;
-  height: 18px;
-}
-
-#homePageDiv #homepageBtns .homepageBtnDiv p {
-  margin: 0;
-  font-size: 16px;
-  color: #4f5363;
-}
-
-#homePageDiv #homepageBtns .homepageBtnDiv .lcd1 {
-  color: #404351;
-  font-size: 12px;
-}
-
-#homePageDiv #homepageBtns {
-  margin-left: -12px;
 }
 
 .mainListContent.text {
@@ -691,7 +617,6 @@ a {
 }
 
 .mainListContent.text button {
-  background-repeat: no-repeat;
   background-size: 20px 20px;
   background-color: var(--bg1);
   background-position: center;
@@ -774,16 +699,17 @@ a {
   margin-top: 2px;
   transition: 100ms;
   color: #6a6d7a;
-  width: 100%;
-  padding: 12px 8px;
+  width: calc(100% - 16px);
+  padding: 8px 8px;
   user-select: none;
-  background-repeat: no-repeat;
   background-size: 18px 18px;
   white-space: nowrap;
   text-overflow: ellipsis;
   border-radius: 3px;
   background-position: 138px 10px;
+  font-size: 14px;
 }
+
 /* block */
 .sideListBtn.block {
   background-image: url("../assets/listIcons/blockList.svg");
@@ -821,7 +747,6 @@ a {
 
 .sideListBtn.active {
   background-color: var(--green);
-  color: #efefef;
 }
 .sideListBtn.active:hover {
   background-color: var(--green);
@@ -829,6 +754,19 @@ a {
 
 .sideListBtn:hover {
   background-color: var(--bg3);
+}
+
+.sideListBtn.active .title {
+  color: #dfdfdf;
+}
+
+.sideListBtn.active .date {
+  color: #d0d0d0;
+}
+
+.sideListBtn .date {
+  font-size: 11px;
+  color: #404351;
 }
 
 .listDate {
@@ -867,15 +805,15 @@ a {
 
 #noListSelected {
   text-align: center;
-  margin-top: 128px;
+  margin-top: 30vh;
   user-select: none;
-  color: var(--bg4);
+  color: var(--bg3);
   font-size: 32px;
 }
 
 .lockedDiv {
   text-align: center;
-  margin-top: 128px;
+  margin-top: 30vh;
 }
 
 .pswdInput::placeholder {
@@ -911,16 +849,6 @@ a {
   padding: 4px 4px;
 }
 
-#side p {
-  font-weight: bold;
-  color: #404351;
-  margin-bottom: 2px;
-  user-select: none;
-  margin-top: 12px;
-  margin-left: 8px;
-  font-size: 12px;
-}
-
 #homeBtn {
   font-size: 16px;
   padding: 4px 8px;
@@ -929,11 +857,13 @@ a {
 #settingsBtn {
   font-size: 16px;
   padding: 6px 8px;
+  width: 100%;
   background-size: 20px 20px;
   background-position: 138px 5px;
   background-image: url("../assets/settings.svg");
 }
 #settingsBtn.active {
+  color: #dfdfdf;
   background-image: url("../assets/settings2.svg");
 }
 
@@ -966,7 +896,7 @@ a {
 #info {
   position: absolute;
   text-align: center;
-  margin-top: 40px;
+  margin-top: 32px;
   margin-left: calc((100vw / 2) - 8px);
   z-index: 99999;
 }
@@ -1007,6 +937,7 @@ a {
   transform: translateY(3px);
 }
 
+/* animations + global/unimportant elements & properties */
 @keyframes fadein {
   0% {
     opacity: 0%;
@@ -1030,4 +961,33 @@ a {
 
 ::selection {
   background: var(--selectionGreen);
+}
+* {
+  margin: 0;
+  padding: 0 0;
+  border: none;
+  font-family: Helvetica;
+  background-repeat: no-repeat;
+}
+
+body {
+  background-color: var(--bg1);
+}
+
+#app {
+  display: none;
+}
+
+input {
+  outline: none;
+}
+
+*[contenteditable="true"] {
+  outline: none;
+}
+
+*[contenteditable="true"]:empty:before {
+  content: "...";
+  pointer-events: none;
+  color: #2d303c;
 }
