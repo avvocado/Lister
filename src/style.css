@@ -59,7 +59,7 @@ input {
   transition: background-color 100ms;
 }
 .listSettingsDiv button:hover {
-  background-color: var(--bg2);
+  background-color: var(--bg3);
 }
 .listSettingsDiv div {
   float: right;
@@ -116,6 +116,7 @@ input {
   color: #606472;
   width: 692px;
   padding: 4px 8px;
+  padding-left: 2px;
   background-color: var(--bg1);
   border-radius: 3px;
   margin-top: 4px;
@@ -232,7 +233,7 @@ input {
 }
 
 .itemSettingsDiv button:hover {
-  background-color: var(--bg3);
+  background-color: var(--bg4);
 }
 
 .addDescBtn {
@@ -318,7 +319,7 @@ input {
 }
 
 .creationDateText {
-  color: #404351;
+  color: #2d303c;
   font-size: 12px;
   margin-top: 4px;
   margin-left: 8px;
@@ -476,7 +477,6 @@ body::-webkit-scrollbar {
   display: none;
   padding: 4px 8px;
   border-radius: 4px;
-  box-shadow: 0 0 20px 0.5px var(--bg1);
   z-index: 1000;
 }
 
@@ -731,22 +731,13 @@ a {
 }
 .mainListContent.block .block.text .text {
   overflow-x: auto;
-  color:#6a6d7a;
+  color: #6a6d7a;
   background-color: var(--bg1);
 }
-.mainListContent.block .block.text .text:focus {
-  border-radius: 4px;
-  box-shadow: 0 0 0 2px var(--bg2);
-}
-
 .mainListContent.block .block.code {
   margin-bottom: 8px;
   color: #404351;
   font-size: 14px;
-}
-
-.mainListContent.block .text {
-  margin-bottom: 8px;
 }
 
 .mainListContent.block button {
@@ -788,7 +779,7 @@ a {
 
 .copyBtnDiv {
   position: absolute;
-  transform: translateX(-56px) translateY(4px);
+  transform: translateX(-48px) translateY(3px);
   right: 0;
 }
 
@@ -804,18 +795,16 @@ a {
 }
 
 .delBlockBtn:hover {
-  background-color: var(--bg2) !important;
+  background-color: var(--bg3) !important;
   background-image: url("../assets/trashColor.svg");
 }
 .mainListContent.block .block.code .text {
-  padding: 8px 8px;
+  padding: 8px 12px;
   border-radius: 3px;
   white-space: nowrap;
   background-color: var(--bg2);
   font-family: Consolas !important;
-
   overflow-x: auto;
-  padding-bottom: 6px;
 }
 
 .blockSettingsDiv {

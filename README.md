@@ -95,7 +95,13 @@
 - hides the list type when it's locked
 - added alerts
   - 5 states: success, error, info, normal, warning
-- small popups at the top of the screen, still need to properly center them
+  - small popups at the top of the screen
 - removed the home page
 - last edit is now saved
 - when you make a new list it will open it
+
+### 2022/06/15
+- flipped copy svgs
+- changed item creation date format
+- menu bar is taller
+- side bar goes to the top, menu bar is shifted right
