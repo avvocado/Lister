@@ -71,7 +71,7 @@
   transition: all 100ms, width 0ms;
   display: inline-block;
   color: #606472;
-  width: calc(100vw - 160px - 54px);
+  width: calc(100%);
   padding: 4px 4px;
   padding-left: 0;
   background-color: var(--bg2);
@@ -87,7 +87,7 @@
 
 .sublistTitleDiv {
   margin-bottom: 2px;
-  width: calc(100vw - 160px - 46px);
+  width: calc(100% + 12px);
 }
 
 .sublistTitleDiv input {
@@ -119,6 +119,7 @@
 
 .newItemToTopBtn:hover {
   background-image: url("../assets/plus1.svg");
+  background-color: var(--bg3);
 }
 
 .delSublistBtn {
@@ -153,7 +154,7 @@
   padding: 10px 10px 2px 8px;
   background-color: var(--bg3);
   margin-bottom: 6px;
-  width: calc((100vw - 160px - 70px));
+  width: calc((100% - 12px));
   border-radius: 4px;
   transition: all 100ms, padding 0ms, width 0ms;
 }
@@ -361,28 +362,28 @@
   border-left: 6px solid var(--green);
 }
 
+.item.starred {
+  width: calc((100% - 13px));
+}
+
 .item.s0.starred {
   border: 1px solid var(--blue);
   border-left: 6px solid var(--blue);
-  width: calc((100vw - 160px - 71px));
 }
 
 .item.s1.starred {
   border: 1px solid var(--red);
   border-left: 6px solid var(--red);
-  width: calc((100vw - 160px - 71px));
 }
 
 .item.s2.starred {
   border: 1px solid var(--yellow);
   border-left: 6px solid var(--yellow);
-  width: calc((100vw - 160px - 71px));
 }
 
 .item.s3.starred {
   border: 1px solid var(--green);
   border-left: 6px solid var(--green);
-  width: calc((100vw - 160px - 71px));
 }
 
 body::-webkit-scrollbar {
@@ -392,8 +393,7 @@ body::-webkit-scrollbar {
 
 #menuBar {
   height: 20px;
-  width: calc(100vw - 180px);
-  margin-left: 180px;
+  width: calc(100vw);
   background-color: var(--bg1);
   position: fixed;
   -webkit-app-region: drag;
@@ -404,7 +404,7 @@ body::-webkit-scrollbar {
 #menuBar button {
   -webkit-app-region: no-drag;
   background-color: var(--bg1);
-  width: 20px;
+  width: 24px;
   height: 20px;
   background-position: center;
   transition: 100ms;
@@ -413,12 +413,13 @@ body::-webkit-scrollbar {
 #closeBtn {
   background-size: 20px 20px;
   float: right;
+  background-position: left !important;
   background-image: url("../assets/close.svg");
 }
 
 #closeBtn:hover {
   background-color: var(--red);
-  background-image: url("../assets/close2.svg");
+  background-image: url("../assets/close1.svg");
 }
 
 #minimizeBtn {
@@ -612,7 +613,7 @@ a {
 
 .mainListContent.text .block.code {
   margin-bottom: 8px;
-  color: #404351;
+  color: #535663;
   font-size: 14px;
 }
 
@@ -961,6 +962,24 @@ a {
   margin-right: 4px;
   height: 18px;
   transform: translateY(3px);
+}
+
+#showSideBtn {
+  background-size: 20px 20px;
+  background-position: right !important;
+  background-image: url('../assets/sidebar.svg');
+}
+
+#showSideBtn:hover {
+  background-color: var(--bg5);
+  background-image: url('../assets/sidebar1.svg');
+}
+
+#hideSideBtn {
+  background-image: url('../assets/sidebar.svg');
+  width: 24px;
+  background-color: var(--bg1);
+  height: 24px;
 }
 
 /* animations + global/unimportant elements & properties */

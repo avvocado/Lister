@@ -59,13 +59,7 @@ function removeList(l) {
 
   list['children'].splice(l, 1);
 
-  if (list['children'].length == 0) {
-    selectedList = -2
-    // if that was the last list
-  } else {
-    // send user to the next list
-    selectedList = list['children'].length - 1
-  }
+  selectedList = -2
   writeJSON(list)
   generateList()
 }

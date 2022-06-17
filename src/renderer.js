@@ -4,6 +4,22 @@ document.getElementById("closeBtn").addEventListener("click", function () {
   window.api.send('close', '');
 });
 
+document.getElementById("hideSideBtn").addEventListener("click", function () {
+  document.querySelector('#side').style.display = 'none'
+  document.querySelector('#menuBar').style.width = '100vw'
+  document.querySelector('#menuBar').style.margin = '0'
+  document.querySelector('#content').style.margin = '0'
+  document.querySelector('#showSideBtn').style.display = null
+});
+
+document.getElementById("showSideBtn").addEventListener("click", function () {
+  document.querySelector('#side').style.display = null
+  document.querySelector('#menuBar').style.width = 'calc(100vw - 160px)'
+  document.querySelector('#menuBar').style.marginLeft = '160px'
+  document.querySelector('#content').style.marginLeft = '176px'
+  document.querySelector('#showSideBtn').style.display = 'none'
+});
+
 document.getElementById("password").addEventListener("blur", function () {
   if (settings['password'] != this.value) {
     // if the password actually changed
@@ -112,7 +128,7 @@ window.api.receive("toRenderer", (args, data) => {
   if (args == 'dirname') {
     dirname = data
   }
-  if(args == 'openSettings'){
+  if (args == 'openSettings') {
     document.querySelector('#settingsBtn').click()
   }
   console.log('Received [' + data + '] from main process');
@@ -277,8 +293,8 @@ function generateList() {
         // leaving a locked list, just change the title of sidelist btn to locked list
         document.querySelectorAll('.sideListBtn .title')[selectedList].innerHTML = 'Locked List'
         document.querySelectorAll('.sideListBtn .date')[selectedList].innerHTML = '...'
-        document.querySelectorAll('.sideListBtn')[selectedList+ 1].classList.remove('unlocked')
-        document.querySelectorAll('.sideListBtn')[selectedList+1].classList.add('locked')
+        document.querySelectorAll('.sideListBtn')[selectedList + 1].classList.remove('unlocked')
+        document.querySelectorAll('.sideListBtn')[selectedList + 1].classList.add('locked')
         document.querySelectorAll('.listDiv')[selectedList].children[0].children[1].value = ''
         //                         .listDiv                .lockedDiv  .pswdInput
       }
@@ -467,6 +483,11 @@ function generateList() {
               list['children'][l]['children'][i]['children'][e]['title'] = this.innerHTML
               writeJSON(list)
               listEdited(l)
+            }
+          }
+          itemTitle.onkeydown = function (e) {
+            if (e.code == 'Enter') {
+              this.blur()
             }
           }
           itemDiv.append(itemTitle)
@@ -820,6 +841,11 @@ function generateList() {
               listEdited(l)
             }
           }
+          textBlockP.addEventListener('paste', function (e) {
+            e.preventDefault()
+            var text = e.clipboardData.getData('text/plain')
+            document.execCommand('insertText', false, text)
+          })
           textBlockP.innerHTML = list['children'][l]['children'][a]['data']
           textBlockP.contentEditable = true
           blockDiv.append(textBlockP)
@@ -846,6 +872,11 @@ function generateList() {
               writeJSON(list)
             }
           }
+          codeBlockP.addEventListener('paste', function (e) {
+            e.preventDefault()
+            var text = e.clipboardData.getData('text/plain')
+            document.execCommand('insertText', false, text)
+          })
           codeBlockP.innerHTML = list['children'][l]['children'][a]['data']
           codeBlockP.contentEditable = true
 
