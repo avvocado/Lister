@@ -13,10 +13,6 @@ const path = require("path");
 const fs = require("fs");
 
 let win
-
-app.on('before-quit', function () {
-  isQuiting = true;
-});
 var tray
 const createWindow = () => {
   // create tray
@@ -30,7 +26,6 @@ const createWindow = () => {
     },
     {
       label: 'Quit', click: function () {
-        isQuiting = true;
         app.quit();
       }
     }
@@ -201,6 +196,8 @@ ipcMain.on("openPath", (evt, args) => {
 ipcMain.on("openFile", (evt, args) => {
   shell.openPath(path.join(__dirname, '../', 'resources', '/media/', args));
 })
+
+
 ipcMain.on("trayIcon", (evt, args) => {
   tray.destroy()
   if (args == true) {
@@ -218,8 +215,13 @@ ipcMain.on("trayIcon", (evt, args) => {
       }
     },
     {
+      label: 'temporary label', click: function () {
+        //
+      }
+    },
+    { type: 'separator' },
+    {
       label: 'Quit', click: function () {
-        isQuiting = true;
         app.quit();
       }
     }
@@ -227,8 +229,8 @@ ipcMain.on("trayIcon", (evt, args) => {
   tray.setToolTip('Lister')
 })
 
-
-app.on('window-all-closed', () => {
-  // close app if all windows are closed
-  app.quit()
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
 })
