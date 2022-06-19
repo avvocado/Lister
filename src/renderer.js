@@ -44,6 +44,7 @@ document.getElementById('bwtrayiconCheckbox').addEventListener('input', function
 });
 
 document.getElementById("settingsBtn").addEventListener("click", function () {
+
   for (let p = 0; p < document.getElementsByClassName('sideListBtn').length; p++) {
     document.getElementsByClassName('sideListBtn')[p].classList.remove('active')
   }
@@ -53,7 +54,6 @@ document.getElementById("settingsBtn").addEventListener("click", function () {
   }
   document.getElementById('noListSelected').style.display = 'none'
 
-  document.getElementById('settings').style.animation = 'fadein 500ms'
   document.getElementById('settings').style.display = null
 
   selectedList = -1
@@ -61,14 +61,13 @@ document.getElementById("settingsBtn").addEventListener("click", function () {
 
 // globals
 
-var shiftDown = false
 var selectedList = -2
 const months = ['January', "February", 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 var currImgIndex = [0, 0, 0]
 var list
 var settings
-var newListIndex
+
 
 function init() {
 
@@ -115,6 +114,10 @@ window.api.receive("toRenderer", (args, data) => {
 
 });
 
+function writeJSON(data) {
+  window.api.send('writeJSON', JSON.stringify(data))
+  console.log('wrote list.json file')
+}
 
 function generateList() {
   let d = new Date()
@@ -138,7 +141,7 @@ function generateList() {
     let pswd
     if (list[l]['locked'] == true) {
       let lockedTitle = create('p', 'lockedTitle')
-      lockedTitle.innerHTML = 'This List is Locked'
+      lockedTitle.innerHTML = 'This List is Locked.'
       listDiv.classList.add('locked')
       listContent.style.display = 'none'
       lockedDiv = create('div', 'lockedDiv')
@@ -206,33 +209,90 @@ function generateList() {
       sideListBtn.innerHTML = list[l]['name']
     }
     sideListBtn.classList.add(list[l]['type'])
+    let lastEdited
     sideListBtn.onclick = function () {
-      gotoPage(this, l, listDiv, lockedDiv, listContent, pswd)
+
+      console.log('going to list: ' + l + ', coming from: ' + selectedList)
+
+      this.classList.add('active')
+
+      if (selectedList != -2) {
+        // if you arent coming from nolistselected
+        // because settings is a sidelistbtn, +1
+        if (l != selectedList) {
+          document.getElementsByClassName('sideListBtn')[selectedList + 1].classList.remove('active')
+        }
+
+        // update last edited
+        let d = new Date()
+        lastEdited.innerHTML = "Edited: " + (timeAgo(d.getTime(), list[l]['lastEdited']))
+
+        // settings does not have a list div, no +1
+        for (let h = 0; h < document.querySelectorAll('.listDiv').length; h++) {
+          document.querySelectorAll('.listDiv')[h].style.display = 'none'
+        }
+      }
+
+      // hide settings and nolistselected pages
+      document.getElementById('settings').style.display = 'none'
+      document.getElementById('noListSelected').style.display = 'none'
+
+
+      // show list div
+      document.querySelectorAll('.listDiv')[l].style.display = null
+
+      if (list[l]['locked'] == true) {
+        // if you're entering a locked list, relock it
+        if (selectedList != l) {
+          lockedDiv.style.display = 'block'
+          listContent.style.display = 'none'
+          pswd.focus()
+        }
+        // you're going to the same list & its unlocked, bypass the lock
+        console.log(lockedDiv.style.display)
+        if (l == selectedList && lockedDiv.style.display != 'block') {
+          console.log('bypassed lock')
+          lockedDiv.style.display = 'none'
+          listContent.style.display = null
+          sideListBtn.innerHTML = list[l]['name']
+          sideListBtn.classList.remove('locked')
+          sideListBtn.classList.add('unlocked')
+        }
+
+      }
+      try {
+        if (selectedList >= 0 && list[selectedList]['locked'] == true && selectedList != l) {
+          // leaving a locked list, just change the title of sidelist btn to locked list
+          document.querySelectorAll('.sideListBtn')[selectedList + 1].innerHTML = 'Locked List'
+          document.querySelectorAll('.sideListBtn')[selectedList + 1].classList.remove('unlocked')
+          document.querySelectorAll('.sideListBtn')[selectedList + 1].classList.add('locked')
+          document.querySelectorAll('.listDiv')[selectedList].children[0].children[1].value = ''
+          //                         .listDiv                .lockedDiv  .pswdInput
+        }
+      } catch {
+        // catch the err when you delete a list
+        console.log('deleted a list')
+      }
+
+      selectedList = l
     }
 
     // list settings, creation date, last edit + buttons
     let listSettingsDiv = create('div', 'listSettingsDiv')
     let listCreationDate = create('p', 'listDate')
     listCreationDate.title = (timeAgo(d.getTime(), list[l]['creationDate']))
-    let mod = ''
-    if (tdate.getHours() > 11) {
-      mod = 'PM'
-    } else {
-      mod = 'AM'
-    }
-    listCreationDate.innerHTML = "Created: " + months[tdate.getMonth()] + ' ' + tdate.getDate() + ", " + (tdate.getHours() % 12 || 12) + ":" + tdate.getMinutes().toString().padStart(2, '0') + " " + mod
-    let lastEdited = create('p', 'listDate')
-    let mod2 = ''
-    if (edate.getHours() > 11) {
-      mod2 = 'PM'
-    } else {
-      mod2 = 'AM'
-    }
+    listCreationDate.innerHTML = "Created: " + months[tdate.getMonth()] + ' ' + tdate.getDate() + ", " + (tdate.getHours() % 12 || 12) + ":" + tdate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(tdate)
+    lastEdited = create('p', 'listDate')
 
     if (list[l]['lastEdited'] != 0) {
-      lastEdited.title = months[edate.getMonth()] + ' ' + edate.getDate() + ", " + (edate.getHours() % 12 || 12) + ":" + edate.getMinutes().toString().padStart(2, '0') + " " + mod2
+      lastEdited.title = months[edate.getMonth()] + ' ' + edate.getDate() + ", " + (edate.getHours() % 12 || 12) + ":" + edate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(edate)
       lastEdited.innerHTML = "Edited: " + (timeAgo(d.getTime(), list[l]['lastEdited']))
       lastEdited.style.marginRight = '4px'
+      lastEdited.onclick = function () {
+        let d = new Date()
+        lastEdited.title = months[edate.getMonth()] + ' ' + edate.getDate() + ", " + (edate.getHours() % 12 || 12) + ":" + edate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(edate)
+        lastEdited.innerHTML = "Edited: " + (timeAgo(d.getTime(), list[l]['lastEdited']))
+      }
       listSettingsDiv.append(lastEdited)
     }
 
@@ -281,7 +341,6 @@ function generateList() {
       unlockListBtnDiv.append(unlockListBtnTooltip)
       unlockListBtnDiv.append(unlockListBtn)
       listSettingsDiv.append(unlockListBtnDiv)
-
     }
 
     listContent.append(listSettingsDiv)
@@ -289,19 +348,31 @@ function generateList() {
     document.getElementById('listBtns').append(sideListBtn)
     listContent.append(listTitle)
 
-    if (list[l]['type'] == 'default') {
-      listDiv.classList.add('default')
-      listContent.classList.add('default')
+    if (list[l]['type'] == 'block') {
+      listDiv.classList.add('block')
+      listContent.classList.add('block')
 
-      let sublists = create('div', 'mainListContent default')
+      let sublists = create('div', 'mainListContent block')
       for (let i = 0; i < getListChildren(l); i++) {
-        // for each sublist
+        // FOR_EACH_SUBLIST
         // -3 because "name" and "type"
 
         let sublistDiv = create('div', 'sublistDiv')
         let sublistContentDiv = document.createElement('div')
 
         let sublistTitleDiv = create('div', 'sublistTitleDiv')
+        let collapseSublistBtn = create('button', 'collapseSublistBtn down')
+        collapseSublistBtn.onclick = function () {
+          if (sublistContentDiv.style.display == 'none') {
+            sublistContentDiv.style.display = null
+            this.classList.remove('up')
+            this.classList.add('down')
+          } else {
+            sublistContentDiv.style.display = 'none'
+            this.classList.remove('down')
+            this.classList.add('up')
+          }
+        }
         let newItemToTopBtn = create('button', 'newItemToTopBtn')
         newItemToTopBtn.onclick = function () {
           d = new Date()
@@ -318,6 +389,9 @@ function generateList() {
             this.blur()
           }
         }
+        sublistTitleP.oninput = function () {
+          this.value = this.value.toUpperCase()
+        }
         // only update list and writejson if it actually changed
         let stpTemp = ''
         sublistTitleP.onfocus = function () {
@@ -333,25 +407,18 @@ function generateList() {
 
         }
 
+        sublistTitleDiv.append(collapseSublistBtn)
         sublistTitleDiv.append(newItemToTopBtn)
         sublistTitleDiv.append(sublistTitleP)
 
-        let newItemBtnContainer = create('div', 'newItemBtnContainer')
 
-        let newItemBtn = create('button', 'newItemBtn')
-        newItemBtn.innerHTML = '+'
-        newItemBtn.onclick = function () {
-          d = new Date()
-          list[l]['lastEdited'] = d.getTime()
-          newItemToEnd(l, i)
-        }
-        newItemBtnContainer.append(newItemBtn)
         sublistDiv.append(sublistTitleDiv)
         sublistDiv.append(sublistContentDiv)
         sublists.append(sublistDiv)
         listContent.append(sublists)
         listDiv.append(listContent)
 
+        // FOR_EVERY_ITEM
         for (let e = 0; e < Object.keys(list[l][i]).length - 1; e++) {
           // -1 because "name" is a key
           let itemSettingsDiv = document.createElement('div')
@@ -407,19 +474,14 @@ function generateList() {
 
           button.classList.add("s" + (list[l][i][e]['status']).toString());
           itemDiv.classList.add(("s" + (list[l][i][e]['status']).toString()));
-          itemDiv.append(button)
+          // !itemDiv.append(button)
 
-          // item title
+          // ITEM_TITLE
           let itemTitle = document.createElement('p')
           itemTitle.contentEditable = true
           itemTitle.innerHTML = list[l][i][e]['title']
-          itemTitle.className = 'itemTitle'
+          itemTitle.className = 'title'
           itemTitle.spellcheck = false
-          itemTitle.onkeydown = function (e) {
-            if (e.code == 'Enter') {
-              this.blur()
-            }
-          }
           let itTemp = ''
           itemTitle.onfocus = function () {
             itTemp = this.innerHTML
@@ -434,7 +496,7 @@ function generateList() {
           }
           itemDiv.append(itemTitle)
 
-          // MORE BUTTON
+          // ITEM_SETTINGS_BUTTON
           let moreBtn = document.createElement('button')
           moreBtn.className = 'moreBtn'
           moreBtn.onclick = function () {
@@ -450,7 +512,7 @@ function generateList() {
 
           let delMediaBtnDiv
 
-          // ITEM media 
+          // ITEM_MEDIA
           if (list[l][i][e]['media'] != null && list[l][i][e]['media'] != '' && list[l][i][e]['media'] != []) {
             // if there is an media media specified
             for (let p = 0; p < list[l][i][e]['media'].length; p++) {
@@ -495,7 +557,7 @@ function generateList() {
               }
             }
 
-            // delete media button
+            // DELETE_MEDIA_BUTTON
             delMediaBtnDiv = document.createElement('div')
             let delMediaBtnTooltip = createTooltip('Delete All Media', 36, true)
             let delMediaBtn = document.createElement('button')
@@ -511,7 +573,7 @@ function generateList() {
           }
 
           // ITEM DESCRIPTION
-          // ADD DESCRIPTION BUTTON
+          // ADD_ITEM_DESCRIPTION_BUTTON
           let addDescBtnDiv = document.createElement('div')
           let addDescBtn = document.createElement('button')
           addDescBtn.className = 'addDescBtn'
@@ -526,9 +588,9 @@ function generateList() {
           addDescBtnDiv.append(addDescBtnTooltip)
           addDescBtnDiv.append(addDescBtn)
 
+          // ITEM_PRIORITY_BUTTON
           let setPriorityBtnDiv = document.createElement('div')
           let setPriorityBtn = document.createElement('button')
-
           let setPriorityBtnTooltip
 
           if (list[l][i][e]['priority'] == true) {
@@ -565,10 +627,11 @@ function generateList() {
           setPriorityBtnDiv.append(setPriorityBtnTooltip)
           setPriorityBtnDiv.append(setPriorityBtn)
 
+          // ITEM_DESCRIPTION
           let itemDescription = document.createElement('p')
           itemDescription.contentEditable = true
           itemDescription.innerHTML = list[l][i][e]['description']
-          itemDescription.className = 'itemDescription'
+          itemDescription.className = 'description'
           itemDescription.spellcheck = false
           let idTemp = ''
           itemDescription.onfocus = function () {
@@ -593,7 +656,7 @@ function generateList() {
           }
           itemDiv.append(itemDescription)
 
-          // LINK
+          // ITEM_LINK
           if (list[l][i][e]['link'] != '' && list[l][i][e]['link'] != null) {
             let linkDiv = create('div', '')
             linkDiv.style.marginTop = '-8px'
@@ -612,24 +675,18 @@ function generateList() {
             itemDiv.append(linkDiv)
           }
 
-          // CREATION DATE
+          // ITEM_CREATION_DATE
           let cdate = new Date(list[l][i][e]['creationDate'])
           let creationDateP = create('p', 'creationDateText')
-          let mod = ''
-          if (cdate.getHours() > 11) {
-            mod = 'PM'
-          } else {
-            mod = 'AM'
-          }
-          creationDateP.title = months[cdate.getMonth()] + ' ' + cdate.getDate() + ", " + (cdate.getHours() % 12 || 12) + ":" + cdate.getMinutes().toString().padStart(2, '0') + " " + mod
-         
-          creationDateP.innerHTML = (timeAgo(d.getTime(), list[l][i][e]['creationDate']))
+          creationDateP.title = (timeAgo(d.getTime(), list[l][i][e]['creationDate']))
 
-          // ITEM SETTINGS DIV 
+          creationDateP.innerHTML = months[cdate.getMonth()] + ' ' + cdate.getDate() + ", " + (cdate.getHours() % 12 || 12) + ":" + cdate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(cdate)
+
+          // ITEM_SETTINGS_DIV
           itemSettingsDiv.style.display = 'none'
           itemSettingsDiv.className = 'itemSettingsDiv'
 
-          // DUPLICATE ITEM BUTTON
+          // DUPLICATE_ITEM_BUTTON_
           let duplicateItemBtnDiv = create('div', '')
           let duplicateItemBtn = create('button', 'duplicateItemBtn')
           let duplicateItemBtnTooltip = createTooltip('Duplicate Item', 32, true)
@@ -643,7 +700,7 @@ function generateList() {
           duplicateItemBtnDiv.append(duplicateItemBtnTooltip)
           duplicateItemBtnDiv.append(duplicateItemBtn)
 
-          // ADD LINK BUTTON
+          // ADD_LINK_BUTTON_
           let addLinkBtnDiv = create('div', '')
           let addLinkBtn = create('button', 'addLinkBtn')
           let addLinkBtnTooltip = createTooltip('Add Link', 17, true)
@@ -727,13 +784,12 @@ function generateList() {
           sublistContentDiv.append(itemDiv)
 
         }
-        sublistContentDiv.append(newItemBtnContainer)
       }
       lists.append(listDiv)
-    } else if (list[l]['type'] == 'block') {
-      listDiv.classList.add('block')
-      listContent.classList.add('block')
-      let textDiv = create('div', 'mainListContent block')
+    } else if (list[l]['type'] == 'text') {
+      listDiv.classList.add('text')
+      listContent.classList.add('text')
+      let textDiv = create('div', 'mainListContent text')
 
       for (let a = 0; a < getListChildren(l); a++) {
         // all "blocks"
@@ -827,7 +883,6 @@ function generateList() {
 
       }
 
-      let newBlockBtns = create('div', 'newBlockBtns')
 
       let newCodeBlockBtnDiv = create('div', '', '')
       let newCodeBlockBtn = create('button', 'newCodeBlockBtn', '')
@@ -855,13 +910,9 @@ function generateList() {
 
       listContent.append(textDiv)
 
-      textDiv.append(newBlockBtns)
       listDiv.append(listContent)
       lists.append(listDiv)
-
-
     }
-
   }
 
   if (selectedList == -2) {
@@ -879,7 +930,6 @@ function generateList() {
   } else {
     document.getElementById('noListSelected').style.display = 'none'
     document.getElementsByClassName('sideListBtn')[selectedList + 1].click()
-
   }
 }
 

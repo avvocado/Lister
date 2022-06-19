@@ -12,40 +12,34 @@
 <body>
   <div id="app">
 
-    <!-- info -->
-    <div id="info">
-
-    </div>
-
+    <!-- alerts -->
+    <div id="info"></div>
 
     <!-- side bar -->
     <div id="side">
+      <!-- settings button -->
+      <button id="settingsBtn" class="sideListBtn">Settings</button>
 
-
-
-      <div id="mainSideBtns">
-        <button id="settingsBtn" class="sideListBtn">Settings</button>
-      </div>
-
-      <p style="font-weight: 900;">LISTS</p>
+      <p>LISTS</p>
+      <!-- main list buttons -->
       <div id="listBtns"></div>
 
+      <!-- new list button & selector -->
       <div style="text-align: center; margin-top: 32px;">
         <select id="listType">
-          <option value="default">default</option>
           <option value="block">block</option>
+          <option value="text">text</option>
         </select>
         <button id="newListBtn">+</button>
       </div>
     </div>
 
-
-       <!-- menu bar -->
-       <div id="menuBar">
-        <button id="closeBtn"></button>
-        <button id="minimizeBtn"></button>
-      </div>
-      <br>
+    <!-- menu bar -->
+    <div id="menuBar">
+      <button id="closeBtn"></button>
+      <button id="minimizeBtn"></button>
+    </div>
+    <br>
 
     <!-- main content -->
     <div id="content">
@@ -81,7 +75,7 @@
           <div class='settingsDiv'>
             <h3>Open Resources Folder</h3>
             <button id="openResourcesFolderBtn"></button>
-            <p>Manually edit media file storage, lists, settings, and more from the files in this folder.</p>
+            <p>Manually edit media file storage, lists, settings, and more, from the files in this folder.</p>
           </div>
         </div>
         <h1>Locked Lists</h1>
@@ -99,7 +93,7 @@
 
   </div>
 
-  <!-- source files -->
+  <!-- source code -->
   <script src="helper.js"></script>
   <script src="renderer.js"></script>
 </body>
