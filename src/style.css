@@ -163,11 +163,17 @@
 
 .checklistItem.true .checklistItemText {
   color: #393c4c;
+}
+
+
+.checklistItem.true.strikethrough .checklistItemText {
+  color: #393c4c;
   text-decoration: line-through;
 }
 
 .checklistItem.false .checklistItemText {
   color: #4f5363;
+  text-decoration: none;
 }
 
 
@@ -176,19 +182,20 @@
   display: inline-block;
   background-color: var(--bg3);
   width: calc(100% - 48px);
-  transition: 100ms;
+  transition: 200ms;
 }
 
 
 .checkBoxBtn {
   height: 16px;
   width: 16px;
+  vertical-align: top;
   border-radius: 3px;
   margin-right: 6px;
   transition: background-color 100ms;
   background-color: var(--bg5);
   background-position: center;
-  transform: translateY(2px);
+  transform: translateY(1px);
   background-image: url('../assets/check.svg');
 }
 
@@ -250,6 +257,7 @@
   margin-right: 4px;
   width: 24px;
   height: 24px;
+  float: right;
   border-radius: 3px;
   transition: 100ms;
 }
@@ -308,10 +316,11 @@
 }
 
 .itemMedia {
-  width: 100%;
   border-radius: 5px;
   margin-top: 6px;
   image-rendering: pixelated;
+  color: #535663;
+  font-size: 14px;
 }
 
 .uploadMediaBtn {
@@ -437,11 +446,6 @@
   border-left: 6px solid var(--green);
 }
 
-body::-webkit-scrollbar {
-  /* hide scrollbar */
-  display: none;
-}
-
 #menuBar {
   height: 20px;
   width: calc(100vw - 180px);
@@ -463,6 +467,7 @@ body::-webkit-scrollbar {
 }
 
 #closeBtn {
+  margin-right: 8px;
   background-size: 20px 20px;
   float: right;
   background-image: url("../assets/close.svg");
@@ -511,7 +516,7 @@ body::-webkit-scrollbar {
   position: absolute;
   font-size: 12px;
   color: #8c8c8c;
-  background-color: var(--bg3);
+  background-color: var(--bg4);
   white-space: nowrap;
   user-select: none;
   display: none;
@@ -555,9 +560,10 @@ body::-webkit-scrollbar {
 
 #settings h1 {
   display: inline;
-  font-size: 18px;
-  color: #818491;
-  font-weight: 1;
+  font-size: 12px;
+  user-select: none;
+  color: #404351;
+  font-weight: bold;
 }
 
 #settings h3 {
@@ -569,10 +575,28 @@ body::-webkit-scrollbar {
 
 .settingsDiv {
   margin-bottom: 8px;
-  margin-top: 6px;
   padding: 12px 12px;
   background-color: var(--bg3);
   border-radius: 4px;
+}
+
+.settingsDiv .option {
+  font-size: 0;
+  padding: 4px 6px;
+  border-radius: 6px;
+  float: right;
+  background-color: var(--bg3);
+  transition: 100ms;
+  margin-right: 8px;
+  border: 2px solid var(--bg5)
+}
+
+.settingsDiv .option:hover {
+  border: 2px solid var(--green);
+}
+
+.settingsDiv .option.active {
+  border: 2px solid var(--green)
 }
 
 .switch {
@@ -783,9 +807,9 @@ a {
   width: calc(100% - 16px);
   padding: 8px 8px;
   user-select: none;
-  background-size: 18px 18px;
+  background-size: 16px 16px;
   border-radius: 3px;
-  background-position: 138px 10px;
+  background-position: 142px 6px;
   font-size: 14px;
 }
 
@@ -806,13 +830,6 @@ a {
   background-image: url("../assets/listIcons/blockList1.svg");
 }
 
-/* block & unlocked */
-.sideListBtn.block.unlocked.active {
-  background-image: url("../assets/unlock1.svg"),
-    url("../assets/listIcons/blockList1.svg");
-  background-position: 114px 10px, 138px 10px;
-}
-
 /* checklist */
 .sideListBtn.checklist {
   background-image: url("../assets/listIcons/checklistList.svg");
@@ -820,13 +837,6 @@ a {
 
 .sideListBtn.checklist.active {
   background-image: url("../assets/listIcons/checklistList1.svg");
-}
-
-/* checklist & unlocked */
-.sideListBtn.checklist.unlocked.active {
-  background-image: url("../assets/unlock1.svg"),
-    url("../assets/listIcons/checklistList1.svg");
-  background-position: 114px 10px, 138px 10px;
 }
 
 /* text */
@@ -838,13 +848,6 @@ a {
   background-image: url("../assets/listIcons/textList1.svg");
 }
 
-/* text & unlocked */
-.sideListBtn.text.unlocked.active {
-  background-image: url("../assets/unlock1.svg"),
-    url("../assets/listIcons/textList1.svg");
-  background-position: 116px 10px, 140px 10px;
-}
-
 /* locked */
 .sideListBtn.locked {
   background-image: url("../assets/lock.svg");
@@ -854,6 +857,12 @@ a {
   background-image: url("../assets/lock1.svg");
 }
 
+/* unlocked */
+.sideListBtn.unlocked.active {
+  background-image: url("../assets/unlock1.svg");
+}
+
+/* others */
 .sideListBtn.active {
   background-color: var(--green);
 }
@@ -1070,7 +1079,7 @@ a {
 }
 
 
-/* animations + global/unimportant elements & properties */
+/* ! animations + global/unimportant elements & properties */
 @keyframes fadein {
   0% {
     opacity: 0%;
@@ -1127,4 +1136,49 @@ input {
   content: "...";
   pointer-events: none;
   color: #2d303c;
+}
+
+/* range sliders */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: var(--green);
+  border-radius: 8px;
+  height: 8px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  /* Override default look */
+  appearance: none;
+  margin-top: -2px;
+
+  /*custom styles*/
+  background-color: #d5d5d5;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+}
+
+a {
+  color: var(--green);
+}
+
+/* scrollbars */
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--bg1);
+  border-radius: 8px;
+  background-clip: padding-box;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: var(--bg2)
 }

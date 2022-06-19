@@ -141,6 +141,7 @@ ipcMain.on("requestDirname", (evt, args) => {
   win.webContents.send('toRenderer', 'dirname', path.join(__dirname, '../'))
 })
 
+
 ipcMain.on("alwaysOnTop", (evt, args) => {
   win.setAlwaysOnTop(args);
 })

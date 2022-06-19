@@ -59,47 +59,76 @@
       </div>
       <!-- settings -->
       <div id="settings">
-        <h1>App Settings</h1>
-        <div>
-          <!-- always on top -->
-          <div class='settingsDiv'>
-            <h3 style=" display: inline-block;">Always on top</h3>
-            <label class="switch">
-              <input id='alwaysOnTopCheckbox' type="checkbox">
-              <span class="slider round"></span>
-            </label>
-            <p>Forces the Lister to be above all other applications</p>
-          </div>
-
-          <!-- b&w tray icon -->
-          <div class='settingsDiv'>
-            <h3 style=" display: inline-block;">Black and white tray icon</h3>
-            <label class="switch">
-              <input id='bwtrayiconCheckbox' type="checkbox">
-              <span class="slider round"></span>
-            </label>
-            <p>Makes the tray icon black and white</p>
-          </div>
-
-          <!-- open resources folder -->
-          <div class='settingsDiv'>
-            <h3>Open Resources Folder</h3>
-            <button id="openResourcesFolderBtn"></button>
-            <p>Manually edit media file storage, lists, settings, and more, from the files in this folder.</p>
-          </div>
+        <h1>APP SETTINGS</h1>
+        <!-- always on top -->
+        <div class='settingsDiv'>
+          <h3 style=" display: inline-block;">Always on top</h3>
+          <label class="switch">
+            <input id='alwaysOnTopCheckbox' type="checkbox">
+            <span class="slider round"></span>
+          </label>
+          <p>Forces the Lister to be above all other applications</p>
         </div>
-        <h1>Locked Lists</h1>
 
+        <!-- b&w tray icon -->
+        <div class='settingsDiv'>
+          <h3 style=" display: inline-block;">Black and white tray icon</h3>
+          <label class="switch">
+            <input id='bwtrayiconCheckbox' type="checkbox">
+            <span class="slider round"></span>
+          </label>
+          <p>Makes the tray icon black and white</p>
+        </div>
+
+        <!-- open resources folder -->
+        <div class='settingsDiv'>
+          <h3>Open Resources Folder</h3>
+          <button id="openResourcesFolderBtn"></button>
+          <p>Manually edit media file storage, lists, settings, and more, from the files in this folder.</p>
+        </div>
+        <h1>BLOCK LISTS</h1>
+        <!-- media width -->
+        <div class="settingsDiv">
+          <h3 id="mediaWidthTitle">Media Width</h3>
+          <input style="float: right" type="range" max="10" min="1" value="5" id="blockListItemMediaWidth" />
+          <p>Width of item media by % of item width, height is automatic.</p>
+        </div>
+        <h1>CHECKLISTS</h1>
+        <!-- strikethrough completed items -->
+        <div class="settingsDiv">
+          <h3 id="mediaWidthTitle">Checked Item Style</h3>
+          <div class="option checkedItemStyleBtn">
+            <button class="checkBoxBtn true"></button>
+            <p style="font-size: 16px;cursor: default; user-select: none; margin: 0;display: inline-block;color: #393c4c;  text-decoration: line-through;">Strikethrough</p>
+          </div>
+          <div class="option checkedItemStyleBtn">
+            <button class="checkBoxBtn true"></button>
+            <p style="font-size: 16px;cursor: default; user-select: none; margin: 0; display: inline-block;color: #393c4c;">Regular</p>
+          </div>
+          <p>Style of items that have been checked off by the user.</p>
+        </div>
+        <h1>LOCKED LISTS</h1>
         <!-- password -->
         <div class="settingsDiv">
           <h3>Password:</h3>
           <input type="text" id="password">
         </div>
-      </div>
+        <h1>APP INFO</h1>
+        <!-- password -->
+        <div class="settingsDiv">
+          <h3>App Info</h3>
+          <p>Source Code: <a href="https://github.com/devinmd/Lister" target="_blank">https://github.com/devinmd/Lister</a></p>
 
-      <!-- lists -->
+        </div>
+      </div>
       <div id="lists"></div>
     </div>
+
+
+  </div>
+
+  <!-- lists -->
+  </div>
 
   </div>
 

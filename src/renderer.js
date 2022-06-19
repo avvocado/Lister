@@ -4,6 +4,36 @@ document.getElementById("closeBtn").addEventListener("click", function () {
   window.api.send('close', '');
 });
 
+document.querySelectorAll(".checkedItemStyleBtn")[0].addEventListener("click", function () {
+  settings['checkedItemStyle'] = 0
+  document.querySelectorAll(".checkedItemStyleBtn")[1].classList.remove('active')
+  this.classList.add('active')
+  writeSettings(settings)
+  for (let i = 0; i < document.querySelectorAll('.checklistItem').length; i++) {
+    document.querySelectorAll('.checklistItem')[i].classList.add('strikethrough')
+  }
+});
+
+document.querySelectorAll(".checkedItemStyleBtn")[1].addEventListener("click", function () {
+  settings['checkedItemStyle'] = 1
+  document.querySelectorAll(".checkedItemStyleBtn")[0].classList.remove('active')
+  this.classList.add('active')
+  writeSettings(settings)
+  for (let i = 0; i < document.querySelectorAll('.checklistItem').length; i++) {
+    document.querySelectorAll('.checklistItem')[i].classList.remove('strikethrough')
+  }
+});
+
+document.getElementById("blockListItemMediaWidth").addEventListener("input", function () {
+  let wid = document.querySelector('#blockListItemMediaWidth').value * 10
+  document.querySelector('#mediaWidthTitle').innerHTML = 'Media Width (' + wid + '%)'
+  for (let i = 0; i < document.querySelectorAll('.itemMedia').length; i++) {
+    document.querySelectorAll('.itemMedia')[i].style.width = wid + '%'
+  }
+  settings['blockListItemMediaWidth'] = wid
+  writeSettings(settings)
+});
+
 document.getElementById("toggleSideBtn").addEventListener("click", function () {
   if (document.querySelector('#side').style.display == 'none') {
     document.querySelector('#side').style.display = null
@@ -38,7 +68,6 @@ document.getElementById("minimizeBtn").addEventListener("click", function () {
 
 document.getElementById("maximizeBtn").addEventListener("click", function () {
   window.api.send('maximize', '');
-  console.log('maximize')
   this.className = !(this.className === 'true')
 });
 
@@ -90,7 +119,6 @@ var list
 var settings
 
 function init() {
-
   // request the json
   // uses toMain, which sends data to the main process
   window.api.send('requestList', '');
@@ -104,7 +132,6 @@ window.api.receive("toRenderer", (args, data) => {
   if (args == 'list') {
     // list json
     list = data
-    generateList()
   }
 
   if (args == 'settings') {
@@ -118,12 +145,24 @@ window.api.receive("toRenderer", (args, data) => {
     document.getElementById('bwtrayiconCheckbox').checked = settings['bwTrayIcon']
     window.api.send('trayIcon', settings['bwTrayIcon']);
 
+    // block list item media width
+    document.getElementById('blockListItemMediaWidth').value = settings['blockListItemMediaWidth'] / 10
+    document.querySelector('#mediaWidthTitle').innerHTML = 'Media Width (' + (settings['blockListItemMediaWidth']) + '%)'
+    for (let i = 0; i < document.querySelectorAll('.itemMedia').length; i++) {
+      document.querySelectorAll('.itemMedia')[i].style.width = settings['blockListItemMediaWidth'] + '%'
+    }
+
+    // checked item style
+    document.querySelectorAll(".checkedItemStyleBtn")[settings['checkedItemStyle']].click()
+
+
     document.getElementById('password').value = settings['password']
+    generateList()
 
   }
   if (args == 'media') {
     // data is an array of media names
-    list[currImgIndex[0]][currImgIndex[1]][currImgIndex[2]]['media'].push(data)
+    list['children'][currImgIndex[0]]['children'][currImgIndex[1]]['children'][currImgIndex[2]]['media'].push(data)
     writeJSON(list)
     generateList()
   }
@@ -523,8 +562,9 @@ function generateList() {
                 let img = document.createElement('img')
                 img.className = 'itemMedia'
                 img.src = "../resources/media/" + list['children'][l]['children'][i]['children'][e]['media'][p]
-                img.alt = 'Error loading ' + list['children'][l]['children'][i]['children'][e]['media'][p]
+                img.alt = 'Error loading ' + dirname + 'resources/media/' + list['children'][l]['children'][i]['children'][e]['media']
                 img.title = dirname + 'resources/media/' + list['children'][l]['children'][i]['children'][e]['media']
+
                 img.addEventListener("dblclick", function () {
                   window.api.send('openFile', list['children'][l]['children'][i]['children'][e]['media'][p]);
                 });
@@ -715,9 +755,9 @@ function generateList() {
           mediaBtnTooltip = createTooltip('Upload Media', 28, true)
 
           mediaBtn.onclick = function () {
-            window.api.send("uploadMedia", '');
-            // wait for main to send back the media name
             currImgIndex = [l, i, e]
+            // wait for main to send back the media name
+            window.api.send("uploadMedia", '');
           }
           mediaBtn = handleTooltip(mediaBtn, mediaBtnTooltip)
           mediaBtnDiv.append(mediaBtnTooltip)
@@ -1035,15 +1075,27 @@ function generateList() {
         for (let e = 0; e < list['children'][l]['children'][i]['children'].length; e++) {
           let itemDiv = create('div', ('checklistItem ' + list['children'][l]['children'][i]['children'][e]['checked']))
           let itemText = create('p', 'checklistItemText')
+
+          if (settings['checkedItemStyle'] == 0) {
+            itemDiv.classList.add('strikethrough')
+          }
           let checkbox = create('button', ('checkBoxBtn ' + list['children'][l]['children'][i]['children'][e]['checked']))
           checkbox.onclick = function () {
             list['children'][l]['children'][i]['children'][e]['checked'] = !list['children'][l]['children'][i]['children'][e]['checked']
             this.className = 'checkBoxBtn ' + list['children'][l]['children'][i]['children'][e]['checked']
-            itemDiv.className = 'checklistItem ' + list['children'][l]['children'][i]['children'][e]['checked']
+            itemDiv.classList.remove('true')
+            itemDiv.classList.remove('false')
+            itemDiv.classList.add(list['children'][l]['children'][i]['children'][e]['checked'])
             writeJSON(list)
           }
           itemText.contentEditable = true
           itemText.spellcheck = false
+
+          itemText.addEventListener('paste', function (e) {
+            e.preventDefault()
+            var text = e.clipboardData.getData('text/plain')
+            document.execCommand('insertText', false, text)
+          })
 
           let ctTemp = ''
           itemText.onkeydown = function (e) {
@@ -1051,26 +1103,27 @@ function generateList() {
               this.blur()
             }
           }
+
           itemText.onfocus = function () {
-            ctTemp = this.innerHTML
+            ctTemp = this.innerText
           }
           itemText.onblur = function () {
-            if (this.innerHTML != ctTemp) {
-              list['children'][l]['children'][i]['children'][e]['text'] = this.innerHTML
+            if (this.innerText != ctTemp) {
+              list['children'][l]['children'][i]['children'][e]['text'] = this.innerText
               writeJSON(list)
               generateList()
               listEdited(l)
             }
-            if (this.innerHTML.replaceAll(' ', '') == '' && e != list['children'][l]['children'][i]['children'].length - 1) {
+            if (this.innerText.replaceAll(' ', '') == '' && e != list['children'][l]['children'][i]['children'].length - 1) {
               // if empty and not last element
               deleteChecklistItem(l, i, e)
             }
-            if (this.innerHTML.replaceAll(' ', '') != '' && e == list['children'][l]['children'][i]['children'].length - 1) {
+            if (this.innerText.replaceAll(' ', '') != '' && (list['children'][l]['children'][i]['children'].length == 0 || e == list['children'][l]['children'][i]['children'].length - 1)) {
               // not empty and is last element
               newChecklistItemToBottom(l, i)
             }
           }
-          itemText.innerHTML = list['children'][l]['children'][i]['children'][e]['text']
+          itemText.innerText = list['children'][l]['children'][i]['children'][e]['text']
 
           // dont give last element a checkbox
           if (e != list['children'][l]['children'][i]['children'].length - 1) {
