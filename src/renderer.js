@@ -224,13 +224,10 @@ function generateList() {
           document.getElementsByClassName('sideListBtn')[selectedList + 1].classList.remove('active')
         }
 
-<<<<<<< HEAD
         // update last edited
         let d = new Date()
         lastEdited.innerHTML = "Edited: " + (timeAgo(d.getTime(), list[l]['lastEdited']))
 
-=======
->>>>>>> b142ffcd898715c567ae98b8b2f4181e633071dd
         // settings does not have a list div, no +1
         for (let h = 0; h < document.querySelectorAll('.listDiv').length; h++) {
           document.querySelectorAll('.listDiv')[h].style.display = 'none'
@@ -247,10 +244,6 @@ function generateList() {
 
       if (list[l]['locked'] == true) {
         // if you're entering a locked list, relock it
-<<<<<<< HEAD
-=======
-
->>>>>>> b142ffcd898715c567ae98b8b2f4181e633071dd
         if (selectedList != l) {
           lockedDiv.style.display = 'block'
           listContent.style.display = 'none'
@@ -290,11 +283,7 @@ function generateList() {
     let listCreationDate = create('p', 'listDate')
     listCreationDate.title = (timeAgo(d.getTime(), list[l]['creationDate']))
     listCreationDate.innerHTML = "Created: " + months[tdate.getMonth()] + ' ' + tdate.getDate() + ", " + (tdate.getHours() % 12 || 12) + ":" + tdate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(tdate)
-<<<<<<< HEAD
     lastEdited = create('p', 'listDate')
-=======
-    let lastEdited = create('p', 'listDate')
->>>>>>> b142ffcd898715c567ae98b8b2f4181e633071dd
 
     if (list[l]['lastEdited'] != 0) {
       lastEdited.title = months[edate.getMonth()] + ' ' + edate.getDate() + ", " + (edate.getHours() % 12 || 12) + ":" + edate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(edate)
