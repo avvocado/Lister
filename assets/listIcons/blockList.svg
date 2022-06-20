@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <rect style="paint-order: fill; fill: rgba(0, 0, 0, 0); stroke: rgb(45, 48, 60); stroke-width: 40px;" x="20" y="207" width="460" height="86" rx="24" ry="24" bx:origin="0.5 -2.333333"/>
+  <rect style="fill: rgba(0, 0, 0, 0); stroke: rgb(45, 48, 60); stroke-width: 40px;" x="20" y="20" width="460" height="85.996" rx="24" ry="24" bx:origin="0.5 0"/>
+  <rect style="paint-order: fill; fill: rgba(0, 0, 0, 0); stroke: rgb(45, 48, 60); stroke-width: 40px;" x="20" y="394" width="460" height="86" rx="24" ry="24" bx:origin="0.5 -2.333333"/>
+</svg>

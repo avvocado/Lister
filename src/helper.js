@@ -286,12 +286,12 @@ function newList(type) {
   if (type == 'block') {
     list[newIndex] = {
       "0": {
-        "name": "Sublist",
+        "name": "SUBLIST",
       },
       "1": {
-        "name": "Sublist",
+        "name": "SUBLIST",
       }, "2": {
-        "name": "Sublist",
+        "name": "SUBLIST",
       },
       "name": "New List",
       "type": "block",

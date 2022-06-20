@@ -43,7 +43,7 @@ input {
   background-image: url("../assets/trashColor.svg");
 }
 .listSettingsDiv {
-  margin-top: 16px;
+  margin-top: -8px;
 }
 .listSettingsDiv button {
   transform: translateY(4px);
@@ -100,11 +100,10 @@ input {
 }
 
 .sublistTitleDiv input {
-  font-size: 8px;
+  font-size: 12px;
   background-color: var(--bg1);
   transition: all 100ms, width 0ms;
   width: calc(100% - 80px);
-  font-size: 14px;
   font-weight: bold;
   color: #404351;
 }
@@ -180,7 +179,7 @@ input {
   background-color: var(--bg2);
   float: right;
   background-repeat: no-repeat;
-  background-size: 16px 16px;
+  background-size: 20px 20px;
   background-position: center;
   transform: translateY(-8px) translateX(5px);
   background-image: url("../assets/settings.svg");
@@ -372,7 +371,7 @@ body::-webkit-scrollbar {
 }
 
 #menuBar {
-  height: 32px;
+  height: 20px;
   width: calc(100vw - 180px);
   margin-left: 180px;
   background-color: var(--bg2);
@@ -385,13 +384,13 @@ body::-webkit-scrollbar {
 #menuBar button {
   -webkit-app-region: no-drag;
   background-color: var(--bg2);
-  width: 32px;
-  height: 32px;
+  width: 20px;
+  height: 20px;
   background-position: center;
   transition: 100ms;
 }
 #closeBtn {
-  background-size: 22px 22px;
+  background-size: 20px 20px;
   float: right;
   background-image: url("../assets/close.svg");
 }
@@ -402,7 +401,7 @@ body::-webkit-scrollbar {
 }
 
 #minimizeBtn {
-  background-size: 24px 24px;
+  background-size: 20px 20px;
   float: right;
   background-image: url("../assets/minimize.svg");
 }
@@ -762,6 +761,7 @@ a {
   display: block;
   background-color: var(--bg2);
   text-align: left;
+  margin-top: 2px;
   transition: 100ms;
   color: #6a6d7a;
   width: 100%;
@@ -770,34 +770,34 @@ a {
   background-repeat: no-repeat;
   background-size: 18px 18px;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
   border-radius: 3px;
   background-position: 138px 10px;
 }
 /* block */
 .sideListBtn.block {
-  background-image: url("../assets/blockList.svg");
+  background-image: url("../assets/listIcons/blockList.svg");
 }
 .sideListBtn.block.active {
-  background-image: url("../assets/blockList1.svg");
+  background-image: url("../assets/listIcons/blockList1.svg");
 }
 /* block & unlocked */
 .sideListBtn.block.unlocked.active {
   background-image: url("../assets/unlock1.svg"),
-    url("../assets/blockList1.svg");
+    url("../assets/listIcons/blockList1.svg");
   background-position: 114px 10px, 138px 10px;
 }
 /* text */
 .sideListBtn.text {
-  background-image: url("../assets/textList.svg");
+  background-image: url("../assets/listIcons/textList.svg");
 }
 .sideListBtn.text.active {
-  background-image: url("../assets/textList1.svg");
+  background-image: url("../assets/listIcons/textList1.svg");
 }
 /* text & unlocked */
 .sideListBtn.text.unlocked.active {
-  background-image: url("../assets/unlock1.svg"), url("../assets/textList1.svg");
+  background-image: url("../assets/unlock1.svg"),
+    url("../assets/listIcons/textList1.svg");
   background-position: 116px 6px, 140px 6px;
 }
 
@@ -825,7 +825,6 @@ a {
   color: #2d303c;
   font-size: 12px;
   user-select: none;
-  margin-left: 8px;
   display: inline-block;
   margin-top: 8px;
 }
@@ -920,7 +919,8 @@ a {
 #settingsBtn {
   font-size: 16px;
   padding: 6px 8px;
-  background-position: 138px 6px;
+  background-size: 20px 20px;
+  background-position: 138px 5px;
   background-image: url("../assets/settings.svg");
 }
 #settingsBtn.active {

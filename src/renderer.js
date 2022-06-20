@@ -281,14 +281,14 @@ function generateList() {
     // list settings, creation date, last edit + buttons
     let listSettingsDiv = create('div', 'listSettingsDiv')
     let listCreationDate = create('p', 'listDate')
-    listCreationDate.title = (timeAgo(d.getTime(), list[l]['creationDate']))
-    listCreationDate.innerHTML = "Created: " + months[tdate.getMonth()] + ' ' + tdate.getDate() + ", " + (tdate.getHours() % 12 || 12) + ":" + tdate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(tdate)
+    listCreationDate.title = months[tdate.getMonth()] + ' ' + tdate.getDate() + ", " + (tdate.getHours() % 12 || 12) + ":" + tdate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(tdate)
+    listCreationDate.innerHTML = "Created: " + (timeAgo(d.getTime(), list[l]['creationDate']))
     lastEdited = create('p', 'listDate')
 
     if (list[l]['lastEdited'] != 0) {
       lastEdited.title = months[edate.getMonth()] + ' ' + edate.getDate() + ", " + (edate.getHours() % 12 || 12) + ":" + edate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(edate)
       lastEdited.innerHTML = "Edited: " + (timeAgo(d.getTime(), list[l]['lastEdited']))
-      lastEdited.style.marginRight = '4px'
+      lastEdited.style.marginRight = '16px'
       lastEdited.onclick = function () {
         let d = new Date()
         lastEdited.title = months[edate.getMonth()] + ' ' + edate.getDate() + ", " + (edate.getHours() % 12 || 12) + ":" + edate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(edate)
@@ -679,9 +679,9 @@ function generateList() {
           // ITEM_CREATION_DATE
           let cdate = new Date(list[l][i][e]['creationDate'])
           let creationDateP = create('p', 'creationDateText')
-          creationDateP.title = (timeAgo(d.getTime(), list[l][i][e]['creationDate']))
+          creationDateP.title = months[cdate.getMonth()] + ' ' + cdate.getDate() + ", " + (cdate.getHours() % 12 || 12) + ":" + cdate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(cdate)
 
-          creationDateP.innerHTML = months[cdate.getMonth()] + ' ' + cdate.getDate() + ", " + (cdate.getHours() % 12 || 12) + ":" + cdate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(cdate)
+          creationDateP.innerHTML = (timeAgo(d.getTime(), list[l][i][e]['creationDate']))
 
           // ITEM_SETTINGS_DIV
           itemSettingsDiv.style.display = 'none'

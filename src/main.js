@@ -20,7 +20,7 @@ app.on('before-quit', function () {
 var tray
 const createWindow = () => {
   // create tray
-  tray = new Tray(path.join(__dirname, '../', "/assets/", '/icons/', 'icon18x18.png'));
+  tray = new Tray(path.join(__dirname, '../', "/assets/", '/appIcons/', 'icon18x18.png'));
 
   tray.setContextMenu(Menu.buildFromTemplate([
     {
@@ -52,7 +52,7 @@ const createWindow = () => {
     autoHideMenuBar: true,
     resizable: true,
     frame: false,
-    icon: path.join(__dirname, '../', "/assets", '/icons', "icon.png"),
+    icon: path.join(__dirname, '../', "/assets", '/appIcons', "icon.png"),
     backgroundColor: '#121319',
     darkTheme: true,
   })
@@ -198,11 +198,11 @@ ipcMain.on("trayIcon", (evt, args) => {
   tray.destroy()
   if (args == true) {
     // black and white
-    tray = new Tray(path.join(__dirname, '../', "/assets/", '/icons/', 'icon18x18BW.png'));
+    tray = new Tray(path.join(__dirname, '../', "/assets/", '/appIcons/', 'icon18x18BW.png'));
 
   } else {
     // color
-    tray = new Tray(path.join(__dirname, '../', "/assets/", '/icons/', 'icon18x18.png'));
+    tray = new Tray(path.join(__dirname, '../', "/assets/", '/appIcons/', 'icon18x18.png'));
   }
   tray.setContextMenu(Menu.buildFromTemplate([
     {
