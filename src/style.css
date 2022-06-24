@@ -1,9 +1,9 @@
 :root {
-  --bg1: #191A21;
-  --bg2: #1D1E26;
-  --bg3: #22232B;
-  --bg4: #272830;
-  --bg5: #2A2B33;
+  --bg1: #171921;
+  --bg2: #1B1D26;
+  --bg3: #20222B;
+  --bg4: #24262F;
+  --bg5: #272933;
   --green: #009966;
   --selectionGreen: #64a684;
   --yellow: #f0be61;
@@ -38,7 +38,7 @@
 }
 
 .listSettingsDiv button:hover {
-  background-color: var(--bg3);
+  background-color: var(--bg4);
 }
 
 .listSettingsDiv div {
@@ -119,7 +119,6 @@
 
 .newItemToTopBtn:hover {
   background-image: url("../assets/plus1.svg");
-  background-color: var(--bg3);
 }
 
 .delSublistBtn {
@@ -139,7 +138,6 @@
 
 .collapseSublistBtn.up:hover {
   background-image: url("../assets/arrowUp1.svg");
-  background-color: var(--bg3);
 }
 
 .collapseSublistBtn.down {
