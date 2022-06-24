@@ -2,8 +2,8 @@
   --bg1: #171921;
   --bg2: #1B1D26;
   --bg3: #20222B;
-  --bg4: #24262F;
-  --bg5: #272933;
+  --bg4: #272933;
+  --bg5: #32343f;
   --green: #009966;
   --selectionGreen: #64a684;
   --yellow: #f0be61;
@@ -38,7 +38,7 @@
 }
 
 .listSettingsDiv button:hover {
-  background-color: var(--bg5);
+  background-color: var(--bg4);
 }
 
 .listSettingsDiv div {
@@ -88,6 +88,7 @@
   background-color: var(--bg3);
   padding: 8px 8px;
   border-radius: 4px;
+  box-shadow: 0 1px 1px 0.3px var(--bg1);
 }
 
 .sublistTitleDiv {
@@ -193,25 +194,26 @@
   border-radius: 3px;
   margin-right: 6px;
   transition: background-color 100ms;
-  background-color: var(--bg5);
+  background-color: var(--bg4);
   background-position: center;
   transform: translateY(1px);
   background-image: url('../assets/check.svg');
 }
 
 .checkBoxBtn.false:hover {
-  background-image: url('../assets/check1.svg');
+  background-color: var(--bg5);
 }
 
 .checkBoxBtn.true {
   background-color: var(--green);
-  background-image: url('../assets/check2.svg');
+  background-image: url('../assets/check1.svg');
 }
 
 .item {
   padding: 10px 10px 2px 8px;
   background-color: var(--bg3);
   margin-bottom: 6px;
+  box-shadow: 0 1px 1px 0.3px var(--bg1);
   width: calc((100% - 24px));
   border-radius: 4px;
   transition: all 100ms, padding 0ms, width 0ms;
@@ -263,7 +265,7 @@
 }
 
 .itemSettingsDiv button:hover {
-  background-color: var(--bg5);
+  background-color: var(--bg4);
 }
 
 .addDescBtn {
@@ -348,7 +350,7 @@
   line-height: 14px;
   width: auto;
   margin: 0 0 4px 0;
-  border-left: 2px solid var(--bg5);
+  border-left: 2px solid var(--bg4);
   padding: 0 4px 2px 8px;
 }
 
@@ -576,6 +578,7 @@
 .settingsDiv {
   margin-bottom: 8px;
   padding: 12px 12px;
+  box-shadow: 0 1px 1px 0.3px var(--bg1);
   background-color: var(--bg3);
   border-radius: 4px;
 }
@@ -588,7 +591,7 @@
   background-color: var(--bg3);
   transition: 100ms;
   margin-right: 8px;
-  border: 2px solid var(--bg5)
+  border: 2px solid var(--bg4)
 }
 
 .settingsDiv .option:hover {
@@ -686,7 +689,7 @@ a {
 }
 
 #openResourcesFolderBtn:hover {
-  background-color: var(--bg5);
+  background-color: var(--bg4);
   background-image: url("../assets/folder1.svg");
 }
 
@@ -927,7 +930,7 @@ a {
   text-align: center;
   margin-top: 30vh;
   user-select: none;
-  color: var(--bg5);
+  color: var(--bg4);
   font-size: 32px;
 }
 
@@ -1002,7 +1005,7 @@ a {
 }
 
 #newListBtn:hover {
-  background-color: var(--bg5);
+  background-color: var(--bg4);
   color: #4f5363;
 }
 
@@ -1074,7 +1077,7 @@ a {
 }
 
 #toggleSideBtn:hover {
-  background-color: var(--bg5);
+  background-color: var(--bg4);
   background-image: url('../assets/sidebar1.svg');
 }
 
@@ -1096,7 +1099,7 @@ a {
   }
 
   20% {
-    background-color: var(--bg5);
+    background-color: var(--bg4);
   }
 
   100% {

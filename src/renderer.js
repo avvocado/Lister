@@ -294,7 +294,7 @@ function generateList() {
 
         // update last edited
         let d = new Date()
-        lastEdited.innerHTML = "Edited: " + (timeAgo(d.getTime(), list['children'][l]['lastEdited']))
+        lastEdited.innerHTML = "Edited " + (timeAgo(d.getTime(), list['children'][l]['lastEdited']))
 
         if (list['children'][l]['locked'] == false) {
           sideListBtnDate.innerHTML = timeAgo(d.getTime(), edate)
@@ -348,12 +348,12 @@ function generateList() {
     let listSettingsDiv = create('div', 'listSettingsDiv')
     let listCreationDate = create('p', 'listDate')
     listCreationDate.title = months[tdate.getMonth()] + ' ' + tdate.getDate() + ", " + (tdate.getHours() % 12 || 12) + ":" + tdate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(tdate)
-    listCreationDate.innerHTML = "Created: " + (timeAgo(d.getTime(), list['children'][l]['creationDate']))
+    listCreationDate.innerHTML = "Created " + (timeAgo(d.getTime(), list['children'][l]['creationDate']))
     lastEdited = create('p', 'listDate')
 
     if (list['children'][l]['lastEdited'] != 0) {
       lastEdited.title = months[edate.getMonth()] + ' ' + edate.getDate() + ", " + (edate.getHours() % 12 || 12) + ":" + edate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(edate)
-      lastEdited.innerHTML = "Edited: " + (timeAgo(d.getTime(), list['children'][l]['lastEdited']))
+      lastEdited.innerHTML = "Edited " + (timeAgo(d.getTime(), list['children'][l]['lastEdited']))
       lastEdited.style.marginRight = '16px'
       listSettingsDiv.append(lastEdited)
     }
