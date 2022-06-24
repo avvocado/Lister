@@ -1,9 +1,9 @@
 :root {
-  --bg1: #121319;
-  --bg2: #191a21;
-  --bg3: #1D1E26;
-  --bg4: #22232B;
-  --bg5: #272830;
+  --bg1: #191A21;
+  --bg2: #1D1E26;
+  --bg3: #22232B;
+  --bg4: #272830;
+  --bg5: #2A2B33;
   --green: #009966;
   --selectionGreen: #64a684;
   --yellow: #f0be61;
@@ -15,44 +15,54 @@
   margin-left: 12px;
   margin-top: 12px;
 }
+
 .deleteListBtn {
   float: right;
   background-image: url("../assets/trashColor.svg");
 }
+
 .listSettingsDiv {
   margin-top: -8px;
 }
+
 .listSettingsDiv button {
   transform: translateY(4px);
   margin-left: 4px;
   width: 30px;
   height: 24px;
-  background-color: var(--bg1);
+  background-color: var(--bg2);
   border-radius: 3px;
   background-size: 18px 18px;
   background-position: center;
   transition: background-color 100ms;
 }
+
 .listSettingsDiv button:hover {
   background-color: var(--bg3);
 }
+
 .listSettingsDiv div {
   float: right;
 }
+
 .deleteListBtn:hover {
   background-image: url("../assets/trash1.svg");
   background-color: var(--red) !important;
 }
+
 .newSublistBtn {
   background-size: 22px 22px !important;
   background-image: url("../assets/plus.svg");
 }
+
 .newSublistBtn:hover {
   background-image: url("../assets/plusColor.svg");
 }
+
 .listDiv {
   margin-right: 12px;
 }
+
 .mainListContent.block {
   margin-top: 4px;
 }
@@ -64,7 +74,7 @@
   width: calc(100vw - 160px - 54px);
   padding: 4px 4px;
   padding-left: 0;
-  background-color: var(--bg1);
+  background-color: var(--bg2);
   border-radius: 3px;
   font-size: 24px;
   font-weight: 500;
@@ -82,7 +92,7 @@
 
 .sublistTitleDiv input {
   font-size: 12px;
-  background-color: var(--bg1);
+  background-color: var(--bg2);
   transition: all 100ms, width 0ms;
   width: calc(100% - 80px);
   font-weight: bold;
@@ -92,7 +102,7 @@
 .sublistTitleDiv button {
   width: 24px;
   height: 20px;
-  background-color: var(--bg1);
+  background-color: var(--bg2);
   float: right;
   background-position: center;
   transform: translateY(-4px);
@@ -109,7 +119,7 @@
 
 .newItemToTopBtn:hover {
   background-image: url("../assets/plus1.svg");
-  background-color: var(--bg2);
+  background-color: var(--bg3);
 }
 
 .delSublistBtn {
@@ -117,6 +127,7 @@
   background-size: 16px 16px;
   margin-left: 4px;
 }
+
 .delSublistBtn:hover {
   background-color: var(--red);
   background-image: url("../assets/trash1.svg");
@@ -125,21 +136,24 @@
 .collapseSublistBtn.up {
   background-image: url("../assets/arrowUp.svg");
 }
+
 .collapseSublistBtn.up:hover {
   background-image: url("../assets/arrowUp1.svg");
-  background-color: var(--bg2);
+  background-color: var(--bg3);
 }
 
 .collapseSublistBtn.down {
   background-image: url("../assets/arrowDown.svg");
 }
+
 .collapseSublistBtn.down:hover {
   background-image: url("../assets/arrowDown1.svg");
-  background-color: var(--bg2);
+  background-color: var(--bg3);
 }
+
 .item {
   padding: 10px 10px 2px 8px;
-  background-color: var(--bg2);
+  background-color: var(--bg3);
   margin-bottom: 6px;
   width: calc((100vw - 160px - 70px));
   border-radius: 4px;
@@ -150,7 +164,7 @@
   color: #4f5363;
   font-size: 16px;
   display: inline-block;
-  background-color: var(--bg2);
+  background-color: var(--bg3);
   width: calc(100% - 48px);
   transition: 100ms;
   transform: translateY(-4px);
@@ -159,7 +173,7 @@
 .moreBtn {
   width: 24px;
   height: 24px;
-  background-color: var(--bg2);
+  background-color: var(--bg3);
   float: right;
   background-size: 20px 20px;
   background-position: center;
@@ -181,7 +195,7 @@
 
 .itemSettingsDiv button {
   background-size: 20px 20px;
-  background-color: var(--bg2);
+  background-color: var(--bg3);
   background-position: center;
   margin-right: 4px;
   width: 24px;
@@ -191,12 +205,13 @@
 }
 
 .itemSettingsDiv button:hover {
-  background-color: var(--bg4);
+  background-color: var(--bg5);
 }
 
 .addDescBtn {
   background-image: url("../assets/text.svg");
 }
+
 .addDescBtn:hover {
   background-image: url("../assets/textColor.svg");
 }
@@ -205,15 +220,19 @@
   background-image: url("../assets/star.svg");
   background-size: 18px 18px !important;
 }
+
 .setStarredBtn.active {
   background-image: url("../assets/starColorFilled.svg");
 }
+
 .setStarredBtn:hover {
   background-image: url("../assets/starColor.svg");
 }
+
 .addLinkBtn {
   background-image: url("../assets/link.svg");
 }
+
 .addLinkBtn:hover {
   background-image: url("../assets/linkColor.svg");
 }
@@ -249,12 +268,15 @@
   background-image: url("../assets/upload.svg");
   margin-left: 4px;
 }
+
 .uploadMediaBtn:hover {
   background-image: url("../assets/uploadColor.svg");
 }
+
 .delMediaBtn {
   background-image: url("../assets/trash.svg");
 }
+
 .delMediaBtn:hover {
   background-image: url("../assets/trashColor.svg");
 }
@@ -262,7 +284,7 @@
 .item .description {
   font-size: 14px;
   color: #404351;
-  background-color: var(--bg2);
+  background-color: var(--bg3);
   transition: 100ms;
   line-height: 14px;
   width: auto;
@@ -292,27 +314,34 @@
 .colorBtn.c0 {
   border-color: var(--blue);
 }
+
 .colorBtn.c1 {
   border-color: var(--red);
 }
+
 .colorBtn.c2 {
   border-color: var(--yellow);
 }
+
 .colorBtn.c3 {
   border-color: var(--green);
 }
+
 .colorBtn.c0:hover,
 .colorBtn.c0.active {
   background-color: var(--blue);
 }
+
 .colorBtn.c1:hover,
 .colorBtn.c1.active {
   background-color: var(--red);
 }
+
 .colorBtn.c2:hover,
 .colorBtn.c2.active {
   background-color: var(--yellow);
 }
+
 .colorBtn.c3:hover,
 .colorBtn.c3.active {
   background-color: var(--green);
@@ -339,21 +368,25 @@
   border-left: 6px solid var(--blue);
   width: calc((100vw - 160px - 71px));
 }
+
 .item.s1.starred {
   border: 1px solid var(--red);
   border-left: 6px solid var(--red);
   width: calc((100vw - 160px - 71px));
 }
+
 .item.s2.starred {
   border: 1px solid var(--yellow);
   border-left: 6px solid var(--yellow);
   width: calc((100vw - 160px - 71px));
 }
+
 .item.s3.starred {
   border: 1px solid var(--green);
   border-left: 6px solid var(--green);
   width: calc((100vw - 160px - 71px));
 }
+
 body::-webkit-scrollbar {
   /* hide scrollbar */
   display: none;
@@ -363,7 +396,7 @@ body::-webkit-scrollbar {
   height: 20px;
   width: calc(100vw - 180px);
   margin-left: 180px;
-  background-color: var(--bg2);
+  background-color: var(--bg1);
   position: fixed;
   -webkit-app-region: drag;
   transition: all 100ms width 0ms;
@@ -372,12 +405,13 @@ body::-webkit-scrollbar {
 
 #menuBar button {
   -webkit-app-region: no-drag;
-  background-color: var(--bg2);
+  background-color: var(--bg1);
   width: 20px;
   height: 20px;
   background-position: center;
   transition: 100ms;
 }
+
 #closeBtn {
   background-size: 20px 20px;
   float: right;
@@ -400,42 +434,6 @@ body::-webkit-scrollbar {
   background-image: url("../assets/minimize1.svg");
 }
 
-#fullscreenBtn {
-  background-size: 14px 14px;
-  float: right;
-  background-image: url("../assets/maximize.svg");
-}
-#fullscreenBtn.unfullscreen {
-  background-image: url("../assets/unmaximize.svg");
-}
-
-#fullscreenBtn:hover {
-  background-color: var(--bg4);
-  background-image: url("../assets/maximize1.svg");
-}
-#fullscreenBtn.unfullscreen:hover {
-  background-color: var(--bg4);
-  background-image: url("../assets/unmaximize1.svg");
-}
-
-
-#maximizeBtn {
-  background-size: 14px 14px;
-  float: right;
-  background-image: url("../assets/maximize.svg");
-}
-#maximizeBtn.unmaximize {
-  background-image: url("../assets/unmaximize.svg");
-}
-
-#maximizeBtn:hover {
-  background-color: var(--bg4);
-  background-image: url("../assets/maximize1.svg");
-}
-#maximizeBtn.unmaximize:hover {
-  background-color: var(--bg4);
-  background-image: url("../assets/unmaximize1.svg");
-}
 
 .tooltip {
   position: absolute;
@@ -457,6 +455,7 @@ body::-webkit-scrollbar {
 .openMediaFolderBtn {
   background-image: url("../assets/folder.svg");
 }
+
 .openMediaFolderBtn:hover {
   background-image: url("../assets/folderColor.svg");
 }
@@ -470,7 +469,7 @@ body::-webkit-scrollbar {
 }
 
 #settings {
-  background-color: var(--bg1);
+  background-color: var(--bg2);
   margin: 20px 12px 0 12px;
   border-radius: 4px;
 }
@@ -488,6 +487,7 @@ body::-webkit-scrollbar {
   color: #818491;
   font-weight: 1;
 }
+
 #settings h3 {
   font-size: 16px;
   font-weight: 1;
@@ -499,7 +499,7 @@ body::-webkit-scrollbar {
   margin-bottom: 8px;
   margin-top: 6px;
   padding: 12px 12px;
-  background-color: var(--bg2);
+  background-color: var(--bg3);
   border-radius: 4px;
 }
 
@@ -537,15 +537,15 @@ body::-webkit-scrollbar {
   transition: 400ms;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: var(--green);
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   background-color: #d5d5d5;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   transform: translateX(17px);
 }
 
@@ -565,7 +565,7 @@ a {
 .openLinkBtn {
   float: none;
   background-size: 100%;
-  background-color: var(--bg2);
+  background-color: var(--bg3);
   background-image: url("../assets/linkColor.svg");
   width: 20px;
   display: inline;
@@ -581,7 +581,7 @@ a {
   float: right;
   width: 26px;
   height: 26px;
-  background-color: var(--bg2);
+  background-color: var(--bg3);
   background-size: 20px 20px;
   transition: 100ms;
   transform: translateY(-3px);
@@ -590,12 +590,12 @@ a {
 }
 
 #openResourcesFolderBtn:hover {
-  background-color: var(--bg4);
+  background-color: var(--bg5);
   background-image: url("../assets/folder1.svg");
 }
 
 .mainListContent.text {
-  background-color: var(--bg1);
+  background-color: var(--bg2);
   margin: 0;
   padding-bottom: 2px;
   border-radius: 4px;
@@ -605,11 +605,13 @@ a {
   font-size: 14px;
   margin-bottom: 4px;
 }
+
 .mainListContent.text .block.text .text {
   overflow-x: auto;
   color: #6a6d7a;
-  background-color: var(--bg1);
+  background-color: var(--bg2);
 }
+
 .mainListContent.text .block.code {
   margin-bottom: 8px;
   color: #404351;
@@ -618,7 +620,7 @@ a {
 
 .mainListContent.text button {
   background-size: 20px 20px;
-  background-color: var(--bg1);
+  background-color: var(--bg2);
   background-position: center;
   margin-right: 4px;
   width: 24px;
@@ -628,12 +630,13 @@ a {
 }
 
 .mainListContent.text button:hover {
-  background-color: var(--bg2);
+  background-color: var(--bg3);
 }
 
 .newCodeBlockBtn {
   background-image: url("../assets/code.svg");
 }
+
 .newCodeBlockBtn:hover {
   background-image: url("../assets/codeColor.svg");
 }
@@ -657,7 +660,7 @@ a {
 
 .delBlockBtn {
   margin: 0 !important;
-  background-color: var(--bg1) !important;
+  background-color: var(--bg2) !important;
   background-image: url("../assets/trash.svg");
 }
 
@@ -665,13 +668,19 @@ a {
   background-color: var(--bg3) !important;
   background-image: url("../assets/trashColor.svg");
 }
+
 .mainListContent.text .block.code .text {
   padding: 8px 10px;
   border-radius: 3px;
   white-space: nowrap;
-  background-color: var(--bg2);
+  background-color: var(--bg3);
   font-family: Consolas !important;
   overflow-x: auto;
+}
+
+.mainListContent.text .block.code .text div {
+  /* ? new lines are inside of divs for some reason */
+  font-family: Consolas !important;
 }
 
 .blockSettingsDiv {
@@ -682,7 +691,7 @@ a {
 #side {
   position: fixed;
   height: 100%;
-  background-color: var(--bg2);
+  background-color: var(--bg1);
   padding: 8px;
   z-index: 900;
   width: 164px;
@@ -694,7 +703,7 @@ a {
 
 .sideListBtn {
   display: block;
-  background-color: var(--bg2);
+  background-color: var(--bg1);
   text-align: left;
   margin-top: 2px;
   transition: 100ms;
@@ -714,22 +723,27 @@ a {
 .sideListBtn.block {
   background-image: url("../assets/listIcons/blockList.svg");
 }
+
 .sideListBtn.block.active {
   background-image: url("../assets/listIcons/blockList1.svg");
 }
+
 /* block & unlocked */
 .sideListBtn.block.unlocked.active {
   background-image: url("../assets/unlock1.svg"),
     url("../assets/listIcons/blockList1.svg");
   background-position: 114px 10px, 138px 10px;
 }
+
 /* text */
 .sideListBtn.text {
   background-image: url("../assets/listIcons/textList.svg");
 }
+
 .sideListBtn.text.active {
   background-image: url("../assets/listIcons/textList1.svg");
 }
+
 /* text & unlocked */
 .sideListBtn.text.unlocked.active {
   background-image: url("../assets/unlock1.svg"),
@@ -741,6 +755,7 @@ a {
 .sideListBtn.locked {
   background-image: url("../assets/lock.svg");
 }
+
 .sideListBtn.locked.active {
   background-image: url("../assets/lock1.svg");
 }
@@ -748,12 +763,13 @@ a {
 .sideListBtn.active {
   background-color: var(--green);
 }
+
 .sideListBtn.active:hover {
   background-color: var(--green);
 }
 
 .sideListBtn:hover {
-  background-color: var(--bg3);
+  background-color: var(--bg2);
 }
 
 .sideListBtn.active .title {
@@ -776,8 +792,9 @@ a {
   display: inline-block;
   margin-top: 8px;
 }
+
 .pswdInput {
-  background-color: var(--bg2);
+  background-color: var(--bg3);
   transition: 100ms;
   padding: 2px 12px;
   height: 20px;
@@ -786,7 +803,7 @@ a {
 }
 
 .pswdSubmit {
-  background-color: var(--bg2);
+  background-color: var(--bg3);
   width: 24px;
   transform: translateY(8px);
   transition: 100ms;
@@ -807,7 +824,7 @@ a {
   text-align: center;
   margin-top: 30vh;
   user-select: none;
-  color: var(--bg3);
+  color: var(--bg5);
   font-size: 32px;
 }
 
@@ -819,6 +836,7 @@ a {
 .pswdInput::placeholder {
   color: #404351;
 }
+
 .lockedTitle {
   color: #404351;
   user-select: none;
@@ -831,6 +849,7 @@ a {
 .unlockListBtn {
   background-image: url("../assets/unlock.svg");
 }
+
 .lockListBtn:hover {
   background-image: url("../assets/lockColor.svg");
 }
@@ -862,6 +881,7 @@ a {
   background-position: 138px 5px;
   background-image: url("../assets/settings.svg");
 }
+
 #settingsBtn.active {
   color: #dfdfdf;
   background-image: url("../assets/settings2.svg");
@@ -879,11 +899,12 @@ a {
 }
 
 #newListBtn:hover {
-  background-color: var(--bg4);
+  background-color: var(--bg5);
   color: #4f5363;
 }
+
 #listType {
-  background-color: var(--bg2);
+  background-color: var(--bg1);
   color: #404351;
   user-select: none;
   outline: none;
@@ -909,27 +930,34 @@ a {
   width: auto;
   white-space: nowrap;
   color: #404351;
-  background-color: var(--bg2);
+  background-color: var(--bg3);
 }
+
 .alert p {
   display: inline-block;
   margin-left: 4px;
 }
+
 .alert.error {
   border-left: 6px solid var(--red);
 }
+
 .alert.success {
   border-left: 6px solid var(--green);
 }
+
 .alert.normal {
   border-left: 6px solid var(--bg3);
 }
+
 .alert.warning {
   border-left: 6px solid var(--yellow);
 }
+
 .alert.info {
   border-left: 6px solid var(--blue);
 }
+
 .alert img {
   width: 18px;
   margin-right: 4px;
@@ -942,6 +970,7 @@ a {
   0% {
     opacity: 0%;
   }
+
   100% {
     opacity: 100%;
   }
@@ -949,19 +978,22 @@ a {
 
 @keyframes flash {
   0% {
-    background-color: var(--bg2);
-  }
-  20% {
     background-color: var(--bg3);
   }
+
+  20% {
+    background-color: var(--bg5);
+  }
+
   100% {
-    background-color: var(--bg2);
+    background-color: var(--bg3);
   }
 }
 
 ::selection {
   background: var(--selectionGreen);
 }
+
 * {
   margin: 0;
   padding: 0 0;
@@ -971,7 +1003,7 @@ a {
 }
 
 body {
-  background-color: var(--bg1);
+  background-color: var(--bg2);
 }
 
 #app {

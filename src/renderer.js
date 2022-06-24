@@ -22,29 +22,6 @@ document.getElementById("minimizeBtn").addEventListener("click", function () {
   window.api.send('minimize', '');
 });
 
-
-document.getElementById("fullscreenBtn").addEventListener("click", function () {
-  if (!fullscreened) {
-    this.classList.add('unfullscreen')
-  } else {
-    this.classList.remove('unfullscreen')
-  }
-  fullscreened = !fullscreened
-
-  window.api.send('fullscreen', fullscreened);
-});
-
-document.getElementById("maximizeBtn").addEventListener("click", function () {
-  if (!maximized) {
-    this.classList.add('unmaximize')
-  } else {
-    this.classList.remove('unmaximize')
-  }
-  maximized = !maximized
-
-  window.api.send('maximize', maximized);
-});
-
 document.getElementById("newListBtn").addEventListener("click", function () {
   let type = document.getElementById('listType').value
   showAlert('Created New List', + 2000, "success")
@@ -134,6 +111,9 @@ window.api.receive("toRenderer", (args, data) => {
   }
   if (args == 'dirname') {
     dirname = data
+  }
+  if(args == 'openSettings'){
+    document.querySelector('#settingsBtn').click()
   }
   console.log('Received [' + data + '] from main process');
 

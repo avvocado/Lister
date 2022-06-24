@@ -18,20 +18,6 @@ const createWindow = () => {
   // create tray
   tray = new Tray(path.join(__dirname, '../', "/assets/", '/appIcons/', 'icon18x18.png'));
 
-  tray.setContextMenu(Menu.buildFromTemplate([
-    {
-      label: 'Show App', click: function () {
-        win.show();
-      }
-    },
-    {
-      label: 'Quit', click: function () {
-        app.quit();
-      }
-    }
-  ]));
-  tray.setToolTip('Lister')
-
 
   // Create the browser window.
   win = new BrowserWindow({
@@ -102,18 +88,6 @@ ipcMain.on("close", (evt, args) => {
 
   //win.hide()
   // new Notification({ title: 'Lister Minimized to Tray', body: '',}).show()
-})
-
-ipcMain.on("maximize", (evt, args) => {
-  if (args == true) {
-    BrowserWindow.getFocusedWindow().maximize()
-  } else {
-    BrowserWindow.getFocusedWindow().unmaximize()
-  }
-})
-
-ipcMain.on("fullscreen", (evt, args) => {
-  BrowserWindow.fullscreen = args // ! doesn't work ???
 })
 
 ipcMain.on("minimize", (evt, args) => {
@@ -208,15 +182,25 @@ ipcMain.on("trayIcon", (evt, args) => {
     // color
     tray = new Tray(path.join(__dirname, '../', "/assets/", '/appIcons/', 'icon18x18.png'));
   }
-  tray.setContextMenu(Menu.buildFromTemplate([
+
+  // open on left click on windows
+  if (process.platform == 'win32') {
+    tray.on('click', function () {
+      tray.popUpContextMenu();
+    })
+  }
+
+
+  let menu = Menu.buildFromTemplate([
     {
-      label: 'Show App', click: function () {
+      label: 'Lister', click: function () {
         win.show();
       }
     },
     {
-      label: 'temporary label', click: function () {
-        //
+      label: 'Settings', click: function () {
+        win.show();
+        win.webContents.send("toRenderer", "openSettings", "");
       }
     },
     { type: 'separator' },
@@ -225,7 +209,9 @@ ipcMain.on("trayIcon", (evt, args) => {
         app.quit();
       }
     }
-  ]));
+  ])
+
+  tray.setContextMenu(menu);
   tray.setToolTip('Lister')
 })
 
