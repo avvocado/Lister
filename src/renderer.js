@@ -4,20 +4,18 @@ document.getElementById("closeBtn").addEventListener("click", function () {
   window.api.send('close', '');
 });
 
-document.getElementById("hideSideBtn").addEventListener("click", function () {
-  document.querySelector('#side').style.display = 'none'
-  document.querySelector('#menuBar').style.width = '100vw'
-  document.querySelector('#menuBar').style.margin = '0'
-  document.querySelector('#content').style.margin = '0'
-  document.querySelector('#showSideBtn').style.display = null
-});
-
-document.getElementById("showSideBtn").addEventListener("click", function () {
-  document.querySelector('#side').style.display = null
-  document.querySelector('#menuBar').style.width = 'calc(100vw - 160px)'
-  document.querySelector('#menuBar').style.marginLeft = '160px'
-  document.querySelector('#content').style.marginLeft = '176px'
-  document.querySelector('#showSideBtn').style.display = 'none'
+document.getElementById("toggleSideBtn").addEventListener("click", function () {
+  if (document.querySelector('#side').style.display == 'none') {
+    document.querySelector('#side').style.display = null
+    document.querySelector('#menuBar').style.width = 'calc(100vw - 180px)'
+    document.querySelector('#menuBar').style.marginLeft = '180px'
+    document.querySelector('#content').style.marginLeft = '180px'
+  } else {
+    document.querySelector('#side').style.display = 'none'
+    document.querySelector('#menuBar').style.width = '100vw'
+    document.querySelector('#menuBar').style.margin = '0'
+    document.querySelector('#content').style.margin = '0'
+  }
 });
 
 document.getElementById("password").addEventListener("blur", function () {
@@ -40,7 +38,7 @@ document.getElementById("minimizeBtn").addEventListener("click", function () {
 
 document.getElementById("newListBtn").addEventListener("click", function () {
   let type = document.getElementById('listType').value
-  showAlert('Created New List', + 2000, "success")
+  showAlert('Created New List',1000, "success")
   newList(type)
 });
 
@@ -177,10 +175,11 @@ function generateList() {
           sideListBtnDate.innerHTML = timeAgo(d.getTime(), edate)
           sideListBtn.classList.remove('locked')
           sideListBtn.classList.add('unlocked')
+          showAlert('Correct Password!', 1000, 'success')
         } else {
           // incorrect password
           pswd.select()
-          showAlert('Incorrect Password', 2000, 'error')
+          showAlert('Incorrect Password', 1000, 'error')
         }
       }
       pswd.onkeydown = function (e) {
@@ -320,7 +319,7 @@ function generateList() {
 
     let deleteListBtn = create('button', 'deleteListBtn')
     deleteListBtn.onclick = function () {
-      showAlert('Deleted "' + list['children'][l]['name'] + '"', + 2000, "success")
+      showAlert('Deleted "' + list['children'][l]['name'] + '"', + 1000, "success")
       removeList(l)
     }
     deleteListBtn = handleTooltip(deleteListBtn, deleteListBtnTooltip)
@@ -929,7 +928,7 @@ function generateList() {
       newCodeBlockBtn = handleTooltip(newCodeBlockBtn, newCodeBlockBtnTooltip)
 
       newCodeBlockBtn.onclick = function () {
-        list['children'][l]['children'].push({
+        /*list['children'][l]['children'].push({
           "data": "New Code Block",
           "type": "code"
         })
@@ -938,7 +937,8 @@ function generateList() {
           "type": "text"
         })
         writeJSON(list)
-        generateList()
+        generateList()*/
+        showAlert('Code blocks are currently disabled', 1250, 'warning')
       }
       newCodeBlockBtnDiv.append(newCodeBlockBtnTooltip)
       newCodeBlockBtnDiv.append(newCodeBlockBtn)
@@ -949,6 +949,141 @@ function generateList() {
 
       listDiv.append(listContent)
       lists.append(listDiv)
+    } else if (list['children'][l]['type'] == 'checklist') {
+      listDiv.classList.add('checklist')
+      listContent.classList.add('checklist')
+
+      // NEW SUBLIST BUTTON
+      let newSublistBtnDiv = create('div', '')
+      let newSublistBtnTooltip = createTooltip('New Sublist', 22, false)
+
+      let newSublistBtn = create('button', 'newSublistBtn')
+      newSublistBtn.onclick = function () {
+        newChecklistSublist(l)
+        writeJSON(list)
+        generateList()
+      }
+      newSublistBtn = handleTooltip(newSublistBtn, newSublistBtnTooltip)
+      newSublistBtnDiv.append(newSublistBtnTooltip)
+      newSublistBtnDiv.append(newSublistBtn)
+      listSettingsDiv.append(newSublistBtnDiv)
+
+      let sublists = create('div', 'mainListContent checklist')
+      for (let i = 0; i < list['children'][l]['children'].length; i++) {
+        // FOR_EACH_SUBLIST
+
+        let sublistDiv = create('div', 'sublistDiv')
+        let sublistContentDiv = create('div', 'checklistSublistDiv')
+
+
+        let sublistTitleDiv = create('div', 'sublistTitleDiv')
+        let collapseSublistBtn = create('button', 'collapseSublistBtn down')
+        collapseSublistBtn.onclick = function () {
+          if (sublistContentDiv.style.display == 'none') {
+            sublistContentDiv.style.display = null
+            this.classList.remove('up')
+            this.classList.add('down')
+          } else {
+            sublistContentDiv.style.display = 'none'
+            this.classList.remove('down')
+            this.classList.add('up')
+          }
+        }
+
+        let deleteSublistBtn = create('button', 'delSublistBtn')
+        deleteSublistBtn.onclick = function () {
+          deleteSublist(l, i)
+        }
+
+        let sublistTitleP = document.createElement('input')
+
+        sublistTitleP.value = list['children'][l]['children'][i]['name']
+        sublistTitleP.type = 'text'
+        sublistTitleP.spellcheck = false
+        sublistTitleP.onkeydown = function (e) {
+          if (e.code == 'Enter') {
+            this.blur()
+          }
+        }
+        sublistTitleP.oninput = function () {
+          this.value = this.value.toUpperCase()
+        }
+        // only update list and writejson if it actually changed
+        let stpTemp = ''
+        sublistTitleP.onfocus = function () {
+          stpTemp = this.value
+        }
+        sublistTitleP.onblur = function () {
+          if (this.value != stpTemp) {
+            list['children'][l]['children'][i]['name'] = this.value
+            writeJSON(list)
+            listEdited(l)
+          }
+        }
+        sublistTitleDiv.append(deleteSublistBtn)
+
+        sublistTitleDiv.append(collapseSublistBtn)
+        sublistTitleDiv.append(sublistTitleP)
+
+        sublistDiv.append(sublistTitleDiv)
+        sublistDiv.append(sublistContentDiv)
+        sublists.append(sublistDiv)
+
+
+        for (let e = 0; e < list['children'][l]['children'][i]['children'].length; e++) {
+          let itemDiv = create('div', ('checklistItem ' + list['children'][l]['children'][i]['children'][e]['checked']))
+          let itemText = create('p', 'checklistItemText')
+          let checkbox = create('button', ('checkBoxBtn ' + list['children'][l]['children'][i]['children'][e]['checked']))
+          checkbox.onclick = function () {
+            list['children'][l]['children'][i]['children'][e]['checked'] = !list['children'][l]['children'][i]['children'][e]['checked']
+            this.className = 'checkBoxBtn ' + list['children'][l]['children'][i]['children'][e]['checked']
+            itemDiv.className = 'checklistItem ' + list['children'][l]['children'][i]['children'][e]['checked']
+            writeJSON(list)
+          }
+          itemText.contentEditable = true
+
+          let ctTemp = ''
+          itemText.onkeydown = function (e) {
+            if (e.code == 'Enter') {
+              this.blur()
+            }
+          }
+          itemText.onfocus = function () {
+            ctTemp = this.innerHTML
+          }
+          itemText.onblur = function () {
+            if (this.innerHTML != ctTemp) {
+              list['children'][l]['children'][i]['children'][e]['text'] = this.innerHTML
+              writeJSON(list)
+              generateList()
+              listEdited(l)
+            }
+            if (this.innerHTML.replaceAll(' ', '') == '' && e != list['children'][l]['children'][i]['children'].length - 1) {
+              // if empty and not last element
+              deleteChecklistItem(l, i, e)
+            }
+            if (this.innerHTML.replaceAll(' ', '') != '' && e == list['children'][l]['children'][i]['children'].length - 1) {
+              // not empty and is last element
+              newChecklistItemToBottom(l, i)
+            }
+          }
+          itemText.innerHTML = list['children'][l]['children'][i]['children'][e]['text']
+
+          // dont give last element a checkbox
+          if (e != list['children'][l]['children'][i]['children'].length - 1) {
+            itemDiv.append(checkbox)
+          } else {
+            // is the last element
+            itemText.style.marginLeft = '22px'
+          }
+          itemDiv.append(itemText)
+          sublistContentDiv.append(itemDiv)
+        }
+      }
+      listContent.append(sublists)
+      listDiv.append(listContent)
+      lists.append(listDiv)
+
     }
   }
 

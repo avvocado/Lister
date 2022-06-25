@@ -22,6 +22,14 @@ function newSublist(l) {
   })
 }
 
+function newChecklistSublist(l) {
+  let d = new Date()
+  list['children'][l]['children'].push({
+    "name": "SUBLIST",
+    "children": [{"text": "", "checked": false, "creationDate": d.getTime()}]
+  })
+}
+
 // deletes a block in text list
 function deleteBlock(l, a) {
   list['children'][l]['children'].splice(a, 1);
@@ -46,6 +54,26 @@ function newItemToTop(l, i) {
   generateList()
 }
 
+// creates a new item at the top of a checklist list
+function newChecklistItemToBottom(l, i) {
+  // add new item in index 0
+  let d = new Date()
+  list['children'][l]['children'][i]['children'].push({
+    text: "",
+    checked: false,
+    creationDate: d.getTime(),
+  })
+  writeJSON(list)
+  generateList()
+}
+
+
+// delete item in checklist
+function deleteChecklistItem(l, i, e) {
+  list['children'][l]['children'][i]['children'].splice(e, 1);
+  writeJSON(list)
+  generateList()
+}
 
 // delete item in block list
 function removeItem(l, i, e) {
@@ -124,6 +152,18 @@ function newList(type) {
       "name": "New Text List",
       "type": "text",
       "creationDate": d.getTime(),
+      "locked": false,
+      "lastEdited": d.getTime()
+    })
+  }
+  else if (type == 'checklist') {
+    list['children'].unshift({
+      "children": [
+        { "text": "SUBLIST", "children": [] }
+      ],
+      "name": "New Checklist",
+      "creationDate": d.getTime(),
+      "type": "checklist",
       "locked": false,
       "lastEdited": d.getTime()
     })

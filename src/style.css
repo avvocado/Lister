@@ -38,7 +38,7 @@
 }
 
 .listSettingsDiv button:hover {
-  background-color: var(--bg4);
+  background-color: var(--bg5);
 }
 
 .listSettingsDiv div {
@@ -81,13 +81,18 @@
 }
 
 .sublistDiv {
-  margin-right: 12px;
   margin-bottom: 16px;
+}
+
+.checklistSublistDiv {
+  background-color: var(--bg3);
+  padding: 8px 8px;
+  border-radius: 4px;
 }
 
 .sublistTitleDiv {
   margin-bottom: 2px;
-  width: calc(100% + 12px);
+  width: calc(100%);
 }
 
 .sublistTitleDiv input {
@@ -138,6 +143,7 @@
 }
 
 .collapseSublistBtn.up:hover {
+  background-color: var(--bg4);
   background-image: url("../assets/arrowUp1.svg");
 }
 
@@ -146,15 +152,59 @@
 }
 
 .collapseSublistBtn.down:hover {
+  background-color: var(--bg4);
   background-image: url("../assets/arrowDown1.svg");
+}
+
+.checklistItem {
+  width: calc((100%));
+}
+
+
+.checklistItem.true .checklistItemText {
+  color: #393c4c;
+  text-decoration: line-through;
+}
+
+.checklistItem.false .checklistItemText {
+  color: #4f5363;
+}
+
+
+.checklistItemText {
+  font-size: 16px;
+  display: inline-block;
   background-color: var(--bg3);
+  width: calc(100% - 48px);
+  transition: 100ms;
+  transform: translateY(-4px);
+}
+
+
+.checkBoxBtn {
+  height: 16px;
+  width: 16px;
+  border-radius: 3px;
+  margin-right: 6px;
+  transition: background-color 100ms;
+  background-color: var(--bg5);
+  background-position: center;
+}
+
+.checkBoxBtn.false:hover {
+  background-image: url('../assets/check.svg');
+}
+
+.checkBoxBtn.true {
+  background-color: var(--green);
+  background-image: url('../assets/check1.svg');
 }
 
 .item {
   padding: 10px 10px 2px 8px;
   background-color: var(--bg3);
   margin-bottom: 6px;
-  width: calc((100% - 12px));
+  width: calc((100% - 24px));
   border-radius: 4px;
   transition: all 100ms, padding 0ms, width 0ms;
 }
@@ -393,7 +443,8 @@ body::-webkit-scrollbar {
 
 #menuBar {
   height: 20px;
-  width: calc(100vw);
+  width: calc(100vw - 180px);
+  margin-left: 180px;
   background-color: var(--bg1);
   position: fixed;
   -webkit-app-region: drag;
@@ -413,7 +464,6 @@ body::-webkit-scrollbar {
 #closeBtn {
   background-size: 20px 20px;
   float: right;
-  background-position: left !important;
   background-image: url("../assets/close.svg");
 }
 
@@ -734,6 +784,22 @@ a {
   background-position: 114px 10px, 138px 10px;
 }
 
+/* checklist */
+.sideListBtn.checklist {
+  background-image: url("../assets/listIcons/checklistList.svg");
+}
+
+.sideListBtn.checklist.active {
+  background-image: url("../assets/listIcons/checklistList1.svg");
+}
+
+/* checklist & unlocked */
+.sideListBtn.checklist.unlocked.active {
+  background-image: url("../assets/unlock1.svg"),
+    url("../assets/listIcons/checklistList1.svg");
+  background-position: 114px 10px, 138px 10px;
+}
+
 /* text */
 .sideListBtn.text {
   background-image: url("../assets/listIcons/textList.svg");
@@ -747,7 +813,7 @@ a {
 .sideListBtn.text.unlocked.active {
   background-image: url("../assets/unlock1.svg"),
     url("../assets/listIcons/textList1.svg");
-  background-position: 116px 6px, 140px 6px;
+  background-position: 116px 10px, 140px 10px;
 }
 
 /* locked */
@@ -964,23 +1030,16 @@ a {
   transform: translateY(3px);
 }
 
-#showSideBtn {
+#toggleSideBtn {
   background-size: 20px 20px;
-  background-position: right !important;
   background-image: url('../assets/sidebar.svg');
 }
 
-#showSideBtn:hover {
+#toggleSideBtn:hover {
   background-color: var(--bg5);
   background-image: url('../assets/sidebar1.svg');
 }
 
-#hideSideBtn {
-  background-image: url('../assets/sidebar.svg');
-  width: 24px;
-  background-color: var(--bg1);
-  height: 24px;
-}
 
 /* animations + global/unimportant elements & properties */
 @keyframes fadein {
