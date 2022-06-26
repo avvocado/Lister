@@ -53,8 +53,9 @@ document.getElementById("toggleSideBtn").addEventListener("click", function () {
 document.getElementById("password").addEventListener("blur", function () {
   if (settings['password'] != this.value) {
     // if the password actually changed
-    writeSettings(settings)
     settings['password'] = this.value
+
+    writeSettings(settings)
   }
 });
 
@@ -167,8 +168,7 @@ function generateList() {
         listDiv.classList.add('locked')
         listContent.style.display = 'none'
         lockedDiv = create('div', 'lockedDiv')
-        pswd = create('input', 'pswdInput')
-        pswd.type = 'password'
+        pswd = createElement('input', { 'class': 'pswdInput', 'type': 'password', 'placeholder': 'Password' })
         let pswdSubmit = create('button', 'pswdSubmit')
         pswdSubmit.onclick = function () {
           if (pswd.value == settings['password']) {
@@ -180,7 +180,7 @@ function generateList() {
             sideListBtnText.innerHTML = list['children'][l]['name']
             sideListBtnDate.innerHTML = timeAgo(d.getTime(), edate)
             sideListBtn.classList.remove('locked')
-            sideListBtn.classList.add('unlocked')
+            sideListBtn.classList.add(list['children'][l]['type'])
             showAlert('Unlocked "' + list['children'][l]['name'] + '"', 1000, 'success')
           } else {
             // incorrect password
@@ -193,7 +193,6 @@ function generateList() {
             pswdSubmit.click()
           }
         }
-        pswd.placeholder = 'Password'
         lockedDiv.append(lockedTitle)
         if (system['touchID'] == true) {
           lockedDiv.append(touchIdBtn)
@@ -203,10 +202,8 @@ function generateList() {
         listDiv.append(lockedDiv)
       }
 
-
       // list title
-      let listTitle = create('input', 'listTitle')
-      listTitle.type = 'text'
+      let listTitle = createElement('input', { 'class': 'listTitle', 'type': 'text', 'value': (list['children'][l]['name']) })
       let ltTemp = ''
       listTitle.onkeydown = function (e) {
         if (e.code == 'Enter') {
@@ -224,7 +221,6 @@ function generateList() {
           listEdited(l)
         }
       }
-      listTitle.value = list['children'][l]['name']
 
       sideListBtn = create('div', 'sideListBtn ')
       sideListBtnText = create('p', 'title')
@@ -280,11 +276,34 @@ function generateList() {
           // if you're entering a locked list, relock it
           if (selectedList != l) {
 
-            sideListBtn.classList.remove('unlocked')
+            console.log(settings)
+            if (settings.lockedListTimeoutDuration > 0) {
+              // start the timeout
+              console.log('list timeout started')
+              setTimeout(function () {
+                // lock it back up!
+                lockedDiv.style.display = null
+                listContent.style.display = 'none'
+                sideListBtnText.innerHTML = 'Locked List'
+                sideListBtnDate.innerHTML = '...'
+                sideListBtn.classList.add('locked')
+                sideListBtn.classList.remove(list['children'][l]['type'])
+                console.log('ilst timed out')
+              }, settings.lockedListTimeoutDuration);
+            }
+
+
+            sideListBtn.classList.remove(list['children'][l]['type'])
             sideListBtn.classList.add('locked')
             lockedDiv.style.display = 'block'
             listContent.style.display = 'none'
             pswd.focus()
+
+            // do touchid
+            if (system.touchID = true) {
+              awaitUnlock = l
+              window.api.send('touchID', '');
+            }
           }
           // you're going to the same list & its unlocked, bypass the lock
           if (l == selectedList && lockedDiv.style.display != 'block') {
@@ -293,14 +312,14 @@ function generateList() {
             sideListBtnText.innerHTML = list['children'][l]['name']
             sideListBtnDate.innerHTML = timeAgo(d.getTime(), edate)
             sideListBtn.classList.remove('locked')
-            sideListBtn.classList.add('unlocked')
+            sideListBtn.classList.add(list['children'][l]['type'])
           }
         }
         if (selectedList >= 0 && list['children'][selectedList]['locked'] == true && selectedList != l) {
           // leaving a locked list, just change the title of sidelist btn to locked list
           document.querySelectorAll('.sideListBtn .title')[selectedList].innerHTML = 'Locked List'
           document.querySelectorAll('.sideListBtn .date')[selectedList].innerHTML = '...'
-          document.querySelectorAll('.sideListBtn')[selectedList + 1].classList.remove('unlocked')
+          document.querySelectorAll('.sideListBtn')[selectedList + 1].classList.remove(list['children'][l]['type'])
           document.querySelectorAll('.sideListBtn')[selectedList + 1].classList.add('locked')
           document.querySelectorAll('.listDiv')[selectedList].children[0].children[1].value = ''
           //                         .listDiv                .lockedDiv  .pswdInput
@@ -314,9 +333,12 @@ function generateList() {
 
       // list settings, creation date, last edit + buttons
       let listSettingsDiv = create('div', 'listSettingsDiv')
-      let listCreationDate = create('p', 'listDate')
-      listCreationDate.title = months[tdate.getMonth()] + ' ' + tdate.getDate() + ", " + (tdate.getHours() % 12 || 12) + ":" + tdate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(tdate)
-      listCreationDate.innerHTML = "Created " + (timeAgo(d.getTime(), list['children'][l]['creationDate']))
+      let listCreationDate = createElement('p', {
+        'class': 'listDate',
+        'title': (months[tdate.getMonth()] + ' ' + tdate.getDate() + ", " + (tdate.getHours() % 12 || 12) + ":" + tdate.getMinutes().toString().padStart(2, '0') + " " + getAmPm(tdate)),
+        'innerhtml': ("Created " + (timeAgo(d.getTime(), list['children'][l]['creationDate'])))
+      })
+
       lastEdited = create('p', 'listDate')
 
       if (list['children'][l]['lastEdited'] != 0) {
@@ -428,11 +450,11 @@ function generateList() {
             newItemToTop(l, i)
             listEdited(l)
           }
-          let sublistTitleP = document.createElement('input')
+          let sublistTitleP = createElement('input', {
+            'value': (list['children'][l]['children'][i]['name']),
+            'type': 'text',
+          })
 
-          sublistTitleP.value = list['children'][l]['children'][i]['name']
-          sublistTitleP.type = 'text'
-          sublistTitleP.spellcheck = settings['spellcheck']
           sublistTitleP.onkeydown = function (e) {
             if (e.code == 'Enter') {
               this.blur()
@@ -477,11 +499,12 @@ function generateList() {
             itemDiv.classList.add(("s" + (list['children'][l]['children'][i]['children'][e]['color']).toString()));
 
             // ITEM_TITLE
-            let itemTitle = document.createElement('p')
-            itemTitle.contentEditable = true
-            itemTitle.spellcheck = settings['spellcheck']
-            itemTitle.innerHTML = list['children'][l]['children'][i]['children'][e]['title']
-            itemTitle.className = 'title'
+            let itemTitle = createElement('p', {
+              'contenteditable': true,
+              'innerhtml': (list['children'][l]['children'][i]['children'][e]['title']),
+              'class': 'title'
+            })
+            itemTitle.spellcheck = settings.spellcheck
             let itTemp = ''
             itemTitle.onfocus = function () {
               itTemp = this.innerHTML
@@ -1000,10 +1023,11 @@ function generateList() {
             deleteSublist(l, i)
           }
 
-          let sublistTitleP = document.createElement('input')
+          let sublistTitleP = createElement('input', {
+            'value': (list['children'][l]['children'][i]['name']),
+            'type': 'text',
+          })
 
-          sublistTitleP.value = list['children'][l]['children'][i]['name']
-          sublistTitleP.type = 'text'
           sublistTitleP.spellcheck = settings['spellcheck']
           sublistTitleP.onkeydown = function (e) {
             if (e.code == 'Enter') {
@@ -1018,7 +1042,7 @@ function generateList() {
 
           sublistTitleP.onblur = function () {
             if (this.value != stpTemp) {
-              list['children'][l]['children'][i]['name'] = this.value3
+              list['children'][l]['children'][i]['name'] = this.value
               writeJSON(list)
               listEdited(l)
             }
@@ -1116,10 +1140,21 @@ function generateList() {
           writeJSON(list)
           generateList()
         }
+
+        searchBox = create('input', 'accountSearchBox')
+        searchBox.type = 'text'
+        searchBox.placeholder = 'Search...'
+        searchBox.spellcheck = settings.spellcheck
+
+
         newAccountBtn = handleTooltip(newAccountBtn, newAccountBtnTooltip)
         newAccountBtnDiv.append(newAccountBtnTooltip)
         newAccountBtnDiv.append(newAccountBtn)
         listSettingsDiv.append(newAccountBtnDiv)
+        listContent.append(searchBox)
+
+        let accountsDiv = create('div', 'mainListContent accounts')
+
         for (let i = 0; i < list['children'][l]['children'].length; i++) {
           // each account
           let accountDiv = create('div', 'accountDiv')
@@ -1158,11 +1193,13 @@ function generateList() {
             writeJSON(list)
             generateList()
           }
+          deleteAccountBtn.style.marginBottom = '4px'
 
           let fieldType = create('select', 'field')
           fieldType.innerHTML = (`
           <option value='Email'>Email</option>
           <option value='ID'>ID</option>
+          <option value='Name'>Name</option>
           <option value='Password'>Password</option>
           <option value='Phone'>Phone</option>
           <option value='Token'>Token</option>
@@ -1199,7 +1236,6 @@ function generateList() {
 
           let accountTypeIconMap = {
             "education": "../assets/accountTypeIcons/book.svg",
-            "education": "../assets/accountTypeIcons/book.svg",
             "shopping": "../assets/accountTypeIcons/shopping.svg",
             "music": "../assets/accountTypeIcons/music.svg",
             "socialmedia": "../assets/accountTypeIcons/message.svg",
@@ -1208,9 +1244,20 @@ function generateList() {
             "email": "../assets/accountTypeIcons/mail.svg",
           }
 
+          accountType.style.marginTop = '4px'
+          fieldType.style.transform = 'translateY(-6px)'
+
+          let p1 = create('p', '')
+          p1.innerHTML = 'New Field'
+
+          let p2 = create('p', '')
+          p2.innerHTML = 'Account Type'
+
           let accountSettingsDiv = create('div', 'accountSettingsDiv')
-          accountSettingsDiv.append(fieldType)
+          accountSettingsDiv.append(p1)
           accountSettingsDiv.append(newFieldBtn)
+          accountSettingsDiv.append(fieldType)
+          accountSettingsDiv.append(p2)
           accountSettingsDiv.append(accountType)
           accountSettingsDiv.append(deleteAccountBtn)
 
@@ -1246,6 +1293,7 @@ function generateList() {
               "Website": "globe.svg",
               "Email": "mail.svg",
               "Username": "user.svg",
+              "Name": "user.svg",
               "Token": "key.svg",
               "ID": "id.svg",
               "Phone": "phone.svg"
@@ -1257,6 +1305,7 @@ function generateList() {
             // token: key
             // phone: phone
             // id: id card
+            // name: user
 
             if (Object.keys(fieldIcons).includes(list['children'][l]['children'][i]['fields'][e]['title'])) {
               // is not a custom field, has icon
@@ -1296,8 +1345,7 @@ function generateList() {
               }
             }
 
-            let colon = create('p', '')
-            colon.innerHTML = ':'
+            let colon = createElement('p', { "innerhtml": ':' })
 
             // appends
             fieldDiv.append(fieldTitle)
@@ -1306,11 +1354,33 @@ function generateList() {
             accountDiv.append(fieldDiv)
           }
           accountDiv.append(accountSettingsDiv)
-          listContent.append(accountDiv)
+          accountsDiv.append(accountDiv)
         }
         let accountCount = create('p', 'accountCount')
+
+        searchBox.oninput = function () {
+          // do search
+          let accts = 0
+          for (let k = 0; k < list['children'][l]['children'].length; k++) {
+            listContent.querySelectorAll('.accountDiv')[k].style.display = 'none'
+          }
+          for (let k = 0; k < list['children'][l]['children'].length; k++) {
+            if (list['children'][l]['children'][k]['name'].toLowerCase().includes(this.value.toLowerCase())) {
+              listContent.querySelectorAll('.accountDiv')[k].style.display = null
+              accts += 1;
+            }
+          }
+          if (this.value == '') {
+            accountCount.innerHTML = list['children'][l]['children'].length + ((list['children'][l]['children'].length == 1) ? ' Account' : ' Accounts')
+          } else {
+            accountCount.innerHTML = accts + ((accts == 1) ? ' Account' : ' Accounts') + '<br>' + list['children'][l]['children'].length + ((list['children'][l]['children'].length == 1) ? ' Account Total' : ' Accounts Total')
+          }
+        }
+
         accountCount.innerHTML = list['children'][l]['children'].length + ((list['children'][l]['children'].length == 1) ? ' Account' : ' Accounts')
         accountCount.style.userSelect = 'none'
+        accountCount.style.marginBottom = '16px'
+        listContent.append(accountsDiv)
         listContent.append(accountCount)
         listDiv.append(listContent)
         lists.append(listDiv)

@@ -9,7 +9,9 @@
 }
 
 .listSettingsDiv {
-  margin-top: -8px;
+  display: inline-block;
+  transform: translateY(-6px);
+  width: 100%;
 }
 
 .listSettingsDiv button {
@@ -50,21 +52,23 @@
   margin-right: 12px;
 }
 
-.mainListContent.block {
-  margin-top: 4px;
-}
+
 
 .listTitle {
   transition: all 100ms, width 0ms;
-  display: inline-block;
   color: #606472;
   width: calc(100%);
   padding: 4px 4px;
+  transform: translateY(-8px);
   padding-left: 0;
   background-color: var(--bg2);
   border-radius: 3px;
   font-size: 24px;
   font-weight: bold;
+}
+
+.listContent.accounts .listTitle {
+  width: calc(100% - 240px);
 }
 
 .sublistDiv {
@@ -707,6 +711,11 @@ input:checked+.slider:before {
   border-radius: 4px;
 }
 
+.mainListContent{
+  transform: translateY(-8px);
+}
+
+
 .mainListContent.text .block.text {
   font-size: 14px;
   margin-bottom: 4px;
@@ -714,7 +723,7 @@ input:checked+.slider:before {
 
 .mainListContent.text .block.text .text {
   overflow-x: auto;
-  color: #6a6d7a;
+  color:#535663;
   background-color: var(--bg2);
 }
 
@@ -915,7 +924,6 @@ input:checked+.slider:before {
   font-size: 12px;
   user-select: none;
   display: inline-block;
-  margin-top: 8px;
 }
 
 .pswdInput {
@@ -1005,13 +1013,36 @@ input:checked+.slider:before {
   padding: 8px 8px 4px 8px;
   background-color: var(--bg3);
   display: inline-block;
-  margin-right: 12px;
   vertical-align: top;
   box-shadow: 0 1px 1px 0.3px var(--bg1);
   border-radius: 3px;
-  min-width: 160px;
   margin-bottom: 12px;
+  flex: 1 1 30%;
   width: auto;
+  align-self: flex-start;
+}
+
+.accountSearchBox {
+  background-color: var(--bg2);
+  float: right;
+  font-size: 16px;
+  border-bottom: 2px solid var(--bg4);
+  transition: 100ms;
+  padding: 0 2px;
+  color: #404351;
+}
+
+
+.accountSearchBox:focus {
+  border-bottom: 2px solid var(--bg5);
+}
+
+
+.mainListContent.accounts {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  column-gap: 12px;
 }
 
 .accountDiv p {
@@ -1022,6 +1053,7 @@ input:checked+.slider:before {
   color: #4f5363;
   white-space: nowrap;
   font-size: 18px;
+  margin-bottom: 4px;
   vertical-align: top;
   display: inline-block;
 }
@@ -1030,6 +1062,7 @@ input:checked+.slider:before {
   color: #2d303c;
   text-align: center;
   font-size: 12px;
+  margin-top: 16px;
   font-weight: bold;
 }
 
@@ -1060,6 +1093,7 @@ input:checked+.slider:before {
   display: block;
   font-size: 15px;
   margin: 0 0 4px 0;
+  white-space: nowrap;
 }
 
 
@@ -1070,7 +1104,7 @@ input:checked+.slider:before {
 }
 
 .blur {
-  filter: blur(5px);
+  filter: blur(4px);
 }
 
 .blur:hover,
@@ -1091,7 +1125,7 @@ input:checked+.slider:before {
   height: 26px;
   width: 26px;
   background-position: center;
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   margin-right: 4px;
   background-size: 100%;
 }
@@ -1102,6 +1136,12 @@ input:checked+.slider:before {
   margin-top: 8px;
 }
 
+.accountDiv .accountSettingsDiv p {
+  color: #393c4c;
+  margin-bottom: 1px;
+  font-size: 14px;
+}
+
 .newFieldBtn {
   background-image: url('../assets/plus.svg');
   background-position: center;
@@ -1109,6 +1149,7 @@ input:checked+.slider:before {
   height: 22px;
   border-radius: 3px;
   transition: 100ms;
+  margin-right: 4px;
   background-size: 20px 20px;
   background-color: var(--bg3);
 }

@@ -63,7 +63,15 @@ body {
   display: none;
 }
 
+input::placeholder {
+  color: #32343f;
+}
+
 input {
+  outline: none;
+}
+
+select {
   outline: none;
 }
 
@@ -164,7 +172,7 @@ body::-webkit-scrollbar-track {
 }
 
 #info {
-  position: absolute;
+  position: fixed;
   text-align: center;
   margin-top: 32px;
   overflow: hidden;
@@ -179,7 +187,7 @@ body::-webkit-scrollbar-track {
   font-size: 16px;
   width: auto;
   white-space: nowrap;
-  color: #404351;
+  color: #4f5363;
   background-color: var(--bg3);
   box-shadow: 0 1px 1px 0.3px var(--bg1);
 }
