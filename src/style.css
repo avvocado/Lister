@@ -189,15 +189,16 @@
   transition: background-color 100ms;
   background-color: var(--bg5);
   background-position: center;
+  background-image: url('../assets/check.svg');
 }
 
 .checkBoxBtn.false:hover {
-  background-image: url('../assets/check.svg');
+  background-image: url('../assets/check1.svg');
 }
 
 .checkBoxBtn.true {
   background-color: var(--green);
-  background-image: url('../assets/check1.svg');
+  background-image: url('../assets/check2.svg');
 }
 
 .item {

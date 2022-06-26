@@ -38,7 +38,7 @@ document.getElementById("minimizeBtn").addEventListener("click", function () {
 
 document.getElementById("newListBtn").addEventListener("click", function () {
   let type = document.getElementById('listType').value
-  showAlert('Created New List',1000, "success")
+  showAlert('Created New List', 1000, "success")
   newList(type)
 });
 
@@ -247,6 +247,7 @@ function generateList() {
         if (l != selectedList) {
           document.getElementsByClassName('sideListBtn')[selectedList + 1].classList.remove('active')
         }
+        document.querySelector('#settingsBtn').classList.remove('active')
 
         // update last edited
         let d = new Date()

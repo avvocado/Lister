@@ -159,7 +159,7 @@ function newList(type) {
   else if (type == 'checklist') {
     list['children'].unshift({
       "children": [
-        { "text": "SUBLIST", "children": [] }
+        { "name": "SUBLIST", "children": [{"text": "", "checked": false, "creationDate": d.getTime()}] }
       ],
       "name": "New Checklist",
       "creationDate": d.getTime(),
