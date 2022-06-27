@@ -34,8 +34,9 @@ const createWindow = () => {
     resizable: true,
     frame: false,
     icon: path.join(__dirname, '../', "/assets", '/appIcons', "icon.png"),
-    backgroundColor: '#12131900',
+    backgroundColor: '#1B1D26',
     darkTheme: true,
+    show: false
   })
 
 
@@ -48,6 +49,15 @@ const createWindow = () => {
     shell.openExternal(url);
     return { action: 'deny' };
   })
+
+  if (process.platform !== 'darwin') {
+    win.once('ready-to-show', () => {
+      win.show()
+    })
+  } else {
+    win.show()
+  }
+
 
   console.log('created main window')
 }
@@ -169,6 +179,14 @@ ipcMain.on("openPath", (evt, args) => {
 })
 ipcMain.on("openFile", (evt, args) => {
   shell.openPath(path.join(__dirname, '../', 'resources', '/media/', args));
+})
+
+ipcMain.on("maximize", (evt, args) => {
+  if (win.isMaximized()) {
+    win.unmaximize()
+  } else {
+    win.maximize();
+  }
 })
 
 

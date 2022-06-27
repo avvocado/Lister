@@ -177,7 +177,6 @@
   background-color: var(--bg3);
   width: calc(100% - 48px);
   transition: 100ms;
-  transform: translateY(-4px);
 }
 
 
@@ -189,6 +188,7 @@
   transition: background-color 100ms;
   background-color: var(--bg5);
   background-position: center;
+  transform: translateY(2px);
   background-image: url('../assets/check.svg');
 }
 
@@ -414,7 +414,7 @@
 }
 
 .item.starred {
-  width: calc((100% - 13px));
+  width: calc((100% - 25px));
 }
 
 .item.s0.starred {
@@ -482,6 +482,28 @@ body::-webkit-scrollbar {
 #minimizeBtn:hover {
   background-color: var(--bg4);
   background-image: url("../assets/minimize1.svg");
+}
+
+#maximizeBtn.true {
+  background-size: 14px 14px;
+  float: right;
+  background-image: url("../assets/maximize.svg");
+}
+
+#maximizeBtn.true:hover {
+  background-color: var(--bg4);
+  background-image: url("../assets/maximize1.svg");
+}
+
+#maximizeBtn.false {
+  background-size: 14px 14px;
+  float: right;
+  background-image: url("../assets/unmaximize.svg");
+}
+
+#maximizeBtn.false:hover {
+  background-color: var(--bg4);
+  background-image: url("../assets/unmaximize1.svg");
 }
 
 
@@ -762,11 +784,17 @@ a {
   padding: 8px 8px;
   user-select: none;
   background-size: 18px 18px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   border-radius: 3px;
   background-position: 138px 10px;
   font-size: 14px;
+}
+
+.sideListBtn p {
+  text-overflow: ellipsis;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: calc(100% - 20px);
 }
 
 /* block */

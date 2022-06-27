@@ -36,6 +36,12 @@ document.getElementById("minimizeBtn").addEventListener("click", function () {
   window.api.send('minimize', '');
 });
 
+document.getElementById("maximizeBtn").addEventListener("click", function () {
+  window.api.send('maximize', '');
+  console.log('maximize')
+  this.className = !(this.className === 'true')
+});
+
 document.getElementById("newListBtn").addEventListener("click", function () {
   let type = document.getElementById('listType').value
   showAlert('Created New List', 1000, "success")
@@ -82,8 +88,6 @@ const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 var currImgIndex = [0, 0, 0]
 var list
 var settings
-var fullscreened = false
-var maximized = false
 
 function init() {
 
@@ -595,9 +599,6 @@ function generateList() {
           setStarredBtn.onclick = function () {
             // edit list
             list['children'][l]['children'][i]['children'][e].starred = !list['children'][l]['children'][i]['children'][e].starred
-            if (list['children'][l]['children'][i]['children'][e].starred == true) {
-              sendItemToTop(l, i, e)
-            }
             writeJSON(list)
             generateList()
 
@@ -1042,6 +1043,7 @@ function generateList() {
             writeJSON(list)
           }
           itemText.contentEditable = true
+          itemText.spellcheck = false
 
           let ctTemp = ''
           itemText.onkeydown = function (e) {
