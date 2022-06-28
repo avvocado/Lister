@@ -181,7 +181,7 @@ function generateList() {
             sideListBtnDate.innerHTML = timeAgo(d.getTime(), edate)
             sideListBtn.classList.remove('locked')
             sideListBtn.classList.add('unlocked')
-            showAlert('List Unlocked', 1000, 'success')
+            showAlert('Unlocked "' + list['children'][l]['name'] + '"', 1000, 'success')
           } else {
             // incorrect password
             pswd.select()
@@ -195,7 +195,6 @@ function generateList() {
         }
         pswd.placeholder = 'Password'
         lockedDiv.append(lockedTitle)
-        console.log(system)
         if (system['touchID'] == true) {
           lockedDiv.append(touchIdBtn)
         }
@@ -305,6 +304,10 @@ function generateList() {
           document.querySelectorAll('.sideListBtn')[selectedList + 1].classList.add('locked')
           document.querySelectorAll('.listDiv')[selectedList].children[0].children[1].value = ''
           //                         .listDiv                .lockedDiv  .pswdInput
+        }
+        if (selectedList >= 0 && list['children'][selectedList]['type'] == 'accounts' && selectedList != l) {
+          // leaving an account list, sort it
+          sortAccounts(selectedList)
         }
         selectedList = l
       }
@@ -434,9 +437,6 @@ function generateList() {
             if (e.code == 'Enter') {
               this.blur()
             }
-          }
-          sublistTitleP.oninput = function () {
-            this.value = this.value.toUpperCase()
           }
           // only update list and writejson if it actually changed
           let stpTemp = ''
@@ -909,7 +909,6 @@ function generateList() {
               });
               setTimeout(function () {
                 codeBlockP.style.animation = ''
-
               }, 500);
             }
             copyBtnDiv.append(copyBtnTooltip)
@@ -1010,9 +1009,6 @@ function generateList() {
             if (e.code == 'Enter') {
               this.blur()
             }
-          }
-          sublistTitleP.oninput = function () {
-            this.value = this.value.toUpperCase()
           }
           // only update list and writejson if it actually changed
           let stpTemp = ''
@@ -1162,9 +1158,100 @@ function generateList() {
             generateList()
           }
 
+          let accountType = create('select', '')
+
+          let option1 = create('option', '')
+          option1.value = ''
+          option1.innerHTML = 'None'
+
+          let option2 = create('option', '')
+          option2.value = 'education'
+          option2.innerHTML = 'Education'
+
+          let option3 = create('option', '')
+          option3.value = 'shopping'
+          option3.innerHTML = 'Shopping'
+
+          let option4 = create('option', '')
+          option4.value = 'music'
+          option4.innerHTML = 'Music'
+
+          let option5 = create('option', '')
+          option5.value = 'socialmedia'
+          option5.innerHTML = 'Social Media'
+
+          let option6 = create('option', '')
+          option6.value = 'entertainment'
+          option6.innerHTML = 'Entertainment'
+
+          let option7 = create('option', '')
+          option7.value = 'game'
+          option7.innerHTML = 'Game'
+
+          let option8 = create('option', '')
+          option8.value = 'email'
+          option8.innerHTML = 'Email'
+
+          accountType.append(option1) // none
+          accountType.append(option2) // education
+          accountType.append(option8) // email
+          accountType.append(option6) // entertainment
+          accountType.append(option7) // game
+          accountType.append(option4) // music
+          accountType.append(option3) // shopping
+          accountType.append(option5) // social media
+
+          accountType.oninput = function () {
+            list['children'][l]['children'][i]['type'] = this.value
+            if (list['children'][l]['children'][i]['type'] != '') {
+              // not none
+              accountIcon.style.display = null
+              accountIcon.src = accountTypeIconMap[list['children'][l]['children'][i]['type']]
+            } else {
+              accountIcon.style.display = 'none'
+            }
+            writeJSON(list)
+          }
+
+          accountType.value = list['children'][l]['children'][i]['type']
+
+          let accountTypeIconMap = {
+            "education": "../assets/accountTypeIcons/book.svg",
+            "education": "../assets/accountTypeIcons/book.svg",
+            "shopping": "../assets/accountTypeIcons/shopping.svg",
+            "music": "../assets/accountTypeIcons/music.svg",
+            "socialmedia": "../assets/accountTypeIcons/message.svg",
+            "entertainment": "../assets/accountTypeIcons/film.svg",
+            "game": "../assets/accountTypeIcons/controller.svg",
+            "email": "../assets/accountTypeIcons/mail.svg",
+          }
+
+          let accountSettingsDiv = create('div', 'accountSettingsDiv')
+          accountSettingsDiv.append(newFieldBtn)
+          accountSettingsDiv.append(accountType)
+          accountSettingsDiv.append(deleteAccountBtn)
+
+          let openAccountSettingsBtn = create('button', 'openAccountSettingsBtn')
+          openAccountSettingsBtn.onclick = function () {
+            if (accountSettingsDiv.style.display == 'none') {
+              accountSettingsDiv.style.display = null
+            } else {
+              accountSettingsDiv.style.display = 'none'
+            }
+          }
+
+          let accountIcon = create('img', '')
+          if (list['children'][l]['children'][i]['type'] != '') {
+            // not none
+            accountIcon.src = accountTypeIconMap[list['children'][l]['children'][i]['type']]
+          } else {
+            accountIcon.style.display = 'none'
+          }
+          openAccountSettingsBtn.click()
+
+          accountDiv.append(accountIcon)
           accountDiv.append(accountTitle)
-          accountDiv.append(deleteAccountBtn)
-          accountDiv.append(newFieldBtn)
+          accountDiv.append(openAccountSettingsBtn)
 
           for (let e = 0; e < list['children'][l]['children'][i]['fields'].length; e++) {
             // each field
@@ -1172,14 +1259,21 @@ function generateList() {
             let fieldIcon = create('img', '')
 
             let fieldIcons = {
-              "Password": "lock.svg", "Website": "globe.svg", "Email": "mail.svg", "Username": "user.svg", "Token": "key.svg", "ID": "id.svg"
+              "Password": "lock.svg",
+              "Website": "globe.svg",
+              "Email": "mail.svg",
+              "Username": "user.svg",
+              "Token": "key.svg",
+              "ID": "id.svg",
+              "Phone": "phone.svg"
             }
-            // password: yellow lock
-            // website: green globe
-            // email: blue mail
-            // username: blue user
-            // token: yellow key
-            // id: red id card
+            // password: lock
+            // website: globe
+            // email: mail
+            // username: user
+            // token: key
+            // phone: phone
+            // id: id card
 
             if (Object.keys(fieldIcons).includes(list['children'][l]['children'][i]['fields'][e]['title'])) {
               // is not a custom field, has icon
@@ -1215,8 +1309,9 @@ function generateList() {
             fieldTitle.innerHTML = list['children'][l]['children'][i]['fields'][e]['title']
             fieldText.spellcheck = settings['spellcheck']
             fieldText.contentEditable = true
-            if (fieldTitle.innerHTML == 'Password') {
-              fieldText.classList.add('password')
+            if (fieldTitle.innerHTML == 'Password' || fieldTitle.innerHTML == 'Token') {
+              // if is password or token, blur it
+              fieldText.classList.add('blur')
             }
             fieldText.innerHTML = list['children'][l]['children'][i]['fields'][e]['value']
             let fteTemp = ''
@@ -1248,12 +1343,12 @@ function generateList() {
             fieldDiv.append(fieldText)
             accountDiv.append(fieldDiv)
           }
-
+          accountDiv.append(accountSettingsDiv)
           listContent.append(accountDiv)
         }
         let accountCount = create('p', 'accountCount')
-        accountCount.innerHTML = list['children'][l]['children'].length + ' Accounts'
-        accountCount.style.userSelect = 'noselect'
+        accountCount.innerHTML = list['children'][l]['children'].length + ((list['children'][l]['children'].length == 1) ? ' Account' : ' Accounts')
+        accountCount.style.userSelect = 'none'
         listContent.append(accountCount)
         listDiv.append(listContent)
         lists.append(listDiv)

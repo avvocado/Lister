@@ -146,7 +146,8 @@ ipcMain.on("requestSystem", (evt, args) => {
   let systemObj = {
     "dirname": path.join(__dirname, '../'),
     "operatingSystem": process.platform,
-    "touchID": systemPreferences.canPromptTouchID()
+    "touchID": systemPreferences.canPromptTouchID(),
+    "versions": process.versions
   }
 
   win.webContents.send('system', systemObj)

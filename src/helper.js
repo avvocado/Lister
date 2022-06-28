@@ -30,6 +30,7 @@ function handleTooltip(item, tool) {
 function newAccount(l) {
   list['children'][l]['children'].push({
     "name": "",
+    "type": "",
     "fields": []
   })
 }
@@ -143,6 +144,16 @@ function listEdited(l) {
 
   generateList()
   document.querySelectorAll('.sideListBtn')[1].click()
+}
+
+function sortAccounts(l) {
+  console.log('sorting ' + l)
+  list['children'][l]['children'] = list['children'][l]['children'].sort(function (a, b) {
+    var textA = a.name.toUpperCase();
+    var textB = b.name.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+  });
+  writeJSON(list)
 }
 
 // helper to create elements

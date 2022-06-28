@@ -48,11 +48,19 @@ window.api.receive("defaultSettings", (args) => {
 
 window.api.receive("system", (args) => {
   system = args
+
+  // do system info in settings
+  let idv = document.querySelector('#appinfo')
+  idv.innerHTML += '<p>Lister: 0.0.0</p>'
+  idv.innerHTML += '<p>Running:</p>'
+  idv.innerHTML += '<p>Electron: ' + system.versions.electron + '</p>'
+  idv.innerHTML += '<p>Chromium: ' + system.versions.chrome + '</p>'
+  idv.innerHTML += '<p>Node: ' + system.versions.node + '</p>'
+
 })
 
 window.api.receive("touchID", (args) => {
   if (args == true) {
-    console.log(awaitUnlock)
     document.querySelectorAll('.listDiv')[awaitUnlock].children[0].children[2].value = settings['password']
     //                                               .lockedDiv  .pswdInput
     document.querySelectorAll('.listDiv')[awaitUnlock].children[0].children[3].click()

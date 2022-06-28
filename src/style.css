@@ -89,6 +89,7 @@
   transition: all 100ms, width 0ms;
   width: calc(100% - 80px);
   font-weight: bold;
+  text-transform: uppercase;
   color: #404351;
 }
 
@@ -975,7 +976,7 @@ input:checked+.slider:before {
 }
 
 .pswdInput::placeholder {
-  color:#393c4c;
+  color: #393c4c;
 }
 
 .lockedTitle {
@@ -1019,10 +1020,9 @@ input:checked+.slider:before {
 
 .accountDiv .accountTitle {
   color: #4f5363;
-  margin-bottom: 4px;
-  vertical-align: top;
   white-space: nowrap;
   font-size: 18px;
+  vertical-align: top;
   display: inline-block;
 }
 
@@ -1033,9 +1033,27 @@ input:checked+.slider:before {
   font-weight: bold;
 }
 
-.accountDiv .accountType {
+.accountDiv .openAccountSettingsBtn {
   background-color: var(--bg3);
-  color:#393c4c;
+  width: 22px;
+  float: right;
+  background-image: url('../assets/settings.svg');
+  height: 22px;
+  transition: 100ms;
+  border-radius: 3px;
+  background-position: center;
+  background-size: 18px 18px;
+}
+
+.accountDiv .openAccountSettingsBtn:hover {
+  background-color: var(--bg4);
+  background-image: url('../assets/settings1.svg');
+}
+
+.accountDiv select {
+  transform: translateY(-4px);
+  background-color: var(--bg3);
+  color: #393c4c;
 }
 
 .accountDiv .fieldDiv {
@@ -1046,21 +1064,19 @@ input:checked+.slider:before {
 
 
 .accountDiv .fieldDiv .text {
-  margin-left: 4px;
+  margin-left: 5px;
   color: #404351;
   transition: 200ms;
 }
 
-.accountDiv .fieldDiv .text.password {
-  filter: blur(4px);
+.blur {
+  filter: blur(5px);
 }
 
-
-.accountDiv .fieldDiv .text.password:hover,
-.accountDiv .fieldDiv .text.password:focus {
+.blur:hover,
+.blur:focus {
   filter: none;
 }
-
 
 .accountDiv .fieldDiv .title {
   color: #404351;
@@ -1071,13 +1087,26 @@ input:checked+.slider:before {
   display: inline-block;
 }
 
+.accountDiv img {
+  height: 26px;
+  width: 26px;
+  background-position: center;
+  transform: translateY(-4px);
+  margin-right: 4px;
+  background-size: 100%;
+}
+
+.accountDiv .accountSettingsDiv {
+  border-top: 2px solid var(--bg4);
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
 .newFieldBtn {
   background-image: url('../assets/plus.svg');
   background-position: center;
   width: 22px;
   height: 22px;
-  float: right;
-  margin-left: 4px;
   border-radius: 3px;
   transition: 100ms;
   background-size: 20px 20px;
@@ -1109,6 +1138,7 @@ input:checked+.slider:before {
 
 .accountDiv .fieldDiv img {
   height: 18px;
+  transform: none;
   vertical-align: top;
   margin-right: 4px;
   width: 18px;
@@ -1121,5 +1151,6 @@ input:checked+.slider:before {
   display: inline-block;
   font-size: 14px;
   border-radius: 3px;
+  transition: 200ms;
   padding: 4px 4px;
 }

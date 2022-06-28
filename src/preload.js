@@ -1,11 +1,4 @@
 
-// on load
-window.addEventListener('DOMContentLoaded', () => {
-  console.log('Chromium ' + process.versions['chrome'])
-  console.log('Node.js ' + process.versions['node'])
-  console.log('Electron.js ' + process.versions['electron'])
-})
-
 const {
   contextBridge,
   ipcRenderer
