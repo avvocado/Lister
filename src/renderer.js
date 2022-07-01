@@ -1161,6 +1161,7 @@ function generateList() {
             writeJSON(list)
             generateList()
           }
+
           accountDiv.append(accountTitle)
           accountDiv.append(deleteAccountBtn)
           accountDiv.append(newFieldBtn)
@@ -1170,7 +1171,9 @@ function generateList() {
             let fieldDiv = create('div', 'fieldDiv')
             let fieldIcon = create('img', '')
 
-            let fieldIcons = { "Password": "lock.svg", "Website": "globe.svg", "Email": "mail.svg", "Username": "user.svg", "Token": "key.svg", "ID": "id.svg" }
+            let fieldIcons = {
+              "Password": "lock.svg", "Website": "globe.svg", "Email": "mail.svg", "Username": "user.svg", "Token": "key.svg", "ID": "id.svg"
+            }
             // password: yellow lock
             // website: green globe
             // email: blue mail
