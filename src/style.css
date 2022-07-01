@@ -941,7 +941,7 @@ input:checked+.slider:before {
 
 .pswdSubmit:hover {
   background-image: url("../assets/arrowRight1.svg");
-  background-color: var(--bg3);
+  background-color: var(--bg4);
 }
 
 #noListSelected {
@@ -957,13 +957,31 @@ input:checked+.slider:before {
   margin-top: 30vh;
 }
 
+.touchidbtn {
+  background-image: url('../assets/touchid.svg');
+  background-color: var(--bg3);
+  width: 24px;
+  transform: translateY(8px);
+  transition: 100ms;
+  height: 24px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: 18px 18px;
+  margin-right: 4px;
+}
+
+.touchidbtn:hover {
+  background-color: var(--bg4);
+}
+
 .pswdInput::placeholder {
-  color: #404351;
+  color:#393c4c;
 }
 
 .lockedTitle {
-  color: #404351;
+  color: var(--bg5);
   user-select: none;
+  font-size: 20px;
 }
 
 .lockListBtn {
@@ -1032,7 +1050,8 @@ input:checked+.slider:before {
 }
 
 
-.accountDiv .fieldDiv .text.password:hover, .accountDiv .fieldDiv .text.password:focus {
+.accountDiv .fieldDiv .text.password:hover,
+.accountDiv .fieldDiv .text.password:focus {
   filter: none;
 }
 

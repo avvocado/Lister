@@ -7,7 +7,9 @@ const {
   Tray,
   Menu,
   shell,
-  ipcMain, dialog
+  ipcMain,
+  dialog,
+  systemPreferences
 } = require("electron");
 const path = require("path");
 const fs = require("fs");
@@ -106,18 +108,18 @@ ipcMain.on("minimize", (evt, args) => {
 
 ipcMain.on("requestList", (evt, args) => {
   fs.readFile(path.join(__dirname, '../', '/resources/', 'list.json'), (error, data) => {
-    win.webContents.send("toRenderer", "list", JSON.parse(data));
+    win.webContents.send("list", JSON.parse(data));
   });
 })
 ipcMain.on("requestSettings", (evt, args) => {
   fs.readFile(path.join(__dirname, '../', '/resources/', 'settings.json'), (error, data) => {
-    win.webContents.send("toRenderer", "settings", JSON.parse(data));
+    win.webContents.send("settings", JSON.parse(data));
   });
 })
 
 ipcMain.on("requestDefaultSettings", (evt, args) => {
   fs.readFile(path.join(__dirname, '../', '/resources/', 'defaultSettings.json'), (error, data) => {
-    win.webContents.send("toRenderer", "defaultSettings", JSON.parse(data));
+    win.webContents.send("defaultSettings", JSON.parse(data));
   });
 })
 
@@ -138,8 +140,16 @@ ipcMain.on("writeSettings", (evt, args) => {
   })
 })
 
-ipcMain.on("requestDirname", (evt, args) => {
-  win.webContents.send('toRenderer', 'dirname', path.join(__dirname, '../'))
+
+ipcMain.on("requestSystem", (evt, args) => {
+
+  let systemObj = {
+    "dirname": path.join(__dirname, '../'),
+    "operatingSystem": process.platform,
+    "touchID": systemPreferences.canPromptTouchID()
+  }
+
+  win.webContents.send('system', systemObj)
 })
 
 
@@ -159,7 +169,6 @@ ipcMain.on("uploadMedia", (evt, args) => {
     // checks if window was closed
     if (result.canceled) {
       console.log("no file was selected")
-      win.webContents.send("toRenderer", null);
     } else {
 
       // get first element in array which is path to file selected
@@ -171,7 +180,7 @@ ipcMain.on("uploadMedia", (evt, args) => {
       // copy file from original location to app data folder
       fs.copyFile(filePath, path.join(__dirname, '../', '/resources/', '/media/', fileName), (err) => {
         if (err) throw err;
-        win.webContents.send("toRenderer", "media", fileName);
+        win.webContents.send("media", fileName);
       });
     }
   });
@@ -188,6 +197,17 @@ ipcMain.on("maximize", (evt, args) => {
     win.unmaximize()
   } else {
     win.maximize();
+  }
+})
+
+ipcMain.on('touchID', (evt, args) => {
+  if (systemPreferences.canPromptTouchID()) {
+    systemPreferences.promptTouchID('Unlock List').then(success => {
+      win.webContents.send("touchID", true, '');
+    }).catch(err => {
+      console.log(err)
+      win.webContents.send("touchID", false, '');
+    })
   }
 })
 
@@ -220,7 +240,7 @@ ipcMain.on("trayIcon", (evt, args) => {
     {
       label: 'Settings', click: function () {
         win.show();
-        win.webContents.send("toRenderer", "openSettings", "");
+        win.webContents.send("openSettings", "");
       }
     },
     { type: 'separator' },

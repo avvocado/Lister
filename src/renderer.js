@@ -124,80 +124,14 @@ document.getElementById("settingsBtn").addEventListener("click", function () {
 
 });
 
-// globals
-
-var selectedList = -2
-const months = ['January', "February", 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-var currImgIndex = [0, 0, 0]
-var list
-var settings
-
 function init() {
   // request the json
   // uses toMain, which sends data to the main process
   window.api.send('requestList', '');
   window.api.send('requestSettings', '');
-  window.api.send('requestDirname', '');
+  window.api.send('requestSystem', '');
   // wait for main to send back the json
 }
-
-// receiving info from main process
-window.api.receive("toRenderer", (args, data) => {
-  if (args == 'list') {
-    // list json
-    list = data
-    generateList()
-  }
-
-  if (args == 'settings') {
-    // settings json
-    settings = data
-
-    // load settings
-    document.getElementById('alwaysOnTopCheckbox').checked = settings['alwaysOnTop']
-    window.api.send('alwaysOnTop', settings['alwaysOnTop']);
-
-    document.getElementById('bwtrayiconCheckbox').checked = settings['bwTrayIcon']
-    window.api.send('trayIcon', settings['bwTrayIcon']);
-
-    // block list item media width
-    document.getElementById('blockListItemMediaWidth').value = settings['blockListItemMediaWidth'] / 10
-    document.querySelector('#mediaWidthTitle').innerHTML = 'Media Width (' + (settings['blockListItemMediaWidth']) + '%)'
-    for (let i = 0; i < document.querySelectorAll('.itemMedia').length; i++) {
-      document.querySelectorAll('.itemMedia')[i].style.width = settings['blockListItemMediaWidth'] + '%'
-    }
-
-    // checked item style
-    document.querySelectorAll(".checkedItemStyleBtn")[settings['checkedItemStyle']].click()
-
-    // spellcheck
-    document.getElementById('spellcheckToggle').checked = settings['spellcheck']
-
-
-    document.getElementById('password').value = settings['password']
-    generateList()
-
-  }
-  if (args == 'media') {
-    // data is an array of media names
-    list['children'][currImgIndex[0]]['children'][currImgIndex[1]]['children'][currImgIndex[2]]['media'].push(data)
-    writeJSON(list)
-    generateList()
-  }
-
-  if (args == 'defaultSettings') {
-    writeSettings(data)
-    window.api.send('requestSettings', '');
-  }
-  if (args == 'dirname') {
-    dirname = data
-  }
-  if (args == 'openSettings') {
-    document.querySelector('#settingsBtn').click()
-  }
-
-});
 
 function generateList() {
   try {
@@ -224,7 +158,12 @@ function generateList() {
       let pswd
       if (list['children'][l]['locked'] == true) {
         let lockedTitle = create('p', 'lockedTitle')
-        lockedTitle.innerHTML = 'This List is Locked.'
+        let touchIdBtn = create('button', 'touchidbtn')
+        touchIdBtn.onclick = function () {
+          awaitUnlock = l
+          window.api.send('touchID', '');
+        }
+        lockedTitle.innerHTML = 'This List is Locked'
         listDiv.classList.add('locked')
         listContent.style.display = 'none'
         lockedDiv = create('div', 'lockedDiv')
@@ -256,7 +195,10 @@ function generateList() {
         }
         pswd.placeholder = 'Password'
         lockedDiv.append(lockedTitle)
-
+        console.log(system)
+        if (system['touchID'] == true) {
+          lockedDiv.append(touchIdBtn)
+        }
         lockedDiv.append(pswd)
         lockedDiv.append(pswdSubmit)
         listDiv.append(lockedDiv)
@@ -304,7 +246,6 @@ function generateList() {
       let lastEdited
       sideListBtn.onclick = function () {
 
-
         this.classList.add('active')
 
         if (selectedList != -2) {
@@ -339,6 +280,7 @@ function generateList() {
         if (list['children'][l]['locked'] == true) {
           // if you're entering a locked list, relock it
           if (selectedList != l) {
+
             sideListBtn.classList.remove('unlocked')
             sideListBtn.classList.add('locked')
             lockedDiv.style.display = 'block'
@@ -585,8 +527,6 @@ function generateList() {
                   let img = document.createElement('img')
                   img.className = 'itemMedia'
                   img.src = "../resources/media/" + list['children'][l]['children'][i]['children'][e]['media'][p]
-                  img.alt = 'Error loading ' + dirname + 'resources/media/' + list['children'][l]['children'][i]['children'][e]['media']
-                  img.title = dirname + 'resources/media/' + list['children'][l]['children'][i]['children'][e]['media']
 
                   img.addEventListener("dblclick", function () {
                     window.api.send('openFile', list['children'][l]['children'][i]['children'][e]['media'][p]);
@@ -1310,6 +1250,7 @@ function generateList() {
         }
         let accountCount = create('p', 'accountCount')
         accountCount.innerHTML = list['children'][l]['children'].length + ' Accounts'
+        accountCount.style.userSelect = 'noselect'
         listContent.append(accountCount)
         listDiv.append(listContent)
         lists.append(listDiv)

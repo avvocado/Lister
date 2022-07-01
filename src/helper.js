@@ -1,5 +1,17 @@
 
 
+// globals
+var selectedList = -2
+const months = ['January', "February", 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+var currImgIndex = [0, 0, 0]
+var awaitUnlock = -1
+var list
+var settings
+var system
+
+
+
 // handles the tooltip code
 // params: item the tooltip is attached to, tooltip element
 function handleTooltip(item, tool) {
