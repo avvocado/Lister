@@ -26,6 +26,11 @@
   background: var(--selectionGreen);
 }
 
+button {
+  background-color: var(--bg3);
+  transition: 100ms;
+}
+
 video,
 audio,
 img {
@@ -37,6 +42,7 @@ img {
   margin: 0;
   padding: 0 0;
   border: none;
+  background-position: center;
   font-family: Helvetica;
   background-repeat: no-repeat;
 }
@@ -225,7 +231,7 @@ body::-webkit-scrollbar-track {
 
 #side #listsSearch {
   background-color: var(--bg1);
-  color:#404351;
+  color: #404351;
   float: right;
   margin-top: 12px;
   text-align: right;
@@ -233,8 +239,8 @@ body::-webkit-scrollbar-track {
   width: calc(100% - 70px);
 }
 
-#exitSearch{
-  background-image: url('../assets/close.svg');
+#exitSearch {
+  background-image: url("../assets/close.svg");
   height: 16px;
   background-position: center;
   margin-top: 12px;
@@ -243,4 +249,36 @@ body::-webkit-scrollbar-track {
   margin-right: 4px;
   background-color: var(--bg1);
   width: 16px;
+}
+
+.right {
+  float: right;
+}
+
+.bg-green {
+  background-color: var(--green);
+}
+
+.text-green {
+  color: var(--green);
+}
+
+.border-green {
+  border: 1px solid var(--green);
+}
+
+.bg-red {
+  background-color: var(--red);
+}
+
+.text-red {
+  color: var(--red);
+}
+
+.border-red {
+  border: 1px solid var(--red);
+}
+
+.margin4 {
+  margin: 4px;
 }

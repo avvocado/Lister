@@ -36,10 +36,10 @@ function newAccount(l) {
   listEdited(l)
 }
 
-function newAccountField(l, i, name) {
+function newAccountField(l, i, name ,value) {
   list['children'][l]['children'][i]['fields'].push({
     "title": name,
-    "value": ""
+    "value": value
   })
 
   // sort fields
@@ -150,6 +150,9 @@ function createElement(type, params) {
   if (params.title) {
     elem.title = params.title
   }
+  if (params.hide == true) {
+    elem.style.display = 'none'
+  }
 
   return (elem)
 }
@@ -184,6 +187,7 @@ function removeList(l) {
 function listEdited(l) {
   d = new Date()
   list['children'][l]['lastEdited'] = d.getTime()
+  writeJSON(list)
 
   let temp = list['children'][selectedList]
 
@@ -191,7 +195,6 @@ function listEdited(l) {
 
   selectedList = list['children'].indexOf(temp)
 
-  generateList()
   document.querySelectorAll('.sideListBtn')[1].click()
 }
 

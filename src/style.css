@@ -17,7 +17,6 @@
 }
 
 .deleteListBtn {
-  float: right;
   background-image: url("../assets/trashColor.svg");
 }
 
@@ -35,7 +34,6 @@
   background-color: var(--bg2);
   border-radius: 3px;
   background-size: 18px 18px;
-  background-position: center;
   transition: background-color 100ms;
 }
 
@@ -113,7 +111,6 @@
   height: 20px;
   background-color: var(--bg2);
   float: right;
-  background-position: center;
   transform: translateY(-4px);
   border-radius: 3px;
   transition: 100ms;
@@ -195,7 +192,6 @@
   border: 2px solid var(--bg4);
   transition: background-color 100ms border 100ms;
   background-color: var(--bg3);
-  background-position: center;
   transform: translateY(1px);
 }
 
@@ -235,7 +231,6 @@
   background-color: var(--bg3);
   float: right;
   background-size: 20px 20px;
-  background-position: center;
   transform: translateY(-7px) translateX(6px);
   background-image: url("../assets/settings.svg");
 }
@@ -255,7 +250,6 @@
 .itemSettingsDiv button {
   background-size: 20px 20px;
   background-color: var(--bg3);
-  background-position: center;
   margin-right: 4px;
   width: 24px;
   height: 24px;
@@ -462,7 +456,6 @@
   background-color: var(--bg1);
   width: 24px;
   height: 20px;
-  background-position: center;
   transition: 100ms;
 }
 
@@ -596,19 +589,20 @@
 }
 
 .settingsDiv .btn.fatal {
-  padding: 4px 8px;
+  padding: 4px 12px;
   border-radius: 6px;
   float: right;
   background-color: var(--bg3);
   transition: 100ms;
   margin-right: 8px;
-  color: #bcbcbc;
-  border: 2px solid var(--red);
+  color: var(--red);
+  border: 1px solid var(--red);
 }
 
 .settingsDiv .btn.fatal:hover {
   background-color: var(--red);
-  border: 2px solid var(--red);
+  border: 1px solid var(--red);
+  color: #d5d5d5;
 }
 
 .settingsDiv .btn:hover {
@@ -701,7 +695,6 @@ input:checked + .slider:before {
   background-size: 20px 20px;
   transition: 100ms;
   transform: translateY(-3px);
-  background-position: center;
   background-image: url("../assets/folder.svg");
 }
 
@@ -741,7 +734,6 @@ input:checked + .slider:before {
 .mainListContent.text button {
   background-size: 20px 20px;
   background-color: var(--bg2);
-  background-position: center;
   margin-right: 4px;
   width: 24px;
   height: 24px;
@@ -948,7 +940,6 @@ input:checked + .slider:before {
   height: 24px;
   border-radius: 50%;
   background-image: url("../assets/arrowRight.svg");
-  background-position: center;
   background-size: 18px 18px;
   margin-left: 4px;
 }
@@ -979,7 +970,6 @@ input:checked + .slider:before {
   transition: 100ms;
   height: 24px;
   border-radius: 50%;
-  background-position: center;
   background-size: 18px 18px;
   margin-right: 4px;
 }
@@ -1027,7 +1017,6 @@ input:checked + .slider:before {
   align-self: flex-start;
 }
 
-
 .accountSearchBox {
   background-color: var(--bg2);
   float: right;
@@ -1074,23 +1063,21 @@ input:checked + .slider:before {
   background-color: var(--bg3);
   width: 22px;
   float: right;
-  background-image: url("../assets/settings.svg");
+  background-image: url("../assets/penEdit.svg");
   height: 22px;
   transition: 100ms;
   border-radius: 3px;
-  background-position: center;
-  background-size: 18px 18px;
+  background-size: 20px 20px;
 }
 
 .accountDiv .openAccountSettingsBtn:hover {
   background-color: var(--bg4);
-  background-image: url("../assets/settings1.svg");
+  background-image: url("../assets/penEdit1.svg");
 }
 
 .accountDiv select {
   transform: translateY(-4px);
   background-color: var(--bg3);
-  color: #3b3e4c;
 }
 
 .blur {
@@ -1106,30 +1093,44 @@ input:checked + .slider:before {
 .accountDiv tr td .title {
   color: var(--bg5);
   text-transform: uppercase;
+  cursor: default;
   font-size: 11px;
   font-weight: bold;
 }
 
-.accountDiv tr td .text {
-  color:#3b3e4c;
-  transform: translateY(-2px);
+.accountDiv .collapseAccountBtn.up {
+  height: 20px;
+  width: 20px;
+  margin-left: 4px;
+  background-image: url("../assets/arrowUp.svg");
 }
 
+.accountDiv .collapseAccountBtn.down {
+  height: 20px;
+  margin-left: 4px;
+  width: 20px;
+  background-image: url("../assets/arrowDown.svg");
+}
 
+.accountDiv .collapseAccountBtn.up:hover {
+  background-image: url("../assets/arrowUp1.svg");
+}
+
+.accountDiv .collapseAccountBtn.down:hover {
+  background-image: url("../assets/arrowDown1.svg");
+}
+
+.accountDiv tr td .text {
+  color: #3b3e4c;
+  transform: translateY(-2px);
+}
 
 .accountDiv img {
   height: 26px;
   width: 26px;
-  background-position: center;
   transform: translateY(-3px);
   margin-right: 4px;
   background-size: 100%;
-}
-
-.accountDiv .accountSettingsDiv {
-  border-top: 2px solid var(--bg4);
-  padding-top: 8px;
-  margin-top: 8px;
 }
 
 .accountDiv .accountSettingsDiv p {
@@ -1138,9 +1139,44 @@ input:checked + .slider:before {
   font-size: 14px;
 }
 
+.accountDiv table tr td .deleteFieldBtn {
+  background-image: url("../assets/close.svg");
+  height: 10px;
+  margin-left: 8px;
+  width: 10px;
+  transform: translateY(-2px);
+}
+
+.accountDiv .accountSettingsDiv input {
+  background-color: var(--bg3);
+  vertical-align: super;
+  transition: 100ms;
+  color: #404351;
+  margin-left: 4px;
+  display: inline-block;
+}
+
+.accountDiv .accountSettingsDiv input:focus {
+  border-bottom: 2px solid var(--bg5);
+}
+
+.accountDiv .accountSettingsDiv {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 2px solid var(--bg5);
+}
+.fieldType {
+  color: var(--bg5);
+  margin-left: -4px;
+  text-transform: uppercase;
+  margin-top: 12px;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+}
+
 .newFieldBtn {
   background-image: url("../assets/plus.svg");
-  background-position: center;
   width: 22px;
   height: 22px;
   border-radius: 3px;
@@ -1157,7 +1193,6 @@ input:checked + .slider:before {
 
 .delAccountBtn {
   float: right;
-  background-position: center;
   width: 22px;
   background-color: var(--bg3);
   margin-left: 4px;

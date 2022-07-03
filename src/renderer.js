@@ -52,7 +52,7 @@ document.getElementById("blockListItemMediaWidth").addEventListener("input", fun
 document.querySelector('#listsSearch').addEventListener('input', function () {
   if (this.value != '') {
     document.querySelector('#exitSearch').style.display = null
-  }else{
+  } else {
     document.querySelector('#exitSearch').style.display = 'none'
   }
   for (let s = 0; s < document.querySelectorAll('.sideListBtn').length; s++) {
@@ -371,7 +371,7 @@ function generateList() {
       let deleteListBtnDiv = create('div', '')
       let deleteListBtnTooltip = createTooltip('Delete List', 38, false)
 
-      let deleteListBtn = create('button', 'deleteListBtn')
+      let deleteListBtn = createElement('button', { 'class': 'deleteListBtn right' })
       deleteListBtn.onclick = function () {
         showAlert('Deleted "' + list['children'][l]['name'] + '"', + 1000, "success")
         removeList(l)
@@ -1174,11 +1174,51 @@ function generateList() {
         let accountsDiv = create('div', 'mainListContent accounts')
 
         for (let i = 0; i < list['children'][l]['children'].length; i++) {
-          // each account
+          // for each account
+          // for_each_account
+
+          let editableOnEdit = []
+          let accountFields = createElement('table', {})
+
           let accountDiv = create('div', 'accountDiv')
           let accountTitle = create('p', 'accountTitle')
-          accountTitle.contentEditable = true
+          let collapseIcon = createElement('button', { 'class': 'collapseAccountBtn up' })
+
+          accountTitle.contentEditable = false
+          accountTitle.style.cursor = 'default'
+          editableOnEdit.push(accountTitle)
+          accountTitle.onclick = function () {
+            if (this.contentEditable == 'false') {
+              if (accountFields.style.display == 'none') {
+                accountFields.style.display = null
+                collapseIcon.classList.remove('up')
+                collapseIcon.classList.add('down')
+              } else {
+                accountFields.style.display = 'none'
+                collapseIcon.classList.remove('down')
+                collapseIcon.classList.add('up')
+              }
+            }
+          }
+
+          collapseIcon.onclick = function () {
+            if (accountTitle.contentEditable == 'false') {
+              if (accountFields.style.display == 'none') {
+                accountFields.style.display = null
+                collapseIcon.classList.remove('up')
+                collapseIcon.classList.add('down')
+              } else {
+                accountFields.style.display = 'none'
+                collapseIcon.classList.remove('down')
+                collapseIcon.classList.add('up')
+              }
+            }
+          }
+
+          collapseIcon.click()
           accountTitle.spellcheck = settings['spellcheck']
+
+          let showOnEdit = []
 
           let atTemp = ''
           accountTitle.onfocus = function () {
@@ -1201,20 +1241,47 @@ function generateList() {
           // new field btn
           let newFieldBtn = create('button', 'newFieldBtn')
           newFieldBtn.onclick = function () {
-            newAccountField(l, i, fieldType.value)
+            newAccountField(l, i, fieldType.value, newFieldText.value)
             writeJSON(list)
             generateList()
           }
 
-          let deleteAccountBtn = create('button', 'delAccountBtn')
+          let openAccountSettingsBtn = create('button', 'openAccountSettingsBtn')
+
+
+          let deleteAccountBtn = createElement('button', { 'class': 'right text-red border-red margin4', 'innerhtml': 'Delete' })
+          deleteAccountBtn.style.padding = '0 12px'
+          deleteAccountBtn.style.borderRadius = '3px'
           deleteAccountBtn.onclick = function () {
             deleteAccount(l, i)
             writeJSON(list)
             generateList()
           }
-          deleteAccountBtn.style.marginBottom = '4px'
 
-          let fieldType = create('select', 'field')
+          let accountSettingsDiv = createElement('div', { 'class': 'accountSettingsDiv', 'hide': true })
+
+          let saveAccountChangesBtn = createElement('button', { 'class': 'right bg-green border-green margin4', 'innerhtml': 'Done' })
+          saveAccountChangesBtn.style.padding = '0 12px'
+          saveAccountChangesBtn.style.borderRadius = '3px'
+          saveAccountChangesBtn.onclick = function () {
+            accountSettingsDiv.style.display = 'none'
+            openAccountSettingsBtn.style.display = null;
+
+            // hide all tagged items
+            for (let k = 0; k < showOnEdit.length; k++) {
+              showOnEdit[k].style.display = 'none'
+            }
+
+            // make elements not editable
+            for (let k = 0; k < editableOnEdit.length; k++) {
+              editableOnEdit[k].contentEditable = false
+              editableOnEdit[k].style.filter = null
+            }
+            accountTitle.style.cursor = 'default'
+
+          }
+
+          let fieldType = create('select', 'fieldType')
           fieldType.innerHTML = (`
             <option value='Email'>Email</option>
             <option value='ID'>ID</option>
@@ -1226,6 +1293,12 @@ function generateList() {
             <option value='Website'>Website</option>
           `)
 
+          let newFieldText = createElement('input', { 'type': 'text', 'placeholder': 'Field Value...' })
+          newFieldText.addEventListener('paste', function (e) {
+            e.preventDefault()
+            var text = e.clipboardData.getData('text/plain')
+            document.execCommand('insertText', false, text)
+          })
 
           let accountType = create('select', 'account')
           accountType.innerHTML = (`
@@ -1272,22 +1345,17 @@ function generateList() {
           let p2 = create('p', '')
           p2.innerHTML = 'Account Type'
 
-          let accountSettingsDiv = create('div', 'accountSettingsDiv')
-          accountSettingsDiv.append(p1)
+
+          //  accountSettingsDiv.append(p1)
           accountSettingsDiv.append(newFieldBtn)
           accountSettingsDiv.append(fieldType)
-          accountSettingsDiv.append(p2)
-          accountSettingsDiv.append(accountType)
+          accountSettingsDiv.append(newFieldText)
+          //accountSettingsDiv.append(p2)
+          //accountSettingsDiv.append(accountType)
+          accountSettingsDiv.append(saveAccountChangesBtn)
           accountSettingsDiv.append(deleteAccountBtn)
 
-          let openAccountSettingsBtn = create('button', 'openAccountSettingsBtn')
-          openAccountSettingsBtn.onclick = function () {
-            if (accountSettingsDiv.style.display == 'none') {
-              accountSettingsDiv.style.display = null
-            } else {
-              accountSettingsDiv.style.display = 'none'
-            }
-          }
+
 
           let accountIcon = create('img', '')
           if (list['children'][l]['children'][i]['type'] != '') {
@@ -1296,17 +1364,15 @@ function generateList() {
           } else {
             accountIcon.style.display = 'none'
           }
-          openAccountSettingsBtn.click()
 
           accountDiv.append(accountIcon)
           accountDiv.append(accountTitle)
+          accountDiv.append(collapseIcon)
           accountDiv.append(openAccountSettingsBtn)
 
-          let accountFields = createElement('table', {})
 
           for (let e = 0; e < list['children'][l]['children'][i]['fields'].length; e++) {
             // each field
-            let fieldRow = create('tr', '')
             let fieldIcon = create('img', '')
 
             let fieldIcons = {
@@ -1335,8 +1401,7 @@ function generateList() {
             let fieldTitle = create('p', 'title')
             fieldTitle.innerHTML = list['children'][l]['children'][i]['fields'][e]['title'] + ':&nbsp;'
 
-            fieldText.spellcheck = settings['spellcheck']
-            fieldText.contentEditable = true
+            editableOnEdit.push(fieldText)
             if (list['children'][l]['children'][i]['fields'][e].title == 'Password' || list['children'][l]['children'][i]['fields'][e].title == 'Token') {
               // if is password or token, blur it
               fieldText.classList.add('blur')
@@ -1352,14 +1417,16 @@ function generateList() {
                 writeJSON(list)
                 listEdited(l)
               }
-              if (this.innerHTML == '') {
-                deleteAccountField(l, i, e)
-              }
             }
             fieldText.onkeydown = function (e) {
               if (e.code == 'Enter') {
                 this.blur();
               }
+            }
+
+            let deleteFieldRowBtn = createElement('button', { 'hide': false, 'class': 'deleteFieldBtn' })
+            deleteFieldRowBtn.onclick = function () {
+              deleteAccountField(l, i, e)
             }
 
             // appends
@@ -1375,11 +1442,41 @@ function generateList() {
             let titleTd = createElement('td', { "class": "titleTD" })
             titleTd.append(fieldTitle)
 
+            let deleteFieldRowTd = createElement('td', { 'class': 'deleteFieldTd', 'hide': true })
+            showOnEdit.push(deleteFieldRowTd)
+            deleteFieldRowTd.append(deleteFieldRowBtn)
+
             accountFieldRow.append(iconTd)
             accountFieldRow.append(titleTd)
             accountFieldRow.append(textTd)
+            accountFieldRow.append(deleteFieldRowTd)
 
             accountFields.append(accountFieldRow)
+          }
+
+          openAccountSettingsBtn.onclick = function () {
+            // show settings
+            accountSettingsDiv.style.display = null
+            this.style.display = 'none'
+
+            // show fields
+            accountFields.style.display = null
+
+            collapseIcon.classList.remove('up')
+            collapseIcon.classList.add('down')
+
+            // show all tagged items
+            for (let k = 0; k < showOnEdit.length; k++) {
+              showOnEdit[k].style.display = null
+            }
+
+            // make elements editable
+            for (let k = 0; k < editableOnEdit.length; k++) {
+              editableOnEdit[k].contentEditable = true
+              editableOnEdit[k].style.filter = 'none'
+            }
+            accountTitle.style.cursor = 'text'
+
           }
           accountDiv.append(accountFields)
           accountDiv.append(accountSettingsDiv)
@@ -1400,8 +1497,9 @@ function generateList() {
           if (this.value == '') {
             accountCount.innerHTML = list['children'][l]['children'].length + ((list['children'][l]['children'].length == 1) ? ' Account' : ' Accounts')
           } else {
-            accountCount.innerHTML = accts + ((accts == 1) ? ' Account' : ' Accounts') + '<br>' + list['children'][l]['children'].length + ((list['children'][l]['children'].length == 1) ? ' Account Total' : ' Accounts Total')
+            accountCount.innerHTML = accts + ((accts == 1) ? ' Matching Account' : ' Matching Accounts') + '<br>' + list['children'][l]['children'].length + ((list['children'][l]['children'].length == 1) ? ' Account Total' : ' Accounts Total')
           }
+
         }
 
         accountCount.innerHTML = list['children'][l]['children'].length + ((list['children'][l]['children'].length == 1) ? ' Account' : ' Accounts')
