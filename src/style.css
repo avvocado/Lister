@@ -1,16 +1,3 @@
-:root {
-  --bg1: #171921;
-  --bg2: #1B1D26;
-  --bg3: #20222B;
-  --bg4: #272933;
-  --bg5: #32343f;
-  --green: #009966;
-  --selectionGreen: #64a684;
-  --yellow: #f0be61;
-  --blue: #4a73db;
-  --red: #bf2d4b;
-}
-
 #lists {
   margin-left: 12px;
   margin-top: 12px;
@@ -50,12 +37,12 @@
   background-color: var(--red) !important;
 }
 
-.newSublistBtn {
+.newBtn {
   background-size: 22px 22px !important;
   background-image: url("../assets/plus.svg");
 }
 
-.newSublistBtn:hover {
+.newBtn:hover {
   background-image: url("../assets/plusColor.svg");
 }
 
@@ -320,8 +307,6 @@
 .itemMedia {
   border-radius: 5px;
   margin-top: 6px;
-  image-rendering: pixelated;
-  color: #535663;
   font-size: 14px;
 }
 
@@ -875,6 +860,15 @@ a {
   background-image: url("../assets/listIcons/textList1.svg");
 }
 
+/* accounts */
+.sideListBtn.accounts {
+  background-image: url("../assets/listIcons/accountsList.svg");
+}
+
+.sideListBtn.accounts.active {
+  background-image: url("../assets/listIcons/accountsList1.svg");
+}
+
 /* locked */
 .sideListBtn.locked {
   background-image: url("../assets/lock.svg");
@@ -988,6 +982,100 @@ a {
   background-image: url("../assets/unlockColor.svg");
 }
 
+.accountDiv {
+  padding: 8px 8px 4px 8px;
+  background-color: var(--bg3);
+  display: inline-block;
+  margin-right: 12px;
+  vertical-align: top;
+  border-radius: 3px;
+  min-width: 160px;
+  margin-bottom: 12px;
+  width: auto;
+}
+
+.accountDiv p {
+  color: #393c4c;
+}
+
+.accountDiv .accountTitle {
+  color: #4f5363;
+  margin-bottom: 4px;
+  vertical-align: top;
+  width: calc(100% - 50px);
+  font-size: 18px;
+  display: inline-block;
+}
+
+.accountCount {
+  color:#2d303c;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.accountDiv .fieldDiv {
+  display: block;
+  margin: 0 16px 4px 0;
+}
+
+
+.accountDiv .fieldDiv .text {
+  margin-left: 4px;
+  color: #404351;
+}
+
+.accountDiv .fieldDiv .title {
+  color: #404351;
+}
+
+
+.accountDiv .fieldDiv p {
+  display: inline-block;
+}
+
+.newFieldBtn {
+  background-image: url('../assets/plus.svg');
+  background-position: center;
+  width: 22px;
+  height: 22px;
+  float: right;
+  border-radius: 2px;
+  transition: 100ms;
+  background-size: 20px 20px;
+  background-color: var(--bg3);
+}
+
+.newFieldBtn:hover {
+  background-color: var(--bg4);
+  background-image: url('../assets/plus1.svg');
+}
+
+.delAccountBtn {
+  float: right;
+  background-position: center;
+  width: 22px;
+  background-color: var(--bg3);
+  margin-left: 4px;
+  height: 22px;
+  border-radius: 2px;
+  transition: 100ms;
+  background-size: 18px 18px;
+  background-image: url("../assets/trashColor.svg");
+}
+
+.delAccountBtn:hover {
+  background-color: var(--red);
+  background-image: url("../assets/trash1.svg");
+}
+
+.accountDiv .fieldDiv img {
+  height: 18px;
+  vertical-align: top;
+  margin-right: 2px;
+  width: 18px;
+}
+
 #settings #password {
   background-color: var(--bg3);
   color: #535663;
@@ -996,216 +1084,4 @@ a {
   font-size: 14px;
   border-radius: 3px;
   padding: 4px 4px;
-}
-
-#homeBtn {
-  font-size: 16px;
-  padding: 4px 8px;
-}
-
-#settingsBtn {
-  font-size: 16px;
-  padding: 6px 8px;
-  width: 100%;
-  background-size: 20px 20px;
-  background-position: 138px 5px;
-  background-image: url("../assets/settings.svg");
-}
-
-#settingsBtn.active {
-  color: #dfdfdf;
-  background-image: url("../assets/settings2.svg");
-}
-
-#newListBtn {
-  background-color: var(--bg3);
-  border-radius: 50%;
-  width: 24px;
-  font-size: 20px;
-  transition: 100ms;
-  user-select: none;
-  height: 24px;
-  color: #404351;
-}
-
-#newListBtn:hover {
-  background-color: var(--bg4);
-  color: #4f5363;
-}
-
-#listType {
-  background-color: var(--bg1);
-  color: #404351;
-  user-select: none;
-  outline: none;
-}
-
-#listType:hover {
-  color: #4f5363;
-}
-
-#info {
-  position: absolute;
-  text-align: center;
-  margin-top: 32px;
-  margin-left: calc((100vw / 2) - 8px);
-  z-index: 99999;
-}
-
-.alert {
-  padding: 6px 16px 8px 8px;
-  border-radius: 4px;
-  margin-bottom: 8px;
-  font-size: 16px;
-  width: auto;
-  white-space: nowrap;
-  color: #404351;
-  background-color: var(--bg3);
-}
-
-.alert p {
-  display: inline-block;
-  margin-left: 4px;
-}
-
-.alert.error {
-  border-left: 6px solid var(--red);
-}
-
-.alert.success {
-  border-left: 6px solid var(--green);
-}
-
-.alert.normal {
-  border-left: 6px solid var(--bg3);
-}
-
-.alert.warning {
-  border-left: 6px solid var(--yellow);
-}
-
-.alert.info {
-  border-left: 6px solid var(--blue);
-}
-
-.alert img {
-  width: 18px;
-  margin-right: 4px;
-  height: 18px;
-  transform: translateY(3px);
-}
-
-#toggleSideBtn {
-  background-size: 20px 20px;
-  background-image: url('../assets/sidebar.svg');
-}
-
-#toggleSideBtn:hover {
-  background-color: var(--bg4);
-  background-image: url('../assets/sidebar1.svg');
-}
-
-
-/* ! animations + global/unimportant elements & properties */
-@keyframes fadein {
-  0% {
-    opacity: 0%;
-  }
-
-  100% {
-    opacity: 100%;
-  }
-}
-
-@keyframes flash {
-  0% {
-    background-color: var(--bg3);
-  }
-
-  20% {
-    background-color: var(--bg4);
-  }
-
-  100% {
-    background-color: var(--bg3);
-  }
-}
-
-::selection {
-  background: var(--selectionGreen);
-}
-
-* {
-  margin: 0;
-  padding: 0 0;
-  border: none;
-  font-family: Helvetica;
-  background-repeat: no-repeat;
-}
-
-body {
-  background-color: var(--bg2);
-}
-
-#app {
-  display: none;
-}
-
-input {
-  outline: none;
-}
-
-*[contenteditable="true"] {
-  outline: none;
-}
-
-*[contenteditable="true"]:empty:before {
-  content: "...";
-  pointer-events: none;
-  color: #2d303c;
-}
-
-/* range sliders */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  background-color: var(--green);
-  border-radius: 8px;
-  height: 8px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  /* Override default look */
-  appearance: none;
-  margin-top: -2px;
-
-  /*custom styles*/
-  background-color: #d5d5d5;
-  height: 12px;
-  width: 12px;
-  border-radius: 50%;
-}
-
-a {
-  color: var(--green);
-}
-
-/* scrollbars */
-body::-webkit-scrollbar {
-  width: 8px;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: var(--bg1);
-  border-radius: 8px;
-  background-clip: padding-box;
-}
-
-body::-webkit-scrollbar-track {
-  background-color: var(--bg2)
 }

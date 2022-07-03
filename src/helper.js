@@ -14,6 +14,33 @@ function handleTooltip(item, tool) {
   return (item)
 }
 
+// creates a new account
+function newAccount(l) {
+  list['children'][l]['children'].push({
+    "name": "",
+    "fields": []
+  })
+}
+
+function newAccountField(l, i) {
+  list['children'][l]['children'][i]['fields'].push({
+    "title": "",
+    "value": ""
+  })
+}
+
+function deleteAccountField(l, i, e) {
+  list['children'][l]['children'][i]['fields'].splice(e, 1);
+  writeJSON(list)
+  generateList()
+}
+
+function deleteAccount(l, i) {
+  list['children'][l]['children'].splice(i, 1);
+  writeJSON(list)
+  generateList()
+}
+
 // creates a new sublist
 function newSublist(l) {
   list['children'][l]['children'].push({
@@ -26,7 +53,7 @@ function newChecklistSublist(l) {
   let d = new Date()
   list['children'][l]['children'].push({
     "name": "SUBLIST",
-    "children": [{"text": "", "checked": false, "creationDate": d.getTime()}]
+    "children": [{ "text": "", "checked": false, "creationDate": d.getTime() }]
   })
 }
 
@@ -159,11 +186,21 @@ function newList(type) {
   else if (type == 'checklist') {
     list['children'].unshift({
       "children": [
-        { "name": "SUBLIST", "children": [{"text": "", "checked": false, "creationDate": d.getTime()}] }
+        { "name": "SUBLIST", "children": [{ "text": "", "checked": false, "creationDate": d.getTime() }] }
       ],
       "name": "New Checklist",
       "creationDate": d.getTime(),
       "type": "checklist",
+      "locked": false,
+      "lastEdited": d.getTime()
+    })
+  }
+  else if (type == 'accounts') {
+    list['children'].unshift({
+      "children": [],
+      "name": "Accounts",
+      "creationDate": d.getTime(),
+      "type": "accounts",
       "locked": false,
       "lastEdited": d.getTime()
     })
@@ -173,15 +210,6 @@ function newList(type) {
   writeJSON(list)
   generateList()
 }
-
-// returns how many children there are inside the list
-// params: list index
-function getListChildren(l) {
-  // creationdate, type, locked, name, last edit date
-  return (Object.keys(list['children'][l]).length - 5)
-}
-
-
 // writing list.json
 function writeJSON(data) {
   window.api.send('writeJSON', JSON.stringify(data))

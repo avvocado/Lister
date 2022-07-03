@@ -441,7 +441,7 @@ function generateList() {
         let newSublistBtnDiv = create('div', '')
         let newSublistBtnTooltip = createTooltip('New Sublist', 22, false)
 
-        let newSublistBtn = create('button', 'newSublistBtn')
+        let newSublistBtn = create('button', 'newBtn')
         newSublistBtn.onclick = function () {
           newSublist(l)
           writeJSON(list)
@@ -1023,7 +1023,7 @@ function generateList() {
         let newSublistBtnDiv = create('div', '')
         let newSublistBtnTooltip = createTooltip('New Sublist', 22, false)
 
-        let newSublistBtn = create('button', 'newSublistBtn')
+        let newSublistBtn = create('button', 'newBtn')
         newSublistBtn.onclick = function () {
           newChecklistSublist(l)
           writeJSON(list)
@@ -1165,6 +1165,145 @@ function generateList() {
         listDiv.append(listContent)
         lists.append(listDiv)
 
+      } else if (list['children'][l]['type'] == 'accounts') {
+        // ! LIST TYPE ACCOUNTS
+        listDiv.classList.add('accounts')
+        listContent.classList.add('accounts')
+        // NEW SUBLIST BUTTON
+        let newAccountBtnDiv = create('div', '')
+        let newAccountBtnTooltip = createTooltip('New Sublist', 22, false)
+
+        let newAccountBtn = create('button', 'newBtn')
+        newAccountBtn.onclick = function () {
+          newAccount(l)
+          writeJSON(list)
+          generateList()
+        }
+        newAccountBtn = handleTooltip(newAccountBtn, newAccountBtnTooltip)
+        newAccountBtnDiv.append(newAccountBtnTooltip)
+        newAccountBtnDiv.append(newAccountBtn)
+        listSettingsDiv.append(newAccountBtnDiv)
+        for (let i = 0; i < list['children'][l]['children'].length; i++) {
+          // each account
+          let accountDiv = create('div', 'accountDiv')
+          let accountTitle = create('p', 'accountTitle')
+          accountTitle.contentEditable = true
+          accountTitle.spellcheck = settings['spellcheck']
+
+          let atTemp = ''
+          accountTitle.onfocus = function () {
+            atTemp = this.innerHTML
+          }
+          accountTitle.onblur = function () {
+            if (this.innerHTML != atTemp) {
+              list['children'][l]['children'][i]['name'] = this.innerHTML
+              writeJSON(list)
+              listEdited(l)
+            }
+          }
+          accountTitle.onkeydown = function (e) {
+            if (e.code == 'Enter') {
+              this.blur()
+            }
+          }
+          accountTitle.innerHTML = list['children'][l]['children'][i]['name']
+          // new field btn
+          let newFieldBtn = create('button', 'newFieldBtn')
+          newFieldBtn.onclick = function () {
+            newAccountField(l, i)
+            writeJSON(list)
+            generateList()
+          }
+
+          let deleteAccountBtn = create('button', 'delAccountBtn')
+          deleteAccountBtn.onclick = function () {
+            deleteAccount(l, i)
+            writeJSON(list)
+            generateList()
+          }
+          accountDiv.append(accountTitle)
+          accountDiv.append(deleteAccountBtn)
+          accountDiv.append(newFieldBtn)
+
+          for (let e = 0; e < list['children'][l]['children'][i]['fields'].length; e++) {
+            // each field
+            let fieldDiv = create('div', 'fieldDiv')
+            let fieldIcon = create('img', '')
+
+            let fieldIcons = { "Password": "lockColor.svg", "Website": "globeColor.svg", "Email": "mailColor.svg", "Username": "userColor.svg", "Token": "keyColor.svg" }
+
+            if (Object.keys(fieldIcons).includes(list['children'][l]['children'][i]['fields'][e]['title'])) {
+              // is not a custom field, has icon
+              fieldIcon.src = '../assets/accountFieldIcons/' + fieldIcons[list['children'][l]['children'][i]['fields'][e]['title']]
+              fieldDiv.append(fieldIcon)
+            }
+
+            let fieldText = create('p', 'text')
+
+            let fieldTitle = create('p', 'title')
+            fieldTitle.contentEditable = true
+            fieldTitle.spellcheck = settings['spellcheck']
+            let ftTemp = ''
+            fieldTitle.onfocus = function () {
+              ftTemp = this.innerHTML
+            }
+            fieldTitle.onblur = function () {
+              if (this.innerHTML != ftTemp) {
+                list['children'][l]['children'][i]['fields'][e]['title'] = this.innerHTML
+                writeJSON(list)
+                listEdited(l)
+              }
+              if (this.innerHTML == '' && fieldText.innerHTML == '') {
+                deleteAccountField(l, i, e)
+              }
+            }
+            fieldTitle.onkeydown = function (e) {
+              if (e.code == 'Enter') {
+                this.blur()
+              }
+            }
+
+            fieldTitle.innerHTML = list['children'][l]['children'][i]['fields'][e]['title']
+            fieldText.spellcheck = settings['spellcheck']
+            fieldText.contentEditable = true
+            fieldText.innerHTML = list['children'][l]['children'][i]['fields'][e]['value']
+            let fteTemp = ''
+            fieldText.onfocus = function () {
+              fteTemp = this.innerHTML
+            }
+            fieldText.onblur = function () {
+              if (this.innerHTML != fteTemp) {
+                list['children'][l]['children'][i]['fields'][e]['value'] = this.innerHTML
+                writeJSON(list)
+                listEdited(l)
+              }
+              if (this.innerHTML == '' && fieldTitle.innerHTML == '') {
+                deleteAccountField(l, i, e)
+              }
+            }
+            fieldText.onkeydown = function (e) {
+              if (e.code == 'Enter') {
+                this.blur()
+              }
+            }
+
+            let colon = create('p', '')
+            colon.innerHTML = ':'
+
+            // appends
+            fieldDiv.append(fieldTitle)
+            fieldDiv.append(colon)
+            fieldDiv.append(fieldText)
+            accountDiv.append(fieldDiv)
+          }
+
+          listContent.append(accountDiv)
+        }
+        let accountCount = create('p', 'accountCount')
+        accountCount.innerHTML = list['children'][l]['children'].length + ' Accounts'
+        listContent.append(accountCount)
+        listDiv.append(listContent)
+        lists.append(listDiv)
       }
     }
 
