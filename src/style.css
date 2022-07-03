@@ -549,8 +549,13 @@
 
 #settings {
   background-color: var(--bg2);
-  margin: 20px 12px 0 12px;
+  margin: 8px 12px 0 12px;
   border-radius: 4px;
+}
+
+#settings h2 {
+  color: #535663;
+  margin-bottom: 4px;
 }
 
 #settings p {
@@ -583,8 +588,7 @@
   border-radius: 4px;
 }
 
-.settingsDiv .option {
-  font-size: 0;
+.settingsDiv .btn {
   padding: 4px 6px;
   border-radius: 6px;
   float: right;
@@ -594,11 +598,28 @@
   border: 2px solid var(--bg4)
 }
 
-.settingsDiv .option:hover {
+
+.settingsDiv .btn.fatal {
+  padding: 4px 8px;
+  border-radius: 6px;
+  float: right;
+  background-color: var(--bg3);
+  transition: 100ms;
+  margin-right: 8px;
+  color: #bcbcbc;
+  border: 2px solid var(--red)
+}
+
+.settingsDiv .btn.fatal:hover {
+  background-color: var(--red);
+  border: 2px solid var(--red)
+}
+
+.settingsDiv .btn:hover {
   border: 2px solid var(--green);
 }
 
-.settingsDiv .option.active {
+.settingsDiv .btn.active {
   border: 2px solid var(--green)
 }
 
@@ -622,7 +643,7 @@
   right: 0;
   bottom: 0;
   background-color: var(--bg5);
-  transition: 200ms;
+  transition: 250ms;
 }
 
 .slider:before {
@@ -633,7 +654,7 @@
   left: 3px;
   bottom: 3px;
   background-color: #606472;
-  transition: 400ms;
+  transition: 300ms;
 }
 
 input:checked+.slider {
@@ -792,12 +813,15 @@ a {
   height: 100%;
   background-color: var(--bg1);
   padding: 8px;
+  overflow-x: hidden;
+  transition: 100ms;
   z-index: 900;
   width: 164px;
 }
 
 #content {
   margin-left: 180px;
+  transition: 100ms;
 }
 
 .sideListBtn {

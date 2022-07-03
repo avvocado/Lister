@@ -106,16 +106,18 @@ ipcMain.on("minimize", (evt, args) => {
 
 ipcMain.on("requestList", (evt, args) => {
   fs.readFile(path.join(__dirname, '../', '/resources/', 'list.json'), (error, data) => {
-    // Do something with file contents
-    // Send result back to renderer process
     win.webContents.send("toRenderer", "list", JSON.parse(data));
   });
 })
 ipcMain.on("requestSettings", (evt, args) => {
   fs.readFile(path.join(__dirname, '../', '/resources/', 'settings.json'), (error, data) => {
-    // Do something with file contents
-    // Send result back to renderer process
     win.webContents.send("toRenderer", "settings", JSON.parse(data));
+  });
+})
+
+ipcMain.on("requestDefaultSettings", (evt, args) => {
+  fs.readFile(path.join(__dirname, '../', '/resources/', 'defaultSettings.json'), (error, data) => {
+    win.webContents.send("toRenderer", "defaultSettings", JSON.parse(data));
   });
 })
 
@@ -129,7 +131,6 @@ ipcMain.on("writeJSON", (evt, args) => {
 })
 
 ipcMain.on("writeSettings", (evt, args) => {
-  console.log(args)
   fs.writeFile(path.join(__dirname, '../', '/resources/', 'settings.json'), args, err => {
     if (err) {
       console.log(err)

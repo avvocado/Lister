@@ -35,16 +35,18 @@ document.getElementById("blockListItemMediaWidth").addEventListener("input", fun
 });
 
 document.getElementById("toggleSideBtn").addEventListener("click", function () {
-  if (document.querySelector('#side').style.display == 'none') {
-    document.querySelector('#side').style.display = null
+  if (document.querySelector('#side').style.padding == "8px 0px") {
     document.querySelector('#menuBar').style.width = 'calc(100vw - 180px)'
     document.querySelector('#menuBar').style.marginLeft = '180px'
     document.querySelector('#content').style.marginLeft = '180px'
+    document.querySelector('#side').style.width = null
+    document.querySelector('#side').style.padding = null
   } else {
-    document.querySelector('#side').style.display = 'none'
     document.querySelector('#menuBar').style.width = '100vw'
     document.querySelector('#menuBar').style.margin = '0'
     document.querySelector('#content').style.margin = '0'
+    document.querySelector('#side').style.width = '0'
+    document.querySelector('#side').style.padding = '8px 0 8px 0'
   }
 });
 
@@ -75,6 +77,11 @@ document.getElementById("newListBtn").addEventListener("click", function () {
   let type = document.getElementById('listType').value
   showAlert('Created New List', 1000, "success")
   newList(type)
+});
+
+document.getElementById("resetSettingsBtn").addEventListener("click", function () {
+  showAlert('Reset Settings', 1000, "success")
+  window.api.send('requestDefaultSettings');
 });
 
 document.getElementById("openResourcesFolderBtn").addEventListener("click", function () {
@@ -177,6 +184,11 @@ window.api.receive("toRenderer", (args, data) => {
     list['children'][currImgIndex[0]]['children'][currImgIndex[1]]['children'][currImgIndex[2]]['media'].push(data)
     writeJSON(list)
     generateList()
+  }
+
+  if (args == 'defaultSettings') {
+    writeSettings(data)
+    window.api.send('requestSettings', '');
   }
   if (args == 'dirname') {
     dirname = data

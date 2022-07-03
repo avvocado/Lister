@@ -59,6 +59,7 @@
       </div>
       <!-- settings -->
       <div id="settings">
+        <h2>Settings</h2>
         <h1>APP SETTINGS</h1>
         <!-- always on top -->
         <div class='settingsDiv'>
@@ -86,7 +87,7 @@
             <input id='spellcheckToggle' type="checkbox">
             <span class="slider round"></span>
           </label>
-          <p>Highlights misspelled words</p>
+          <p>Underlines misspelled words</p>
         </div>
 
         <!-- open resources folder -->
@@ -106,11 +107,11 @@
         <!-- strikethrough completed items -->
         <div class="settingsDiv">
           <h3 id="mediaWidthTitle">Checked Item Style</h3>
-          <div class="option checkedItemStyleBtn">
+          <div class="btn checkedItemStyleBtn">
             <button class="checkBoxBtn true"></button>
             <p style="font-size: 16px;cursor: default; user-select: none; margin: 0;display: inline-block;color: #393c4c;  text-decoration: line-through;">Strikethrough</p>
           </div>
-          <div class="option checkedItemStyleBtn">
+          <div class="btn checkedItemStyleBtn">
             <button class="checkBoxBtn true"></button>
             <p style="font-size: 16px;cursor: default; user-select: none; margin: 0; display: inline-block;color: #393c4c;">Regular</p>
           </div>
@@ -124,10 +125,15 @@
         </div>
         <h1>APP INFO</h1>
         <!-- password -->
+        <!-- spellcheck -->
+        <div class='settingsDiv'>
+          <h3 style=" display: inline-block;">Reset Settings</h3>
+          <button class="btn fatal" id="resetSettingsBtn">Reset</button>
+          <p>Resets all settings to the default</p>
+        </div>
         <div class="settingsDiv">
-          <h3>App Info</h3>
-          <p>Source Code: <a href="https://github.com/devinmd/Lister" target="_blank">https://github.com/devinmd/Lister</a></p>
-
+          <h3>Source Code</h3>
+          <p><a href="https://github.com/devinmd/Lister" target="_blank">https://github.com/devinmd/Lister</a></p>
         </div>
       </div>
       <div id="lists"></div>
