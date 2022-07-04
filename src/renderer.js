@@ -242,7 +242,7 @@ function generateList() {
             sideListBtnDate.innerHTML = timeAgo(d.getTime(), edate)
             sideListBtn.classList.remove('locked')
             sideListBtn.classList.add('unlocked')
-            showAlert('Correct Password!', 1000, 'success')
+            showAlert('List Unlocked', 1000, 'success')
           } else {
             // incorrect password
             pswd.select()
@@ -399,7 +399,7 @@ function generateList() {
       if (list['children'][l]['locked'] == false) {
         // not locked yet
         let lockListBtnDiv = create('div', '')
-        let lockListBtnTooltip = createTooltip('Lock List', 16, false)
+        let lockListBtnTooltip = createTooltip('Lock List', 12, false)
 
         let lockListBtn = create('button', 'lockListBtn')
         lockListBtn.onclick = function () {
@@ -1171,7 +1171,7 @@ function generateList() {
         listContent.classList.add('accounts')
         // NEW SUBLIST BUTTON
         let newAccountBtnDiv = create('div', '')
-        let newAccountBtnTooltip = createTooltip('New Sublist', 22, false)
+        let newAccountBtnTooltip = createTooltip('New Account', 24, false)
 
         let newAccountBtn = create('button', 'newBtn')
         newAccountBtn.onclick = function () {
@@ -1230,7 +1230,13 @@ function generateList() {
             let fieldDiv = create('div', 'fieldDiv')
             let fieldIcon = create('img', '')
 
-            let fieldIcons = { "Password": "lockColor.svg", "Website": "globeColor.svg", "Email": "mailColor.svg", "Username": "userColor.svg", "Token": "keyColor.svg" }
+            let fieldIcons = { "Password": "lockColor.svg", "Website": "globeColor.svg", "Email": "mailColor.svg", "Username": "userColor.svg", "Token": "keyColor.svg", "ID": "idColor.svg" }
+            // password: yellow lock
+            // website: green globe
+            // email: blue mail
+            // username: blue user
+            // token: yellow key
+            // id: red id card
 
             if (Object.keys(fieldIcons).includes(list['children'][l]['children'][i]['fields'][e]['title'])) {
               // is not a custom field, has icon
@@ -1266,6 +1272,9 @@ function generateList() {
             fieldTitle.innerHTML = list['children'][l]['children'][i]['fields'][e]['title']
             fieldText.spellcheck = settings['spellcheck']
             fieldText.contentEditable = true
+            if (fieldTitle.innerHTML == 'Password') {
+              fieldText.classList.add('password')
+            }
             fieldText.innerHTML = list['children'][l]['children'][i]['fields'][e]['value']
             let fteTemp = ''
             fieldText.onfocus = function () {

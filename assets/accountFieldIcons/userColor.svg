@@ -1,5 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
-  <path style="stroke: #4a73db; stroke-width: 40px; fill: rgba(216, 216, 216, 0); stroke-linecap: round;" d="M 19.877 479.521 C 152.206 212.367 407.382 318.434 479.31 479.613" data-bx-origin="0.499 -12.304"></path>
-  <ellipse style="stroke: #4a73db; stroke-width: 40px; fill: rgba(216, 216, 216, 0);" cx="250" cy="150" rx="100.195" ry="100.195"></ellipse>
-</svg>
+<svg class="w-6 h-6" fill="none" stroke="#4a73db" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>

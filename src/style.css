@@ -662,7 +662,7 @@ input:checked+.slider:before {
   border-radius: 50%;
 }
 
-a {
+.item a {
   color: var(--blue);
   font-size: 14px;
 }
@@ -684,7 +684,7 @@ a {
 #openResourcesFolderBtn {
   border-radius: 3px;
   float: right;
-  width: 26px;
+  width: 32px;
   height: 26px;
   background-color: var(--bg3);
   background-size: 20px 20px;
@@ -696,7 +696,7 @@ a {
 
 #openResourcesFolderBtn:hover {
   background-color: var(--bg4);
-  background-image: url("../assets/folder1.svg");
+  background-image: url("../assets/folderColor.svg");
 }
 
 .mainListContent.text {
@@ -988,6 +988,7 @@ a {
   display: inline-block;
   margin-right: 12px;
   vertical-align: top;
+  box-shadow: 0 1px 1px 0.3px var(--bg1);
   border-radius: 3px;
   min-width: 160px;
   margin-bottom: 12px;
@@ -1008,7 +1009,7 @@ a {
 }
 
 .accountCount {
-  color:#2d303c;
+  color: #2d303c;
   text-align: center;
   font-size: 12px;
   font-weight: bold;
@@ -1023,7 +1024,18 @@ a {
 .accountDiv .fieldDiv .text {
   margin-left: 4px;
   color: #404351;
+  transition: 200ms;
 }
+
+.accountDiv .fieldDiv .text.password {
+  filter: blur(4px);
+}
+
+
+.accountDiv .fieldDiv .text.password:hover, .accountDiv .fieldDiv .text.password:focus {
+  filter: none;
+}
+
 
 .accountDiv .fieldDiv .title {
   color: #404351;
@@ -1040,7 +1052,7 @@ a {
   width: 22px;
   height: 22px;
   float: right;
-  border-radius: 2px;
+  border-radius: 3px;
   transition: 100ms;
   background-size: 20px 20px;
   background-color: var(--bg3);
@@ -1058,7 +1070,7 @@ a {
   background-color: var(--bg3);
   margin-left: 4px;
   height: 22px;
-  border-radius: 2px;
+  border-radius: 3px;
   transition: 100ms;
   background-size: 18px 18px;
   background-image: url("../assets/trashColor.svg");
@@ -1072,7 +1084,7 @@ a {
 .accountDiv .fieldDiv img {
   height: 18px;
   vertical-align: top;
-  margin-right: 2px;
+  margin-right: 4px;
   width: 18px;
 }
 

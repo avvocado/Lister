@@ -180,6 +180,7 @@ body::-webkit-scrollbar-track {
   white-space: nowrap;
   color: #404351;
   background-color: var(--bg3);
+  box-shadow: 0 1px 1px 0.3px var(--bg1);
 }
 
 .alert p {

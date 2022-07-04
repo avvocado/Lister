@@ -164,8 +164,6 @@ function newList(type) {
     list['children'].unshift({
       "children": [
         { "name": "SUBLIST", "children": [] },
-        { "name": "SUBLIST", "children": [] },
-        { "name": "SUBLIST", "children": [] }
       ],
       "name": "New List",
       "type": "block",
