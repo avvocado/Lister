@@ -1230,7 +1230,7 @@ function generateList() {
             let fieldDiv = create('div', 'fieldDiv')
             let fieldIcon = create('img', '')
 
-            let fieldIcons = { "Password": "lockColor.svg", "Website": "globeColor.svg", "Email": "mailColor.svg", "Username": "userColor.svg", "Token": "keyColor.svg", "ID": "idColor.svg" }
+            let fieldIcons = { "Password": "lock.svg", "Website": "globe.svg", "Email": "mail.svg", "Username": "user.svg", "Token": "key.svg", "ID": "id.svg" }
             // password: yellow lock
             // website: green globe
             // email: blue mail
