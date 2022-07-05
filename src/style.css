@@ -1003,7 +1003,7 @@ input:checked+.slider:before {
   color: #4f5363;
   margin-bottom: 4px;
   vertical-align: top;
-  width: calc(100% - 50px);
+  white-space: nowrap;
   font-size: 18px;
   display: inline-block;
 }
@@ -1015,8 +1015,14 @@ input:checked+.slider:before {
   font-weight: bold;
 }
 
+.accountDiv .accountType {
+  background-color: var(--bg3);
+  color:#393c4c;
+}
+
 .accountDiv .fieldDiv {
   display: block;
+  font-size: 15px;
   margin: 0 0 4px 0;
 }
 
@@ -1052,6 +1058,7 @@ input:checked+.slider:before {
   width: 22px;
   height: 22px;
   float: right;
+  margin-left: 4px;
   border-radius: 3px;
   transition: 100ms;
   background-size: 20px 20px;
