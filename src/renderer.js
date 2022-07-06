@@ -277,20 +277,6 @@ function generateList() {
           if (selectedList != l) {
 
             console.log(settings)
-            if (settings.lockedListTimeoutDuration > 0) {
-              // start the timeout
-              console.log('list timeout started')
-              setTimeout(function () {
-                // lock it back up!
-                lockedDiv.style.display = null
-                listContent.style.display = 'none'
-                sideListBtnText.innerHTML = 'Locked List'
-                sideListBtnDate.innerHTML = '...'
-                sideListBtn.classList.add('locked')
-                sideListBtn.classList.remove(list['children'][l]['type'])
-                console.log('ilst timed out')
-              }, settings.lockedListTimeoutDuration);
-            }
 
 
             sideListBtn.classList.remove(list['children'][l]['type'])
@@ -300,7 +286,7 @@ function generateList() {
             pswd.focus()
 
             // do touchid
-            if (system.touchID = true) {
+            if (system.touchID == true) {
               awaitUnlock = l
               window.api.send('touchID', '');
             }

@@ -4,6 +4,5 @@
   "bwTrayIcon": true,
   "blockListItemMediaWidth": 50,
   "checkedItemStyle": 0,
-  "spellcheck": false,
-  "lockedListTimeoutDuration": 300000
+  "spellcheck": false
 }
