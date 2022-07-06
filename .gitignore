@@ -1,6 +1,13 @@
+# node modules
 node_modules/
 
+# macos .ds_store files
 .DS_Store
 src/.DS_Store
+resources/.DS_Store
 assets/.DS_Store
-assets/icons/.DS_Store
+assets/accountFieldIcons/.DS_Store
+assets/accountTypeIcons/.DS_Store
+assets/appIcons/.DS_Store
+assets/listIcons/.DS_Store
+assets/unused/.DS_Store

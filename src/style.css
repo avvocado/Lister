@@ -1,3 +1,16 @@
+:root {
+  --bg1: #171921;
+  --bg2: #1b1d26;
+  --bg3: #20222b;
+  --bg4: #272933;
+  --bg5: #32343f;
+  --green: #009966;
+  --selectionGreen: #64a684;
+  --yellow: #f0be61;
+  --blue: #4a73db;
+  --red: #bf2d4b;
+}
+
 #lists {
   margin-left: 12px;
   margin-top: 12px;
@@ -51,8 +64,6 @@
 .listDiv {
   margin-right: 12px;
 }
-
-
 
 .listTitle {
   transition: all 100ms, width 0ms;
@@ -153,11 +164,9 @@
   width: calc((100%));
 }
 
-
 .checklistItem.true .checklistItemText {
   color: #393c4c;
 }
-
 
 .checklistItem.true.strikethrough .checklistItemText {
   color: #393c4c;
@@ -169,7 +178,6 @@
   text-decoration: none;
 }
 
-
 .checklistItemText {
   font-size: 16px;
   display: inline-block;
@@ -177,7 +185,6 @@
   width: calc(100% - 48px);
   transition: 200ms;
 }
-
 
 .checkBoxBtn {
   height: 16px;
@@ -189,7 +196,7 @@
   background-color: var(--bg4);
   background-position: center;
   transform: translateY(1px);
-  background-image: url('../assets/check.svg');
+  background-image: url("../assets/check.svg");
 }
 
 .checkBoxBtn.false:hover {
@@ -198,7 +205,7 @@
 
 .checkBoxBtn.true {
   background-color: var(--green);
-  background-image: url('../assets/check1.svg');
+  background-image: url("../assets/check1.svg");
 }
 
 .item {
@@ -503,7 +510,6 @@
   background-image: url("../assets/unmaximize1.svg");
 }
 
-
 .tooltip {
   position: absolute;
   font-size: 12px;
@@ -585,9 +591,8 @@
   background-color: var(--bg3);
   transition: 100ms;
   margin-right: 8px;
-  border: 2px solid var(--bg4)
+  border: 2px solid var(--bg4);
 }
-
 
 .settingsDiv .btn.fatal {
   padding: 4px 8px;
@@ -597,12 +602,12 @@
   transition: 100ms;
   margin-right: 8px;
   color: #bcbcbc;
-  border: 2px solid var(--red)
+  border: 2px solid var(--red);
 }
 
 .settingsDiv .btn.fatal:hover {
   background-color: var(--red);
-  border: 2px solid var(--red)
+  border: 2px solid var(--red);
 }
 
 .settingsDiv .btn:hover {
@@ -610,7 +615,7 @@
 }
 
 .settingsDiv .btn.active {
-  border: 2px solid var(--green)
+  border: 2px solid var(--green);
 }
 
 .switch {
@@ -647,15 +652,15 @@
   transition: 300ms;
 }
 
-input:checked+.slider {
+input:checked + .slider {
   background-color: var(--green);
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   background-color: #d5d5d5;
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   transform: translateX(17px);
 }
 
@@ -711,10 +716,9 @@ input:checked+.slider:before {
   border-radius: 4px;
 }
 
-.mainListContent{
+.mainListContent {
   transform: translateY(-8px);
 }
-
 
 .mainListContent.text .block.text {
   font-size: 14px;
@@ -723,7 +727,7 @@ input:checked+.slider:before {
 
 .mainListContent.text .block.text .text {
   overflow-x: auto;
-  color:#535663;
+  color: #535663;
   background-color: var(--bg2);
 }
 
@@ -831,7 +835,7 @@ input:checked+.slider:before {
   user-select: none;
   background-size: 16px 16px;
   border-radius: 3px;
-  background-position: 142px 6px;
+  background-position: 142px 8px;
   font-size: 14px;
 }
 
@@ -967,7 +971,7 @@ input:checked+.slider:before {
 }
 
 .touchidbtn {
-  background-image: url('../assets/touchid.svg');
+  background-image: url("../assets/touchid.svg");
   background-color: var(--bg3);
   width: 24px;
   transform: translateY(8px);
@@ -990,7 +994,7 @@ input:checked+.slider:before {
 .lockedTitle {
   color: var(--bg5);
   user-select: none;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .lockListBtn {
@@ -1022,6 +1026,10 @@ input:checked+.slider:before {
   align-self: flex-start;
 }
 
+.accountDiv table .titleTD {
+  text-align: right;
+}
+
 .accountSearchBox {
   background-color: var(--bg2);
   float: right;
@@ -1032,11 +1040,9 @@ input:checked+.slider:before {
   color: #404351;
 }
 
-
 .accountSearchBox:focus {
   border-bottom: 2px solid var(--bg5);
 }
-
 
 .mainListContent.accounts {
   display: flex;
@@ -1070,7 +1076,7 @@ input:checked+.slider:before {
   background-color: var(--bg3);
   width: 22px;
   float: right;
-  background-image: url('../assets/settings.svg');
+  background-image: url("../assets/settings.svg");
   height: 22px;
   transition: 100ms;
   border-radius: 3px;
@@ -1080,7 +1086,7 @@ input:checked+.slider:before {
 
 .accountDiv .openAccountSettingsBtn:hover {
   background-color: var(--bg4);
-  background-image: url('../assets/settings1.svg');
+  background-image: url("../assets/settings1.svg");
 }
 
 .accountDiv select {
@@ -1089,15 +1095,14 @@ input:checked+.slider:before {
   color: #393c4c;
 }
 
-.accountDiv .fieldDiv {
+.accountDiv .fieldRow {
   display: block;
   font-size: 15px;
   margin: 0 0 4px 0;
   white-space: nowrap;
 }
 
-
-.accountDiv .fieldDiv .text {
+.accountDiv .fieldRow .text {
   margin-left: 5px;
   color: #404351;
   transition: 200ms;
@@ -1112,12 +1117,11 @@ input:checked+.slider:before {
   filter: none;
 }
 
-.accountDiv .fieldDiv .title {
+.accountDiv .fieldRow .title {
   color: #404351;
 }
 
-
-.accountDiv .fieldDiv p {
+.accountDiv .fieldRow p {
   display: inline-block;
 }
 
@@ -1143,7 +1147,7 @@ input:checked+.slider:before {
 }
 
 .newFieldBtn {
-  background-image: url('../assets/plus.svg');
+  background-image: url("../assets/plus.svg");
   background-position: center;
   width: 22px;
   height: 22px;
@@ -1156,7 +1160,7 @@ input:checked+.slider:before {
 
 .newFieldBtn:hover {
   background-color: var(--bg4);
-  background-image: url('../assets/plus1.svg');
+  background-image: url("../assets/plus1.svg");
 }
 
 .delAccountBtn {
@@ -1177,7 +1181,7 @@ input:checked+.slider:before {
   background-image: url("../assets/trash1.svg");
 }
 
-.accountDiv .fieldDiv img {
+.accountDiv table tr td img {
   height: 18px;
   transform: none;
   vertical-align: top;

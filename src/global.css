@@ -1,15 +1,3 @@
-:root {
-  --bg1: #171921;
-  --bg2: #1B1D26;
-  --bg3: #20222B;
-  --bg4: #272933;
-  --bg5: #32343f;
-  --green: #009966;
-  --selectionGreen: #64a684;
-  --yellow: #f0be61;
-  --blue: #4a73db;
-  --red: #bf2d4b;
-}
 
 
 @keyframes fadein {
@@ -129,14 +117,13 @@ body::-webkit-scrollbar-track {
   background-color: var(--bg2)
 }
 
-
 #settingsBtn {
-  font-size: 16px;
-  padding: 6px 8px;
+  font-size: 16px ;
+  padding: 6px 8px 6px 29px;
   width: 100%;
   background-size: 20px 20px;
-  background-position: 138px 5px;
-  background-image: url("../assets/settings.svg");
+  background-position: 5px 5px;
+  background-image: url("../assets/settings1.svg");
 }
 
 #settingsBtn.active {

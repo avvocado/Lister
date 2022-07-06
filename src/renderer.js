@@ -196,6 +196,7 @@ function generateList() {
           }
         }
         lockedDiv.append(lockedTitle)
+
         if (system['touchID'] == true) {
           lockedDiv.append(touchIdBtn)
         }
@@ -287,10 +288,10 @@ function generateList() {
             listContent.style.display = 'none'
             pswd.focus()
 
-            // do touchid
+            // ! automatically request touch id when clicking on a locked list
             if (system.touchID == true) {
-              awaitUnlock = l
-              window.api.send('touchID', '');
+              //awaitUnlock = l
+              // window.api.send('touchID', '');
             }
           }
           // you're going to the same list & its unlocked, bypass the lock
@@ -314,7 +315,7 @@ function generateList() {
         }
         if (selectedList >= 0 && list['children'][selectedList]['type'] == 'accounts' && selectedList != l) {
           // leaving an account list, sort it
-          sortAccounts(selectedList)
+          //  sortAccounts(selectedList)
         }
         selectedList = l
       }
@@ -436,7 +437,6 @@ function generateList() {
           let newItemToTopBtn = create('button', 'newItemToTopBtn')
           newItemToTopBtn.onclick = function () {
             newItemToTop(l, i)
-            listEdited(l)
           }
           let sublistTitleP = createElement('input', {
             'value': (list['children'][l]['children'][i]['name']),
@@ -753,7 +753,6 @@ function generateList() {
             }
             delItemBtn.onclick = function () {
               removeItem(l, i, e)
-              listEdited(l)
             }
             delItemBtn = handleTooltip(delItemBtn, delItemBtnTooltip)
             delItemBtnDiv.append(delItemBtnTooltip)
@@ -1167,7 +1166,7 @@ function generateList() {
             }
           }
           accountTitle.innerHTML = list['children'][l]['children'][i]['name']
-          
+
           // new field btn
           let newFieldBtn = create('button', 'newFieldBtn')
           newFieldBtn.onclick = function () {
@@ -1272,9 +1271,11 @@ function generateList() {
           accountDiv.append(accountTitle)
           accountDiv.append(openAccountSettingsBtn)
 
+          let accountFields = createElement('table', {})
+
           for (let e = 0; e < list['children'][l]['children'][i]['fields'].length; e++) {
             // each field
-            let fieldDiv = create('div', 'fieldDiv')
+            let fieldRow = create('tr', 'fieldRow')
             let fieldIcon = create('img', '')
 
             let fieldIcons = {
@@ -1296,17 +1297,13 @@ function generateList() {
             // id: id card
             // name: user
 
-            if (Object.keys(fieldIcons).includes(list['children'][l]['children'][i]['fields'][e]['title'])) {
-              // is not a custom field, has icon
-              fieldIcon.src = '../assets/accountFieldIcons/' + fieldIcons[list['children'][l]['children'][i]['fields'][e]['title']]
-              fieldDiv.append(fieldIcon)
-            }
+            fieldIcon.src = '../assets/accountFieldIcons/' + fieldIcons[list['children'][l]['children'][i]['fields'][e]['title']]
 
             let fieldText = create('p', 'text')
 
             let fieldTitle = create('p', 'title')
-
             fieldTitle.innerHTML = list['children'][l]['children'][i]['fields'][e]['title']
+
             fieldText.spellcheck = settings['spellcheck']
             fieldText.contentEditable = true
             if (fieldTitle.innerHTML == 'Password' || fieldTitle.innerHTML == 'Token') {
@@ -1334,14 +1331,27 @@ function generateList() {
               }
             }
 
-            let colon = createElement('p', { "innerhtml": ':' })
-
             // appends
-            fieldDiv.append(fieldTitle)
-            fieldDiv.append(colon)
-            fieldDiv.append(fieldText)
-            accountDiv.append(fieldDiv)
+
+            let accountFieldRow = createElement('tr', {})
+
+            let iconTd = createElement('td', {})
+            iconTd.append(fieldIcon)
+
+            let textTd = createElement('td', {})
+            textTd.append(fieldText)
+
+            let titleTd = createElement('td', {"class": "titleTD"})
+            titleTd.append(fieldTitle)
+
+            accountFieldRow.append(iconTd)
+            accountFieldRow.append(titleTd)
+            accountFieldRow.innerHTML += `<td><p>:</p></td>`
+            accountFieldRow.append(textTd)
+
+            accountFields.append(accountFieldRow)
           }
+          accountDiv.append(accountFields)
           accountDiv.append(accountSettingsDiv)
           accountsDiv.append(accountDiv)
         }

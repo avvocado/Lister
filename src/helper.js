@@ -33,6 +33,7 @@ function newAccount(l) {
     "type": "",
     "fields": []
   })
+  listEdited(l)
 }
 
 function newAccountField(l, i, name) {
@@ -47,18 +48,21 @@ function newAccountField(l, i, name) {
     var textB = b.title.toUpperCase();
     return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
   });
+  listEdited(l)
 }
 
 function deleteAccountField(l, i, e) {
   list['children'][l]['children'][i]['fields'].splice(e, 1);
   writeJSON(list)
   generateList()
+  listEdited(l)
 }
 
 function deleteAccount(l, i) {
   list['children'][l]['children'].splice(i, 1);
   writeJSON(list)
   generateList()
+  listEdited(l)
 }
 
 // creates a new sublist
@@ -67,6 +71,7 @@ function newSublist(l) {
     "name": "SUBLIST",
     "children": []
   })
+  listEdited(l)
 }
 
 function newChecklistSublist(l) {
@@ -75,12 +80,14 @@ function newChecklistSublist(l) {
     "name": "SUBLIST",
     "children": [{ "text": "", "checked": false, "creationDate": d.getTime() }]
   })
+  listEdited(l)
 }
 
 // deletes a block in text list
 function deleteBlock(l, a) {
   list['children'][l]['children'].splice(a, 1);
   writeJSON(list)
+  listEdited(l)
   generateList()
 }
 
@@ -98,6 +105,7 @@ function newItemToTop(l, i) {
     creationDate: d.getTime(),
   })
   writeJSON(list)
+  listEdited(l)
   generateList()
 }
 
@@ -111,6 +119,7 @@ function newChecklistItemToBottom(l, i) {
     creationDate: d.getTime(),
   })
   writeJSON(list)
+  listEdited(l)
   generateList()
 }
 
@@ -150,6 +159,7 @@ function createElement(type, params) {
 function deleteChecklistItem(l, i, e) {
   list['children'][l]['children'][i]['children'].splice(e, 1);
   writeJSON(list)
+  listEdited(l)
   generateList()
 }
 
@@ -157,6 +167,7 @@ function deleteChecklistItem(l, i, e) {
 function removeItem(l, i, e) {
   list['children'][l]['children'][i]['children'].splice(e, 1);
   writeJSON(list)
+  listEdited(l)
   generateList()
 }
 
@@ -317,6 +328,7 @@ function sendItemToTop(l, i, e) {
 function deleteSublist(l, a) {
   list['children'][l]['children'].splice(a, 1);
   writeJSON(list)
+  listEdited(l)
   generateList()
 }
 
