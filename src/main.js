@@ -146,8 +146,14 @@ ipcMain.on("requestSystem", (evt, args) => {
   let systemObj = {
     "dirname": path.join(__dirname, '../'),
     "operatingSystem": process.platform,
-    "touchID": systemPreferences.canPromptTouchID(),
     "versions": process.versions
+  }
+  if(process.platform == 'darwin'){
+    // macos, see if touch id is supported
+    systemObj.touchID = systemPreferences.canPromptTouchID
+  }else{
+    // if is windows it will throw an error when checking
+    systemObj.touchID = false
   }
 
   win.webContents.send('system', systemObj)

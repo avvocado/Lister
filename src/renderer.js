@@ -1015,9 +1015,10 @@ function generateList() {
           sublistTitleP.onfocus = function () {
             stpTemp = this.value
           }
+
           sublistTitleP.onblur = function () {
             if (this.value != stpTemp) {
-              list['children'][l]['children'][i]['name'] = this.value
+              list['children'][l]['children'][i]['name'] = this.value3
               writeJSON(list)
               listEdited(l)
             }
@@ -1146,7 +1147,7 @@ function generateList() {
           // new field btn
           let newFieldBtn = create('button', 'newFieldBtn')
           newFieldBtn.onclick = function () {
-            newAccountField(l, i)
+            newAccountField(l, i, fieldType.value)
             writeJSON(list)
             generateList()
           }
@@ -1158,48 +1159,29 @@ function generateList() {
             generateList()
           }
 
-          let accountType = create('select', '')
+          let fieldType = create('select', 'field')
+          fieldType.innerHTML = (`
+          <option value='Email'>Email</option>
+          <option value='ID'>ID</option>
+          <option value='Password'>Password</option>
+          <option value='Phone'>Phone</option>
+          <option value='Token'>Token</option>
+          <option value='Username'>Username</option>
+          <option value='Website'>Website</option>
+          `)
 
-          let option1 = create('option', '')
-          option1.value = ''
-          option1.innerHTML = 'None'
 
-          let option2 = create('option', '')
-          option2.value = 'education'
-          option2.innerHTML = 'Education'
-
-          let option3 = create('option', '')
-          option3.value = 'shopping'
-          option3.innerHTML = 'Shopping'
-
-          let option4 = create('option', '')
-          option4.value = 'music'
-          option4.innerHTML = 'Music'
-
-          let option5 = create('option', '')
-          option5.value = 'socialmedia'
-          option5.innerHTML = 'Social Media'
-
-          let option6 = create('option', '')
-          option6.value = 'entertainment'
-          option6.innerHTML = 'Entertainment'
-
-          let option7 = create('option', '')
-          option7.value = 'game'
-          option7.innerHTML = 'Game'
-
-          let option8 = create('option', '')
-          option8.value = 'email'
-          option8.innerHTML = 'Email'
-
-          accountType.append(option1) // none
-          accountType.append(option2) // education
-          accountType.append(option8) // email
-          accountType.append(option6) // entertainment
-          accountType.append(option7) // game
-          accountType.append(option4) // music
-          accountType.append(option3) // shopping
-          accountType.append(option5) // social media
+          let accountType = create('select', 'account')
+          accountType.innerHTML = (`
+          <option value=''>None</option>
+          <option value='education'>Education</option>
+          <option value='email'>Email</option>
+          <option value='entertainment'>Entertainment</option>
+          <option value='game'>Game</option>
+          <option value='music'>Music</option>
+          <option value='shopping'>Shopping</option>
+          <option value='socialmedia'>Social Media</option>
+          `)
 
           accountType.oninput = function () {
             list['children'][l]['children'][i]['type'] = this.value
@@ -1227,6 +1209,7 @@ function generateList() {
           }
 
           let accountSettingsDiv = create('div', 'accountSettingsDiv')
+          accountSettingsDiv.append(fieldType)
           accountSettingsDiv.append(newFieldBtn)
           accountSettingsDiv.append(accountType)
           accountSettingsDiv.append(deleteAccountBtn)
@@ -1284,27 +1267,6 @@ function generateList() {
             let fieldText = create('p', 'text')
 
             let fieldTitle = create('p', 'title')
-            fieldTitle.contentEditable = true
-            fieldTitle.spellcheck = settings['spellcheck']
-            let ftTemp = ''
-            fieldTitle.onfocus = function () {
-              ftTemp = this.innerHTML
-            }
-            fieldTitle.onblur = function () {
-              if (this.innerHTML != ftTemp) {
-                list['children'][l]['children'][i]['fields'][e]['title'] = this.innerHTML
-                writeJSON(list)
-                listEdited(l)
-              }
-              if (this.innerHTML == '' && fieldText.innerHTML == '') {
-                deleteAccountField(l, i, e)
-              }
-            }
-            fieldTitle.onkeydown = function (e) {
-              if (e.code == 'Enter') {
-                this.blur()
-              }
-            }
 
             fieldTitle.innerHTML = list['children'][l]['children'][i]['fields'][e]['title']
             fieldText.spellcheck = settings['spellcheck']
@@ -1324,13 +1286,13 @@ function generateList() {
                 writeJSON(list)
                 listEdited(l)
               }
-              if (this.innerHTML == '' && fieldTitle.innerHTML == '') {
+              if (this.innerHTML == '') {
                 deleteAccountField(l, i, e)
               }
             }
             fieldText.onkeydown = function (e) {
               if (e.code == 'Enter') {
-                this.blur()
+                this.blur();
               }
             }
 

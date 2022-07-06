@@ -35,9 +35,9 @@ function newAccount(l) {
   })
 }
 
-function newAccountField(l, i) {
+function newAccountField(l, i, name) {
   list['children'][l]['children'][i]['fields'].push({
-    "title": "",
+    "title": name,
     "value": ""
   })
 }
@@ -147,7 +147,6 @@ function listEdited(l) {
 }
 
 function sortAccounts(l) {
-  console.log('sorting ' + l)
   list['children'][l]['children'] = list['children'][l]['children'].sort(function (a, b) {
     var textA = a.name.toUpperCase();
     var textB = b.name.toUpperCase();
@@ -227,7 +226,6 @@ function newList(type) {
     })
   }
   selectedList = Object.keys(list).length - 1
-  console.log(selectedList)
   writeJSON(list)
   generateList()
 }
@@ -401,4 +399,11 @@ function timeAgo(now, date) {
 
   return (time)
 
+}
+
+function strToElem(html) {
+  let temp = document.createElement('template');
+  html = html.trim(); // Never return a space text node as a result
+  temp.innerHTML = html;
+  return temp.content.firstChild;
 }
