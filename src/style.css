@@ -192,20 +192,21 @@
   vertical-align: top;
   border-radius: 3px;
   margin-right: 6px;
-  transition: background-color 100ms;
-  background-color: var(--bg4);
+  border: 2px solid var(--bg4);
+  transition: background-color 100ms border 100ms;
+  background-color: var(--bg3);
   background-position: center;
   transform: translateY(1px);
-  background-image: url("../assets/check.svg");
 }
 
 .checkBoxBtn.false:hover {
-  background-color: var(--bg5);
+  border: 2px solid var(--bg5);
 }
 
 .checkBoxBtn.true {
   background-color: var(--green);
-  background-image: url("../assets/check1.svg");
+  border: 2px solid var(--green);
+  background-image: url("../assets/check.svg");
 }
 
 .item {

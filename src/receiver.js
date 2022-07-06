@@ -32,6 +32,7 @@ window.api.receive("settings", (args) => {
 
 
   document.getElementById('password').value = settings['password']
+  console.log(settings)
   generateList()
 })
 
@@ -56,6 +57,7 @@ window.api.receive("system", (args) => {
   idv.innerHTML += '<p>Chromium: ' + system.versions.chrome + '</p>'
   idv.innerHTML += '<p>Node: ' + system.versions.node + '</p>'
 
+  console.log(system)
 })
 
 window.api.receive("touchID", (args) => {

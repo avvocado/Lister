@@ -71,6 +71,7 @@ if (!gotTheLock) {
   app.on('second-instance', (event, commandLine, workingDirectory) => {
     // Someone tried to run a second instance, we should focus our window.
     if (win) {
+      console.log('app opened')
       if (win.isMinimized()) {
         win.restore()
       }
@@ -93,13 +94,12 @@ if (!gotTheLock) {
 }
 
 ipcMain.on("close", (evt, args) => {
-  if (process.platform !== 'darwin') {
-    // kill tray icon
-    tray.destroy()
+  // kill tray icon
+  tray.destroy()
 
-    // quit app
-    app.quit()
-  }
+  // quit the app
+  app.quit()
+
   //win.hide()
   // new Notification({ title: 'Lister Minimized to Tray', body: '',}).show()
 })

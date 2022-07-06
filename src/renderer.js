@@ -4,6 +4,21 @@ document.getElementById("closeBtn").addEventListener("click", function () {
   window.api.send('close', '');
 });
 
+document.getElementById("exitSearch").addEventListener("click", function () {
+  document.querySelector('#listsSearch').value = ''
+  this.style.display = 'none'
+
+  for (let s = 0; s < document.querySelectorAll('.sideListBtn').length; s++) {
+    if (document.querySelectorAll('.sideListBtn')[s].id != 'settingsBtn') {
+      document.querySelectorAll('.sideListBtn')[s].style.display = 'none'
+      if (list['children'][(s - 1)]['name'].includes(document.querySelector('#listsSearch').value.toLowerCase())) {
+        document.querySelectorAll('.sideListBtn')[s].style.display = null
+      }
+    }
+  }
+});
+
+
 document.querySelectorAll(".checkedItemStyleBtn")[0].addEventListener("click", function () {
   settings['checkedItemStyle'] = 0
   document.querySelectorAll(".checkedItemStyleBtn")[1].classList.remove('active')
@@ -33,6 +48,22 @@ document.getElementById("blockListItemMediaWidth").addEventListener("input", fun
   settings['blockListItemMediaWidth'] = wid
   writeSettings(settings)
 });
+
+document.querySelector('#listsSearch').addEventListener('input', function () {
+  if (this.value != '') {
+    document.querySelector('#exitSearch').style.display = null
+  }else{
+    document.querySelector('#exitSearch').style.display = 'none'
+  }
+  for (let s = 0; s < document.querySelectorAll('.sideListBtn').length; s++) {
+    if (document.querySelectorAll('.sideListBtn')[s].id != 'settingsBtn') {
+      document.querySelectorAll('.sideListBtn')[s].style.display = 'none'
+      if (list['children'][(s - 1)]['name'].includes(this.value.toLowerCase())) {
+        document.querySelectorAll('.sideListBtn')[s].style.display = null
+      }
+    }
+  }
+})
 
 document.getElementById("toggleSideBtn").addEventListener("click", function () {
   if (document.querySelector('#side').style.padding == "8px 0px") {
@@ -207,6 +238,7 @@ function generateList() {
 
       // list title
       let listTitle = createElement('input', { 'class': 'listTitle', 'type': 'text', 'value': (list['children'][l]['name']) })
+      listTitle.spellcheck = settings.spellcheck
       let ltTemp = ''
       listTitle.onkeydown = function (e) {
         if (e.code == 'Enter') {
@@ -279,7 +311,6 @@ function generateList() {
           // if you're entering a locked list, relock it
           if (selectedList != l) {
 
-            console.log(settings)
 
 
             sideListBtn.classList.remove(list['children'][l]['type'])
@@ -1361,8 +1392,6 @@ function generateList() {
           let accts = 0
           for (let k = 0; k < list['children'][l]['children'].length; k++) {
             listContent.querySelectorAll('.accountDiv')[k].style.display = 'none'
-          }
-          for (let k = 0; k < list['children'][l]['children'].length; k++) {
             if (list['children'][l]['children'][k]['name'].toLowerCase().includes(this.value.toLowerCase())) {
               listContent.querySelectorAll('.accountDiv')[k].style.display = null
               accts += 1;
