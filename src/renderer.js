@@ -11,7 +11,7 @@ document.getElementById("exitSearch").addEventListener("click", function () {
   for (let s = 0; s < document.querySelectorAll('.sideListBtn').length; s++) {
     if (document.querySelectorAll('.sideListBtn')[s].id != 'settingsBtn') {
       document.querySelectorAll('.sideListBtn')[s].style.display = 'none'
-      if (list['children'][(s - 1)]['name'].includes(document.querySelector('#listsSearch').value.toLowerCase())) {
+      if ((list['children'][(s - 1)]['name'].includes(document.querySelector('#listsSearch').value.toLowerCase()) && list['children'][(s - 1)]['locked'] == false) || this.value == '') {
         document.querySelectorAll('.sideListBtn')[s].style.display = null
       }
     }
@@ -58,7 +58,7 @@ document.querySelector('#listsSearch').addEventListener('input', function () {
   for (let s = 0; s < document.querySelectorAll('.sideListBtn').length; s++) {
     if (document.querySelectorAll('.sideListBtn')[s].id != 'settingsBtn') {
       document.querySelectorAll('.sideListBtn')[s].style.display = 'none'
-      if (list['children'][(s - 1)]['name'].includes(this.value.toLowerCase())) {
+      if ((list['children'][(s - 1)]['name'].includes(document.querySelector('#listsSearch').value.toLowerCase()) && list['children'][(s - 1)]['locked'] == false) || this.value == '') {
         document.querySelectorAll('.sideListBtn')[s].style.display = null
       }
     }
@@ -1299,6 +1299,7 @@ function generateList() {
             var text = e.clipboardData.getData('text/plain')
             document.execCommand('insertText', false, text)
           })
+          newFieldText.spellcheck = settings.spellcheck
 
           let accountType = create('select', 'account')
           accountType.innerHTML = (`
