@@ -107,19 +107,27 @@ ipcMain.on("minimize", (evt, args) => {
 })
 
 ipcMain.on("requestList", (evt, args) => {
-  fs.readFile(path.join(__dirname, '../', '/resources/', 'list.json'), (error, data) => {
+  fs.readFile(path.join(__dirname, '../', '/resources/', 'list.json'), (err, data) => {
     win.webContents.send("list", JSON.parse(data));
   });
 })
 ipcMain.on("requestSettings", (evt, args) => {
-  fs.readFile(path.join(__dirname, '../', '/resources/', 'settings.json'), (error, data) => {
-    win.webContents.send("settings", JSON.parse(data));
+  fs.readFile(path.join(__dirname, '../', '/resources/', 'settings.json'), (err, data) => {
+    try {
+      win.webContents.send("settings", JSON.parse(data));
+    } catch (err) {
+      console.log(err)
+    }
   });
 })
 
 ipcMain.on("requestDefaultSettings", (evt, args) => {
-  fs.readFile(path.join(__dirname, '../', '/resources/', 'defaultSettings.json'), (error, data) => {
-    win.webContents.send("defaultSettings", JSON.parse(data));
+  fs.readFile(path.join(__dirname, '/defaultSettings.json'), (err, data) => {
+    try {
+      win.webContents.send("defaultSettings", JSON.parse(data));
+    } catch (err) {
+      console.log(err)
+    }
   });
 })
 

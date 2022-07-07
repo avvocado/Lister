@@ -42,8 +42,7 @@ window.api.receive("media", (args) => {
 })
 
 window.api.receive("defaultSettings", (args) => {
-  writeSettings(args)
-  window.api.send('requestSettings', '');
+  defaultSettings = args
 })
 
 window.api.receive("system", (args) => {

@@ -40,6 +40,13 @@ function newAccountField(l, i, name) {
     "title": name,
     "value": ""
   })
+
+  // sort fields
+  list['children'][l]['children'][i]['fields'] = list['children'][l]['children'][i]['fields'].sort(function (a, b) {
+    var textA = a.title.toUpperCase();
+    var textB = b.title.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+  });
 }
 
 function deleteAccountField(l, i, e) {

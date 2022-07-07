@@ -1183,6 +1183,7 @@ input:checked+.slider:before {
   vertical-align: top;
   margin-right: 4px;
   width: 18px;
+  transform: translateY(-1px);
 }
 
 #settings #password {

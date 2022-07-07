@@ -81,8 +81,9 @@ document.getElementById("newListBtn").addEventListener("click", function () {
 });
 
 document.getElementById("resetSettingsBtn").addEventListener("click", function () {
+  writeSettings(defaultSettings)
+  window.api.send('requestSettings', '');
   showAlert('Reset Settings', 1000, "success")
-  window.api.send('requestDefaultSettings');
 });
 
 document.getElementById("openResourcesFolderBtn").addEventListener("click", function () {
@@ -131,6 +132,7 @@ function init() {
   window.api.send('requestList', '');
   window.api.send('requestSettings', '');
   window.api.send('requestSystem', '');
+  window.api.send('requestDefaultSettings', '');
   // wait for main to send back the json
 }
 
@@ -1165,6 +1167,7 @@ function generateList() {
             }
           }
           accountTitle.innerHTML = list['children'][l]['children'][i]['name']
+          
           // new field btn
           let newFieldBtn = create('button', 'newFieldBtn')
           newFieldBtn.onclick = function () {
@@ -1183,14 +1186,14 @@ function generateList() {
 
           let fieldType = create('select', 'field')
           fieldType.innerHTML = (`
-          <option value='Email'>Email</option>
-          <option value='ID'>ID</option>
-          <option value='Name'>Name</option>
-          <option value='Password'>Password</option>
-          <option value='Phone'>Phone</option>
-          <option value='Token'>Token</option>
-          <option value='Username'>Username</option>
-          <option value='Website'>Website</option>
+            <option value='Email'>Email</option>
+            <option value='ID'>ID</option>
+            <option value='Name'>Name</option>
+            <option value='Password'>Password</option>
+            <option value='Phone'>Phone</option>
+            <option value='Token'>Token</option>
+            <option value='Username'>Username</option>
+            <option value='Website'>Website</option>
           `)
 
 
