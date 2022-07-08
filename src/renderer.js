@@ -1306,7 +1306,7 @@ function generateList() {
 
             fieldText.spellcheck = settings['spellcheck']
             fieldText.contentEditable = true
-            if (fieldTitle.innerHTML == 'Password' || fieldTitle.innerHTML == 'Token') {
+            if (list['children'][l]['children'][i]['fields'][e].title == 'Password' || list['children'][l]['children'][i]['fields'][e].title == 'Token') {
               // if is password or token, blur it
               fieldText.classList.add('blur')
             }
