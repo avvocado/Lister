@@ -1275,7 +1275,7 @@ function generateList() {
 
           for (let e = 0; e < list['children'][l]['children'][i]['fields'].length; e++) {
             // each field
-            let fieldRow = create('tr', 'fieldRow')
+            let fieldRow = create('tr', '')
             let fieldIcon = create('img', '')
 
             let fieldIcons = {
@@ -1302,7 +1302,7 @@ function generateList() {
             let fieldText = create('p', 'text')
 
             let fieldTitle = create('p', 'title')
-            fieldTitle.innerHTML = list['children'][l]['children'][i]['fields'][e]['title']
+            fieldTitle.innerHTML = list['children'][l]['children'][i]['fields'][e]['title'] + ':&nbsp;'
 
             fieldText.spellcheck = settings['spellcheck']
             fieldText.contentEditable = true
@@ -1341,12 +1341,11 @@ function generateList() {
             let textTd = createElement('td', {})
             textTd.append(fieldText)
 
-            let titleTd = createElement('td', {"class": "titleTD"})
+            let titleTd = createElement('td', { "class": "titleTD" })
             titleTd.append(fieldTitle)
 
             accountFieldRow.append(iconTd)
             accountFieldRow.append(titleTd)
-            accountFieldRow.innerHTML += `<td><p>:</p></td>`
             accountFieldRow.append(textTd)
 
             accountFields.append(accountFieldRow)

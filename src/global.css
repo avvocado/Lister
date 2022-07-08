@@ -119,10 +119,10 @@ body::-webkit-scrollbar-track {
 
 #settingsBtn {
   font-size: 16px ;
-  padding: 6px 8px 6px 29px;
+  padding: 6px 8px 6px 31px;
   width: 100%;
   background-size: 20px 20px;
-  background-position: 5px 5px;
+  background-position: 6px 5px;
   background-image: url("../assets/settings1.svg");
 }
 

@@ -17,9 +17,6 @@ const fs = require("fs");
 let win
 var tray
 const createWindow = () => {
-  // create tray
-  tray = new Tray(path.join(__dirname, '../', "/assets/", '/appIcons/', 'icon18x18.png'));
-
 
   // Create the browser window.
   win = new BrowserWindow({
@@ -96,8 +93,13 @@ if (!gotTheLock) {
 }
 
 ipcMain.on("close", (evt, args) => {
-  app.quit();
+  if (process.platform !== 'darwin') {
+    // kill tray icon
+    tray.destroy()
 
+    // quit app
+    app.quit()
+  }
   //win.hide()
   // new Notification({ title: 'Lister Minimized to Tray', body: '',}).show()
 })
@@ -226,7 +228,9 @@ ipcMain.on('touchID', (evt, args) => {
 
 
 ipcMain.on("trayIcon", (evt, args) => {
-  tray.destroy()
+  if (tray != null) {
+    tray.destroy()
+  }
   if (args == true) {
     // black and white
     tray = new Tray(path.join(__dirname, '../', "/assets/", '/appIcons/', 'icon18x18BW.png'));
@@ -246,30 +250,28 @@ ipcMain.on("trayIcon", (evt, args) => {
 
   let menu = Menu.buildFromTemplate([
     {
-      label: 'Lister', click: function () {
+      label: 'Lister',
+      click: function () {
         win.show();
-      }
+      },
     },
     {
       label: 'Settings', click: function () {
         win.show();
         win.webContents.send("openSettings", "");
-      }
+      },
+      //icon: path.join(__dirname, '../', '/assets/', '/', 'settings.png')
+
     },
     { type: 'separator' },
     {
       label: 'Quit', click: function () {
         app.quit();
-      }
+      },
+      //icon: path.join(__dirname, '../', '/assets/', '/', 'quit.png')
     }
   ])
 
   tray.setContextMenu(menu);
   tray.setToolTip('Lister')
-})
-
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
 })

@@ -165,11 +165,11 @@
 }
 
 .checklistItem.true .checklistItemText {
-  color: #393c4c;
+  color: #3b3e4c;
 }
 
 .checklistItem.true.strikethrough .checklistItemText {
-  color: #393c4c;
+  color: #3b3e4c;
   text-decoration: line-through;
 }
 
@@ -988,7 +988,7 @@ input:checked + .slider:before {
 }
 
 .pswdInput::placeholder {
-  color: #393c4c;
+  color: #3b3e4c;
 }
 
 .lockedTitle {
@@ -1026,9 +1026,6 @@ input:checked + .slider:before {
   align-self: flex-start;
 }
 
-.accountDiv table .titleTD {
-  text-align: right;
-}
 
 .accountSearchBox {
   background-color: var(--bg2);
@@ -1052,14 +1049,14 @@ input:checked + .slider:before {
 }
 
 .accountDiv p {
-  color: #393c4c;
+  color: #3b3e4c;
 }
 
 .accountDiv .accountTitle {
   color: #4f5363;
   white-space: nowrap;
   font-size: 18px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   vertical-align: top;
   display: inline-block;
 }
@@ -1092,24 +1089,12 @@ input:checked + .slider:before {
 .accountDiv select {
   transform: translateY(-4px);
   background-color: var(--bg3);
-  color: #393c4c;
-}
-
-.accountDiv .fieldRow {
-  display: block;
-  font-size: 15px;
-  margin: 0 0 4px 0;
-  white-space: nowrap;
-}
-
-.accountDiv .fieldRow .text {
-  margin-left: 5px;
-  color: #404351;
-  transition: 200ms;
+  color: #3b3e4c;
 }
 
 .blur {
   filter: blur(4px);
+  transition: filter 100ms;
 }
 
 .blur:hover,
@@ -1117,13 +1102,19 @@ input:checked + .slider:before {
   filter: none;
 }
 
-.accountDiv .fieldRow .title {
-  color: #404351;
+.accountDiv tr td .title {
+  color: var(--bg5);
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: bold;
 }
 
-.accountDiv .fieldRow p {
-  display: inline-block;
+.accountDiv tr td .text {
+  color:#3b3e4c;
+  transform: translateY(-2px);
 }
+
+
 
 .accountDiv img {
   height: 26px;
@@ -1141,7 +1132,7 @@ input:checked + .slider:before {
 }
 
 .accountDiv .accountSettingsDiv p {
-  color: #393c4c;
+  color: #3b3e4c;
   margin-bottom: 1px;
   font-size: 14px;
 }
@@ -1187,7 +1178,6 @@ input:checked + .slider:before {
   vertical-align: top;
   margin-right: 4px;
   width: 18px;
-  transform: translateY(-1px);
 }
 
 #settings #password {
