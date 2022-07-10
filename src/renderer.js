@@ -375,6 +375,8 @@ function generateList() {
       deleteListBtn.onclick = function () {
         showAlert('Deleted "' + list['children'][l]['name'] + '"', + 1000, "success")
         removeList(l)
+        writeJSON(list)
+        generateList()
       }
       deleteListBtn = handleTooltip(deleteListBtn, deleteListBtnTooltip)
       deleteListBtnDiv.append(deleteListBtnTooltip)
@@ -431,6 +433,7 @@ function generateList() {
         let newSublistBtn = create('button', 'newBtn')
         newSublistBtn.onclick = function () {
           newSublist(l)
+          listEdited(l)
           writeJSON(list)
           generateList()
         }
@@ -463,11 +466,17 @@ function generateList() {
           let deleteSublistBtn = create('button', 'delSublistBtn')
           deleteSublistBtn.onclick = function () {
             deleteSublist(l, i)
+            listEdited(l)
+            writeJSON(list)
+            generateList()
           }
 
           let newItemToTopBtn = create('button', 'newItemToTopBtn')
           newItemToTopBtn.onclick = function () {
             newItemToTop(l, i)
+            listEdited(l)
+            writeJSON(list)
+            generateList()
           }
           let sublistTitleP = createElement('input', {
             'value': (list['children'][l]['children'][i]['name']),
@@ -606,6 +615,7 @@ function generateList() {
               delMediaBtn = handleTooltip(delMediaBtn, delMediaBtnTooltip)
               delMediaBtn.onclick = function () {
                 list['children'][l]['children'][i]['children'][e]['media'] = []
+                listEdited(l)
                 writeJSON(list)
                 generateList()
               }
@@ -644,6 +654,7 @@ function generateList() {
             setStarredBtn.onclick = function () {
               // edit list
               list['children'][l]['children'][i]['children'][e].starred = !list['children'][l]['children'][i]['children'][e].starred
+              listEdited(l)
               writeJSON(list)
               generateList()
 
@@ -669,10 +680,10 @@ function generateList() {
 
                 list['children'][l]['children'][i]['children'][e]['description'] = this.innerHTML
                 writeJSON(list)
+                listEdited(l)
                 if (this.innerHTML.replaceAll(" ", '').replaceAll("\\n", '').replaceAll('<br>', '') == '') {
                   this.style.display = 'none'
                   addDescBtnDiv.style.display = 'inline-block'
-                  listEdited(l)
                 }
               }
             }
@@ -720,6 +731,7 @@ function generateList() {
             duplicateItemBtn = handleTooltip(duplicateItemBtn, duplicateItemBtnTooltip)
             duplicateItemBtn.onclick = function () {
               list['children'][l]['children'][i]['children'].splice(e, 0, list['children'][l]['children'][i]['children'][e])
+              listEdited(l)
               writeJSON(list)
               generateList()
             }
@@ -739,9 +751,9 @@ function generateList() {
 
               this.value = (this.value).replaceAll(' ', '')
               list['children'][l]['children'][i]['children'][e]['link'] = this.value.replaceAll('https://', '')
+              listEdited(l)
               writeJSON(list)
               generateList()
-              listEdited(l)
             }
             addLinkBtn.onclick = function () {
               if (addLinkInput.style.display == 'none') {
@@ -784,6 +796,9 @@ function generateList() {
             }
             delItemBtn.onclick = function () {
               removeItem(l, i, e)
+              listEdited(l)
+              writeJSON(list)
+              generateList()
             }
             delItemBtn = handleTooltip(delItemBtn, delItemBtnTooltip)
             delItemBtnDiv.append(delItemBtnTooltip)
@@ -883,8 +898,8 @@ function generateList() {
             textBlockP.onblur = function () {
               if (this.innerHTML != temp) {
                 list['children'][l]['children'][a]['data'] = this.innerHTML
-                writeJSON(list)
                 listEdited(l)
+                writeJSON(list)
               }
             }
             textBlockP.addEventListener('paste', function (e) {
@@ -914,8 +929,9 @@ function generateList() {
             codeBlockP.onblur = function () {
               if (this.innerHTML != temp) {
                 list['children'][l]['children'][a]['data'] = this.innerHTML
+                listEdited(l)
                 writeJSON(list)
-                writeJSON(list)
+
               }
             }
             codeBlockP.addEventListener('paste', function (e) {
@@ -930,6 +946,9 @@ function generateList() {
             let deleteBlockBtn = create('button', 'delBlockBtn')
             deleteBlockBtn.onclick = function () {
               deleteBlock(l, a)
+              listEdited(l)
+              writeJSON(list)
+              generateList()
             }
             let deleteBlockBtnTooltip = createTooltip('Delete Block', 54, true)
             deleteBlockBtn = handleTooltip(deleteBlockBtn, deleteBlockBtnTooltip)
@@ -1006,6 +1025,7 @@ function generateList() {
         let newSublistBtn = create('button', 'newBtn')
         newSublistBtn.onclick = function () {
           newChecklistSublist(l)
+          listEdited(l)
           writeJSON(list)
           generateList()
         }
@@ -1039,6 +1059,9 @@ function generateList() {
           let deleteSublistBtn = create('button', 'delSublistBtn')
           deleteSublistBtn.onclick = function () {
             deleteSublist(l, i)
+            listEdited(l)
+            writeJSON(list)
+            generateList()
           }
 
           let sublistTitleP = createElement('input', {
@@ -1061,8 +1084,9 @@ function generateList() {
           sublistTitleP.onblur = function () {
             if (this.value != stpTemp) {
               list['children'][l]['children'][i]['name'] = this.value
-              writeJSON(list)
               listEdited(l)
+              writeJSON(list)
+              generateList()
             }
           }
           sublistTitleDiv.append(deleteSublistBtn)
@@ -1089,6 +1113,7 @@ function generateList() {
               itemDiv.classList.remove('true')
               itemDiv.classList.remove('false')
               itemDiv.classList.add(list['children'][l]['children'][i]['children'][e]['checked'])
+              listEdited(l)
               writeJSON(list)
             }
             itemText.contentEditable = true
@@ -1113,17 +1138,23 @@ function generateList() {
             itemText.onblur = function () {
               if (this.innerText != ctTemp) {
                 list['children'][l]['children'][i]['children'][e]['text'] = this.innerText
-                writeJSON(list)
                 listEdited(l)
+                writeJSON(list)
                 generateList()
               }
               if (this.innerText.replaceAll(' ', '') == '' && e != list['children'][l]['children'][i]['children'].length - 1) {
                 // if empty and not last element
                 deleteChecklistItem(l, i, e)
+                listEdited(l)
+                writeJSON(list)
+                generateList()
               }
               if (this.innerText.replaceAll(' ', '') != '' && (list['children'][l]['children'][i]['children'].length == 0 || e == list['children'][l]['children'][i]['children'].length - 1)) {
                 // not empty and is last element
                 newChecklistItemToBottom(l, i)
+                listEdited(l)
+                writeJSON(list)
+                generateList()
               }
             }
             itemText.innerText = list['children'][l]['children'][i]['children'][e]['text']
@@ -1227,8 +1258,8 @@ function generateList() {
           accountTitle.onblur = function () {
             if (this.innerHTML != atTemp) {
               list['children'][l]['children'][i]['name'] = this.innerHTML
-              writeJSON(list)
               listEdited(l)
+              writeJSON(list)
             }
           }
           accountTitle.onkeydown = function (e) {
@@ -1242,6 +1273,7 @@ function generateList() {
           let newFieldBtn = create('button', 'newFieldBtn')
           newFieldBtn.onclick = function () {
             newAccountField(l, i, fieldType.value, newFieldText.value)
+            listEdited(l)
             writeJSON(list)
             generateList()
           }
@@ -1254,6 +1286,7 @@ function generateList() {
           deleteAccountBtn.style.borderRadius = '3px'
           deleteAccountBtn.onclick = function () {
             deleteAccount(l, i)
+            listEdited(l)
             writeJSON(list)
             generateList()
           }
@@ -1415,8 +1448,8 @@ function generateList() {
             fieldText.onblur = function () {
               if (this.innerHTML != fteTemp) {
                 list['children'][l]['children'][i]['fields'][e]['value'] = this.innerHTML
-                writeJSON(list)
                 listEdited(l)
+                writeJSON(list)
               }
             }
             fieldText.onkeydown = function (e) {
@@ -1428,6 +1461,9 @@ function generateList() {
             let deleteFieldRowBtn = createElement('button', { 'hide': false, 'class': 'deleteFieldBtn' })
             deleteFieldRowBtn.onclick = function () {
               deleteAccountField(l, i, e)
+              listEdited(l)
+              writeJSON(list)
+              generateList()
             }
 
             // appends
