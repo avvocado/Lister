@@ -9,6 +9,7 @@ var awaitUnlock = -1
 var list
 var settings
 var system
+var openedAccountSettings = []
 
 
 
@@ -36,7 +37,7 @@ function newAccount(l) {
   listEdited(l)
 }
 
-function newAccountField(l, i, name ,value) {
+function newAccountField(l, i, name, value) {
   list['children'][l]['children'][i]['fields'].push({
     "title": name,
     "value": value

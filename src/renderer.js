@@ -1156,6 +1156,7 @@ function generateList() {
                 writeJSON(list)
                 generateList()
               }
+
             }
             itemText.innerText = list['children'][l]['children'][i]['children'][e]['text']
 
@@ -1332,6 +1333,11 @@ function generateList() {
             var text = e.clipboardData.getData('text/plain')
             document.execCommand('insertText', false, text)
           })
+          newFieldText.onkeydown = function (e) {
+            if (e.code == 'Enter') {
+              newFieldBtn.click()
+            }
+          }
           newFieldText.spellcheck = settings.spellcheck
 
           let accountType = create('select', 'account')
@@ -1496,6 +1502,9 @@ function generateList() {
             accountSettingsDiv.style.display = null
             this.style.display = 'none'
 
+            // set open account settings variable [list, account]
+            openedAccountSettings = [l, i]
+
             // show fields
             accountFields.style.display = null
 
@@ -1514,6 +1523,10 @@ function generateList() {
             }
             accountTitle.style.cursor = 'text'
 
+          }
+
+          if (openedAccountSettings[0] == l && openedAccountSettings[1] == i) {
+            openAccountSettingsBtn.click()
           }
           accountDiv.append(accountFields)
           accountDiv.append(accountSettingsDiv)
