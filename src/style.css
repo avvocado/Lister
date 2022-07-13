@@ -1226,3 +1226,26 @@ input:checked + .slider:before {
   transition: 200ms;
   padding: 4px 4px;
 }
+
+
+.statusBtn {
+  height: 16px;
+  width: 16px;
+  transform: translateY(-2px);
+  border-radius: 50%;
+  margin-right: 2px;
+  vertical-align: top;
+  transition: 100ms;
+}
+
+.statusBtn.s0 {
+  background-color: var(--blue);
+}
+
+.statusBtn.s1 {
+  background-color: var(--red);
+}
+
+.statusBtn.s2 {
+  background-color: var(--yellow);
+}

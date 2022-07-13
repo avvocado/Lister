@@ -1,1 +1,69 @@
-{"children":[{"children":[{"name":"SUBLIST","children":[{"text":"sssksjssasdjasdkasd","checked":false,"creationDate":1656949129836},{"text":"","checked":false,"creationDate":1657134064119}]}],"name":"new","creationDate":1656949129836,"type":"checklist","locked":false,"lastEdited":1657512660440},{"children":[{"name":"account 1","type":"","fields":[{"title":"Email","value":"anothhe remial"},{"title":"Email","value":"ymemail!"},{"title":"Password","value":"passcode"},{"title":"Phone","value":"phone number"},{"title":"Username","value":"usernmame"},{"title":"Website","value":"webstie.com"}]},{"name":"","type":"","fields":[]}],"name":"accountse","creationDate":1656774043607,"type":"accounts","locked":false,"lastEdited":1657489672025}]}
+{
+  "children": [
+    {
+      "children": [
+        {
+          "name": "SUBLIST",
+          "children": [
+            {
+              "title": "s",
+              "media": [],
+              "description": "",
+              "status": 3,
+              "starred": false,
+              "link": "",
+              "creationDate": 1657750198637
+            }
+          ]
+        }
+      ],
+      "name": "New List",
+      "type": "block",
+      "creationDate": 1657750064865,
+      "locked": false,
+      "lastEdited": 1657750200232
+    },
+    {
+      "children": [
+        {
+          "name": "account 1",
+          "type": "",
+          "fields": [
+            { "title": "Email", "value": "anothhe remial" },
+            { "title": "Email", "value": "ymemail!" },
+            { "title": "Password", "value": "passcode" },
+            { "title": "Phone", "value": "phone number" },
+            { "title": "Username", "value": "usernmame" },
+            { "title": "Website", "value": "webstie.com" }
+          ]
+        },
+        { "name": "", "type": "", "fields": [] }
+      ],
+      "name": "ife",
+      "creationDate": 1656774043607,
+      "type": "accounts",
+      "locked": false,
+      "lastEdited": 1657722264371
+    },
+    {
+      "children": [
+        {
+          "name": "SUBLIST",
+          "children": [
+            {
+              "text": "sssksjssasdjasdkasd",
+              "checked": false,
+              "creationDate": 1656949129836
+            },
+            { "text": "", "checked": false, "creationDate": 1657134064119 }
+          ]
+        }
+      ],
+      "name": "Lister",
+      "creationDate": 1656949129836,
+      "type": "checklist",
+      "locked": false,
+      "lastEdited": 1657722212671
+    }
+  ]
+}

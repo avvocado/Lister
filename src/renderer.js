@@ -11,13 +11,12 @@ document.getElementById("exitSearch").addEventListener("click", function () {
   for (let s = 0; s < document.querySelectorAll('.sideListBtn').length; s++) {
     if (document.querySelectorAll('.sideListBtn')[s].id != 'settingsBtn') {
       document.querySelectorAll('.sideListBtn')[s].style.display = 'none'
-      if ((list['children'][(s - 1)]['name'].includes(document.querySelector('#listsSearch').value.toLowerCase()) && list['children'][(s - 1)]['locked'] == false) || this.value == '') {
+      if ((list['children'][(s - 1)]['name'].toLowerCase().includes(document.querySelector('#listsSearch').value.toLowerCase()) && list['children'][(s - 1)]['locked'] == false) || this.value == '') {
         document.querySelectorAll('.sideListBtn')[s].style.display = null
       }
     }
   }
 });
-
 
 document.querySelectorAll(".checkedItemStyleBtn")[0].addEventListener("click", function () {
   settings['checkedItemStyle'] = 0
@@ -58,7 +57,7 @@ document.querySelector('#listsSearch').addEventListener('input', function () {
   for (let s = 0; s < document.querySelectorAll('.sideListBtn').length; s++) {
     if (document.querySelectorAll('.sideListBtn')[s].id != 'settingsBtn') {
       document.querySelectorAll('.sideListBtn')[s].style.display = 'none'
-      if ((list['children'][(s - 1)]['name'].includes(document.querySelector('#listsSearch').value.toLowerCase()) && list['children'][(s - 1)]['locked'] == false) || this.value == '') {
+      if ((list['children'][(s - 1)]['name'].toLowerCase().includes(document.querySelector('#listsSearch').value.toLowerCase()) && list['children'][(s - 1)]['locked'] == false) || this.value == '') {
         document.querySelectorAll('.sideListBtn')[s].style.display = null
       }
     }
@@ -524,7 +523,52 @@ function generateList() {
               itemDiv.classList.add('starred')
             }
 
-            itemDiv.classList.add(("s" + (list['children'][l]['children'][i]['children'][e]['color']).toString()));
+            // status button
+            button = document.createElement('button')
+            button.classList = 'statusBtn'
+
+                 button.onmouseup = function (event) {
+                   if (event.button == 2) {
+                     // right click
+                     // if is complete, skip down to incomplete,
+                     // otherwise just cycle down like normal
+                     if (list[l]['children'][i]['children'][e]['status'] == 3) {
+                       list[l]['children'][i]['children'][e]['status'] = 1
+                       writeJSON(list)
+                     } else if (list[l]['children'][i]['children'][e]['status'] > 0) {
+                       list[l]['children'][i]['children'][e]['status'] -= 1
+                       writeJSON(list)
+                     }
+       
+                   } else if (event.button == 0) {
+                     // left click, cycle up
+                     if (list[l]['children'][i]['children'][e]['status'] < 3) {
+                       list[l]['children'][i]['children'][e]['status'] += 1
+                       writeJSON(list)
+                       if (list[l]['children'][i]['children'][e]['status'] == 3 && list[l]['children'][i]['children'][e]['starred'] == false) {
+                         // completed
+                         let temp = list[l]['children'][i]['children'][e]
+                         removeItem(l, i, e)
+                         currentKeys = Object.keys(list[l]['children'][i]).length - 1
+                         list[l]['children'][i][currentKeys] = temp// + 1 to add next index
+                         writeJSON(list)
+                         generateList()
+       
+                       }
+                     }
+       
+                   }
+                   this.className = 'statusBtn'
+       
+       
+                   this.classList.add("s" + (list[l]['children'][i]['children'][e]['status']).toString())
+                   this.parentElement.className = 'item'
+                   this.parentElement.classList.add(("s" + (list[l]['children'][i]['children'][e]['status']).toString()))
+                 }
+            button.classList.add("s" + (list['children'][l]['children'][i]['children'][e]['status']).toString());
+            itemDiv.append(button)
+
+            itemDiv.classList.add(("s" + (list['children'][l]['children'][i]['children'][e]['status']).toString()));
 
             // ITEM_TITLE
             let itemTitle = createElement('p', {
@@ -804,53 +848,6 @@ function generateList() {
             delItemBtnDiv.append(delItemBtnTooltip)
             delItemBtnDiv.append(delItemBtn)
 
-            // color buttons
-            let colorBtn0 = create('button', 'colorBtn c0')
-            if (list['children'][l]['children'][i]['children'][e]['color'] == 0) {
-              colorBtn0.classList.add('active')
-            }
-            colorBtn0.onclick = function () {
-              updateColor(this, 0)
-            }
-            let colorBtn1 = create('button', 'colorBtn c1')
-            if (list['children'][l]['children'][i]['children'][e]['color'] == 1) {
-              colorBtn1.classList.add('active')
-            }
-            colorBtn1.onclick = function () {
-              updateColor(this, 1)
-            }
-            let colorBtn2 = create('button', 'colorBtn c2')
-            if (list['children'][l]['children'][i]['children'][e]['color'] == 2) {
-              colorBtn2.classList.add('active')
-            }
-            colorBtn2.onclick = function () {
-              updateColor(this, 2)
-            }
-            let colorBtn3 = create('button', 'colorBtn c3')
-            if (list['children'][l]['children'][i]['children'][e]['color'] == 3) {
-              colorBtn3.classList.add('active')
-            }
-            colorBtn3.onclick = function () {
-              updateColor(this, 3)
-            }
-
-
-            function updateColor(item, num) {
-              list['children'][l]['children'][i]['children'][e]['color'] = num
-              document.querySelector('.colorBtn.active').classList.remove('active')
-              item.classList.add('active')
-              itemDiv.className = 'item s' + num
-              if (list['children'][l]['children'][i]['children'][e]['starred'] == true) {
-                itemDiv.classList.add('starred')
-              }
-              writeJSON(list)
-            }
-
-
-
-
-
-
             // add buttons to item settings
             itemSettingsDiv.append(mediaBtnDiv)
 
@@ -863,11 +860,6 @@ function generateList() {
             itemSettingsDiv.append(setStarredBtnDiv)
             itemSettingsDiv.append(duplicateItemBtnDiv)
             itemSettingsDiv.append(delItemBtnDiv)
-            itemSettingsDiv.append(colorBtn0)
-            itemSettingsDiv.append(colorBtn1)
-            itemSettingsDiv.append(colorBtn2)
-            itemSettingsDiv.append(colorBtn3)
-
             // link input
             itemSettingsDiv.append(addLinkInput)
             // creation date
