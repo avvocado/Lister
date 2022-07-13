@@ -502,8 +502,8 @@ function generateList() {
           }
           sublistTitleDiv.append(deleteSublistBtn)
 
-          sublistTitleDiv.append(collapseSublistBtn)
           sublistTitleDiv.append(newItemToTopBtn)
+          sublistTitleDiv.append(collapseSublistBtn)
           sublistTitleDiv.append(sublistTitleP)
 
 
@@ -523,50 +523,34 @@ function generateList() {
               itemDiv.classList.add('starred')
             }
 
+            // number count
+            let count = createElement("p", { "class": "blockItemCount" })
+            count.innerHTML = (e + 1) + "."
+
             // status button
             button = document.createElement('button')
             button.classList = 'statusBtn'
 
-                 button.onmouseup = function (event) {
-                   if (event.button == 2) {
-                     // right click
-                     // if is complete, skip down to incomplete,
-                     // otherwise just cycle down like normal
-                     if (list[l]['children'][i]['children'][e]['status'] == 3) {
-                       list[l]['children'][i]['children'][e]['status'] = 1
-                       writeJSON(list)
-                     } else if (list[l]['children'][i]['children'][e]['status'] > 0) {
-                       list[l]['children'][i]['children'][e]['status'] -= 1
-                       writeJSON(list)
-                     }
-       
-                   } else if (event.button == 0) {
-                     // left click, cycle up
-                     if (list[l]['children'][i]['children'][e]['status'] < 3) {
-                       list[l]['children'][i]['children'][e]['status'] += 1
-                       writeJSON(list)
-                       if (list[l]['children'][i]['children'][e]['status'] == 3 && list[l]['children'][i]['children'][e]['starred'] == false) {
-                         // completed
-                         let temp = list[l]['children'][i]['children'][e]
-                         removeItem(l, i, e)
-                         currentKeys = Object.keys(list[l]['children'][i]).length - 1
-                         list[l]['children'][i][currentKeys] = temp// + 1 to add next index
-                         writeJSON(list)
-                         generateList()
-       
-                       }
-                     }
-       
-                   }
-                   this.className = 'statusBtn'
-       
-       
-                   this.classList.add("s" + (list[l]['children'][i]['children'][e]['status']).toString())
-                   this.parentElement.className = 'item'
-                   this.parentElement.classList.add(("s" + (list[l]['children'][i]['children'][e]['status']).toString()))
-                 }
+            button.onclick = function (event) {
+              listEdited(l)
+              
+              // left click, cycle up
+              if (list['children'][l]['children'][i]['children'][e]['status'] < 3) {
+                list['children'][l]['children'][i]['children'][e]['status'] += 1
+                writeJSON(list)
+              } else {
+                list['children'][l]['children'][i]['children'][e]['status'] = 0
+              }
+              this.className = 'statusBtn'
+
+
+              this.classList.add("s" + (list['children'][l]['children'][i]['children'][e]['status']).toString())
+              this.parentElement.className = 'item'
+              this.parentElement.classList.add(("s" + (list['children'][l]['children'][i]['children'][e]['status']).toString()))
+            }
             button.classList.add("s" + (list['children'][l]['children'][i]['children'][e]['status']).toString());
             itemDiv.append(button)
+            itemDiv.append(count)
 
             itemDiv.classList.add(("s" + (list['children'][l]['children'][i]['children'][e]['status']).toString()));
 
@@ -666,23 +650,6 @@ function generateList() {
               delMediaBtnDiv.append(delMediaBtnTooltip)
               delMediaBtnDiv.append(delMediaBtn)
             }
-
-            // ITEM DESCRIPTION
-            // ADD_ITEM_DESCRIPTION_BUTTON
-            let addDescBtnDiv = document.createElement('div')
-            let addDescBtn = document.createElement('button')
-            addDescBtn.className = 'addDescBtn'
-            addDescBtnDiv.style.display = 'none'
-            let addDescBtnTooltip = createTooltip('Add Description', 36, true)
-            addDescBtn.onclick = function () {
-              itemDescription.style.display = 'block'
-              addDescBtnDiv.style.display = 'none'
-              itemDescription.focus()
-            }
-            addDescBtn = handleTooltip(addDescBtn, addDescBtnTooltip)
-            addDescBtnDiv.append(addDescBtnTooltip)
-            addDescBtnDiv.append(addDescBtn)
-
             // ITEM_starred_BUTTON
             let setStarredBtnDiv = document.createElement('div')
             let setStarredBtn = document.createElement('button')
@@ -707,55 +674,8 @@ function generateList() {
             setStarredBtnDiv.append(setStarredBtnTooltip)
             setStarredBtnDiv.append(setStarredBtn)
 
-            // ITEM_DESCRIPTION
-            let itemDescription = document.createElement('p')
-            itemDescription.placeholder = 'Description...'
-            itemDescription.contentEditable = true
-            itemDescription.spellcheck = settings['spellcheck']
 
-            itemDescription.innerHTML = list['children'][l]['children'][i]['children'][e]['description']
-            itemDescription.className = 'description'
-            let idTemp = ''
-            itemDescription.onfocus = function () {
-              idTemp = this.innerHTML
-            }
-            itemDescription.onblur = function () {
-              if (this.innerHTML != idTemp) {
 
-                list['children'][l]['children'][i]['children'][e]['description'] = this.innerHTML
-                writeJSON(list)
-                listEdited(l)
-                if (this.innerHTML.replaceAll(" ", '').replaceAll("\\n", '').replaceAll('<br>', '') == '') {
-                  this.style.display = 'none'
-                  addDescBtnDiv.style.display = 'inline-block'
-                }
-              }
-            }
-
-            if (itemDescription.innerHTML.replaceAll(" ", '').replaceAll("\n", '').replaceAll('<br>', '') == '') {
-              itemDescription.style.display = 'none'
-              addDescBtnDiv.style.display = 'inline-block'
-            }
-            itemDiv.append(itemDescription)
-
-            // ITEM_LINK
-            if (list['children'][l]['children'][i]['children'][e]['link'] != '' && list['children'][l]['children'][i]['children'][e]['link'] != null) {
-              let linkDiv = create('div', '')
-              linkDiv.style.marginTop = '-8px'
-              let openLinkBtn = create('button', 'openLinkBtn')
-              openLinkBtn.title = ('https://' + list['children'][l]['children'][i]['children'][e]['link'])
-              openLinkBtn.onclick = function () {
-                window.open(list['children'][l]['children'][i]['children'][e]['link'], '_blank')
-              }
-              let link = create('a', 'itemLink')
-              link.title = ('https://' + list['children'][l]['children'][i]['children'][e]['link'])
-              link.href = 'https://' + list['children'][l]['children'][i]['children'][e]['link']
-              link.target = '_blank'
-              link.innerHTML = list['children'][l]['children'][i]['children'][e]['link']
-              linkDiv.append(link)
-              linkDiv.append(openLinkBtn)
-              itemDiv.append(linkDiv)
-            }
 
             // ITEM_CREATION_DATE
             let cdate = new Date(list['children'][l]['children'][i]['children'][e]['creationDate'])
@@ -782,34 +702,6 @@ function generateList() {
             duplicateItemBtnDiv.append(duplicateItemBtnTooltip)
             duplicateItemBtnDiv.append(duplicateItemBtn)
 
-            // ADD_LINK_BUTTON_
-            let addLinkBtnDiv = create('div', '')
-            let addLinkBtn = create('button', 'addLinkBtn')
-            let addLinkBtnTooltip = createTooltip('Add Link', 17, true)
-            addLinkBtn = handleTooltip(addLinkBtn, addLinkBtnTooltip)
-            let addLinkInput = create('input', 'addLinkInput')
-            addLinkInput.placeholder = 'Link'
-            addLinkInput.value = list['children'][l]['children'][i]['children'][e]['link']
-            addLinkInput.style.display = 'none'
-            addLinkInput.onblur = function () {
-
-              this.value = (this.value).replaceAll(' ', '')
-              list['children'][l]['children'][i]['children'][e]['link'] = this.value.replaceAll('https://', '')
-              listEdited(l)
-              writeJSON(list)
-              generateList()
-            }
-            addLinkBtn.onclick = function () {
-              if (addLinkInput.style.display == 'none') {
-                addLinkInput.style.display = 'block'
-
-              } else {
-                addLinkInput.style.display = 'none'
-              }
-            }
-            addLinkBtnDiv.append(addLinkBtnTooltip)
-            addLinkBtnDiv.append(addLinkBtn)
-
             // ADD MEDIA BUTTON
             let mediaBtnDiv = document.createElement('div')
             let mediaBtn = create('button', 'uploadMediaBtn')
@@ -832,12 +724,9 @@ function generateList() {
             delItemBtnDiv.style.float = 'right'
             delItemBtnDiv.style.marginRight = '8px'
             let delItemBtnTooltip
-            if (i == 2) {
-              delItemBtnTooltip = createTooltip('Delete Item', 40, true)
-              delItemBtnTooltip.style.whiteSpace = 'nowrap'
-            } else {
-              delItemBtnTooltip = createTooltip('Delete Item', 28, true)
-            }
+            delItemBtnTooltip = createTooltip('Delete Item', 28, true)
+            delItemBtnTooltip.style.whiteSpace = 'nowrap'
+
             delItemBtn.onclick = function () {
               removeItem(l, i, e)
               listEdited(l)
@@ -855,13 +744,9 @@ function generateList() {
               // if no media
               itemSettingsDiv.append(delMediaBtnDiv)
             }
-            itemSettingsDiv.append(addLinkBtnDiv)
-            itemSettingsDiv.append(addDescBtnDiv)
             itemSettingsDiv.append(setStarredBtnDiv)
             itemSettingsDiv.append(duplicateItemBtnDiv)
             itemSettingsDiv.append(delItemBtnDiv)
-            // link input
-            itemSettingsDiv.append(addLinkInput)
             // creation date
             itemSettingsDiv.append(creationDateP)
             itemDiv.append(itemSettingsDiv)

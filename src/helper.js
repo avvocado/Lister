@@ -99,8 +99,7 @@ function newItemToTop(l, i) {
   list['children'][l]['children'][i]['children'].unshift({
     title: "",
     media: [],
-    description: "",
-    color: 3,
+    status: 1,
     starred: false,
     link: "",
     creationDate: d.getTime(),
