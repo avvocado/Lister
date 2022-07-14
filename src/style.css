@@ -1,14 +1,13 @@
 :root {
-  /*--bg1: #171921;
-  --bg2: #1b1d26;
-  --bg3: #20222b;
-  --bg4: #272933;
-  --bg5: #32343f;*/
   --bg1: #17191e;
   --bg2: #1c1d23;
   --bg3: #212228;
   --bg4: #25262c;
   --bg5: #282930;
+  --text1: #606472;
+  --text2: #4e525e;
+  --text3: #3f424c;
+  --text4: #34363d;
   --green: #009966;
   --selectionGreen: #64a684;
   --yellow: #f0be61;
@@ -70,7 +69,7 @@
 
 .listTitle {
   transition: all 100ms, width 0ms;
-  color: #606472;
+  color: var(--text1);
   width: calc(100%);
   padding: 4px 4px;
   transform: translateY(-6px);
@@ -102,13 +101,13 @@
 }
 
 .sublistTitleDiv input {
-  font-size: 12px;
   background-color: var(--bg2);
+  color: var(--text4);
+  font-size: 12px;
   transition: all 100ms, width 0ms;
   width: calc(100% - 80px);
   font-weight: bold;
   text-transform: uppercase;
-  color: #404351;
 }
 
 .sublistTitleDiv button {
@@ -175,16 +174,16 @@
 }
 
 .checklistItem.true .checklistItemText {
-  color: #3b3e4c;
+  color: var(--text4);
 }
 
 .checklistItem.true.strikethrough .checklistItemText {
-  color: #3b3e4c;
+  color: var(--text4);
   text-decoration: line-through;
 }
 
 .checklistItem.false .checklistItemText {
-  color: #4f5363;
+  color: var(--text3);
   text-decoration: none;
 }
 
@@ -202,14 +201,14 @@
   vertical-align: top;
   border-radius: 3px;
   margin-right: 6px;
-  border: 2px solid var(--bg4);
+  border: 2px solid var(--bg5);
   transition: background-color 100ms border 100ms;
   background-color: var(--bg3);
   transform: translateY(1px);
 }
 
 .checkBoxBtn.false:hover {
-  border: 2px solid var(--bg5);
+  border: 2px solid var(--text4);
 }
 
 .checkBoxBtn.true {
@@ -233,7 +232,7 @@
 }
 
 .item .title {
-  color: #404351;
+  color: var(--text3);
   font-size: 16px;
   display: inline-block;
   background-color: var(--bg3);
@@ -340,7 +339,7 @@
 }
 
 .creationDateText {
-  color: #2d303c;
+  color: var(--text4);
   font-size: 12px;
   display: inline-block;
   user-select: none;
@@ -450,7 +449,7 @@
 .tooltip {
   position: absolute;
   font-size: 12px;
-  color: #8c8c8c;
+  color: var(--text2);
   background-color: var(--bg4);
   white-space: nowrap;
   user-select: none;
@@ -488,14 +487,14 @@
 }
 
 #settings h2 {
-  color: #535663;
+  color: var(--text1);
   margin-bottom: 4px;
 }
 
 #settings p {
   margin: 0;
   margin-top: 8px;
-  color: #404351;
+  color: var(--text3);
   font-size: 14px;
 }
 
@@ -503,14 +502,14 @@
   display: inline;
   font-size: 12px;
   user-select: none;
-  color: #404351;
+  color: var(--text4);
   font-weight: bold;
 }
 
 #settings h3 {
   font-size: 16px;
   font-weight: 1;
-  color: #6a6d7a;
+  color: var(--text2);
   display: inline-block;
 }
 
@@ -587,7 +586,7 @@
   content: "";
   left: 3px;
   bottom: 3px;
-  background-color: #606472;
+  background-color: var(--text1);
   transition: 300ms;
 }
 
@@ -665,13 +664,13 @@ input:checked + .slider:before {
 
 .mainListContent.text .block.text .text {
   overflow-x: auto;
-  color: #535663;
+  color: var(--text3);
   background-color: var(--bg2);
 }
 
 .mainListContent.text .block.code {
   margin-bottom: 8px;
-  color: #535663;
+  color: var(--text3);
   font-size: 14px;
 }
 
@@ -766,7 +765,7 @@ input:checked + .slider:before {
   text-align: left;
   margin-top: 2px;
   transition: 100ms;
-  color: #6a6d7a;
+  color: var(--text1);
   width: calc(100% - 16px);
   padding: 8px 8px;
   user-select: none;
@@ -857,11 +856,11 @@ input:checked + .slider:before {
 
 .sideListBtn .date {
   font-size: 11px;
-  color: #404351;
+  color: var(--text3);
 }
 
 .listDate {
-  color: #2d303c;
+  color: var(--text4);
   font-size: 12px;
   user-select: none;
   display: inline-block;
@@ -873,7 +872,7 @@ input:checked + .slider:before {
   padding: 2px 12px;
   height: 20px;
   border-radius: 24px;
-  color: #606472;
+  color: var(--text1);
 }
 
 .pswdSubmit {
@@ -923,7 +922,7 @@ input:checked + .slider:before {
 }
 
 .pswdInput::placeholder {
-  color: #3b3e4c;
+  color: var(--text4);
 }
 
 .lockedTitle {
@@ -968,7 +967,7 @@ input:checked + .slider:before {
   border-bottom: 2px solid var(--bg4);
   transition: 100ms;
   padding: 0 2px;
-  color: #404351;
+  color: var(--text4);
 }
 
 .accountSearchBox:focus {
@@ -1097,9 +1096,14 @@ input:checked + .slider:before {
   background-color: var(--bg3);
   vertical-align: super;
   transition: 100ms;
-  color: #404351;
+  color:var(--text3);
   margin-left: 4px;
   display: inline-block;
+  border-bottom: 2px solid var(--bg4);
+}
+
+.accountDiv .accountSettingsDiv input::placeholder {
+  color:var(--text4);
 }
 
 .accountDiv .accountSettingsDiv input:focus {
@@ -1112,7 +1116,7 @@ input:checked + .slider:before {
   border-top: 2px solid var(--bg5);
 }
 .fieldType {
-  color: var(--bg5);
+  color: var(--text4);
   margin-left: -4px;
   text-transform: uppercase;
   margin-top: 12px;
