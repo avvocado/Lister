@@ -512,10 +512,6 @@ function generateList() {
             let itemDiv = document.createElement('div')
             itemDiv.className = 'item'
 
-            // number count
-            let count = createElement("p", { "class": "blockItemCount" })
-            count.innerHTML = (e + 1) + "."
-
             // status button
             button = document.createElement('button')
             button.classList = 'statusBtn'
@@ -536,7 +532,6 @@ function generateList() {
             }
             button.classList.add("s" + (list['children'][l]['children'][i]['children'][e]['status']).toString());
             itemDiv.append(button)
-            itemDiv.append(count)
 
             // ITEM_TITLE
             let itemTitle = createElement('p', {

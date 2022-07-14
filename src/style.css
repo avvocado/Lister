@@ -1,9 +1,14 @@
 :root {
-  --bg1: #171921;
+  /*--bg1: #171921;
   --bg2: #1b1d26;
   --bg3: #20222b;
   --bg4: #272933;
-  --bg5: #32343f;
+  --bg5: #32343f;*/
+  --bg1: #17191e;
+  --bg2: #1c1d23;
+  --bg3: #212228;
+  --bg4: #25262c;
+  --bg5: #282930;
   --green: #009966;
   --selectionGreen: #64a684;
   --yellow: #f0be61;
@@ -223,16 +228,20 @@
   transition: all 100ms, padding 0ms, width 0ms;
 }
 
+.item:hover > .creationDateText {
+  opacity: 100;
+}
+
 .item .title {
   color: #404351;
   font-size: 16px;
   display: inline-block;
   background-color: var(--bg3);
-  width: calc(100% - 80px);
-  width: auto;
+  max-width: calc(100% - 64px);
+  overflow-x: auto;
   transition: 100ms;
-  margin-left: 4px;
-  transform: translateY(-4px);
+  margin-left: 7px;
+  transform: translateY(-1px);
 }
 
 .moreBtn {
@@ -335,6 +344,8 @@
   font-size: 12px;
   display: inline-block;
   user-select: none;
+  opacity: 0;
+  transition: 100ms;
   margin-left: 6px;
   transform: translateY(-6px);
 }
@@ -342,6 +353,7 @@
 .statusBtn {
   height: 18px;
   width: 18px;
+  vertical-align: top;
   transform: translateY(-1px);
   transition: 100ms;
 }
