@@ -442,7 +442,7 @@ function generateList() {
           // FOR_EACH_SUBLIST
 
           let sublistDiv = create('div', 'sublistDiv')
-          let sublistContentDiv = document.createElement('div')
+          let sublistContentDiv = create('div', 'content')
 
           let sublistTitleDiv = create('div', 'sublistTitleDiv')
           let collapseSublistBtn = create('button', 'collapseSublistBtn down')
@@ -466,7 +466,8 @@ function generateList() {
 
           let newItemToTopBtn = create('button', 'newItemToTopBtn')
           newItemToTopBtn.onclick = function () {
-            newItemToTop(l, i)
+            // newItemToTop(l, i)
+            newBlockItem(l, i)
             listEdited(l)
           }
           let sublistTitleP = createElement('input', {
@@ -522,7 +523,7 @@ function generateList() {
             button.onclick = function (event) {
 
               // left click, cycle up
-              if (list['children'][l]['children'][i]['children'][e]['status'] < 3) {
+              if (list['children'][l]['children'][i]['children'][e]['status'] < 6) {
                 list['children'][l]['children'][i]['children'][e]['status'] += 1
                 writeJSON(list)
               } else {
@@ -709,6 +710,7 @@ function generateList() {
             sublistContentDiv.append(itemDiv)
           }
         }
+
         listContent.append(sublists)
         listDiv.append(listContent)
         lists.append(listDiv)
@@ -1340,7 +1342,7 @@ function generateList() {
           accountDiv.append(accountSettingsDiv)
           accountsDiv.append(accountDiv)
         }
-        let accountCount = create('p', 'accountCount')
+        let accountCount = create('p', 'bottomCounter')
 
         searchBox.oninput = function () {
           // do search
@@ -1357,12 +1359,9 @@ function generateList() {
           } else {
             accountCount.innerHTML = accts + ((accts == 1) ? ' Matching Account' : ' Matching Accounts') + '<br>' + list['children'][l]['children'].length + ((list['children'][l]['children'].length == 1) ? ' Account Total' : ' Accounts Total')
           }
-
         }
 
         accountCount.innerHTML = list['children'][l]['children'].length + ((list['children'][l]['children'].length == 1) ? ' Account' : ' Accounts')
-        accountCount.style.userSelect = 'none'
-        accountCount.style.marginBottom = '16px'
         listContent.append(accountsDiv)
         listContent.append(accountCount)
         listDiv.append(listContent)

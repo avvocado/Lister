@@ -100,6 +100,24 @@ function newItemToTop(l, i) {
     title: "",
     media: [],
     status: 1,
+    starred: false,
+    link: "",
+    creationDate: d.getTime(),
+  })
+  writeJSON(list)
+  listEdited(l)
+  generateList()
+}
+
+function newBlockItem(l, i) {
+  // add new item to end
+  let d = new Date()
+  list['children'][l]['children'][i]['children'].push({
+    title: "",
+    media: [],
+    status: 1,
+    starred: false,
+    link: "",
     creationDate: d.getTime(),
   })
   writeJSON(list)

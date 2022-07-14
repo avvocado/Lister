@@ -224,7 +224,7 @@
 }
 
 .item .title {
-  color:#404351;
+  color: #404351;
   font-size: 16px;
   display: inline-block;
   background-color: var(--bg3);
@@ -278,7 +278,6 @@
 .addDescBtn:hover {
   background-image: url("../assets/textColor.svg");
 }
-
 
 .addLinkBtn {
   background-image: url("../assets/link.svg");
@@ -361,6 +360,15 @@
 
 .statusBtn.s3 {
   background-image: url("../assets/circleIcons/circleCheck.svg");
+}
+.statusBtn.s4 {
+  background-image: url("../assets/circleIcons/circleDot.svg");
+}
+.statusBtn.s5 {
+  background-image: url("../assets/circleIcons/circlePlay.svg");
+}
+.statusBtn.s6 {
+  background-image: url("../assets/circleIcons/circleStop.svg");
 }
 
 #menuBar {
@@ -975,8 +983,10 @@ input:checked + .slider:before {
   display: inline-block;
 }
 
-.accountCount {
+.bottomCounter {
   color: #2d303c;
+  user-select: none;
+  margin-bottom: 16px;
   text-align: center;
   font-size: 12px;
   margin-top: 16px;
