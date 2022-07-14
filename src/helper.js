@@ -100,8 +100,6 @@ function newItemToTop(l, i) {
     title: "",
     media: [],
     status: 1,
-    starred: false,
-    link: "",
     creationDate: d.getTime(),
   })
   writeJSON(list)
@@ -187,15 +185,14 @@ function removeList(l) {
 function listEdited(l) {
   d = new Date()
   list['children'][l]['lastEdited'] = d.getTime()
-  writeJSON(list)
-
-  let temp = list['children'][selectedList]
 
   list['children'].sort((a, b) => Number(b.lastEdited) - Number(a.lastEdited));
 
-  selectedList = list['children'].indexOf(temp)
+  selectedList = l
 
   document.querySelectorAll('.sideListBtn')[1].click()
+  writeJSON(list)
+  generateList()
 }
 
 function sortAccounts(l) {
