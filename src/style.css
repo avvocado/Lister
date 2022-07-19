@@ -1096,14 +1096,14 @@ input:checked + .slider:before {
   background-color: var(--bg3);
   vertical-align: super;
   transition: 100ms;
-  color:var(--text3);
+  color: var(--text3);
   margin-left: 4px;
   display: inline-block;
   border-bottom: 2px solid var(--bg4);
 }
 
 .accountDiv .accountSettingsDiv input::placeholder {
-  color:var(--text4);
+  color: var(--text4);
 }
 
 .accountDiv .accountSettingsDiv input:focus {
