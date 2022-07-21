@@ -33,7 +33,7 @@ const createWindow = () => {
     resizable: true,
     frame: false,
     icon: path.join(__dirname, '../', "/assets", '/appIcons', "icon.png"),
-    backgroundColor: '#1B1D26',
+    backgroundColor: '#0f1014',
     darkTheme: true,
     show: false
   })

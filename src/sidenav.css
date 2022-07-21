@@ -23,7 +23,7 @@
   text-align: left;
   transition: 100ms;
   user-select: none;
-  border-radius: 6px;
+  border-radius: 5px;
   color: #dfdfdf;
   margin-top: 8px;
   background-color: var(--green);
@@ -40,9 +40,9 @@
 }
 
 #sidenav #otherBtns {
-  margin-top: 16px;
+  margin-top: 12px;
   border-top: 2px solid var(--bg3);
-  padding-top: 16px;
+  padding-top: 12px;
 }
 
 #settingsBtn.active {
@@ -61,7 +61,7 @@
   padding: 8px 8px;
   user-select: none;
   background-size: 16px 16px;
-  border-radius: 6px;
+  border-radius: 5px;
  /* background-position: calc(var(--sidebarWidth) - 48px) 8px;*/
   background-position: 94% 7px;
   font-size: 14px;
