@@ -15,6 +15,15 @@
   --red: #bf2d4b;
 }
 
+.checklistSublistDiv,
+.item,
+.tooltip,
+.settingsDiv,
+.accountDiv {
+  box-shadow: 0 0 0 1px var(--bg1);
+  border-top: 1px solid var(--bg4);
+}
+
 #lists {
   margin-left: 12px;
   margin-top: 12px;
@@ -92,7 +101,6 @@
   background-color: var(--bg3);
   padding: 8px 8px;
   border-radius: 4px;
-  box-shadow: 0 1px 1px 0.3px var(--bg1);
 }
 
 .sublistTitleDiv {
@@ -221,7 +229,6 @@
   padding: 8px 10px 2px 8px;
   background-color: var(--bg3);
   margin-bottom: 6px;
-  box-shadow: 0 1px 1px 0.3px var(--bg1);
   width: calc((100% - 18px));
   border-radius: 4px;
   transition: all 100ms, padding 0ms, width 0ms;
@@ -455,7 +462,6 @@
   user-select: none;
   display: none;
   padding: 4px 8px;
-  box-shadow: 0 1px 1px 0.3px var(--bg3);
   border-radius: 4px;
   z-index: 1000;
 }
@@ -516,7 +522,6 @@
 .settingsDiv {
   margin-bottom: 8px;
   padding: 12px 12px;
-  box-shadow: 0 1px 1px 0.3px var(--bg1);
   background-color: var(--bg3);
   border-radius: 4px;
 }
@@ -952,7 +957,6 @@ input:checked + .slider:before {
   background-color: var(--bg3);
   display: inline-block;
   vertical-align: top;
-  box-shadow: 0 1px 1px 0.3px var(--bg1);
   border-radius: 3px;
   margin-bottom: 12px;
   flex: 1 1 30%;
