@@ -1,23 +1,33 @@
 :root {
-  --bg1: #17191e;
-  --bg2: #1c1d23;
-  --bg3: #212228;
-  --bg4: #25262c;
-  --bg5: #282930;
-  --text1: #606472;
-  --text2: #4e525e;
-  --text3: #3f424c;
+  --bg1: #0f1014;
+  --bg2: #131519;
+  --bg3: #18191e;
+  --bg4: #1d1e23;
+  --bg5: #222328;
+  --text1: #696b74;
+  --text2: #555860;
+  --text3: #46484f;
   --text4: #34363d;
   --green: #009966;
   --selectionGreen: #64a684;
-  --yellow: #f0be61;
+  --yellow: #efba56;
   --blue: #4a73db;
   --red: #bf2d4b;
+  --sidebarWidth: 180px;
+}
+
+.checklistSublistDiv,
+.item,
+.settingsDiv,
+.accountDiv {
+  box-shadow: 0 0 0 1px var(--bg1);
+  border-top: 1px solid var(--bg4);
+  background-color: var(--bg3);
+  border-radius: 6px;
 }
 
 #lists {
-  margin-left: 12px;
-  margin-top: 12px;
+  margin-left: 16px;
 }
 
 .deleteListBtn {
@@ -26,7 +36,7 @@
 
 .listSettingsDiv {
   display: inline-block;
-  transform: translateY(-6px);
+  margin-top: 8px;
   width: 100%;
 }
 
@@ -64,7 +74,7 @@
 }
 
 .listDiv {
-  margin-right: 12px;
+  margin-right: 16px;
 }
 
 .listTitle {
@@ -74,7 +84,7 @@
   padding: 4px 4px;
   transform: translateY(-6px);
   padding-left: 0;
-  background-color: var(--bg2);
+  background-color: transparent;
   border-radius: 3px;
   font-size: 24px;
   font-weight: bold;
@@ -89,10 +99,7 @@
 }
 
 .checklistSublistDiv {
-  background-color: var(--bg3);
   padding: 8px 8px;
-  border-radius: 4px;
-  box-shadow: 0 1px 1px 0.3px var(--bg1);
 }
 
 .sublistTitleDiv {
@@ -219,11 +226,8 @@
 
 .item {
   padding: 8px 10px 2px 8px;
-  background-color: var(--bg3);
   margin-bottom: 6px;
-  box-shadow: 0 1px 1px 0.3px var(--bg1);
   width: calc((100% - 18px));
-  border-radius: 4px;
   transition: all 100ms, padding 0ms, width 0ms;
 }
 
@@ -270,13 +274,13 @@
   margin-right: 4px;
   width: 24px;
   height: 24px;
-  float: right;
+  display: inline-block;
   border-radius: 3px;
   transition: 100ms;
 }
 
 .itemSettingsDiv button:hover {
-  background-color: var(--bg4);
+  background-color: var(--bg5);
 }
 
 .addDescBtn {
@@ -384,8 +388,7 @@
 
 #menuBar {
   height: 20px;
-  width: calc(100vw - 180px);
-  margin-left: 180px;
+  width: 100vw;
   background-color: var(--bg1);
   position: fixed;
   -webkit-app-region: drag;
@@ -446,24 +449,6 @@
   background-image: url("../assets/unmaximize1.svg");
 }
 
-.tooltip {
-  position: absolute;
-  font-size: 12px;
-  color: var(--text2);
-  background-color: var(--bg4);
-  white-space: nowrap;
-  user-select: none;
-  display: none;
-  padding: 4px 8px;
-  box-shadow: 0 1px 1px 0.3px var(--bg3);
-  border-radius: 4px;
-  z-index: 1000;
-}
-
-.itemSettingsDiv div {
-  display: inline-block;
-}
-
 .openMediaFolderBtn {
   background-image: url("../assets/folder.svg");
 }
@@ -516,9 +501,6 @@
 .settingsDiv {
   margin-bottom: 8px;
   padding: 12px 12px;
-  box-shadow: 0 1px 1px 0.3px var(--bg1);
-  background-color: var(--bg3);
-  border-radius: 4px;
 }
 
 .settingsDiv .btn {
@@ -742,121 +724,12 @@ input:checked + .slider:before {
   float: right;
   margin-left: 12px;
 }
-
-#side {
-  position: fixed;
-  height: 100%;
-  background-color: var(--bg1);
-  padding: 8px;
-  overflow-x: hidden;
-  transition: 100ms;
-  z-index: 900;
-  width: 164px;
-}
-
 #content {
-  margin-left: 180px;
+  margin: 0 0 0 calc(var(--sidebarWidth));
   transition: 100ms;
-}
-
-.sideListBtn {
-  display: block;
-  background-color: var(--bg1);
-  text-align: left;
-  margin-top: 2px;
-  transition: 100ms;
-  color: var(--text1);
-  width: calc(100% - 16px);
-  padding: 8px 8px;
-  user-select: none;
-  background-size: 16px 16px;
-  border-radius: 3px;
-  background-position: 142px 8px;
-  font-size: 14px;
-}
-
-.sideListBtn p {
-  text-overflow: ellipsis;
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  width: calc(100% - 20px);
-}
-
-/* block */
-.sideListBtn.block {
-  background-image: url("../assets/listIcons/blockList.svg");
-}
-
-.sideListBtn.block.active {
-  background-image: url("../assets/listIcons/blockList1.svg");
-}
-
-/* checklist */
-.sideListBtn.checklist {
-  background-image: url("../assets/listIcons/checklistList.svg");
-}
-
-.sideListBtn.checklist.active {
-  background-image: url("../assets/listIcons/checklistList1.svg");
-}
-
-/* text */
-.sideListBtn.text {
-  background-image: url("../assets/listIcons/textList.svg");
-}
-
-.sideListBtn.text.active {
-  background-image: url("../assets/listIcons/textList1.svg");
-}
-
-/* accounts */
-.sideListBtn.accounts {
-  background-image: url("../assets/listIcons/accountsList.svg");
-}
-
-.sideListBtn.accounts.active {
-  background-image: url("../assets/listIcons/accountsList1.svg");
-}
-
-/* locked */
-.sideListBtn.locked {
-  background-image: url("../assets/lock.svg");
-}
-
-.sideListBtn.locked.active {
-  background-image: url("../assets/lock1.svg");
-}
-
-/* unlocked */
-.sideListBtn.unlocked.active {
-  background-image: url("../assets/unlock1.svg");
-}
-
-/* others */
-.sideListBtn.active {
-  background-color: var(--green);
-}
-
-.sideListBtn.active:hover {
-  background-color: var(--green);
-}
-
-.sideListBtn:hover {
   background-color: var(--bg2);
-}
-
-.sideListBtn.active .title {
-  color: #dfdfdf;
-}
-
-.sideListBtn.active .date {
-  color: #d0d0d0;
-}
-
-.sideListBtn .date {
-  font-size: 11px;
-  color: var(--text3);
+  border-radius: 16px 0 0 0;
+  overflow-y: auto;
 }
 
 .listDate {
@@ -894,15 +767,22 @@ input:checked + .slider:before {
 
 #noListSelected {
   text-align: center;
-  margin-top: 30vh;
   user-select: none;
-  color: var(--bg4);
+  color: var(--bg5);
+  margin-top: 30vh;
   font-size: 32px;
 }
+
 
 .lockedDiv {
   text-align: center;
   margin-top: 30vh;
+}
+
+.lockedDiv p {
+  color: var(--text4);
+  user-select: none;
+  font-size: 18px;
 }
 
 .touchidbtn {
@@ -925,12 +805,6 @@ input:checked + .slider:before {
   color: var(--text4);
 }
 
-.lockedTitle {
-  color: var(--bg5);
-  user-select: none;
-  font-size: 18px;
-}
-
 .lockListBtn {
   background-image: url("../assets/lock.svg");
 }
@@ -949,11 +823,8 @@ input:checked + .slider:before {
 
 .accountDiv {
   padding: 8px 8px 4px 8px;
-  background-color: var(--bg3);
   display: inline-block;
   vertical-align: top;
-  box-shadow: 0 1px 1px 0.3px var(--bg1);
-  border-radius: 3px;
   margin-bottom: 12px;
   flex: 1 1 30%;
   width: auto;
@@ -982,11 +853,11 @@ input:checked + .slider:before {
 }
 
 .accountDiv p {
-  color: #3b3e4c;
+  color: var(--text4);
 }
 
 .accountDiv .accountTitle {
-  color: #4f5363;
+  color: var(--text3);
   white-space: nowrap;
   font-size: 18px;
   margin-bottom: 2px;
@@ -995,7 +866,7 @@ input:checked + .slider:before {
 }
 
 .bottomCounter {
-  color: #2d303c;
+  color: var(--text4);
   user-select: none;
   margin-bottom: 16px;
   text-align: center;
@@ -1036,7 +907,7 @@ input:checked + .slider:before {
 }
 
 .accountDiv tr td .title {
-  color: var(--bg5);
+  color: var(--text4);
   text-transform: uppercase;
   cursor: default;
   font-size: 11px;
@@ -1066,7 +937,7 @@ input:checked + .slider:before {
 }
 
 .accountDiv tr td .text {
-  color: #3b3e4c;
+  color: var(--text4);
   transform: translateY(-2px);
 }
 
@@ -1079,7 +950,7 @@ input:checked + .slider:before {
 }
 
 .accountDiv .accountSettingsDiv p {
-  color: #3b3e4c;
+  color: var(--text4);
   margin-bottom: 1px;
   font-size: 14px;
 }
@@ -1124,23 +995,6 @@ input:checked + .slider:before {
   font-size: 11px;
   font-weight: bold;
 }
-
-.newFieldBtn {
-  background-image: url("../assets/plus.svg");
-  width: 22px;
-  height: 22px;
-  border-radius: 3px;
-  transition: 100ms;
-  margin-right: 4px;
-  background-size: 20px 20px;
-  background-color: var(--bg3);
-}
-
-.newFieldBtn:hover {
-  background-color: var(--bg4);
-  background-image: url("../assets/plus1.svg");
-}
-
 .delAccountBtn {
   float: right;
   width: 22px;
@@ -1168,7 +1022,7 @@ input:checked + .slider:before {
 
 #settings #password {
   background-color: var(--bg3);
-  color: #535663;
+  color: var(--text2);
   transform: translateY(-1px);
   display: inline-block;
   font-size: 14px;
