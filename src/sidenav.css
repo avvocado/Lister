@@ -9,7 +9,7 @@
   z-index: 900;
   flex-wrap: nowrap;
   display: flex;
-  width: calc(var(--sidebarWidth) - 24px);
+  width: calc(var(--sidenavwidth) - 24px);
 }
 
 
@@ -62,7 +62,7 @@
   user-select: none;
   background-size: 16px 16px;
   border-radius: 5px;
- /* background-position: calc(var(--sidebarWidth) - 48px) 8px;*/
+ /* background-position: calc(var(--sidenavwidth) - 48px) 8px;*/
   background-position: 94% 7px;
   font-size: 14px;
 }

@@ -1,19 +1,22 @@
 :root {
-  --bg1: #0f1014;
+  --bg1: #0e0f11;
   --bg2: #131519;
-  --bg3: #18191c;
-  --bg4: #1d1e23;
-  --bg5: #222328;
+  --bg3: #191b1e;
+  --bg4: #1e2023;
+  --bg5: #232528;
   --text1: #696b74;
   --text2: #555860;
   --text3: #46484f;
-  --text4: #34363d;
+  --text4: #3a3c40;
   --green: #009966;
-  --selectionGreen: #64a684;
+  --greentransparent: #0099661a;
   --yellow: #efba56;
+  --yellowtransparent: #efba561a;
   --blue: #4a73db;
+  --bluetransparent: #4a73db1a;
   --red: #bf2d4b;
-  --sidebarWidth: 180px;
+  --redtransparent: #bf2d4b1a;
+  --sidenavwidth: 200px;
 }
 
 .checklistSublistDiv,
@@ -24,15 +27,6 @@
   border-top: 1px solid var(--bg4);
   background-color: var(--bg3);
   border-radius: 6px;
-}
-
-.checklistSublistDiv,
-.item,
-.tooltip,
-.settingsDiv,
-.accountDiv {
-  box-shadow: 0 0 0 1px var(--bg1);
-  border-top: 1px solid var(--bg4);
 }
 
 #lists {
@@ -734,7 +728,7 @@ input:checked + .slider:before {
   margin-left: 12px;
 }
 #content {
-  margin: 0 0 0 calc(var(--sidebarWidth));
+  margin: 0 0 0 calc(var(--sidenavwidth));
   transition: 100ms;
   background-color: var(--bg2);
   border-radius: 16px 0 0 0;
@@ -781,7 +775,6 @@ input:checked + .slider:before {
   margin-top: 30vh;
   font-size: 32px;
 }
-
 
 .lockedDiv {
   text-align: center;
