@@ -1,7 +1,7 @@
 :root {
   --bg1: #0e0f11;
   --bg2: #131519;
-  --bg3: #191b1e;
+  --bg3: #181b1f;
   --bg4: #1e2023;
   --bg5: #232528;
   --text1: #696b74;
@@ -373,20 +373,10 @@
 }
 
 .statusBtn.s2 {
-  background-image: url("../assets/circleIcons/circleQuestion.svg");
-}
-
-.statusBtn.s3 {
   background-image: url("../assets/circleIcons/circleCheck.svg");
 }
-.statusBtn.s4 {
-  background-image: url("../assets/circleIcons/circleDot.svg");
-}
-.statusBtn.s5 {
+.statusBtn.s3 {
   background-image: url("../assets/circleIcons/circlePlay.svg");
-}
-.statusBtn.s6 {
-  background-image: url("../assets/circleIcons/circleStop.svg");
 }
 
 #menuBar {

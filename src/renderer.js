@@ -558,7 +558,7 @@ function generateList() {
             button.onclick = function (event) {
               // left click, cycle up
               if (
-                list["children"][l]["children"][i]["children"][e]["status"] < 6
+                list["children"][l]["children"][i]["children"][e]["status"] < 3
               ) {
                 list["children"][l]["children"][i]["children"][e][
                   "status"
