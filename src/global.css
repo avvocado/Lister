@@ -236,16 +236,3 @@ a {
 .margin4 {
   margin: 4px;
 }
-
-#footer {
-  width: 100%;
-  height: 16px;
-  background-color: var(--bg1);
-  position: fixed;
-  z-index: 1000;
-  bottom: 0;
-  color: var(--bg5);
-  user-select: none;
-  font-size: 12px;
-  padding: 0 4px 0 4px;
-}
