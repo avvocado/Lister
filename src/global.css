@@ -34,7 +34,6 @@ button {
 video,
 audio,
 img {
-  image-rendering: pixelated;
   color: #535663;
 }
 
