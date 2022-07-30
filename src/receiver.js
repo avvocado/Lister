@@ -30,6 +30,8 @@ window.api.receive("settings", (args) => {
   // spellcheck
   document.getElementById('spellcheckToggle').checked = settings['spellcheck']
 
+  // 24 hour time
+  document.getElementById('spellcheckToggle').checked = settings['24hrtime']
 
   document.getElementById('password').value = settings['password']
   console.log(settings)

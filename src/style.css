@@ -9,8 +9,8 @@
   --text3: #46484f;
   --text4: #3a3c40;
   --green: #009966;
-  --selectionGreen: #00b0662f;
-  --greentransparent: #00b0661a;
+  --selectionGreen: #0099662f;
+  --greentransparent: #0099661a;
   --yellow: #efba56;
   --yellowtransparent: #efba561a;
   --blue: #4a73db;
@@ -84,7 +84,7 @@
 .listTitle {
   transition: all 100ms, width 0ms;
   color: var(--text1);
-  width: calc(100%);
+  width: calc(100% - 128px);
   padding: 4px 4px;
   transform: translateY(-6px);
   padding-left: 0;

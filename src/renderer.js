@@ -58,17 +58,15 @@ document
 
 document.getElementById("toggleSideBtn").addEventListener("click", function () {
   if (document.querySelector("#sidenav").style.padding == "8px 0px") {
-    document.querySelector("#toggleSideBtn").style.marginLeft = `${sidebarWidth}px`;
-    document.querySelector("#content").style.marginLeft = `${sidebarWidth}px`;
+    document.querySelector("#content").style.marginLeft = `${sidebarWidth + 20 /* 8px padding */}px`;
     document.querySelector("#sidenav").style.width = null;
     document.querySelector("#sidenav").style.padding = null;
-    document.querySelector('#content').style.borderRadius = '16px 0 0 0'
+    document.querySelector("#content").style.borderRadius = "16px 0 0 0";
   } else {
-    document.querySelector("#toggleSideBtn").style.margin = "0";
     document.querySelector("#content").style.margin = "0";
     document.querySelector("#sidenav").style.width = "0";
     document.querySelector("#sidenav").style.padding = "8px 0 8px 0";
-    document.querySelector('#content').style.borderRadius = '0'
+    document.querySelector("#content").style.borderRadius = "0";
   }
 });
 
@@ -150,15 +148,21 @@ document
     }
   });
 
+document
+  .getElementById("24hrtimeToggle")
+  .addEventListener("input", function () {
+    settings["24hrtime"] = this.checked;
+    writeSettings(settings);
+    generateList()
+  });
+
 document.getElementById("settingsBtn").addEventListener("click", function () {
   for (
     let p = 0;
     p < document.getElementsByClassName("sidenavBtn").length;
     p++
   ) {
-    document
-      .getElementsByClassName("sidenavBtn")
-      [p].classList.remove("active");
+    document.getElementsByClassName("sidenavBtn")[p].classList.remove("active");
   }
   this.classList.add("active");
   for (let k = 0; k < document.getElementsByClassName("listDiv").length; k++) {
@@ -298,7 +302,6 @@ function generateList() {
       sidenavBtn.classList.add(list["children"][l]["type"]);
       let lastEdited;
       sidenavBtn.onclick = function () {
-        console.trace()
         console.log(selectedList + " > " + l);
         this.classList.add("active");
 
@@ -386,16 +389,23 @@ function generateList() {
       let listSettingsDiv = create("div", "listSettingsDiv");
       let listCreationDate = createElement("p", {
         class: "listDate",
-        title:
-          months[tdate.getMonth()] +
-          " " +
-          tdate.getDate() +
-          ", " +
-          (tdate.getHours() % 12 || 12) +
-          ":" +
-          tdate.getMinutes().toString().padStart(2, "0") +
-          " " +
-          getAmPm(tdate),
+        title: settings["24hrtime"]
+          ? months[tdate.getMonth()] +
+            " " +
+            tdate.getDate() +
+            ", " +
+            tdate.getHours() +
+            ":" +
+            tdate.getMinutes().toString().padStart(2, "0")
+          : months[tdate.getMonth()] +
+            " " +
+            tdate.getDate() +
+            ", " +
+            (tdate.getHours() % 12 || 12) +
+            ":" +
+            tdate.getMinutes().toString().padStart(2, "0") +
+            " " +
+            getAmPm(tdate),
         innerhtml:
           "•&nbsp;&nbsp;&nbsp;Created " +
           timeAgo(d.getTime(), list["children"][l]["creationDate"]),
@@ -404,16 +414,23 @@ function generateList() {
       lastEdited = create("p", "listDate");
 
       if (list["children"][l]["lastEdited"] != 0) {
-        lastEdited.title =
-          months[edate.getMonth()] +
-          " " +
-          edate.getDate() +
-          ", " +
-          (edate.getHours() % 12 || 12) +
-          ":" +
-          edate.getMinutes().toString().padStart(2, "0") +
-          " " +
-          getAmPm(edate);
+        lastEdited.title = settings["24hrtime"]
+          ? months[edate.getMonth()] +
+            " " +
+            edate.getDate() +
+            ", " +
+            edate.getHours() +
+            ":" +
+            edate.getMinutes().toString().padStart(2, "0")
+          : months[edate.getMonth()] +
+            " " +
+            edate.getDate() +
+            ", " +
+            (edate.getHours() % 12 || 12) +
+            ":" +
+            edate.getMinutes().toString().padStart(2, "0") +
+            " " +
+            getAmPm(edate);
         lastEdited.innerHTML =
           "Edited " + timeAgo(d.getTime(), list["children"][l]["lastEdited"]);
         lastEdited.style.marginRight = "10px";
@@ -755,16 +772,23 @@ function generateList() {
               list["children"][l]["children"][i]["children"][e]["creationDate"]
             );
             let creationDateP = create("p", "creationDateText");
-            creationDateP.title =
-              months[cdate.getMonth()] +
-              " " +
-              cdate.getDate() +
-              ", " +
-              (cdate.getHours() % 12 || 12) +
-              ":" +
-              cdate.getMinutes().toString().padStart(2, "0") +
-              " " +
-              getAmPm(cdate);
+            creationDateP.title = settings["24hrtime"]
+              ? months[cdate.getMonth()] +
+                " " +
+                cdate.getDate() +
+                ", " +
+                cdate.getHours() +
+                ":" +
+                cdate.getMinutes().toString().padStart(2, "0")
+              : months[cdate.getMonth()] +
+                " " +
+                cdate.getDate() +
+                ", " +
+                (cdate.getHours() % 12 || 12) +
+                ":" +
+                cdate.getMinutes().toString().padStart(2, "0") +
+                " " +
+                getAmPm(cdate);
 
             creationDateP.innerHTML =
               "• " +
@@ -1275,7 +1299,7 @@ function generateList() {
           newFieldText.onkeydown = function (e) {
             if (e.code == "Enter") {
               newAccountField(l, i, fieldType.value, newFieldText.value);
-              console.log(l)
+              console.log(l);
               listEdited(l);
             }
           };

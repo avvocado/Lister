@@ -126,7 +126,7 @@ a {
 }
 
 *::-webkit-scrollbar-track {
-  background-color: var(--bg1);
+  background-color: var(--bg2);
 }
 
 #listType {
