@@ -34,7 +34,7 @@
 }
 
 .deleteListBtn {
-  background-image: url("../assets/trashColor.svg");
+  background-image: url("../../assets/trashColor.svg");
 }
 
 .listSettingsDiv {
@@ -63,17 +63,17 @@
 }
 
 .deleteListBtn:hover {
-  background-image: url("../assets/trash1.svg");
+  background-image: url("../../assets/trash1.svg");
   background-color: var(--red) !important;
 }
 
 .newBtn {
   background-size: 22px 22px !important;
-  background-image: url("../assets/plus.svg");
+  background-image: url("../../assets/plus.svg");
 }
 
 .newBtn:hover {
-  background-image: url("../assets/plusColor.svg");
+  background-image: url("../../assets/plusColor.svg");
 }
 
 .listDiv {
@@ -132,7 +132,7 @@
 }
 
 .newItemToTopBtn {
-  background-image: url("../assets/plus.svg");
+  background-image: url("../../assets/plus.svg");
   background-size: 16px 16px;
   margin-left: 4px;
 }
@@ -146,37 +146,37 @@
 }
 
 .newItemToTopBtn:hover {
-  background-image: url("../assets/plus1.svg");
+  background-image: url("../../assets/plus1.svg");
   background-color: var(--bg3);
 }
 
 .delSublistBtn {
-  background-image: url("../assets/trashColor.svg");
+  background-image: url("../../assets/trashColor.svg");
   background-size: 16px 16px;
   margin-left: 4px;
 }
 
 .delSublistBtn:hover {
   background-color: var(--red);
-  background-image: url("../assets/trash1.svg");
+  background-image: url("../../assets/trash1.svg");
 }
 
 .collapseSublistBtn.up {
-  background-image: url("../assets/arrowUp.svg");
+  background-image: url("../../assets/arrowUp.svg");
 }
 
 .collapseSublistBtn.up:hover {
   background-color: var(--bg4);
-  background-image: url("../assets/arrowUp1.svg");
+  background-image: url("../../assets/arrowUp1.svg");
 }
 
 .collapseSublistBtn.down {
-  background-image: url("../assets/arrowDown.svg");
+  background-image: url("../../assets/arrowDown.svg");
 }
 
 .collapseSublistBtn.down:hover {
   background-color: var(--bg4);
-  background-image: url("../assets/arrowDown1.svg");
+  background-image: url("../../assets/arrowDown1.svg");
 }
 
 .checklistItem {
@@ -224,7 +224,7 @@
 .checkBoxBtn.true {
   background-color: var(--green);
   border: 2px solid var(--green);
-  background-image: url("../assets/check.svg");
+  background-image: url("../../assets/check.svg");
 }
 
 .item {
@@ -257,11 +257,11 @@
   float: right;
   background-size: 20px 20px;
   transform: translateY(-4px) translateX(4px);
-  background-image: url("../assets/settings.svg");
+  background-image: url("../../assets/settings.svg");
 }
 
 .moreBtn:hover {
-  background-image: url("../assets/settings1.svg");
+  background-image: url("../../assets/settings1.svg");
 }
 
 .itemSettingsDiv {
@@ -287,19 +287,19 @@
 }
 
 .addDescBtn {
-  background-image: url("../assets/text.svg");
+  background-image: url("../../assets/text.svg");
 }
 
 .addDescBtn:hover {
-  background-image: url("../assets/textColor.svg");
+  background-image: url("../../assets/textColor.svg");
 }
 
 .addLinkBtn {
-  background-image: url("../assets/link.svg");
+  background-image: url("../../assets/link.svg");
 }
 
 .addLinkBtn:hover {
-  background-image: url("../assets/linkColor.svg");
+  background-image: url("../../assets/linkColor.svg");
 }
 
 .addLinkInput {
@@ -314,11 +314,11 @@
 .deleteItemBtn {
   margin: 0 !important;
   transform: translateX(4px);
-  background-image: url("../assets/trashColor.svg");
+  background-image: url("../../assets/trashColor.svg");
 }
 
 .deleteItemBtn:hover {
-  background-image: url("../assets/trash1.svg");
+  background-image: url("../../assets/trash1.svg");
   background-color: var(--red) !important;
 }
 
@@ -329,20 +329,20 @@
 }
 
 .uploadMediaBtn {
-  background-image: url("../assets/upload.svg");
+  background-image: url("../../assets/upload.svg");
   margin-left: 4px;
 }
 
 .uploadMediaBtn:hover {
-  background-image: url("../assets/uploadColor.svg");
+  background-image: url("../../assets/uploadColor.svg");
 }
 
 .delMediaBtn {
-  background-image: url("../assets/trash.svg");
+  background-image: url("../../assets/trash.svg");
 }
 
 .delMediaBtn:hover {
-  background-image: url("../assets/trashColor.svg");
+  background-image: url("../../assets/trashColor.svg");
 }
 
 .creationDateText {
@@ -365,18 +365,18 @@
 }
 
 .statusBtn.s0 {
-  background-image: url("../assets/circleIcons/circlePause.svg");
+  background-image: url("../../assets/circleIcons/circlePause.svg");
 }
 
 .statusBtn.s1 {
-  background-image: url("../assets/circleIcons/circleX.svg");
+  background-image: url("../../assets/circleIcons/circleX.svg");
 }
 
 .statusBtn.s2 {
-  background-image: url("../assets/circleIcons/circleCheck.svg");
+  background-image: url("../../assets/circleIcons/circleCheck.svg");
 }
 .statusBtn.s3 {
-  background-image: url("../assets/circleIcons/circlePlay.svg");
+  background-image: url("../../assets/circleIcons/circlePlay.svg");
 }
 
 #menuBar {
@@ -401,61 +401,61 @@
   margin-right: 8px;
   background-size: 20px 20px;
   float: right;
-  background-image: url("../assets/close.svg");
+  background-image: url("../../assets/close.svg");
 }
 
 #closeBtn:hover {
   background-color: var(--red);
-  background-image: url("../assets/close1.svg");
+  background-image: url("../../assets/close1.svg");
 }
 
 #minimizeBtn {
   background-size: 20px 20px;
   float: right;
-  background-image: url("../assets/minimize.svg");
+  background-image: url("../../assets/minimize.svg");
 }
 
 #minimizeBtn:hover {
   background-color: var(--bg4);
-  background-image: url("../assets/minimize1.svg");
+  background-image: url("../../assets/minimize1.svg");
 }
 
 #maximizeBtn.true {
   background-size: 14px 14px;
   float: right;
-  background-image: url("../assets/maximize.svg");
+  background-image: url("../../assets/maximize.svg");
 }
 
 #maximizeBtn.true:hover {
   background-color: var(--bg4);
-  background-image: url("../assets/maximize1.svg");
+  background-image: url("../../assets/maximize1.svg");
 }
 
 #maximizeBtn.false {
   background-size: 14px 14px;
   float: right;
-  background-image: url("../assets/unmaximize.svg");
+  background-image: url("../../assets/unmaximize.svg");
 }
 
 #maximizeBtn.false:hover {
   background-color: var(--bg4);
-  background-image: url("../assets/unmaximize1.svg");
+  background-image: url("../../assets/unmaximize1.svg");
 }
 
 .openMediaFolderBtn {
-  background-image: url("../assets/folder.svg");
+  background-image: url("../../assets/folder.svg");
 }
 
 .openMediaFolderBtn:hover {
-  background-image: url("../assets/folderColor.svg");
+  background-image: url("../../assets/folderColor.svg");
 }
 
 .duplicateItemBtn {
-  background-image: url("../assets/duplicate.svg");
+  background-image: url("../../assets/duplicate.svg");
 }
 
 .duplicateItemBtn:hover {
-  background-image: url("../assets/duplicateColor.svg");
+  background-image: url("../../assets/duplicateColor.svg");
 }
 
 #settings {
@@ -594,7 +594,7 @@ input:checked + .slider:before {
   float: none;
   background-size: 100%;
   background-color: var(--bg3);
-  background-image: url("../assets/linkColor.svg");
+  background-image: url("../../assets/linkColor.svg");
   width: 20px;
   display: inline;
   margin-top: 4px;
@@ -613,12 +613,12 @@ input:checked + .slider:before {
   background-size: 20px 20px;
   transition: 100ms;
   transform: translateY(-3px);
-  background-image: url("../assets/folder.svg");
+  background-image: url("../../assets/folder.svg");
 }
 
 #openResourcesFolderBtn:hover {
   background-color: var(--bg4);
-  background-image: url("../assets/folderColor.svg");
+  background-image: url("../../assets/folderColor.svg");
 }
 
 .mainListContent.text {
@@ -664,18 +664,18 @@ input:checked + .slider:before {
 }
 
 .newCodeBlockBtn {
-  background-image: url("../assets/code.svg");
+  background-image: url("../../assets/code.svg");
 }
 
 .newCodeBlockBtn:hover {
-  background-image: url("../assets/codeColor.svg");
+  background-image: url("../../assets/codeColor.svg");
 }
 
 .copyBtn {
   background-color: transparent !important;
   transition: 100ms;
   margin-right: 0 !important;
-  background-image: url("../assets/copy.svg");
+  background-image: url("../../assets/copy.svg");
 }
 
 .copyBtnDiv {
@@ -685,18 +685,18 @@ input:checked + .slider:before {
 }
 
 .copyBtn:hover {
-  background-image: url("../assets/copy1.svg");
+  background-image: url("../../assets/copy1.svg");
 }
 
 .delBlockBtn {
   margin: 0 !important;
   background-color: var(--bg2) !important;
-  background-image: url("../assets/trash.svg");
+  background-image: url("../../assets/trash.svg");
 }
 
 .delBlockBtn:hover {
   background-color: var(--bg3) !important;
-  background-image: url("../assets/trashColor.svg");
+  background-image: url("../../assets/trashColor.svg");
 }
 
 .mainListContent.text .block.code .text {
@@ -748,13 +748,13 @@ input:checked + .slider:before {
   transition: 100ms;
   height: 24px;
   border-radius: 50%;
-  background-image: url("../assets/arrowRight.svg");
+  background-image: url("../../assets/arrowRight.svg");
   background-size: 18px 18px;
   margin-left: 4px;
 }
 
 .pswdSubmit:hover {
-  background-image: url("../assets/arrowRight1.svg");
+  background-image: url("../../assets/arrowRight1.svg");
   background-color: var(--bg4);
 }
 
@@ -778,7 +778,7 @@ input:checked + .slider:before {
 }
 
 .touchidbtn {
-  background-image: url("../assets/touchid.svg");
+  background-image: url("../../assets/touchid.svg");
   background-color: var(--bg3);
   width: 24px;
   transform: translateY(8px);
@@ -798,19 +798,19 @@ input:checked + .slider:before {
 }
 
 .lockListBtn {
-  background-image: url("../assets/lock.svg");
+  background-image: url("../../assets/lock.svg");
 }
 
 .unlockListBtn {
-  background-image: url("../assets/unlock.svg");
+  background-image: url("../../assets/unlock.svg");
 }
 
 .lockListBtn:hover {
-  background-image: url("../assets/lockColor.svg");
+  background-image: url("../../assets/lockColor.svg");
 }
 
 .unlockListBtn:hover {
-  background-image: url("../assets/unlockColor.svg");
+  background-image: url("../../assets/unlockColor.svg");
 }
 
 .accountDiv {
@@ -871,7 +871,7 @@ input:checked + .slider:before {
   background-color: var(--bg3);
   width: 22px;
   float: right;
-  background-image: url("../assets/penEdit.svg");
+  background-image: url("../../assets/penEdit.svg");
   height: 22px;
   transition: 100ms;
   border-radius: 3px;
@@ -880,7 +880,7 @@ input:checked + .slider:before {
 
 .accountDiv .openAccountSettingsBtn:hover {
   background-color: var(--bg4);
-  background-image: url("../assets/penEdit1.svg");
+  background-image: url("../../assets/penEdit1.svg");
 }
 
 .accountDiv select {
@@ -910,22 +910,22 @@ input:checked + .slider:before {
   height: 20px;
   width: 20px;
   margin-left: 4px;
-  background-image: url("../assets/arrowUp.svg");
+  background-image: url("../../assets/arrowUp.svg");
 }
 
 .accountDiv .collapseAccountBtn.down {
   height: 20px;
   margin-left: 4px;
   width: 20px;
-  background-image: url("../assets/arrowDown.svg");
+  background-image: url("../../assets/arrowDown.svg");
 }
 
 .accountDiv .collapseAccountBtn.up:hover {
-  background-image: url("../assets/arrowUp1.svg");
+  background-image: url("../../assets/arrowUp1.svg");
 }
 
 .accountDiv .collapseAccountBtn.down:hover {
-  background-image: url("../assets/arrowDown1.svg");
+  background-image: url("../../assets/arrowDown1.svg");
 }
 
 .accountDiv tr td .text {
@@ -948,7 +948,7 @@ input:checked + .slider:before {
 }
 
 .accountDiv table tr td .deleteFieldBtn {
-  background-image: url("../assets/close.svg");
+  background-image: url("../../assets/close.svg");
   height: 10px;
   margin-left: 8px;
   width: 10px;
@@ -996,12 +996,12 @@ input:checked + .slider:before {
   border-radius: 3px;
   transition: 100ms;
   background-size: 18px 18px;
-  background-image: url("../assets/trashColor.svg");
+  background-image: url("../../assets/trashColor.svg");
 }
 
 .delAccountBtn:hover {
   background-color: var(--red);
-  background-image: url("../assets/trash1.svg");
+  background-image: url("../../assets/trash1.svg");
 }
 
 .accountDiv table tr td img {
