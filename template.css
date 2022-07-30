@@ -1,0 +1,227 @@
+:root {
+  --bg1: #0e0f11;
+  --bg2: #131519;
+  --bg3: #181b1f;
+  --bg4: #1e2023;
+  --bg5: #232528;
+  --text1: #696b74;
+  --text2: #555860;
+  --text3: #46484f;
+  --text4: #3a3c40;
+  --text5: #303236;
+  --green: #009966;
+  --selectionGreen: #0099662f;
+  --greentransparent: #0099661a;
+  --yellow: #efba56;
+  --yellowtransparent: #efba561a;
+  --blue: #4a73db;
+  --bluetransparent: #4a73db1a;
+  --red: #bf2d4b;
+  --redtransparent: #bf2d4b1a;
+  --sidenavwidth: 200px;
+  --sidenavpadding: 16px;
+  --topnavheight: 64px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@font-face {
+  font-family: "consolas";
+  src: url("./assets/consolas.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background: var(--selectionGreen);
+}
+
+body {
+  font-family: Helvetica;
+  margin: 0;
+  height: 100%;
+  background-color: var(--bg2);
+}
+
+#app {
+  height: 100%;
+}
+
+#topnav {
+  height: var(--topnavheight);
+  background-color: var(--bg1);
+}
+
+#sidenav {
+  background-color: var(--bg1);
+  height: 100%;
+  padding: var(--topnavheight) var(--sidenavpadding) var(--sidenavpadding)
+    var(--sidenavpadding);
+  width: var(--sidenavwidth);
+  position: fixed;
+}
+
+#content {
+  height: 100%;
+  gap: 16px;
+  padding: 32px;
+  background-color: var(--bg2);
+  margin-left: calc(var(--sidenavwidth) + var(--sidenavpadding) * 2);
+}
+
+.box {
+  background-color: var(--bg3);
+  box-shadow: 0 0 4px 0 var(--bg1);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 16px;
+  vertical-align: top;
+}
+
+.box.highlight {
+  border: 1px solid var(--green);
+  box-shadow: 0 0 0 1px var(--green);
+}
+
+.tag {
+  display: inline-flex;
+  font-size: 14px;
+  border-radius: 14px;
+  align-items: center;
+  padding: 0 8px 1px 8px;
+  column-gap: 0.3em;
+}
+
+.box-title {
+  color: var(--text1);
+  font-size: 20px;
+  display: flex;
+  column-gap: 10px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.box-heading {
+  color: var(--text2);
+  font-size: 18px;
+  margin: 16px 0 0 0;
+}
+.box-text {
+  color: var(--text3);
+  font-size: 16px;
+  margin: 8px 0 8px 0;
+}
+
+.tag.green {
+  background-color: var(--greentransparent);
+  color: var(--green);
+}
+
+.tag.green.border {
+  border: 1px solid var(--green);
+}
+
+.tag.yellow {
+  background-color: var(--yellowtransparent);
+  color: var(--yellow);
+}
+
+.tag.yellow.border {
+  border: 1px solid var(--yellow);
+}
+
+.tag.blue {
+  background-color: var(--bluetransparent);
+  color: var(--blue);
+}
+
+.tag.blue.border {
+  border: 1px solid var(--blue);
+}
+
+.tag.red {
+  background-color: var(--redtransparent);
+  color: var(--red);
+}
+
+.tag.red.border {
+  border: 1px solid var(--red);
+}
+
+.icon-tag {
+  vertical-align: text-bottom;
+  height: 0.75em;
+  width: 0.75em;
+}
+.flex-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.box-codeblock {
+  background-color: var(--bg2);
+  margin: 8px 0 12px 0;
+  padding: 12px 16px 12px 16px;
+  color: var(--text3);
+  display: block;
+  width: auto;
+  white-space: nowrap;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: consolas;
+}
+
+.heading {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--text1);
+  width: 100%;
+}
+
+.subheading {
+  font-size: 26px;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--text2);
+  margin: 8px 0 0 0;
+  width: 100%;
+}
+
+a.subheading:hover {
+  /* if the subheading is a link */
+  text-decoration: underline;
+}
+
+.icon-circular {
+  height: 32px;
+  width: 32px;
+  background-position: center;
+  background-size: 18px 18px;
+  vertical-align: middle;
+  display: inline-block;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+}
+
+.icon-circular.green {
+  background-color: var(--green);
+}
+
+.icon-circular.red {
+  background-color: var(--red);
+}
+
+.icon-circular.yellow {
+  background-color: var(--yellow);
+}
+
+.icon-circular.blue {
+  background-color: var(--blue);
+}
