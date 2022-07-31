@@ -196,12 +196,12 @@ a {
 #toggleSideBtn {
   background-size: 20px 20px;
   margin-left: var(--sidebarWidth);
-  background-image: url("../assets/sidebar.svg");
+  background-image: url("../../assets/sidebar.svg");
 }
 
 #toggleSideBtn:hover {
   background-color: var(--bg4);
-  background-image: url("../assets/sidebar1.svg");
+  background-image: url("../../assets/sidebar1.svg");
 }
 
 .right {

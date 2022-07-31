@@ -20,8 +20,8 @@
   --sidenavwidth: 200px;
 }
 
-.checklistSublistDiv,
-.item,
+.checklistSublistContainer,
+.blockItem,
 .settingsDiv,
 .accountDiv {
   box-shadow: 0 0 4px 0 var(--bg1);
@@ -76,7 +76,7 @@
   background-image: url("../../assets/plusColor.svg");
 }
 
-.listDiv {
+.listContainer {
   margin-right: 16px;
 }
 
@@ -93,15 +93,15 @@
   font-weight: bold;
 }
 
-.listContent.accounts .listTitle {
+.listWrapper.accounts .listTitle {
   width: calc(100% - 240px);
 }
 
-.sublistDiv {
+.sublistContainer {
   margin-bottom: 16px;
 }
 
-.checklistSublistDiv {
+.checklistSublistContainer {
   padding: 8px 8px;
 }
 
@@ -227,18 +227,18 @@
   background-image: url("../../assets/check.svg");
 }
 
-.item {
+.blockItem {
   padding: 8px 10px 2px 8px;
   margin-bottom: 6px;
   width: calc((100% - 18px));
   transition: all 100ms, padding 0ms, width 0ms;
 }
 
-.item:hover > .creationDateText {
+.blockItem:hover > .creationDateText {
   opacity: 100;
 }
 
-.item .title {
+.blockItem .title {
   color: var(--text3);
   font-size: 16px;
   display: inline-block;
@@ -264,14 +264,14 @@
   background-image: url("../../assets/settings1.svg");
 }
 
-.itemSettingsDiv {
+.blockItemSettingsDiv {
   width: calc(100%);
   margin-top: 4px;
   padding-top: 4px;
   border-top: 2px solid var(--bg4);
 }
 
-.itemSettingsDiv button {
+.blockItemSettingsDiv button {
   background-size: 20px 20px;
   background-color: var(--bg3);
   margin-right: 4px;
@@ -282,7 +282,7 @@
   transition: 100ms;
 }
 
-.itemSettingsDiv button:hover {
+.blockItemSettingsDiv button:hover {
   background-color: var(--bg5);
 }
 
@@ -322,7 +322,7 @@
   background-color: var(--red) !important;
 }
 
-.itemMedia {
+.blockItemMedia {
   border-radius: 5px;
   margin-top: 6px;
   font-size: 14px;
@@ -418,28 +418,6 @@
 #minimizeBtn:hover {
   background-color: var(--bg4);
   background-image: url("../../assets/minimize1.svg");
-}
-
-#maximizeBtn.true {
-  background-size: 14px 14px;
-  float: right;
-  background-image: url("../../assets/maximize.svg");
-}
-
-#maximizeBtn.true:hover {
-  background-color: var(--bg4);
-  background-image: url("../../assets/maximize1.svg");
-}
-
-#maximizeBtn.false {
-  background-size: 14px 14px;
-  float: right;
-  background-image: url("../../assets/unmaximize.svg");
-}
-
-#maximizeBtn.false:hover {
-  background-color: var(--bg4);
-  background-image: url("../../assets/unmaximize1.svg");
 }
 
 .openMediaFolderBtn {
@@ -585,7 +563,7 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.item a {
+.blockItem a {
   color: var(--blue);
   font-size: 14px;
 }
@@ -621,35 +599,35 @@ input:checked + .slider:before {
   background-image: url("../../assets/folderColor.svg");
 }
 
-.mainListContent.text {
+.listContent.text {
   background-color: var(--bg2);
   margin: 0;
   padding-bottom: 2px;
   border-radius: 4px;
 }
 
-.mainListContent {
+.listContent {
   transform: translateY(-8px);
 }
 
-.mainListContent.text .block.text {
+.listContent.text .block.text {
   font-size: 14px;
   margin-bottom: 4px;
 }
 
-.mainListContent.text .block.text .text {
+.listContent.text .block.text .text {
   overflow-x: auto;
   color: var(--text3);
   background-color: var(--bg2);
 }
 
-.mainListContent.text .block.code {
+.listContent.text .block.code {
   margin-bottom: 8px;
   color: var(--text3);
   font-size: 14px;
 }
 
-.mainListContent.text button {
+.listContent.text button {
   background-size: 20px 20px;
   background-color: var(--bg2);
   margin-right: 4px;
@@ -659,7 +637,7 @@ input:checked + .slider:before {
   transition: 100ms;
 }
 
-.mainListContent.text button:hover {
+.listContent.text button:hover {
   background-color: var(--bg3);
 }
 
@@ -699,7 +677,7 @@ input:checked + .slider:before {
   background-image: url("../../assets/trashColor.svg");
 }
 
-.mainListContent.text .block.code .text {
+.listContent.text .block.code .text {
   padding: 8px 10px;
   border-radius: 3px;
   white-space: nowrap;
@@ -708,7 +686,7 @@ input:checked + .slider:before {
   overflow-x: auto;
 }
 
-.mainListContent.text .block.code .text div {
+.listContent.text .block.code .text div {
   /* ? new lines are inside of divs for some reason */
   font-family: Consolas !important;
 }
@@ -837,7 +815,7 @@ input:checked + .slider:before {
   border-bottom: 2px solid var(--bg5);
 }
 
-.mainListContent.accounts {
+.listContent.accounts {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;

@@ -12,7 +12,6 @@
   width: calc(var(--sidenavwidth) - 24px);
 }
 
-
 #newListBtn {
   font-size: 16px;
   padding: 6px 8px 6px 31px;
@@ -29,24 +28,36 @@
   background-color: var(--green);
 }
 
-#settingsBtn {
-  font-size: 16px;
-  padding: 6px 8px 6px 31px;
+#settingsBtn,
+#search {
+  font-size: 14px;
+  padding: 4px 0 4px 27px;
   width: 100%;
-  background-size: 20px 20px;
-  background-position: 6px 5px;
+  background-size: 17px 17px;
+  background-position: 0 3px;
   background-image: url("../../assets/settings1.svg");
-}
-
-#sidenav #otherBtns {
-  margin-top: 12px;
-  border-top: 2px solid var(--bg3);
-  padding-top: 12px;
+  display: block;
+  background-color: var(--bg1);
+  text-align: left;
+  margin-bottom: 2px;
+  transition: 100ms;
+  color: var(--text2);
+  border-radius: 5px;
+  user-select: none;
 }
 
 #settingsBtn.active {
-  color: #dfdfdf;
+  color: #b8b8b8;
   background-image: url("../../assets/settings2.svg");
+}
+
+#search {
+  background-image: url("../../assets/search.svg");
+  margin-bottom: 12px;
+}
+
+#search::placeholder {
+  color: var(--text2);
 }
 
 .sidenavBtn {
@@ -55,13 +66,13 @@
   text-align: left;
   margin-top: 2px;
   transition: 100ms;
-  color: var(--text1);
+  color: var(--text2);
   width: calc(100% - 16px);
   padding: 8px 8px;
   user-select: none;
   background-size: 16px 16px;
   border-radius: 5px;
- /* background-position: calc(var(--sidenavwidth) - 48px) 8px;*/
+  /* background-position: calc(var(--sidenavwidth) - 48px) 8px;*/
   background-position: 94% 7px;
   font-size: 14px;
 }
@@ -147,16 +158,16 @@
 
 .sidenavBtn .date {
   font-size: 11px;
-  color: var(--text3);
+  color: var(--text4);
 }
 
 #sidenav .header {
   font-weight: bold;
-  color: #404351;
+  color: var(--text4);
   flex-grow: 0;
   user-select: none;
+  letter-spacing: 0.4px;
   display: block;
-  margin: 0 0 0 8px;
   transform: translateY(2px);
   font-size: 12px;
 }

@@ -49,8 +49,8 @@ document
     let wid = document.querySelector("#blockListItemMediaWidth").value * 10;
     document.querySelector("#mediaWidthTitle").innerHTML =
       "Media Width (" + wid + "%)";
-    for (let i = 0; i < document.querySelectorAll(".itemMedia").length; i++) {
-      document.querySelectorAll(".itemMedia")[i].style.width = wid + "%";
+    for (let i = 0; i < document.querySelectorAll(".blockItemMedia").length; i++) {
+      document.querySelectorAll(".blockItemMedia")[i].style.width = wid + "%";
     }
     settings["blockListItemMediaWidth"] = wid;
     writeSettings(settings);
@@ -89,10 +89,6 @@ document.getElementById("minimizeBtn").addEventListener("click", function () {
   window.api.send("minimize", "");
 });
 
-document.getElementById("maximizeBtn").addEventListener("click", function () {
-  window.api.send("maximize", "");
-  this.className = !(this.className === "true");
-});
 
 document.getElementById("newListBtn").addEventListener("click", function () {
   let type = document.getElementById("listType").value;
@@ -165,8 +161,8 @@ document.getElementById("settingsBtn").addEventListener("click", function () {
     document.getElementsByClassName("sidenavBtn")[p].classList.remove("active");
   }
   this.classList.add("active");
-  for (let k = 0; k < document.getElementsByClassName("listDiv").length; k++) {
-    document.getElementsByClassName("listDiv")[k].style.display = "none";
+  for (let k = 0; k < document.getElementsByClassName("listContainer").length; k++) {
+    document.getElementsByClassName("listContainer")[k].style.display = "none";
   }
   document.getElementById("noListSelected").style.display = "none";
 
@@ -204,8 +200,8 @@ function generateList() {
       let sidenavBtnText;
       let sidenavBtnDate;
       // list content div
-      let listDiv = create("div", "listDiv");
-      let listContent = create("div", "listContent");
+      let listContainer = create("div", "listContainer");
+      let listWrapper = create("div", "listWrapper");
 
       let pswd;
       if (list["children"][l]["locked"] == true) {
@@ -216,8 +212,8 @@ function generateList() {
           window.api.send("touchID", "");
         };
         lockedTitle.innerHTML = "This List is Locked";
-        listDiv.classList.add("locked");
-        listContent.style.display = "none";
+        listContainer.classList.add("locked");
+        listWrapper.style.display = "none";
         lockedDiv = create("div", "lockedDiv");
         pswd = createElement("input", {
           class: "pswdInput",
@@ -230,8 +226,8 @@ function generateList() {
             // correct password
             pswd.value = "";
             lockedDiv.style.display = "none";
-            listContent.style.display = "";
-            listContent.style.animation = "fadein 1000ms";
+            listWrapper.style.display = "";
+            listWrapper.style.animation = "fadein 1000ms";
             sidenavBtnText.innerHTML = list["children"][l]["name"];
             sidenavBtnDate.innerHTML = timeAgo(d.getTime(), edate);
             sidenavBtn.classList.remove("locked");
@@ -259,7 +255,7 @@ function generateList() {
         }
         lockedDiv.append(pswd);
         lockedDiv.append(pswdSubmit);
-        listDiv.append(lockedDiv);
+        listContainer.append(lockedDiv);
       }
 
       // list title
@@ -308,9 +304,14 @@ function generateList() {
         if (selectedList != -1) {
           // if you arent coming from nolistselected
           if (l != selectedList) {
-            document
+            try{
+              document
               .getElementsByClassName("sidenavBtn")
               [selectedList].classList.remove("active");
+            }catch(err){
+              
+            }
+            
           }
           document.querySelector("#settingsBtn").classList.remove("active");
 
@@ -325,10 +326,10 @@ function generateList() {
 
           for (
             let h = 0;
-            h < document.querySelectorAll(".listDiv").length;
+            h < document.querySelectorAll(".listContainer").length;
             h++
           ) {
-            document.querySelectorAll(".listDiv")[h].style.display = "none";
+            document.querySelectorAll(".listContainer")[h].style.display = "none";
           }
         }
 
@@ -337,7 +338,7 @@ function generateList() {
         document.getElementById("noListSelected").style.display = "none";
 
         // show list div
-        document.querySelectorAll(".listDiv")[l].style.display = null;
+        document.querySelectorAll(".listContainer")[l].style.display = null;
 
         if (list["children"][l]["locked"] == true) {
           // if you're entering a locked list, relock it
@@ -345,13 +346,13 @@ function generateList() {
             sidenavBtn.classList.remove(list["children"][l]["type"]);
             sidenavBtn.classList.add("locked");
             lockedDiv.style.display = "block";
-            listContent.style.display = "none";
+            listWrapper.style.display = "none";
             pswd.focus();
           }
           // you're going to the same list & its unlocked, bypass the lock
           if (l == selectedList && lockedDiv.style.display != "block") {
             lockedDiv.style.display = "none";
-            listContent.style.display = null;
+            listWrapper.style.display = null;
             sidenavBtnText.innerHTML = list["children"][l]["name"];
             sidenavBtnDate.innerHTML = timeAgo(d.getTime(), edate);
             sidenavBtn.classList.remove("locked");
@@ -377,10 +378,10 @@ function generateList() {
           document
             .querySelectorAll(".sidenavBtn")
             [selectedList].classList.add("locked");
-          document.querySelectorAll(".listDiv")[
+          document.querySelectorAll(".listContainer")[
             selectedList
           ].children[0].children[1].value = "";
-          //                         .listDiv                .lockedDiv  .pswdInput
+          //                         .listContainer                .lockedDiv  .pswdInput
         }
         selectedList = l;
       };
@@ -475,14 +476,14 @@ function generateList() {
         };
         listSettingsDiv.append(unlockListBtn);
       }
-      listContent.append(listSettingsDiv);
+      listWrapper.append(listSettingsDiv);
 
       document.getElementById("listBtns").append(sidenavBtn);
-      listContent.append(listTitle);
+      listWrapper.append(listTitle);
 
       if (list["children"][l]["type"] == "block") {
-        listDiv.classList.add("block");
-        listContent.classList.add("block");
+        listContainer.classList.add("block");
+        listWrapper.classList.add("block");
 
         // NEW SUBLIST BUTTON
         let newSublistBtn = create("button", "newBtn right");
@@ -492,22 +493,22 @@ function generateList() {
         };
         listSettingsDiv.append(newSublistBtn);
 
-        let sublists = create("div", "mainListContent block");
+        let sublists = create("div", "listContent block");
         for (let i = 0; i < list["children"][l]["children"].length; i++) {
           // FOR_EACH_SUBLIST
 
-          let sublistDiv = create("div", "sublistDiv");
-          let sublistContentDiv = create("div", "content");
+          let sublistContainer = create("div", "sublistContainer");
+          let sublistWrapperDiv = create("div", "content");
 
           let sublistTitleDiv = create("div", "sublistTitleDiv");
           let collapseSublistBtn = create("button", "collapseSublistBtn down");
           collapseSublistBtn.onclick = function () {
-            if (sublistContentDiv.style.display == "none") {
-              sublistContentDiv.style.display = null;
+            if (sublistWrapperDiv.style.display == "none") {
+              sublistWrapperDiv.style.display = null;
               this.classList.remove("up");
               this.classList.add("down");
             } else {
-              sublistContentDiv.style.display = "none";
+              sublistWrapperDiv.style.display = "none";
               this.classList.remove("down");
               this.classList.add("up");
             }
@@ -552,9 +553,9 @@ function generateList() {
           sublistTitleDiv.append(collapseSublistBtn);
           sublistTitleDiv.append(sublistTitleP);
 
-          sublistDiv.append(sublistTitleDiv);
-          sublistDiv.append(sublistContentDiv);
-          sublists.append(sublistDiv);
+          sublistContainer.append(sublistTitleDiv);
+          sublistContainer.append(sublistWrapperDiv);
+          sublists.append(sublistContainer);
 
           // FOR_EVERY_ITEM
           for (
@@ -565,8 +566,8 @@ function generateList() {
             // -1 because "name" is a key
             let itemSettingsDiv = document.createElement("div");
 
-            let itemDiv = document.createElement("div");
-            itemDiv.className = "item";
+            let blockItem = document.createElement("div");
+            blockItem.className = "blockItem";
 
             // status button
             button = document.createElement("button");
@@ -599,7 +600,7 @@ function generateList() {
                   "status"
                 ].toString()
             );
-            itemDiv.append(button);
+            blockItem.append(button);
 
             // ITEM_TITLE
             let itemTitle = createElement("p", {
@@ -631,7 +632,7 @@ function generateList() {
                 this.blur();
               }
             };
-            itemDiv.append(itemTitle);
+            blockItem.append(itemTitle);
 
             // ITEM_SETTINGS_BUTTON
             let moreBtn = document.createElement("button");
@@ -639,13 +640,13 @@ function generateList() {
             moreBtn.onclick = function () {
               if (itemSettingsDiv.style.display == "none") {
                 itemSettingsDiv.style.display = "block";
-                itemDiv.style.paddingBottom = "2px";
+                blockItem.style.paddingBottom = "2px";
               } else {
                 itemSettingsDiv.style.display = "none";
-                itemDiv.style.paddingBottom = null;
+                blockItem.style.paddingBottom = null;
               }
             };
-            itemDiv.append(moreBtn);
+            blockItem.append(moreBtn);
 
             // ITEM_MEDIA
             if (
@@ -700,7 +701,7 @@ function generateList() {
                     );
                   });
                   img.style.cursor = "pointer";
-                  itemDiv.append(img);
+                  blockItem.append(img);
                 } else if (
                   list["children"][l]["children"][i]["children"][e]["media"][
                     p
@@ -731,7 +732,7 @@ function generateList() {
                     list["children"][l]["children"][i]["children"][e]["media"][
                       p
                     ];
-                  itemDiv.append(vid);
+                  blockItem.append(vid);
                 } else if (
                   list["children"][l]["children"][i]["children"][e]["media"][
                     p
@@ -753,7 +754,7 @@ function generateList() {
                     list["children"][l]["children"][i]["children"][e]["media"][
                       p
                     ];
-                  itemDiv.append(aud);
+                  blockItem.append(aud);
                 }
               }
 
@@ -849,19 +850,19 @@ function generateList() {
             itemSettingsDiv.append(duplicateItemBtn);
             itemSettingsDiv.append(delItemBtn);
             // creation date
-            itemDiv.append(creationDateP);
-            itemDiv.append(itemSettingsDiv);
-            sublistContentDiv.append(itemDiv);
+            blockItem.append(creationDateP);
+            blockItem.append(itemSettingsDiv);
+            sublistWrapperDiv.append(blockItem);
           }
         }
 
-        listContent.append(sublists);
-        listDiv.append(listContent);
-        lists.append(listDiv);
+        listWrapper.append(sublists);
+        listContainer.append(listWrapper);
+        lists.append(listContainer);
       } else if (list["children"][l]["type"] == "text") {
-        listDiv.classList.add("text");
-        listContent.classList.add("text");
-        let textDiv = create("div", "mainListContent text");
+        listContainer.classList.add("text");
+        listWrapper.classList.add("text");
+        let textDiv = create("div", "listContent text");
 
         for (let a = 0; a < list["children"][l]["children"].length; a++) {
           // all "blocks"
@@ -971,13 +972,13 @@ function generateList() {
 
         listSettingsDiv.append(newCodeBlockBtn);
 
-        listContent.append(textDiv);
+        listWrapper.append(textDiv);
 
-        listDiv.append(listContent);
-        lists.append(listDiv);
+        listContainer.append(listWrapper);
+        lists.append(listContainer);
       } else if (list["children"][l]["type"] == "checklist") {
-        listDiv.classList.add("checklist");
-        listContent.classList.add("checklist");
+        listContainer.classList.add("checklist");
+        listWrapper.classList.add("checklist");
 
         // NEW SUBLIST BUTTON
         let newSublistBtn = create("button", "newBtn right");
@@ -987,22 +988,22 @@ function generateList() {
         };
         listSettingsDiv.append(newSublistBtn);
 
-        let sublists = create("div", "mainListContent checklist");
+        let sublists = create("div", "listContent checklist");
         for (let i = 0; i < list["children"][l]["children"].length; i++) {
           // FOR_EACH_SUBLIST
 
-          let sublistDiv = create("div", "sublistDiv");
-          let sublistContentDiv = create("div", "checklistSublistDiv");
+          let sublistContainer = create("div", "sublistContainer");
+          let sublistWrapperDiv = create("div", "checklistSublistContainer");
 
           let sublistTitleDiv = create("div", "sublistTitleDiv");
           let collapseSublistBtn = create("button", "collapseSublistBtn down");
           collapseSublistBtn.onclick = function () {
-            if (sublistContentDiv.style.display == "none") {
-              sublistContentDiv.style.display = null;
+            if (sublistWrapperDiv.style.display == "none") {
+              sublistWrapperDiv.style.display = null;
               this.classList.remove("up");
               this.classList.add("down");
             } else {
-              sublistContentDiv.style.display = "none";
+              sublistWrapperDiv.style.display = "none";
               this.classList.remove("down");
               this.classList.add("up");
             }
@@ -1042,16 +1043,16 @@ function generateList() {
           sublistTitleDiv.append(collapseSublistBtn);
           sublistTitleDiv.append(sublistTitleP);
 
-          sublistDiv.append(sublistTitleDiv);
-          sublistDiv.append(sublistContentDiv);
-          sublists.append(sublistDiv);
+          sublistContainer.append(sublistTitleDiv);
+          sublistContainer.append(sublistWrapperDiv);
+          sublists.append(sublistContainer);
 
           for (
             let e = 0;
             e < list["children"][l]["children"][i]["children"].length;
             e++
           ) {
-            let itemDiv = create(
+            let blockItem = create(
               "div",
               "checklistItem " +
                 list["children"][l]["children"][i]["children"][e]["checked"]
@@ -1059,7 +1060,7 @@ function generateList() {
             let itemText = create("p", "checklistItemText");
 
             if (settings["checkedItemStyle"] == 0) {
-              itemDiv.classList.add("strikethrough");
+              blockItem.classList.add("strikethrough");
             }
             let checkbox = create(
               "button",
@@ -1072,9 +1073,9 @@ function generateList() {
               this.className =
                 "checkBoxBtn " +
                 list["children"][l]["children"][i]["children"][e]["checked"];
-              itemDiv.classList.remove("true");
-              itemDiv.classList.remove("false");
-              itemDiv.classList.add(
+              blockItem.classList.remove("true");
+              blockItem.classList.remove("false");
+              blockItem.classList.add(
                 list["children"][l]["children"][i]["children"][e]["checked"]
               );
               listEdited(l);
@@ -1131,22 +1132,22 @@ function generateList() {
               e !=
               list["children"][l]["children"][i]["children"].length - 1
             ) {
-              itemDiv.append(checkbox);
+              blockItem.append(checkbox);
             } else {
               // is the last element
               itemText.style.marginLeft = "22px";
             }
-            itemDiv.append(itemText);
-            sublistContentDiv.append(itemDiv);
+            blockItem.append(itemText);
+            sublistWrapperDiv.append(blockItem);
           }
         }
-        listContent.append(sublists);
-        listDiv.append(listContent);
-        lists.append(listDiv);
+        listWrapper.append(sublists);
+        listContainer.append(listWrapper);
+        lists.append(listContainer);
       } else if (list["children"][l]["type"] == "accounts") {
         // ! LIST TYPE ACCOUNTS
-        listDiv.classList.add("accounts");
-        listContent.classList.add("accounts");
+        listContainer.classList.add("accounts");
+        listWrapper.classList.add("accounts");
         // NEW SUBLIST BUTTON
         let newAccountBtn = create("button", "newBtn right");
         newAccountBtn.onclick = function () {
@@ -1161,9 +1162,9 @@ function generateList() {
         searchBox.spellcheck = settings.spellcheck;
 
         listSettingsDiv.append(newAccountBtn);
-        listContent.append(searchBox);
+        listWrapper.append(searchBox);
 
-        let accountsDiv = create("div", "mainListContent accounts");
+        let accountsDiv = create("div", "listContent accounts");
 
         for (let i = 0; i < list["children"][l]["children"].length; i++) {
           // for each account
@@ -1492,14 +1493,14 @@ function generateList() {
           // do search
           let accts = 0;
           for (let k = 0; k < list["children"][l]["children"].length; k++) {
-            listContent.querySelectorAll(".accountDiv")[k].style.display =
+            listWrapper.querySelectorAll(".accountDiv")[k].style.display =
               "none";
             if (
               list["children"][l]["children"][k]["name"]
                 .toLowerCase()
                 .includes(this.value.toLowerCase())
             ) {
-              listContent.querySelectorAll(".accountDiv")[k].style.display =
+              listWrapper.querySelectorAll(".accountDiv")[k].style.display =
                 null;
               accts += 1;
             }
@@ -1527,10 +1528,10 @@ function generateList() {
           (list["children"][l]["children"].length == 1
             ? " Account"
             : " Accounts");
-        listContent.append(accountsDiv);
-        listContent.append(accountCount);
-        listDiv.append(listContent);
-        lists.append(listDiv);
+        listWrapper.append(accountsDiv);
+        listWrapper.append(accountCount);
+        listContainer.append(listWrapper);
+        lists.append(listContainer);
       }
     }
 
@@ -1550,10 +1551,10 @@ function generateList() {
       }
       for (
         let k = 0;
-        k < document.getElementsByClassName("listDiv").length;
+        k < document.getElementsByClassName("listContainer").length;
         k++
       ) {
-        document.getElementsByClassName("listDiv")[k].style.display = "none";
+        document.getElementsByClassName("listContainer")[k].style.display = "none";
       }
       document.getElementById("app").style.display = "block";
     } else {

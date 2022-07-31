@@ -230,15 +230,6 @@ ipcMain.on("openPath", (evt, args) => {
 ipcMain.on("openFile", (evt, args) => {
   shell.openPath(path.join(__dirname, "../", "resources", "/media/", args));
 });
-
-ipcMain.on("maximize", (evt, args) => {
-  if (win.isMaximized()) {
-    win.unmaximize();
-  } else {
-    win.maximize();
-  }
-});
-
 ipcMain.on("touchID", (evt, args) => {
   if (systemPreferences.canPromptTouchID()) {
     systemPreferences

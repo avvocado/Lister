@@ -20,8 +20,8 @@ window.api.receive("settings", (args) => {
   // block list item media width
   document.getElementById('blockListItemMediaWidth').value = settings['blockListItemMediaWidth'] / 10
   document.querySelector('#mediaWidthTitle').innerHTML = 'Media Width (' + (settings['blockListItemMediaWidth']) + '%)'
-  for (let i = 0; i < document.querySelectorAll('.itemMedia').length; i++) {
-    document.querySelectorAll('.itemMedia')[i].style.width = settings['blockListItemMediaWidth'] + '%'
+  for (let i = 0; i < document.querySelectorAll('.blockItemMedia').length; i++) {
+    document.querySelectorAll('.blockItemMedia')[i].style.width = settings['blockListItemMediaWidth'] + '%'
   }
 
   // checked item style
@@ -64,9 +64,9 @@ window.api.receive("system", (args) => {
 
 window.api.receive("touchID", (args) => {
   if (args == true) {
-    document.querySelectorAll('.listDiv')[awaitUnlock].children[0].children[2].value = settings['password']
+    document.querySelectorAll('.listContainer')[awaitUnlock].children[0].children[2].value = settings['password']
     //                                               .lockedDiv  .pswdInput
-    document.querySelectorAll('.listDiv')[awaitUnlock].children[0].children[3].click()
+    document.querySelectorAll('.listContainer')[awaitUnlock].children[0].children[3].click()
     //                                               .lockedDiv  .pswdSubmit
     // does a fake unlock where it sets the password input text to the correct password then clicks submit
   }
