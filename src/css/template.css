@@ -18,9 +18,6 @@
   --bluetransparent: #4a73db1a;
   --red: #bf2d4b;
   --redtransparent: #bf2d4b1a;
-  --sidenavwidth: 200px;
-  --sidenavpadding: 16px;
-  --topnavheight: 64px;
 }
 
 html {
@@ -60,8 +57,7 @@ body {
 #sidenav {
   background-color: var(--bg1);
   height: 100%;
-  padding: var(--topnavheight) var(--sidenavpadding) var(--sidenavpadding)
-    var(--sidenavpadding);
+  padding: var(--topnavheight) var(--sidenavpadding) var(--sidenavpadding) var(--sidenavpadding);
   width: var(--sidenavwidth);
   position: fixed;
 }
@@ -76,11 +72,12 @@ body {
 
 .box {
   background-color: var(--bg3);
-  box-shadow: 0 0 4px 0 var(--bg1);
+  box-shadow: 0 0 0 1px var(--bg1);
   border: 1px solid transparent;
   border-radius: 8px;
   padding: 16px;
   vertical-align: top;
+  border-top: 1px solid var(--bg4);
 }
 
 .box.highlight {
@@ -95,6 +92,7 @@ body {
   align-items: center;
   padding: 0 8px 1px 8px;
   column-gap: 0.3em;
+  border: 1px solid transparent;
 }
 
 .box-title {
@@ -172,9 +170,8 @@ body {
   color: var(--text3);
   display: block;
   width: auto;
-  white-space: nowrap;
   border-radius: 8px;
-  overflow-x: auto;
+  overflow-x: scroll;
   font-family: consolas;
 }
 

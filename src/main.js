@@ -1,16 +1,7 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const {
-  app,
-  BrowserWindow,
-  Tray,
-  Menu,
-  shell,
-  ipcMain,
-  dialog,
-  systemPreferences,
-} = require("electron");
+const { app, BrowserWindow, Tray, Menu, shell, ipcMain, dialog, systemPreferences } = require("electron");
 const path = require("path");
 const fs = require("fs");
 
@@ -32,7 +23,7 @@ const createWindow = () => {
     resizable: true,
     frame: false,
     icon: path.join(__dirname, "../", "/assets", "/appIcons", "icon.png"),
-    backgroundColor: "#0f1014",
+    backgroundColor: "white",
     darkTheme: true,
     show: false,
   });
@@ -100,165 +91,27 @@ ipcMain.on("close", (evt, args) => {
   // new Notification({ title: 'Lister Minimized to Tray', body: '',}).show()
 });
 
-ipcMain.on("minimize", (evt, args) => {
-  BrowserWindow.getFocusedWindow().minimize();
+ipcMain.on("requestLists", (evt, args) => {
+  fs.readFile(path.join(__dirname, "../", "/resources/", "lists.json"), (err, data) => {
+    // return the contents of lists.json
+    win.webContents.send("lists", JSON.parse(data));
+  });
 });
 
-ipcMain.on("requestList", (evt, args) => {
-  fs.readFile(
-    path.join(__dirname, "../", "/resources/", "list.json"),
-    (err, data) => {
-      win.webContents.send("list", JSON.parse(data));
-    }
-  );
-});
-ipcMain.on("requestSettings", (evt, args) => {
-  fs.readFile(
-    path.join(__dirname, "../", "/resources/", "settings.json"),
-    (err, data) => {
-      try {
-        win.webContents.send("settings", JSON.parse(data));
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  );
-});
-
-ipcMain.on("requestDefaultSettings", (evt, args) => {
-  fs.readFile(path.join(__dirname, "/defaultSettings.json"), (err, data) => {
-    try {
-      win.webContents.send("defaultSettings", JSON.parse(data));
-    } catch (err) {
+ipcMain.on("writeLists", (evt, args) => {
+  console.log("wrote lists.json file");
+  fs.writeFile(path.join(__dirname, "../", "/resources/", "lists.json"), args, (err) => {
+    if (err) {
       console.log(err);
     }
   });
 });
 
-ipcMain.on("writeJSON", (evt, args) => {
-  console.log("wrote list.json file");
-  fs.writeFile(
-    path.join(__dirname, "../", "/resources/", "list.json"),
-    args,
-    (err) => {
-      if (err) {
-        console.log(err);
-      }
-    }
-  );
-});
-
-ipcMain.on("writeSettings", (evt, args) => {
-  fs.writeFile(
-    path.join(__dirname, "../", "/resources/", "settings.json"),
-    args,
-    (err) => {
-      if (err) {
-        console.log(err);
-      }
-    }
-  );
-});
-
-ipcMain.on("requestSystem", (evt, args) => {
-  let temp = false;
-  if (process.platform == "darwin") {
-    // macos, see if touch id is supported
-    temp = systemPreferences.canPromptTouchID();
-  }
-
-  win.webContents.send("system", {
-    dirname: path.join(__dirname, "../"),
-    operatingSystem: process.platform,
-    versions: process.versions,
-    touchID: temp,
-  });
-});
-
-ipcMain.on("alwaysOnTop", (evt, args) => {
-  win.setAlwaysOnTop(args);
-});
-ipcMain.on("uploadMedia", (evt, args) => {
-  // opens a window to choose file
-  dialog
-    .showOpenDialog({
-      properties: ["openFile"],
-      filters: [
-        {
-          name: "",
-          extensions: [
-            "png",
-            "jpeg",
-            "jpg",
-            "webp",
-            "gif",
-            "mp4",
-            "webm",
-            "ogg",
-            "wav",
-            "mp3",
-          ],
-        },
-      ],
-    })
-    .then((result) => {
-      // checks if window was closed
-      if (result.canceled) {
-        console.log("no file was selected");
-      } else {
-        // get first element in array which is path to file selected
-        let filePath = result.filePaths[0];
-
-        // get file name
-        let fileName = path.basename(filePath);
-
-        // copy file from original location to app data folder
-        fs.copyFile(
-          filePath,
-          path.join(__dirname, "../", "/resources/", "/media/", fileName),
-          (err) => {
-            if (err) throw err;
-            win.webContents.send("media", fileName);
-          }
-        );
-      }
-    });
-});
-ipcMain.on("openPath", (evt, args) => {
-  shell.showItemInFolder(path.join(__dirname, "../", "/resources/", args));
-});
-ipcMain.on("openFile", (evt, args) => {
-  shell.openPath(path.join(__dirname, "../", "resources", "/media/", args));
-});
-ipcMain.on("touchID", (evt, args) => {
-  if (systemPreferences.canPromptTouchID()) {
-    systemPreferences
-      .promptTouchID("Unlock List")
-      .then((success) => {
-        win.webContents.send("touchID", true, "");
-      })
-      .catch((err) => {
-        console.log(err);
-        win.webContents.send("touchID", false, "");
-      });
-  }
-});
-
-ipcMain.on("trayIcon", (evt, args) => {
+ipcMain.on("createTray", (evt, args) => {
   if (tray != null) {
     tray.destroy();
   }
-  if (args == true) {
-    // black and white
-    tray = new Tray(
-      path.join(__dirname, "../", "/assets/", "/appIcons/", "icon18x18BW.png")
-    );
-  } else {
-    // color
-    tray = new Tray(
-      path.join(__dirname, "../", "/assets/", "/appIcons/", "icon18x18.png")
-    );
-  }
+  tray = new Tray(path.join(__dirname, "../", "/assets/appicons/appicontransparent18x14.png"));
 
   // open on left click on windows
   if (process.platform == "win32") {
@@ -273,14 +126,6 @@ ipcMain.on("trayIcon", (evt, args) => {
       click: function () {
         win.show();
       },
-    },
-    {
-      label: "Settings",
-      click: function () {
-        win.show();
-        win.webContents.send("openSettings", "");
-      },
-      //icon: path.join(__dirname, '../', '/assets/', '/', 'settings.png')
     },
     { type: "separator" },
     {
