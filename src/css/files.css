@@ -1,0 +1,6 @@
+.filecontainer .filename {
+  color: var(--text3);
+  font-size: 24px;
+  letter-spacing: 0.025em;
+  font-weight: bold;
+}

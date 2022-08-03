@@ -1,7 +1,7 @@
 // receiving data from main.js
 
-window.api.receive("lists", (args) => {
+window.api.receive("files", (args) => {
   // receiving list.json
-  lists = args;
-  generateList();
+  files = args;
+  start();
 });

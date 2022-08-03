@@ -13,6 +13,9 @@
   <!-- general css things -->
   <link rel="stylesheet" href="css/style.css">
 
+  <!-- css for files -->
+  <link rel="stylesheet" href="css/files.css">
+
   <title>Lister</title>
 </head>
 
@@ -21,24 +24,27 @@
 
     <!-- menu bar -->
     <div id="menubar">
-      <button id="toggleSideBtn"></button>
-      <button id="closeBtn"></button>
-      <button id="minimizeBtn"></button>
+      <div>
+        <button id="closebtn">x</button>
+        <button id="minimizebtn">-</button>
+      </div>
+
+      <!-- buttons injected here -->
+      <div id="fileactions"></div>
     </div>
 
     <!-- side bar -->
     <div id="sidenav">
-      <button class="settingsBtn">Settings</button>
-      <p class="header">LISTS</p>
+      <p class="header">FILES</p>
 
-      <!-- inject list buttons here -->
-      <div class="listBtns"></div>
+      <!-- inject file buttons here -->
+      <div id="filebtns"></div>
     </div>
 
     <!-- main content -->
     <div id="content">
-      <!-- inject lists here -->
-      <div id="lists"></div>
+      <!-- inject active file here from js -->
+      <div id="activefile"></div>
     </div>
 
 

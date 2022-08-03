@@ -22,7 +22,7 @@ const createWindow = () => {
     autoHideMenuBar: true,
     resizable: true,
     frame: false,
-    icon: path.join(__dirname, "../", "/assets", "/appIcons", "icon.png"),
+    icon: path.join(__dirname, "../", "/assets", "/appicons", "appicon_512x512.png"),
     backgroundColor: "white",
     darkTheme: true,
     show: false,
@@ -80,6 +80,10 @@ if (!gotTheLock) {
   });
 }
 
+ipcMain.on("minimize", (evt, args) => {
+  BrowserWindow.getFocusedWindow().minimize();
+});
+
 ipcMain.on("close", (evt, args) => {
   // kill tray icon
   tray.destroy();
@@ -91,16 +95,16 @@ ipcMain.on("close", (evt, args) => {
   // new Notification({ title: 'Lister Minimized to Tray', body: '',}).show()
 });
 
-ipcMain.on("requestLists", (evt, args) => {
-  fs.readFile(path.join(__dirname, "../", "/resources/", "lists.json"), (err, data) => {
-    // return the contents of lists.json
-    win.webContents.send("lists", JSON.parse(data));
+ipcMain.on("requestFiles", (evt, args) => {
+  fs.readFile(path.join(__dirname, "../", "/resources/", "files.json"), (err, data) => {
+    // return the contents of files.json
+    win.webContents.send("files", JSON.parse(data));
   });
 });
 
-ipcMain.on("writeLists", (evt, args) => {
-  console.log("wrote lists.json file");
-  fs.writeFile(path.join(__dirname, "../", "/resources/", "lists.json"), args, (err) => {
+ipcMain.on("writeFiles", (evt, args) => {
+  console.log("wrote files.json file");
+  fs.writeFile(path.join(__dirname, "../", "/resources/", "files.json"), args, (err) => {
     if (err) {
       console.log(err);
     }
@@ -111,7 +115,7 @@ ipcMain.on("createTray", (evt, args) => {
   if (tray != null) {
     tray.destroy();
   }
-  tray = new Tray(path.join(__dirname, "../", "/assets/appicons/appicontransparent18x14.png"));
+  tray = new Tray(path.join(__dirname, "../", "/assets/appicons/trayicon@2x.png"));
 
   // open on left click on windows
   if (process.platform == "win32") {

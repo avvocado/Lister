@@ -2,29 +2,93 @@
   position: fixed;
   height: 100%;
   background-color: var(--bg1);
+  font-size: 0;
   padding: 0 16px 0 16px;
   overflow-x: hidden;
-  transition: 100ms;
+  flex-shrink: 0;
+  flex-grow: 0;
   flex-direction: column;
-  z-index: 900;
-  flex-wrap: nowrap;
   display: flex;
-  width: var(--sidenavwidth);
+  transition: 100ms;
+  width: calc(var(--sidenavwidth) - 32px);
 }
 
 #sidenav .header {
   font-weight: bold;
-  color: var(--text4);
+  color: var(--text1);
   flex-grow: 0;
   user-select: none;
   letter-spacing: 0.4px;
   display: block;
   transform: translateY(2px);
   font-size: 12px;
+  margin: 0 0 -4px 0;
+}
+
+#sidenav #filebtns .folderdiv {
+  margin: 3px 0 2px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#sidenav #filebtns .sidenavbtn {
+  width: 100%;
+  margin: 0;
+  background-size: auto 16px;
+  background-color: var(--bg1);
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+#sidenav #filebtns .sidenavbtn.file.active {
+  background-color: var(--green);
+  color: var(--textWhite);
+  background-image: url("../../assets/icons/file1.svg") !important;
+}
+
+#sidenav #filebtns .sidenavbtn.folder {
+  padding-left: 18px;
+  font-size: 16px;
+  margin-top: 8px;
+  background-position: 0 1px;
+  color: var(--text3);
+}
+
+#sidenav #filebtns .sidenavbtn.folder.down {
+  background-image: url("../../assets/icons/caretDown.svg");
+}
+
+#sidenav #filebtns .sidenavbtn.folder.right {
+  background-image: url("../../assets/icons/caretRight.svg");
+}
+
+#sidenav #filebtns .sidenavbtn.file {
+  background-image: url("../../assets/icons/file.svg");
+  background-position: 18px 3px;
+  padding: 2px 0 2px 38px;
+  color: var(--text2);
+  font-size: 16px;
+}
+
+#sidenav #filebtns .sidenavbtn.newfile {
+  background-image: url("../../assets/icons/plus.svg");
+  background-position: 18px -1px;
+  padding-left: 38px;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text1);
 }
 
 #menubar {
   width: 100vw;
+  -webkit-app-region: drag;
   background-color: var(--bg1);
   height: var(--menubarheight);
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#menubar div {
+  width: auto;
+  display: inline-block;
 }

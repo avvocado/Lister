@@ -1,5 +1,3 @@
-
-
 @keyframes fadein {
   0% {
     opacity: 0%;
@@ -18,7 +16,9 @@
   margin: 0;
   padding: 0;
   border: none;
+  color: var(--text1);
   background-position: center;
+  text-align: left;
   font-family: Helvetica;
   background-repeat: no-repeat;
 }
@@ -43,7 +43,6 @@ select {
 *[contenteditable="true"]:empty:before {
   content: "...";
   pointer-events: none;
-  color: var(--text4);
 }
 
 /* links */
@@ -72,4 +71,26 @@ a {
 
 body {
   background-color: var(--bg2);
+}
+
+#content {
+  padding: 16px;
+  margin-left: var(--sidenavwidth);
+}
+.box {
+  background-color: var(--bg3);
+  box-shadow: 0 0 3px 0 var(--bg1);
+  border: 1px solid var(--bg1);
+  border-radius: 8px;
+  padding: 16px;
+  color: var(--text2);
+  vertical-align: top;
+}
+
+#activefile {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 16px;
+  flex-wrap: wrap;
 }

@@ -1,8 +1,6 @@
 // globals
-var selectedList = -1;
-var lists;
-var settings;
-var system;
+var files;
+var activefile;
 
 function createElement(type, params) {
   let elem = document.createElement(type);
@@ -38,43 +36,48 @@ function createElement(type, params) {
   return elem;
 }
 
-// delete a list
-function deleteList(l) {
-  lists["children"].splice(l, 1);
-
-  selectedList = -1;
-  writeJSON(list);
-  generateList();
+function deleteFile(p, c) {
+  files.children[p].children.splice(c, 1);
+  writeFiles(files);
+  generateSidenav();
 }
 
-function listEdited(l) {
+function fileEdited(f) {
   d = new Date();
   console.log(l);
-  lists["children"][l]["lastEdited"] = d.getTime();
+  files["children"][f]["lastEdited"] = d.getTime();
 
-  lists["children"].sort((a, b) => Number(b.lastEdited) - Number(a.lastEdited));
+  files["children"].sort((a, b) => Number(b.lastEdited) - Number(a.lastEdited));
 
-  selectedList = 0;
-  writeJSON(lists);
-  generateList();
+  writeFiles(files);
+  generateSidenav();
 }
 
-// creates a new list at the bottom
-// params: list type
-function newList(type) {
+function newFile(p) {
   let d = new Date();
-  writeJSON(lists);
-  generateList();
+  files.children[p].children.push({
+    name: "New File",
+    creationdate: d.getTime(),
+    lastedited: 0,
+  });
+
+  writeFiles(files);
+  generateSidenav();
 }
 
-// writing lists.json
-function writeJSON(data) {
-  window.api.send("writeJSON", JSON.stringify(data));
+function newFolder() {
+  files.children.push({
+    name: "New Folder",
+    children: [],
+  });
+
+  writeFiles(files);
+  generateSidenav();
 }
 
-// writing settings.json
-function writeSettings(data) {
-  window.api.send("writeSettings", JSON.stringify(data));
+// writing files.json
+function writeFiles(data) {
+  window.api.send("writeFiles", JSON.stringify(data));
 }
 
 // takes in an hour 0-24 and returns if that's am or pm in 12 hour time
