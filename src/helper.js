@@ -1,6 +1,6 @@
 // globals
 var files;
-var activefile;
+var activefile = [-1, -1];
 
 function createElement(type, params) {
   let elem = document.createElement(type);
@@ -42,6 +42,12 @@ function deleteFile(p, c) {
   generateSidenav();
 }
 
+function deleteFolder(p) {
+  files.children.splice(p, 1);
+  writeFiles(files);
+  generateSidenav();
+}
+
 function fileEdited(f) {
   d = new Date();
   console.log(l);
@@ -58,7 +64,9 @@ function newFile(p) {
   files.children[p].children.push({
     name: "New File",
     creationdate: d.getTime(),
-    lastedited: 0,
+    lastedited: d.getTime(),
+    starred: false,
+    locked: false,
   });
 
   writeFiles(files);
@@ -94,8 +102,10 @@ function getAmPm(time) {
 // params: current time (ms), past/future time (ms)
 // returns: how long ago the date was OR in how long the date is
 // eg: "9 hours ago", "in 3 weeks"
-function timeAgo(now, date) {
+function timeAgo(date) {
   var time = "";
+  let d = new Date()
+  let now = d.getTime()
   if (now - date > -1000 && now - date < 1000) {
     // within 1 second
     time = "Now";

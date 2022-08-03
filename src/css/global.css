@@ -16,7 +16,7 @@
   margin: 0;
   padding: 0;
   border: none;
-  color: var(--text1);
+  color: var(--text2);
   background-position: center;
   text-align: left;
   font-family: Helvetica;
@@ -79,11 +79,10 @@ body {
 }
 .box {
   background-color: var(--bg3);
-  box-shadow: 0 0 3px 0 var(--bg1);
-  border: 1px solid var(--bg1);
+  box-shadow: 0 0 4px 0 var(--bg1);
+  border: 1px solid transparent;
   border-radius: 8px;
   padding: 16px;
-  color: var(--text2);
   vertical-align: top;
 }
 

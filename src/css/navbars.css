@@ -3,19 +3,19 @@
   height: 100%;
   background-color: var(--bg1);
   font-size: 0;
-  padding: 0 16px 0 16px;
+  padding: 0 8px;
   overflow-x: hidden;
   flex-shrink: 0;
   flex-grow: 0;
   flex-direction: column;
   display: flex;
   transition: 100ms;
-  width: calc(var(--sidenavwidth) - 32px);
+  width: calc(var(--sidenavwidth) - 16px);
 }
 
 #sidenav .header {
   font-weight: bold;
-  color: var(--text1);
+  color: var(--text2);
   flex-grow: 0;
   user-select: none;
   letter-spacing: 0.4px;
@@ -43,40 +43,70 @@
 #sidenav #filebtns .sidenavbtn.file.active {
   background-color: var(--green);
   color: var(--textWhite);
-  background-image: url("../../assets/icons/file1.svg") !important;
+  background-image: url("../../assets/icons/dot1.svg") !important;
 }
 
-#sidenav #filebtns .sidenavbtn.folder {
-  padding-left: 18px;
+#sidenav #filebtns .folderbtn {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  background-size: auto 16px;
+  background-color: var(--bg1);
+  border-radius: 6px;
   font-size: 16px;
   margin-top: 8px;
-  background-position: 0 1px;
-  color: var(--text3);
 }
 
-#sidenav #filebtns .sidenavbtn.folder.down {
+#sidenav #filebtns .folderbtn .folder {
+  padding-left: 18px;
+  font-size: 16px;
+  background-position: 0 1px;
+  flex-grow: 1;
+  background-color: var(--bg1);
+  color: var(--text4);
+}
+
+#sidenav #filebtns .folderbtn .newfile {
+  background-color: transparent;
+  background-image: url("../../assets/icons/plus.svg");
+  background-position: 0px 0px;
+  background-size: contain;
+  width: 18px;
+  display: none;
+}
+#sidenav #filebtns .folderbtn .newfile:hover {
+  background-color: var(--bg2);
+  border-radius: 4px;
+}
+
+
+#sidenav #filebtns .folderbtn:hover .newfile {
+  display: inline-block;
+}
+
+#sidenav #filebtns .folderbtn .folder.down {
   background-image: url("../../assets/icons/caretDown.svg");
 }
 
-#sidenav #filebtns .sidenavbtn.folder.right {
+#sidenav #filebtns .folderbtn .folder.right {
   background-image: url("../../assets/icons/caretRight.svg");
 }
 
 #sidenav #filebtns .sidenavbtn.file {
-  background-image: url("../../assets/icons/file.svg");
-  background-position: 18px 3px;
-  padding: 2px 0 2px 38px;
-  color: var(--text2);
-  font-size: 16px;
+  background-image: url("../../assets/icons/dot.svg");
+  background-position: 1px 2px;
+  padding: 2px 0 2px 18px;
+  color: var(--text3);
+  font-size: 14px;
 }
 
-#sidenav #filebtns .sidenavbtn.newfile {
+#sidenav #filebtns .sidenavbtn.newfolder {
   background-image: url("../../assets/icons/plus.svg");
-  background-position: 18px -1px;
-  padding-left: 38px;
-  margin-top: 4px;
+  background-position: 0px -1px;
+  padding-left: 18px;
+  margin-top: 12px;
   font-size: 12px;
-  color: var(--text1);
+  color: var(--text2);
 }
 
 #menubar {
@@ -86,9 +116,77 @@
   height: var(--menubarheight);
   display: flex;
   flex-wrap: nowrap;
+  align-items: center;
+  gap: 16px;
 }
 
 #menubar div {
-  width: auto;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  height: 100%;
+}
+
+#menubar button {
+  margin: 0;
+  min-width: calc(var(--menubarheight) - 8px);
+  border-radius: 4px;
+  padding: 0 6px;
+  height: calc(var(--menubarheight) - 8px);
+  text-align: center;
+  white-space: nowrap;
+  background-size: 20px 20px;
+  background-color: transparent;
+  transition: 100ms;
+  color: var(--text2);
+  -webkit-app-region: no-drag;
+  font-size: 12px;
+}
+
+#menubar p {
+  -webkit-app-region: no-drag;
+}
+
+#menubar button:hover {
+  background-color: var(--bg2);
+}
+
+#menubar #osbtns {
+  margin-right: 4px;
+}
+
+#menubar #osbtns button#closebtn {
+  background-image: url("../../assets/icons/x.svg");
+}
+
+#menubar #osbtns button#minimizebtn {
+  background-image: url("../../assets/icons/minimize.svg");
+}
+
+#menubar #actions {
+  margin-left: auto;
+}
+
+#menubar #path {
+  margin-left: calc(var(--sidenavwidth) + 4px);
+  font-size: 0;
+}
+
+#menubar #path .path {
+  font-size: 12px;
+}
+
+#menubar #path .path.slash {
+  font-size: 18px;
+  margin: 0 4px 0 4px;
+  color: var(--text1);
+}
+
+#menubar #lastedited p {
+  font-size: 12px;
+  text-align: center;
+  width: 100%;
+}
+#menubar #lastedited {
+  flex-grow: 1;
 }
