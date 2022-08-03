@@ -27,44 +27,67 @@ function generateMenubar(p, c) {
 
   // actions
   // delete file button
-  let deleteFileBtn = createElement("button", { class: "deletefilebtn", innerhtml: "delete" });
+  let deleteFileBtn = createElement("button", {});
+  deleteFileBtn.style.backgroundImage = "url(../assets/icons/trash1.svg)";
   deleteFileBtn.onclick = function () {
     deleteFile(p, c);
-    // todo: go to the next file or none
+    // update sidenav
+    generateSidenav();
+  };
+  // lock file button
+  let lockBtn = createElement("button", {});
+  lockBtn.style.backgroundImage = files.folders[p].files[c].locked
+    ? "url(../assets/icons/unlock.svg)"
+    : "url(../assets/icons/lock.svg)";
+  lockBtn.onclick = function () {
+    // lock
+    files.folders[p].files[c].locked = !files.folders[p].files[c].locked;
+    this.style.backgroundImage = files.folders[p].files[c].locked
+      ? "url(../assets/icons/unlock.svg)"
+      : "url(../assets/icons/lock.svg)";
+    writeFiles(files);
+    // update sidenav
+    generateSidenav();
   };
 
   // star file button
   let starBtn = createElement("button", { class: "starbtn", innerhtml: "star" });
   starBtn.onclick = function () {
     // star
-  };
-
-  // lock file button
-  let lockBtn = createElement("button", { class: "starbtn", innerhtml: "lock" });
-  lockBtn.onclick = function () {
-    // lock
+    files.folders[p].files[c].starred = !files.folders[p].files[c].starred;
+    writeFiles(files);
+    // update sidenav
+    generateSidenav();
   };
 
   // last edited
-  let lastEdited = createElement("p", { innerhtml: timeAgo(files.children[p].children[c].lastedited) });
+  let lastEdited = createElement("p", { innerhtml: timeAgo(files.folders[p].files[c].lastedited) });
 
   // path
-  let pathFolder = createElement("p", { class: "path folder", innerhtml: files.children[p].name, contenteditable: true });
+  let pathFolder = createElement("p", {
+    class: "path folder",
+    innerhtml: files.folders[p].name,
+    contenteditable: true,
+  });
   pathFolder.oninput = function () {
-    files.children[p].name = this.innerText;
+    files.folders[p].name = this.innerText;
     writeFiles(files);
     generateSidenav();
   };
   let pathSlash = createElement("p", { class: "path slash", innerhtml: "/" });
-  let pathFile = createElement("p", { class: "path file", innerhtml: files.children[p].children[c].name == "" ? "..." : files.children[p].children[c].name, contenteditable: true });
+  let pathFile = createElement("p", {
+    class: "path file",
+    innerhtml: files.folders[p].files[c].name == "" ? "Untitled File" : files.folders[p].files[c].name,
+    contenteditable: true,
+  });
   pathFile.oninput = function () {
     // get date
     let d = new Date();
     // edit file name
-    files.children[p].children[c].name = this.innerText;
+    files.folders[p].files[c].name = this.innerText;
     // update last edited
-    files.children[p].children[c].lastedited = d.getTime();
-    lastEdited.innerHTML = timeAgo(files.children[p].children[c].lastedited);
+    files.folders[p].files[c].lastedited = d.getTime();
+    lastEdited.innerHTML = timeAgo(files.folders[p].files[c].lastedited);
     // write files.json
     writeFiles(files);
     // update sidenav button with new name
@@ -82,26 +105,31 @@ function generateMenubar(p, c) {
   document.querySelector("#lastedited").append(lastEdited);
 
   // actions
-  document.querySelector("#actions").append(lockBtn);
   document.querySelector("#actions").append(starBtn);
+  document.querySelector("#actions").append(lockBtn);
   document.querySelector("#actions").append(deleteFileBtn);
 }
 
 // generates file content
 function generateFile(p, c) {
   // clear curent file, path, and actions
-  document.querySelector("#activefile").innerHTML = "";
+  document.querySelector("#filecontainer").innerHTML = "";
 
+  let fileContent = createElement("div", { class: "filecontent" });
   // generate the current active file
   // container
   let fileContainer = createElement("div", { class: "filecontainer" });
-  let fileName = createElement("p", { class: "filename", innerhtml: files.children[p].children[c].name, contenteditable: true });
+  let fileName = createElement("p", {
+    class: "filename",
+    innerhtml: files.folders[p].files[c].name,
+    contenteditable: true,
+  });
   fileName.oninput = function () {
     // get date
     let d = new Date();
     // update last edited
-    files.children[p].children[c].name = this.innerText;
-    files.children[p].children[c].lastedited = d.getTime();
+    files.folders[p].files[c].name = this.innerText;
+    files.folders[p].files[c].lastedited = d.getTime();
     // write files.json
     writeFiles(files);
     // update sidenav button with new name
@@ -110,8 +138,78 @@ function generateFile(p, c) {
     generateMenubar(p, c);
   };
 
-  fileContainer.append(fileName);
-  document.querySelector("#activefile").append(fileContainer);
+  let fileBlocks = createElement("div", { class: "fileblocks" });
+  for (let b = 0; b < files.folders[p].files[c].blocks.length; b++) {
+    // for each block
+    let blockDiv = createElement("div", { class: `blockdiv ${files.folders[p].files[c].blocks[b].type}` });
+    let deleteBlockBtn = createElement("button", { class: "deleteblockbtn" });
+    deleteBlockBtn.style.backgroundImage = "url(../assets/icons/trash.svg)";
+    deleteBlockBtn.onclick = function () {
+      deleteBlock(p, c, b);
+    };
+    blockDiv.append(deleteBlockBtn);
+    let blockContent = createElement("pre", {
+      class: `blockcontent ${files.folders[p].files[c].blocks[b].type}`,
+    });
+    if (files.folders[p].files[c].blocks[b].type == "text") {
+      // text block
+      blockContent.innerHTML = files.folders[p].files[c].blocks[b].text;
+      blockContent.contentEditable = true;
+      blockContent.spellcheck = false;
+      blockContent.oninput = function () {
+        files.folders[p].files[c].blocks[b].text = this.innerText;
+        // get date
+        let d = new Date();
+        // update last edited
+        files.folders[p].files[c].lastedited = d.getTime();
+        generateMenubar(p, c);
+        writeFiles(files);
+      };
+    } else if (files.folders[p].files[c].blocks[b].type == "divider") {
+      // divider block
+    } else if (files.folders[p].files[c].blocks[b].type == "heading") {
+      // heading block
+      blockContent.innerHTML = files.folders[p].files[c].blocks[b].text;
+      blockContent.contentEditable = true;
+      blockContent.spellcheck = false;
+      blockContent.oninput = function () {
+        files.folders[p].files[c].blocks[b].text = this.innerText;
+        // get date
+        let d = new Date();
+        // update last edited
+        files.folders[p].files[c].lastedited = d.getTime();
+        generateMenubar(p, c);
+        writeFiles(files);
+      };
+    }
+    blockDiv.append(blockContent);
+    fileBlocks.append(blockDiv);
+  }
+
+  // new block area
+  let newBlockDiv = createElement("div", { class: "newblockbtns" });
+
+  for (let bt = 0; bt < blockTypes.length; bt++) {
+    let newBlockBtn = createElement("button", {
+      innerhtml: blockTypes[bt].name,
+      class: "newblockbtn " + blockTypes[bt].type,
+    });
+    newBlockBtn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[bt].icon}.svg)`;
+    newBlockBtn.onclick = function () {
+      newBlock(p, c, blockTypes[bt].type);
+      // get date
+      let d = new Date();
+      // update last edited
+      files.folders[p].files[c].lastedited = d.getTime();
+      generateMenubar(p, c);
+    };
+    newBlockDiv.append(newBlockBtn);
+  }
+
+  fileContent.append(fileName);
+  fileContent.append(fileBlocks);
+  fileContent.append(newBlockDiv);
+  document.querySelector("#filecontainer").append(fileContent);
 }
 
 // goes to a certain file
@@ -130,9 +228,13 @@ function gotoFile(p, c) {
 // changes the active sidenav button
 function handleSidenavButton(p, c) {
   // get the sidenav button
+  // error here because "p" is still -1
   let btn = document.querySelectorAll(".folderdiv")[p].children[c];
 
-  if (document.querySelector(".sidenavbtn.active") !== null) document.querySelector(".sidenavbtn.active").classList.remove("active");
+  if (document.querySelector(".sidenavbtn.active") !== null) {
+    document.querySelector(".sidenavbtn.active").classList.remove("active");
+  }
+
   btn.classList.add("active");
 }
 
@@ -140,15 +242,17 @@ function handleSidenavButton(p, c) {
 function generateSidenav() {
   // generate all the sidenav buttons
   document.querySelector("#filebtns").innerHTML = "";
-  console.log("generating sidenav buttons");
 
-  for (let p = 0; p < files.children.length; p++) {
+  for (let p = 0; p < files.folders.length; p++) {
     // for each folder
     let folderDiv = createElement("div", { class: "folderdiv" });
     // folder button container
-    let folderBtnDiv = createElement("div", {class: 'folderbtn sidenavbtn'});
+    let folderBtnDiv = createElement("div", { class: "folderbtn sidenavbtn" });
     // folder button
-    let folderBtn = createElement("button", { class: "folder right", innerhtml: files.children[p].name });
+    let folderBtn = createElement("button", {
+      class: "folder down",
+      innerhtml: files.folders[p].name == "" ? "Untitled Folder" : files.folders[p].name,
+    });
     // new file button
     let newFileBtn = createElement("button", { class: "newfile", innerhtml: "" });
     newFileBtn.onclick = function () {
@@ -157,13 +261,23 @@ function generateSidenav() {
 
     // collapse and show file buttons
     folderBtn.onclick = function () {
-      folderDiv.style.display = folderDiv.style.display == "none" ? "flex" : "none";
-      this.className = "folder " + (folderDiv.style.display == "none" ? "down" : "right");
+      // hide or show the folderdiv
+      folderDiv.style.display = folderDiv.style.display == "none" ? "block" : "none";
+      // change icon
+      this.className = "folder " + (folderDiv.style.display == "none" ? "right" : "down");
+      // change collapse state variable
+      collapseState[p] = folderDiv.style.display == "none";
     };
-    for (let c = 0; c < files.children[p].children.length; c++) {
+
+    if (collapseState[p] == true) folderBtn.click();
+
+    for (let c = 0; c < files.folders[p].files.length; c++) {
       // for each file
       // sidenav button
-      let fileBtn = createElement("button", { class: "sidenavbtn file", innerhtml: files.children[p].children[c].name == "" ? "..." : files.children[p].children[c].name });
+      let fileBtn = createElement("button", {
+        class: "sidenavbtn file",
+        innerhtml: files.folders[p].files[c].name == "" ? "Untitled File" : files.folders[p].files[c].name,
+      });
 
       // show that file
       fileBtn.onclick = function () {
@@ -171,17 +285,23 @@ function generateSidenav() {
       };
       folderDiv.append(fileBtn);
     }
-    
-    folderBtnDiv.append(folderBtn)
-    folderBtnDiv.append(newFileBtn)
+
+    folderBtnDiv.append(folderBtn);
+    folderBtnDiv.append(newFileBtn);
     document.querySelector("#filebtns").append(folderBtnDiv);
     document.querySelector("#filebtns").append(folderDiv);
   }
+
   let newFolderBtn = createElement("button", { class: "sidenavbtn newfolder", innerhtml: "New Folder" });
   newFolderBtn.onclick = function () {
     newFolder();
   };
+
   document.querySelector("#filebtns").append(newFolderBtn);
-  handleSidenavButton(activefile[0], activefile[1]);
+
+  // if active file isn't -1 (not first load)
+  if (activefile[0] != -1 && activefile[1] != -1) {
+    handleSidenavButton(activefile[0], activefile[1]);
+  }
 }
 init();

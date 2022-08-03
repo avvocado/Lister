@@ -103,7 +103,6 @@ ipcMain.on("requestFiles", (evt, args) => {
 });
 
 ipcMain.on("writeFiles", (evt, args) => {
-  console.log("wrote files.json file");
   fs.writeFile(path.join(__dirname, "../", "/resources/", "files.json"), args, (err) => {
     if (err) {
       console.log(err);

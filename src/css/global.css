@@ -16,7 +16,6 @@
   margin: 0;
   padding: 0;
   border: none;
-  color: var(--text2);
   background-position: center;
   text-align: left;
   font-family: Helvetica;
@@ -42,6 +41,7 @@ select {
 
 *[contenteditable="true"]:empty:before {
   content: "...";
+  color: var(--text1);
   pointer-events: none;
 }
 
@@ -74,7 +74,7 @@ body {
 }
 
 #content {
-  padding: 16px;
+  padding: 16px 64px 0 var(--gutterwidth);
   margin-left: var(--sidenavwidth);
 }
 .box {

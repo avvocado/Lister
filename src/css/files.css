@@ -1,6 +1,95 @@
-.filecontainer .filename {
+#filecontainer .filecontent {
+  display: flex;
+  flex-direction: column;
+}
+
+#filecontainer .filecontent .filename {
   color: var(--text4);
   font-size: 24px;
   letter-spacing: 0.025em;
   font-weight: bold;
+  margin-left: calc(var(--gutterwidth) + 8px);
+}
+
+#filecontainer .filecontent .filename:empty:before {
+  color: var(--text1);
+  content: "Untitled File";
+  pointer-events: none;
+}
+
+#filecontainer .filecontent .fileblocks {
+  display: flex;
+  flex-direction: column;
+}
+
+#filecontainer .filecontent .fileblocks .blockdiv {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#filecontainer .filecontent .fileblocks .blockdiv:hover .deleteblockbtn {
+  visibility: visible;
+}
+
+#filecontainer .filecontent .fileblocks .blockdiv .blockcontent {
+  flex-grow: 1;
+}
+
+#filecontainer .filecontent .fileblocks .blockdiv .blockcontent.text {
+  color: var(--text2);
+  font-size: 16px;
+}
+
+#filecontainer .filecontent .fileblocks .blockdiv .blockcontent.text:empty:before {
+  content: "Text Block";
+  color: var(--text1);
+  pointer-events: none;
+}
+
+#filecontainer .filecontent .fileblocks .blockdiv .blockcontent.heading {
+  color: var(--text3);
+  font-size: 20px;
+}
+
+#filecontainer .filecontent .fileblocks .blockdiv .blockcontent.heading:empty:before {
+  content: "Heading";
+  color: var(--text1);
+  pointer-events: none;
+}
+
+#filecontainer .filecontent .fileblocks .blockdiv .blockcontent.divider {
+  border: 1px solid var(--text1);
+  margin: 4px 0;
+  height: 0;
+}
+
+
+
+#filecontainer .filecontent .fileblocks .blockdiv .deleteblockbtn {
+  width: calc(var(--gutterwidth));
+  height: 24px;
+  visibility: hidden;
+  background-size: 14px;
+  align-self: flex-start;
+  border-radius: 4px;
+  background-color: transparent;
+}
+#filecontainer .filecontent .fileblocks .blockdiv .deleteblockbtn:hover {
+  background-color: var(--bg3);
+}
+
+#filecontainer .filecontent .newblockbtns .newblockbtn {
+  border-radius: 6px;
+  padding: 4px 8px 4px 30px;
+  background-color: transparent;
+  transition: 100ms;
+  background-position: 8px 4px;
+  color: var(--text2);
+  background-size: 16px 16px;
+}
+
+#filecontainer .filecontent .newblockbtns .newblockbtn:hover {
+  background-color: var(--bg3);
+  color: var(--text3);
 }

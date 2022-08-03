@@ -1,72 +1,100 @@
-// globals
-var files;
+//
+// global variables
+// main list of folders & files
+var files = {};
+
+// current active file
 var activefile = [-1, -1];
 
-function createElement(type, params) {
-  let elem = document.createElement(type);
+// save which folders are collapsed
+var collapseState = [false, false, false];
 
-  if (params.innerhtml) {
-    elem.innerHTML = params.innerhtml;
-  }
-  if (params.value) {
-    elem.value = params.value;
-  }
-  if (params.placeholder) {
-    elem.placeholder = params.placeholder;
-  }
-  if (params.src) {
-    elem.src = params.src;
-  }
-  if (params.class) {
-    elem.className = params.class;
-  }
-  if (params.contenteditable) {
-    elem.contentEditable = params.contenteditable;
-  }
-  if (params.type) {
-    elem.type = params.type;
-  }
-  if (params.title) {
-    elem.title = params.title;
-  }
-  if (params.hide == true) {
-    elem.style.display = "none";
-  }
+// new object defaults
+var newFolderName = "Folder";
+var newFileName = "File";
+var newTextBlockText = "";
+var newHeadingBlockText = "";
+var newCodeBlockText = "";
 
-  return elem;
-}
+var blockTypes = [
+  {
+    name: "Text",
+    type: "text",
+    icon: "block_text",
+  },
+  {
+    name: "Heading",
+    type: "heading",
+    icon: "block_heading",
+  },
+  {
+    name: "Divider",
+    type: "divider",
+    icon: "block_divider",
+  },
+  {
+    name: "Code Block",
+    type: "code",
+    icon: "block_code",
+  },
+];
 
 function deleteFile(p, c) {
-  files.children[p].children.splice(c, 1);
+  files.folders[p].files.splice(c, 1);
   writeFiles(files);
-  generateSidenav();
 }
 
 function deleteFolder(p) {
-  files.children.splice(p, 1);
+  files.folders.splice(p, 1);
   writeFiles(files);
-  generateSidenav();
 }
 
-function fileEdited(f) {
-  d = new Date();
-  console.log(l);
-  files["children"][f]["lastEdited"] = d.getTime();
-
-  files["children"].sort((a, b) => Number(b.lastEdited) - Number(a.lastEdited));
+function newBlock(p, c, type) {
+  let d = new Date();
+  if (type == "text") {
+    files.folders[p].files[c].blocks.push({
+      creationdate: d.getTime(),
+      type: type,
+      text: newTextBlockText,
+    });
+  } else if (type == "divider") {
+    files.folders[p].files[c].blocks.push({
+      creationdate: d.getTime(),
+      type: type,
+    });
+  } else if (type == "heading") {
+    files.folders[p].files[c].blocks.push({
+      creationdate: d.getTime(),
+      type: type,
+      text: newHeadingBlockText,
+    });
+  } else if (type == "code") {
+    files.folders[p].files[c].blocks.push({
+      creationdate: d.getTime(),
+      type: type,
+      text: newCodeBlockText,
+    });
+  }
 
   writeFiles(files);
-  generateSidenav();
+  generateFile(p, c);
+}
+
+function deleteBlock(p, c, b) {
+  files.folders[p].files[c].blocks.splice(b, 1);
+  writeFiles(files);
+  generateFile(p, c);
 }
 
 function newFile(p) {
   let d = new Date();
-  files.children[p].children.push({
-    name: "New File",
+  files.folders[p].files.push({
+    name: newFileName,
     creationdate: d.getTime(),
     lastedited: d.getTime(),
     starred: false,
     locked: false,
+    blocks: [],
   });
 
   writeFiles(files);
@@ -74,9 +102,9 @@ function newFile(p) {
 }
 
 function newFolder() {
-  files.children.push({
-    name: "New Folder",
-    children: [],
+  files.folders.push({
+    name: newFolderName,
+    files: [],
   });
 
   writeFiles(files);
@@ -99,13 +127,49 @@ function getAmPm(time) {
   return mod;
 }
 
+function createElement(type, params) {
+  let elem = document.createElement(type);
+
+  if (params.innerhtml) {
+    elem.innerHTML = params.innerhtml;
+  }
+  if (params.value) {
+    elem.value = params.value;
+  }
+  if (params.placeholder) {
+    elem.placeholder = params.placeholder;
+  }
+  if (params.src) {
+    elem.src = params.src;
+  }
+  if (params.class) {
+    elem.className = params.class;
+  }
+  if (params.contenteditable) {
+    elem.contentEditable = params.contenteditable;
+
+    elem.spellcheck = false;
+  }
+  if (params.type) {
+    elem.type = params.type;
+  }
+  if (params.title) {
+    elem.title = params.title;
+  }
+  if (params.hide == true) {
+    elem.style.display = "none";
+  }
+
+  return elem;
+}
+
 // params: current time (ms), past/future time (ms)
 // returns: how long ago the date was OR in how long the date is
 // eg: "9 hours ago", "in 3 weeks"
 function timeAgo(date) {
   var time = "";
-  let d = new Date()
-  let now = d.getTime()
+  let d = new Date();
+  let now = d.getTime();
   if (now - date > -1000 && now - date < 1000) {
     // within 1 second
     time = "Now";
