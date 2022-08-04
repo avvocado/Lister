@@ -1,3 +1,42 @@
+#blockmenu {
+  display: none;
+  position: absolute;
+  flex-direction: column;
+  background-color: var(--bg3);
+  border-radius: 4px;
+  padding: 8px;
+}
+
+#blockmenu #newblockbtns {
+  display: flex;
+  flex-direction: column;
+}
+
+#blockmenu .header {
+  color: var(--text1);
+  margin-bottom: 2px;
+}
+
+#blockmenu button,
+#filecontainer .filecontent .newblockbtns .newblockbtn {
+  background-color: transparent;
+  padding: 4px 8px 4px 27px;
+  border-radius: 4px;
+  background-size: 14px 14px;
+  transition: 100ms;
+  background-position: 8px 4px;
+  color: var(--text2);
+}
+#blockmenu button:hover {
+  background-color: var(--bg4);
+  color: var(--text3);
+}
+
+#filecontainer .filecontent .newblockbtns {
+  margin-left: calc(var(--gutterwidth) + 8px);
+  margin-top: 16px;
+}
+
 #filecontainer .filecontent {
   display: flex;
   flex-direction: column;
@@ -20,53 +59,74 @@
 #filecontainer .filecontent .fileblocks {
   display: flex;
   flex-direction: column;
+  margin-top: 16px;
+  gap: 1px;
 }
 
-#filecontainer .filecontent .fileblocks .blockdiv {
+#filecontainer .filecontent .fileblocks .blockcontainer {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-#filecontainer .filecontent .fileblocks .blockdiv:hover .deleteblockbtn {
+#filecontainer .filecontent .fileblocks .blockcontainer:hover .actionsmenubtn {
   visibility: visible;
 }
 
-#filecontainer .filecontent .fileblocks .blockdiv .blockcontent {
+#filecontainer  .block {
   flex-grow: 1;
 }
 
-#filecontainer .filecontent .fileblocks .blockdiv .blockcontent.text {
+#filecontainer .block.text {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
   color: var(--text2);
   font-size: 16px;
 }
 
-#filecontainer .filecontent .fileblocks .blockdiv .blockcontent.text:empty:before {
+#filecontainer .block.text:empty:before {
   content: "Text Block";
   color: var(--text1);
   pointer-events: none;
 }
 
-#filecontainer .filecontent .fileblocks .blockdiv .blockcontent.heading {
+#filecontainer  .block.code {
+  color: var(--text2);
+  font-family: consolasfont;
+  background-color: var(--bg1);
+  padding: 8px 16px;
+  overflow: auto;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+#filecontainer  .block.code:empty:before {
+  content: "Code Block";
+  color: var(--text1);
+  pointer-events: none;
+}
+
+#filecontainer .block.heading {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
   color: var(--text3);
   font-size: 20px;
 }
 
-#filecontainer .filecontent .fileblocks .blockdiv .blockcontent.heading:empty:before {
+#filecontainer  .block.heading:empty:before {
   content: "Heading";
   color: var(--text1);
   pointer-events: none;
 }
 
-#filecontainer .filecontent .fileblocks .blockdiv .blockcontent.divider {
-  border: 1px solid var(--text1);
-  margin: 4px 0;
+#filecontainer .block.divider {
+  border-top: 2px solid var(--bg4);
   height: 0;
 }
 
-
-
-#filecontainer .filecontent .fileblocks .blockdiv .deleteblockbtn {
+#filecontainer  .actionsmenubtn {
   width: calc(var(--gutterwidth));
   height: 24px;
   visibility: hidden;
@@ -75,21 +135,82 @@
   border-radius: 4px;
   background-color: transparent;
 }
-#filecontainer .filecontent .fileblocks .blockdiv .deleteblockbtn:hover {
+#filecontainer .actionsmenubtn:hover {
   background-color: var(--bg3);
 }
-
-#filecontainer .filecontent .newblockbtns .newblockbtn {
-  border-radius: 6px;
-  padding: 4px 8px 4px 30px;
-  background-color: transparent;
-  transition: 100ms;
-  background-position: 8px 4px;
-  color: var(--text2);
-  background-size: 16px 16px;
-}
-
 #filecontainer .filecontent .newblockbtns .newblockbtn:hover {
   background-color: var(--bg3);
   color: var(--text3);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* tags */
+.tag {
+  display: inline-flex;
+  border-radius: 14px;
+  font-size: 12px;
+  align-items: center;
+  padding: 1px 8px 1px 8px;
+  column-gap: 0.3em;
+}
+
+.tag.green {
+  background-color: var(--greentransparent);
+  color: var(--green);
+}
+
+.tag.green.border {
+  border: 1px solid var(--green);
+}
+
+.tag.yellow {
+  background-color: var(--yellowtransparent);
+  color: var(--yellow);
+}
+
+.tag.yellow.border {
+  border: 1px solid var(--yellow);
+}
+
+.tag.blue {
+  background-color: var(--bluetransparent);
+  color: var(--blue);
+}
+
+.tag.blue.border {
+  border: 1px solid var(--blue);
+}
+
+.tag.red {
+  background-color: var(--redtransparent);
+  color: var(--red);
+}
+
+.tag.red.border {
+  border: 1px solid var(--red);
+}
+
+.tag-icon {
+  vertical-align: text-bottom;
+  height: 1em;
+  width: 1em;
 }

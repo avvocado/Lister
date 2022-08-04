@@ -3,8 +3,14 @@
 // main list of folders & files
 var files = {};
 
-// current active file
-var activefile = [-1, -1];
+var appstate = {
+  activefile: [-1, -1],
+  currentlyediting: [-1, -1],
+  activeblockmenu: -1,
+};
+
+// keypress map
+var keyMap = {};
 
 // save which folders are collapsed
 var collapseState = [false, false, false];
@@ -33,11 +39,35 @@ var blockTypes = [
     icon: "block_divider",
   },
   {
-    name: "Code Block",
+    name: "Code",
     type: "code",
     icon: "block_code",
   },
 ];
+
+function blockMenu(p, c, b, btn) {
+  // toggle displaying the div
+  let actionsMenu = document.querySelector("#blockmenu");
+  actionsMenu.style.display = actionsMenu.style.display == "flex" ? "none" : "flex";
+
+  // change active block menu
+  appstate.activeblockmenu = b;
+
+  // change position
+  let btnRect = btn.getBoundingClientRect();
+  actionsMenu.style.top = window.scrollY + btnRect.top + 28 + "px";
+  actionsMenu.style.left = window.scrollX + btnRect.left + "px";
+
+  // delete block btn
+  document.querySelector("#blockmenu #deleteblockbtn").onclick = function () {
+    deleteBlock(p, c, b);
+    hideBlockMenu();
+  };
+}
+
+function hideBlockMenu() {
+  document.querySelector("#blockmenu").style.display = "none";
+}
 
 function deleteFile(p, c) {
   files.folders[p].files.splice(c, 1);
@@ -49,32 +79,23 @@ function deleteFolder(p) {
   writeFiles(files);
 }
 
-function newBlock(p, c, type) {
+function newBlock(p, c, index, type) {
   let d = new Date();
-  if (type == "text") {
-    files.folders[p].files[c].blocks.push({
+  if (type == "text" || type == "heading" || type == "code") {
+    files.folders[p].files[c].blocks.splice(index, 0, {
       creationdate: d.getTime(),
       type: type,
       text: newTextBlockText,
     });
   } else if (type == "divider") {
-    files.folders[p].files[c].blocks.push({
+    files.folders[p].files[c].blocks.splice(index, 0, {
       creationdate: d.getTime(),
       type: type,
-    });
-  } else if (type == "heading") {
-    files.folders[p].files[c].blocks.push({
-      creationdate: d.getTime(),
-      type: type,
-      text: newHeadingBlockText,
-    });
-  } else if (type == "code") {
-    files.folders[p].files[c].blocks.push({
-      creationdate: d.getTime(),
-      type: type,
-      text: newCodeBlockText,
     });
   }
+
+  // update last edited
+  files.folders[p].files[c].lastedited = d.getTime();
 
   writeFiles(files);
   generateFile(p, c);
@@ -152,6 +173,9 @@ function createElement(type, params) {
   }
   if (params.type) {
     elem.type = params.type;
+  }
+  if (params.disabled) {
+    elem.disabled = params.disabled;
   }
   if (params.title) {
     elem.title = params.title;
@@ -274,3 +298,8 @@ function timeAgo(date) {
 
   return time;
 }
+
+// keypresses
+onkeydown = onkeyup = function (e) {
+  keyMap[e.code] = e.type == "keydown";
+};

@@ -1,0 +1,33 @@
+make folders have an actual file for them 
+  - rename to parent file 
+  - allow infinite child files
+
+blocks
+  - link another file
+  - image
+  - url link
+  - checklist
+  - bullet list
+  - numbered list
+  - inline blocks
+  - audio
+  - video
+    - link file (smaller than the other one)
+    - timestamp
+    - code block (inline & much smaller)
+
+collapse sidenav
+starred, priority, important, favorite, pinned files
+tooltips
+locked files
+
+sidenav
+  - search
+  - settings
+    - always on top
+    - edit mode on or off when clicking on file by default
+    - open resources folders
+    - tray icon options
+    - spellcheck
+    - source code
+    - reset settings

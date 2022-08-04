@@ -12,18 +12,10 @@
   transition: 100ms;
   width: calc(var(--sidenavwidth) - 24px);
 }
-
 #sidenav .header {
-  font-weight: bold;
   color: var(--text2);
-  flex-grow: 0;
-  user-select: none;
-  letter-spacing: 0.4px;
-  display: block;
-  transform: translateY(2px);
-  font-size: 12px;
-  margin: 0 0 -4px 0;
 }
+
 
 
 #sidenav #filebtns .sidenavbtn {
@@ -47,7 +39,6 @@
   margin: 0;
   background-size: auto 16px;
   background-color: var(--bg1);
-  border-radius: 6px;
   font-size: 16px;
   margin: 8px 0 2px 0;
 }

@@ -9,7 +9,7 @@
 }
 
 ::selection {
-  background: var(--selectionGreen);
+  background: var(--selection);
 }
 
 * {
@@ -24,6 +24,11 @@
 
 input::placeholder {
   color: var(--bg5);
+}
+
+@font-face {
+  font-family: "consolasfont";
+  src: url("../../assets/fonts/consolas.ttf");
 }
 
 input {
@@ -53,6 +58,7 @@ a {
 /* scrollbars */
 *::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 *::-webkit-scrollbar-thumb {
@@ -66,7 +72,7 @@ a {
 }
 
 *::-webkit-scrollbar-track {
-  background-color: var(--bg2);
+  background-color: var(--bg1);
 }
 
 body {
@@ -74,7 +80,7 @@ body {
 }
 
 #content {
-  padding: 16px 64px 0 var(--gutterwidth);
+  padding: 24px 64px 0 var(--gutterwidth);
   margin-left: var(--sidenavwidth);
 }
 .box {
@@ -86,10 +92,21 @@ body {
   vertical-align: top;
 }
 
-#activefile {
+#appstate.activefile {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
   gap: 16px;
   flex-wrap: wrap;
+}
+
+.header {
+  flex-grow: 0;
+  user-select: none;
+  letter-spacing: 0.4px;
+  font-weight: bold;
+  display: block;
+  transform: translateY(2px);
+  font-size: 12px;
+  margin: 0 0 -4px 0;
 }

@@ -1,7 +1,4 @@
 :root {
-  --bg1: #f1f1f1;
-  --bg2: #fafafa;
-  --bg3: #ffffff;
   --bg1: #131519;
   --bg2: #181b1f;
   --bg3: #1e2023;
@@ -14,7 +11,7 @@
   --text6: #7f7f7f;
   --textwhite: #cecece;
   --green: #009966;
-  --selectionGreen: #0099662f;
+  --selection: #0099662f;
   --greentransparent: #0099661a;
   --yellow: #efba56;
   --yellowtransparent: #efba561a;

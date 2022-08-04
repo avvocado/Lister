@@ -16,6 +16,23 @@ function init() {
 function start() {
   // called after receiving files.json
   generateSidenav();
+
+  // create new block buttons for block menu
+  for (let bt = 0; bt < blockTypes.length; bt++) {
+    let newBlockBtn = createElement("button", {
+      innerhtml: blockTypes[bt].name,
+      class: "newblockbtn " + blockTypes[bt].type,
+    });
+    newBlockBtn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[bt].icon}.svg)`;
+    newBlockBtn.onclick = function () {
+      newBlock(appstate.activefile[0], appstate.activefile[1], appstate.activeblockmenu, blockTypes[bt].type);
+      // get date
+      generateMenubar(appstate.activefile[0], appstate.activefile[1]);
+      // hide block menu
+      hideBlockMenu();
+    };
+    document.querySelector("#blockmenu #newblockbtns").append(newBlockBtn);
+  }
 }
 
 // generates menubar for the file
@@ -49,15 +66,25 @@ function generateMenubar(p, c) {
     // update sidenav
     generateSidenav();
   };
-
-  // star file button
-  let starBtn = createElement("button", { class: "starbtn", innerhtml: "star" });
-  starBtn.onclick = function () {
-    // star
-    files.folders[p].files[c].starred = !files.folders[p].files[c].starred;
-    writeFiles(files);
-    // update sidenav
-    generateSidenav();
+  // edit file btn
+  let editBtn = createElement("button", {});
+  editBtn.style.backgroundImage =
+    appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c
+      ? "url(../assets/icons/pen_edit.svg)"
+      : "url(../assets/icons/pen.svg)";
+  editBtn.onclick = function () {
+    if (appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c) {
+      // editing off
+      appstate.currentlyediting = [-1, -1];
+      this.style.backgroundImage = "url(../assets/icons/pen.svg)";
+      hideBlockMenu()
+    } else {
+      // editing on
+      appstate.currentlyediting = [p, c];
+      this.style.backgroundImage = "url(../assets/icons/pen_edit.svg)";
+    }
+    generateMenubar(p, c);
+    generateFile(p, c);
   };
 
   // last edited
@@ -67,7 +94,7 @@ function generateMenubar(p, c) {
   let pathFolder = createElement("p", {
     class: "path folder",
     innerhtml: files.folders[p].name,
-    contenteditable: true,
+    contenteditable: appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c,
   });
   pathFolder.oninput = function () {
     files.folders[p].name = this.innerText;
@@ -78,7 +105,7 @@ function generateMenubar(p, c) {
   let pathFile = createElement("p", {
     class: "path file",
     innerhtml: files.folders[p].files[c].name == "" ? "Untitled File" : files.folders[p].files[c].name,
-    contenteditable: true,
+    contenteditable: appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c,
   });
   pathFile.oninput = function () {
     // get date
@@ -105,7 +132,7 @@ function generateMenubar(p, c) {
   document.querySelector("#lastedited").append(lastEdited);
 
   // actions
-  document.querySelector("#actions").append(starBtn);
+  document.querySelector("#actions").append(editBtn);
   document.querySelector("#actions").append(lockBtn);
   document.querySelector("#actions").append(deleteFileBtn);
 }
@@ -118,11 +145,10 @@ function generateFile(p, c) {
   let fileContent = createElement("div", { class: "filecontent" });
   // generate the current active file
   // container
-  let fileContainer = createElement("div", { class: "filecontainer" });
   let fileName = createElement("p", {
     class: "filename",
     innerhtml: files.folders[p].files[c].name,
-    contenteditable: true,
+    contenteditable: appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c,
   });
   fileName.oninput = function () {
     // get date
@@ -141,53 +167,68 @@ function generateFile(p, c) {
   let fileBlocks = createElement("div", { class: "fileblocks" });
   for (let b = 0; b < files.folders[p].files[c].blocks.length; b++) {
     // for each block
-    let blockDiv = createElement("div", { class: `blockdiv ${files.folders[p].files[c].blocks[b].type}` });
-    let deleteBlockBtn = createElement("button", { class: "deleteblockbtn" });
-    deleteBlockBtn.style.backgroundImage = "url(../assets/icons/trash.svg)";
-    deleteBlockBtn.onclick = function () {
-      deleteBlock(p, c, b);
-    };
-    blockDiv.append(deleteBlockBtn);
-    let blockContent = createElement("pre", {
-      class: `blockcontent ${files.folders[p].files[c].blocks[b].type}`,
+
+    // block container
+    let blockContainer = createElement("div", { class: `blockcontainer ${files.folders[p].files[c].blocks[b].type}` });
+
+    // block menu
+    let actionsMenuBtn = createElement("button", {
+      class: "actionsmenubtn",
+      disabled: !(appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c),
     });
-    if (files.folders[p].files[c].blocks[b].type == "text") {
-      // text block
-      blockContent.innerHTML = files.folders[p].files[c].blocks[b].text;
-      blockContent.contentEditable = true;
-      blockContent.spellcheck = false;
-      blockContent.oninput = function () {
+    if(!(appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c)){
+      actionsMenuBtn.style.opacity = '0'
+    }
+    actionsMenuBtn.style.backgroundImage = "url(../assets/icons/dots.svg)";
+    actionsMenuBtn.onclick = function () {
+      blockMenu(p, c, b, this);
+    };
+    blockContainer.append(actionsMenuBtn);
+
+    // block content div
+    let block = createElement("pre", {
+      class: `block ${files.folders[p].files[c].blocks[b].type}`,
+    });
+
+    if (files.folders[p].files[c].blocks[b].type == "divider") {
+      // divider block
+    } else if (
+      files.folders[p].files[c].blocks[b].type == "code" ||
+      files.folders[p].files[c].blocks[b].type == "heading" ||
+      files.folders[p].files[c].blocks[b].type == "text"
+    ) {
+      // text, heading, or code
+      block.innerHTML = files.folders[p].files[c].blocks[b].text;
+      block.contentEditable = appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c;
+      block.spellcheck = false;
+      block.oninput = function () {
+        // edit file object
         files.folders[p].files[c].blocks[b].text = this.innerText;
         // get date
         let d = new Date();
         // update last edited
         files.folders[p].files[c].lastedited = d.getTime();
+        // generate menu bar (with new edited time)
         generateMenubar(p, c);
+        // write files.json
         writeFiles(files);
       };
-    } else if (files.folders[p].files[c].blocks[b].type == "divider") {
-      // divider block
-    } else if (files.folders[p].files[c].blocks[b].type == "heading") {
-      // heading block
-      blockContent.innerHTML = files.folders[p].files[c].blocks[b].text;
-      blockContent.contentEditable = true;
-      blockContent.spellcheck = false;
-      blockContent.oninput = function () {
-        files.folders[p].files[c].blocks[b].text = this.innerText;
-        // get date
-        let d = new Date();
-        // update last edited
-        files.folders[p].files[c].lastedited = d.getTime();
-        generateMenubar(p, c);
-        writeFiles(files);
+      block.onkeydown = function (e) {
+        // exit on enter key with no shift
+        // user can use lshift+enter to make a new line and not exit
+        if (e.code == "Enter" && keyMap.ShiftLeft == false) {
+          this.blur();
+        }
       };
     }
-    blockDiv.append(blockContent);
-    fileBlocks.append(blockDiv);
+
+    blockContainer.append(block);
+    fileBlocks.append(blockContainer);
   }
 
   // new block area
   let newBlockDiv = createElement("div", { class: "newblockbtns" });
+  newBlockDiv.style.display = (appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c) ? 'block' : 'none'
 
   for (let bt = 0; bt < blockTypes.length; bt++) {
     let newBlockBtn = createElement("button", {
@@ -196,11 +237,7 @@ function generateFile(p, c) {
     });
     newBlockBtn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[bt].icon}.svg)`;
     newBlockBtn.onclick = function () {
-      newBlock(p, c, blockTypes[bt].type);
-      // get date
-      let d = new Date();
-      // update last edited
-      files.folders[p].files[c].lastedited = d.getTime();
+      newBlock(p, c, files.folders[p].files[c].blocks.length, blockTypes[bt].type);
       generateMenubar(p, c);
     };
     newBlockDiv.append(newBlockBtn);
@@ -215,7 +252,7 @@ function generateFile(p, c) {
 // goes to a certain file
 function gotoFile(p, c) {
   // change the current active file
-  activefile = [p, c];
+  appstate.activefile = [p, c];
 
   // handle sidenav button
   handleSidenavButton(p, c);
@@ -300,8 +337,8 @@ function generateSidenav() {
   document.querySelector("#filebtns").append(newFolderBtn);
 
   // if active file isn't -1 (not first load)
-  if (activefile[0] != -1 && activefile[1] != -1) {
-    handleSidenavButton(activefile[0], activefile[1]);
+  if (appstate.activefile[0] != -1 && appstate.activefile[1] != -1) {
+    handleSidenavButton(appstate.activefile[0], appstate.activefile[1]);
   }
 }
 init();
