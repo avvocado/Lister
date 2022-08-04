@@ -32,23 +32,22 @@
     <!-- sidenav -->
     <div id="sidenav">
       <p class="header">FILES</p>
-
       <!-- inject file buttons here -->
       <div id="filebtns"></div>
     </div>
 
     <!-- menu bar -->
     <div id="menubar">
-
-      <!-- data injected here -->
+      <!-- file path injected here -->
       <div id="path"></div>
+      <!-- last edited injected here -->
       <div id="lastedited"></div>
-      <div id="actions"></div>
-
+      <!-- file action buttons injected here -->
+      <div id="fileactions"></div>
       <!-- buttons for closing & minimizing -->
       <div id="osbtns">
-        <button id="minimizebtn"></button>
-        <button id="closebtn"></button>
+        <button id="minimizebtn" style="background-image: url(' ../assets/icons/navbars/minimize.svg');"></button>
+        <button id="closebtn" style="background-image: url(' ../assets/icons/navbars/x.svg');"></button>
       </div>
 
 
@@ -56,6 +55,14 @@
 
     <!-- main content -->
     <div id="content">
+      <!-- show this if the file is locked -->
+      <div id="lockedfile">
+        <p>This File is Locked</p>
+        <div>
+          <input id="pswdinput" spellcheck="false" type='password' placeholder="Password...">
+          <button id="pswdsubmit"></button>
+        </div>
+      </div>
       <!-- inject active file here from js -->
       <div id="filecontainer"></div>
     </div>

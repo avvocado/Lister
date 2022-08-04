@@ -5,10 +5,10 @@
   --bg4: #232528;
   --text1: #303030;
   --text2: #404040;
-  --text3: #4f4f4f;
-  --text4: #5f5f5f;
-  --text5: #6f6f6f;
-  --text6: #7f7f7f;
+  --text3: #505050;
+  --text4: #606060;
+  --text5: #707070;
+  --text6: #808080;
   --textwhite: #cecece;
   --green: #009966;
   --selection: #0099662f;
@@ -22,4 +22,54 @@
   --sidenavwidth: 180px;
   --menubarheight: 32px;
   --gutterwidth: 28px;
+}
+
+#lockedfile {
+  font-size: 20px;
+  color: var(--text2);
+  display: none;
+  width: 100%;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin-top: 15vh;
+  align-items: center;
+  user-select: none;
+}
+
+#lockedfile #pswdsubmit {
+  height: 22px;
+  width: 22px;
+  transition: 100ms;
+  background-color: var(--bg3);
+  border-radius: 22px;
+  background-image: url('../../assets/icons/arrow.svg');
+}
+
+#lockedfile #pswdsubmit:hover {
+  background-image: url('../../assets/icons/arrow1.svg');
+}
+
+#lockedfile #pswdsubmit:hover {
+  background-color: var(--bg4);
+}
+
+#lockedfile #pswdinput {
+  height: 20px;
+  color: var(--text3);
+  border-radius: 20px;
+  padding: 1px 10px;
+  width: 164px;
+  background-color: var(--bg3);
+}
+
+#lockedfile #pswdinput::placeholder {
+  color: var(--text2);
+}
+
+#lockedfile div {
+  display: flex;
+  margin-top: 8px;
+  flex-direction: row;
+  gap: 4px;
+  align-items: flex-start;
 }

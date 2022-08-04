@@ -16,8 +16,6 @@
   color: var(--text2);
 }
 
-
-
 #sidenav #filebtns .sidenavbtn {
   width: 100%;
   margin: 0;
@@ -30,8 +28,20 @@
 #sidenav #filebtns .sidenavbtn.file.active {
   background-color: var(--green);
   color: var(--textwhite);
-  background-image: url("../../assets/icons/filepath/dot1.svg") !important;
+  background-image: url("../../assets/icons/navbars//dot1.svg");
 }
+
+#sidenav #filebtns .sidenavbtn.file.locked {
+  background-image: url("../../assets/icons/navbars/dot.svg"),url("../../assets/icons/navbars/lock_small.svg");
+  background-position: 1px 2px, calc(100% - 4px) 2px;
+
+
+}
+#sidenav #filebtns .sidenavbtn.file.locked.active {
+  background-image: url("../../assets/icons/navbars/dot1.svg"),url("../../assets/icons/navbars/lock_small1.svg");
+}
+
+
 
 #sidenav #filebtns .folderbtn {
   display: flex;
@@ -49,12 +59,12 @@
   background-position: 0 1px; 
   flex-grow: 1;
   background-color: var(--bg1);
-  color: var(--text4);
+  color: var(--text3);
 }
 
 #sidenav #filebtns .folderbtn .newfile {
   background-color: transparent;
-  background-image: url("../../assets/icons/plus.svg");
+  background-image: url("../../assets/icons/navbars/plus.svg");
   background-position: 0px 0px;
   background-size: contain;
   width: 18px;
@@ -71,24 +81,24 @@
 }
 
 #sidenav #filebtns .folderbtn .folder.down {
-  background-image: url("../../assets/icons/filepath/caretDown.svg");
+  background-image: url("../../assets/icons/navbars/caretDown.svg");
 }
 
 #sidenav #filebtns .folderbtn .folder.right {
-  background-image: url("../../assets/icons/filepath/caretRight.svg");
+  background-image: url("../../assets/icons/navbars/caretRight.svg");
 }
 
 #sidenav #filebtns .sidenavbtn.file {
-  background-image: url("../../assets/icons/filepath/dot.svg");
+  background-image: url("../../assets/icons/navbars/dot.svg");
   background-position: 1px 2px;
   width: 100%;
   padding: 2px 0 2px 18px;
-  color: var(--text3);
+  color: var(--text2);
   font-size: 14px;
 }
 
 #sidenav #filebtns .sidenavbtn.newfolder {
-  background-image: url("../../assets/icons/plus.svg");
+  background-image: url("../../assets/icons/navbars/plus.svg");
   background-position: 0px -1px;
   padding-left: 18px;
   margin-top: 12px;
@@ -139,29 +149,25 @@
   background-color: var(--bg3);
 }
 
+#menubar button:active {
+  background-color: var(--bg4);
+}
+
 #menubar #osbtns {
   margin-right: 6px;
 }
 
-#menubar #osbtns button#closebtn {
-  background-image: url("../../assets/icons/x.svg");
-}
-
-#menubar #osbtns button#minimizebtn {
-  background-image: url("../../assets/icons/minimize.svg");
-}
-
-#menubar #actions {
+#menubar #fileactions {
   margin-left: auto;
 }
 
-#menubar #actions button {
+#menubar #fileactions button {
   background-size: 14px 14px;
 
 }
 
 #menubar #path {
-  margin-left: calc(var(--sidenavwidth) + 6px);
+  margin-left: calc(var(--sidenavwidth) + 8px);
   font-size: 0;
 }
 #menubar #path .path.folder:empty:before {

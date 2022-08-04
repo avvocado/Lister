@@ -1,25 +1,36 @@
 make folders have an actual file for them 
-  - rename to parent file 
-  - allow infinite child files
+  - rename to parent and child files
+  - allow infinite child and parent hierarchy
 
 blocks
-  - link another file
-  - image
-  - url link
-  - checklist
-  - bullet list
-  - numbered list
-  - inline blocks
-  - audio
-  - video
-    - link file (smaller than the other one)
-    - timestamp
-    - code block (inline & much smaller)
+  - already added
+   - text
+   - heading
+   - code block
+   - divider
+  - todo
+    - link another file
+    - url link
+    - lists
+      - checklist
+      - bullet list
+      - numbered list
+   - embed files
+     - audio
+     - image
+     - video
+   - inline blocks
+     - link file (smaller)
+     - timestamp
+     - url (smaller)
+     - code block (smaller)
 
 collapse sidenav
 starred, priority, important, favorite, pinned files
 tooltips
+macos touch id for unlocking things
 locked files
+reminders
 
 sidenav
   - search
@@ -31,3 +42,4 @@ sidenav
     - spellcheck
     - source code
     - reset settings
+    - file content margin (right now it's 64px)

@@ -7,6 +7,31 @@ document.getElementById("minimizebtn").addEventListener("click", function () {
   window.api.send("minimize", "");
 });
 
+// password submit button
+document.getElementById("pswdsubmit").addEventListener("click", function () {
+  if (document.querySelector("#pswdinput").value == settings.password) {
+    // correct password
+    appstate.unlockedfile = appstate.activefile;
+
+    // clear password input
+    document.querySelector("#pswdinput").value = "";
+
+    // generate everything, now unlocked
+    gotoFile(appstate.unlockedfile[0], appstate.unlockedfile[1]);
+  } else {
+    // incorrect
+    document.querySelector("#pswdinput").select();
+  }
+});
+
+// clicking enter inside of password input
+document.getElementById("pswdinput").addEventListener("keydown", function (e) {
+  if (e.code == "Enter") {
+    document.querySelector("#pswdsubmit").click();
+  }
+});
+
+// init
 function init() {
   // request files from main & create tray
   window.api.send("requestFiles", "");
@@ -40,12 +65,12 @@ function generateMenubar(p, c) {
   // clear path & actions
   document.querySelector("#path").innerHTML = "";
   document.querySelector("#lastedited").innerHTML = "";
-  document.querySelector("#actions").innerHTML = "";
+  document.querySelector("#fileactions").innerHTML = "";
 
   // actions
   // delete file button
   let deleteFileBtn = createElement("button", {});
-  deleteFileBtn.style.backgroundImage = "url(../assets/icons/trash1.svg)";
+  deleteFileBtn.style.backgroundImage = "url(../assets/icons/navbars/trash1.svg)";
   deleteFileBtn.onclick = function () {
     deleteFile(p, c);
     // update sidenav
@@ -54,34 +79,31 @@ function generateMenubar(p, c) {
   // lock file button
   let lockBtn = createElement("button", {});
   lockBtn.style.backgroundImage = files.folders[p].files[c].locked
-    ? "url(../assets/icons/unlock.svg)"
-    : "url(../assets/icons/lock.svg)";
+    ? "url(../assets/icons/navbars/unlock.svg)"
+    : "url(../assets/icons/navbars/lock.svg)";
   lockBtn.onclick = function () {
     // lock
     files.folders[p].files[c].locked = !files.folders[p].files[c].locked;
     this.style.backgroundImage = files.folders[p].files[c].locked
-      ? "url(../assets/icons/unlock.svg)"
-      : "url(../assets/icons/lock.svg)";
+      ? "url(../assets/icons/navbars/unlock.svg)"
+      : "url(../assets/icons/navbars/lock.svg)";
     writeFiles(files);
     // update sidenav
     generateSidenav();
   };
   // edit file btn
-  let editBtn = createElement("button", {});
+  let editBtn = createElement("button", { class: "editbtn" });
   editBtn.style.backgroundImage =
-    appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c
-      ? "url(../assets/icons/pen_edit.svg)"
-      : "url(../assets/icons/pen.svg)";
+    JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c])
+      ? "url(../assets/icons/navbars/pen_edit.svg)"
+      : "url(../assets/icons/navbars/pen.svg)";
   editBtn.onclick = function () {
-    if (appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c) {
+    if (JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c])) {
       // editing off
-      appstate.currentlyediting = [-1, -1];
-      this.style.backgroundImage = "url(../assets/icons/pen.svg)";
-      hideBlockMenu()
+      editingFile(false, -1, -1);
     } else {
       // editing on
-      appstate.currentlyediting = [p, c];
-      this.style.backgroundImage = "url(../assets/icons/pen_edit.svg)";
+      editingFile(true, p, c);
     }
     generateMenubar(p, c);
     generateFile(p, c);
@@ -94,7 +116,7 @@ function generateMenubar(p, c) {
   let pathFolder = createElement("p", {
     class: "path folder",
     innerhtml: files.folders[p].name,
-    contenteditable: appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c,
+    contenteditable: JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]),
   });
   pathFolder.oninput = function () {
     files.folders[p].name = this.innerText;
@@ -103,9 +125,33 @@ function generateMenubar(p, c) {
   };
   let pathSlash = createElement("p", { class: "path slash", innerhtml: "/" });
   let pathFile = createElement("p", {
-    class: "path file",
-    innerhtml: files.folders[p].files[c].name == "" ? "Untitled File" : files.folders[p].files[c].name,
-    contenteditable: appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c,
+    class: "path file editableonedit",
+    innerhtml:
+      /*
+      if locked
+        if unlocked
+          if name is empty
+            untitled file
+          else
+            file name
+        else
+          locked file
+      else
+        if name is empty
+          untitled file
+        else
+          name
+      */
+      files.folders[p].files[c].locked == true
+        ? JSON.stringify(appstate.unlockedfile) == JSON.stringify(appstate.activefile)
+          ? files.folders[p].files[c].name == ""
+            ? "Untitled File"
+            : files.folders[p].files[c].name
+          : "Locked File"
+        : files.folders[p].files[c].name == ""
+        ? "Untitled File"
+        : files.folders[p].files[c].name,
+    contenteditable: JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]),
   });
   pathFile.oninput = function () {
     // get date
@@ -131,24 +177,24 @@ function generateMenubar(p, c) {
   // last edited
   document.querySelector("#lastedited").append(lastEdited);
 
-  // actions
-  document.querySelector("#actions").append(editBtn);
-  document.querySelector("#actions").append(lockBtn);
-  document.querySelector("#actions").append(deleteFileBtn);
+  // file action buttons
+  document.querySelector("#fileactions").append(editBtn);
+  document.querySelector("#fileactions").append(lockBtn);
+  document.querySelector("#fileactions").append(deleteFileBtn);
 }
 
 // generates file content
 function generateFile(p, c) {
-  // clear curent file, path, and actions
+  // clear curent file
   document.querySelector("#filecontainer").innerHTML = "";
 
   let fileContent = createElement("div", { class: "filecontent" });
   // generate the current active file
   // container
   let fileName = createElement("p", {
-    class: "filename",
+    class: "filename editableonedit",
     innerhtml: files.folders[p].files[c].name,
-    contenteditable: appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c,
+    contenteditable: JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]),
   });
   fileName.oninput = function () {
     // get date
@@ -173,11 +219,11 @@ function generateFile(p, c) {
 
     // block menu
     let actionsMenuBtn = createElement("button", {
-      class: "actionsmenubtn",
-      disabled: !(appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c),
+      class: "actionsmenubtn showonedit",
+      disabled: !(JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c])),
     });
-    if(!(appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c)){
-      actionsMenuBtn.style.opacity = '0'
+    if (!(JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]))) {
+      actionsMenuBtn.style.opacity = "0";
     }
     actionsMenuBtn.style.backgroundImage = "url(../assets/icons/dots.svg)";
     actionsMenuBtn.onclick = function () {
@@ -198,8 +244,9 @@ function generateFile(p, c) {
       files.folders[p].files[c].blocks[b].type == "text"
     ) {
       // text, heading, or code
+      block.classList.add("editableonedit");
       block.innerHTML = files.folders[p].files[c].blocks[b].text;
-      block.contentEditable = appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c;
+      block.contentEditable = JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]);
       block.spellcheck = false;
       block.oninput = function () {
         // edit file object
@@ -227,8 +274,8 @@ function generateFile(p, c) {
   }
 
   // new block area
-  let newBlockDiv = createElement("div", { class: "newblockbtns" });
-  newBlockDiv.style.display = (appstate.currentlyediting[0] == p && appstate.currentlyediting[1] == c) ? 'block' : 'none'
+  let newBlockDiv = createElement("div", { class: "newblockbtns showonedit" });
+  newBlockDiv.style.display = JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]) ? "block" : "none";
 
   for (let bt = 0; bt < blockTypes.length; bt++) {
     let newBlockBtn = createElement("button", {
@@ -254,25 +301,52 @@ function gotoFile(p, c) {
   // change the current active file
   appstate.activefile = [p, c];
 
-  // handle sidenav button
-  handleSidenavButton(p, c);
+  // update sidenav buttons
+  generateSidenav();
 
-  // append the new file
-  generateFile(p, c);
-  generateMenubar(p, c);
-}
+  if (
+    files.folders[p].files[c].locked == false ||
+    JSON.stringify(appstate.unlockedfile) == JSON.stringify(appstate.activefile)
+  ) {
+    // generate the new file
+    document.querySelector("#lockedfile").style.display = "none";
+    appstate.unlockedfile = appstate.activefile;
+    generateFile(p, c);
+    generateMenubar(p, c);
+  } else {
+    appstate.unlockedfile = [-1,-1];
+    // generate locked file
+    // clear current file
+    document.querySelector("#filecontainer").innerHTML = "";
 
-// changes the active sidenav button
-function handleSidenavButton(p, c) {
-  // get the sidenav button
-  // error here because "p" is still -1
-  let btn = document.querySelectorAll(".folderdiv")[p].children[c];
+    // show locked screen
+    document.querySelector("#lockedfile").style.display = "flex";
+    document.querySelector("#pswdinput").focus()
 
-  if (document.querySelector(".sidenavbtn.active") !== null) {
-    document.querySelector(".sidenavbtn.active").classList.remove("active");
+    // path
+    document.querySelector("#path").innerHTML = "";
+    document.querySelector("#lastedited").innerHTML = "";
+    document.querySelector("#fileactions").innerHTML = "";
+    let pathFolder = createElement("p", {
+      class: "path folder",
+      innerhtml: files.folders[p].name,
+    });
+    pathFolder.oninput = function () {
+      files.folders[p].name = this.innerText;
+      writeFiles(files);
+      generateSidenav();
+    };
+    let pathSlash = createElement("p", { class: "path slash", innerhtml: "/" });
+    let pathFile = createElement("p", {
+      class: "path file editableonedit",
+      innerhtml: "Locked File",
+    });
+
+    // path
+    document.querySelector("#path").append(pathFolder);
+    document.querySelector("#path").append(pathSlash);
+    document.querySelector("#path").append(pathFile);
   }
-
-  btn.classList.add("active");
 }
 
 // generates all sidenav buttons
@@ -312,8 +386,34 @@ function generateSidenav() {
       // for each file
       // sidenav button
       let fileBtn = createElement("button", {
-        class: "sidenavbtn file",
-        innerhtml: files.folders[p].files[c].name == "" ? "Untitled File" : files.folders[p].files[c].name,
+        class: files.folders[p].files[c].locked == true ? "sidenavbtn file locked" : "sidenavbtn file",
+        innerhtml:
+          /*
+      if locked
+        if unlocked
+          if name is empty
+            untitled file
+          else
+            file name
+        else
+          locked file
+      else
+        if name is empty
+          untitled file
+        else
+          name
+      */
+          files.folders[p].files[c].locked == true
+            ? // if unlockedfile == active file && activefile == current sidenav button it's generating
+              JSON.stringify(appstate.unlockedfile) == JSON.stringify(appstate.activefile) &&
+              JSON.stringify(appstate.activefile) == JSON.stringify([p, c])
+              ? files.folders[p].files[c].name == ""
+                ? "Untitled File"
+                : files.folders[p].files[c].name
+              : "Locked File"
+            : files.folders[p].files[c].name == ""
+            ? "Untitled File"
+            : files.folders[p].files[c].name,
       });
 
       // show that file
@@ -336,9 +436,17 @@ function generateSidenav() {
 
   document.querySelector("#filebtns").append(newFolderBtn);
 
-  // if active file isn't -1 (not first load)
-  if (appstate.activefile[0] != -1 && appstate.activefile[1] != -1) {
-    handleSidenavButton(appstate.activefile[0], appstate.activefile[1]);
+  // if active file isn't -1
+  if (JSON.stringify(appstate.activefile) != JSON.stringify([-1, -1])) {
+    // get the sidenav button
+    // error here because "p" is still -1
+    let btn = document.querySelectorAll(".folderdiv")[appstate.activefile[0]].children[appstate.activefile[1]];
+
+    if (document.querySelector(".sidenavbtn.active") !== null) {
+      document.querySelector(".sidenavbtn.active").classList.remove("active");
+    }
+
+    btn.classList.add("active");
   }
 }
 init();

@@ -4,10 +4,18 @@
 var files = {};
 
 var appstate = {
+  // index of the file the user is looking at currently
   activefile: [-1, -1],
+  // index of the file which has edit mode currently on
   currentlyediting: [-1, -1],
+  // index of the block which currently has the block menu active
   activeblockmenu: -1,
+  // index of the currently unlocked file
+  unlockedfile: [-1, -1],
 };
+
+// settings
+var settings = { password: "123" };
 
 // keypress map
 var keyMap = {};
@@ -63,6 +71,19 @@ function blockMenu(p, c, b, btn) {
     deleteBlock(p, c, b);
     hideBlockMenu();
   };
+}
+
+function editingFile(val, p, c) {
+  if (val == false) {
+    // editing off
+    document.querySelector(".editbtn").style.backgroundImage = "url(../assets/icons/navbars/pen.svg)";
+    appstate.currentlyediting = [-1, -1];
+    hideBlockMenu();
+  } else {
+    // editing on
+    document.querySelector(".editbtn").style.backgroundImage = "url(../assets/icons/navbars/pen_edit.svg)";
+    appstate.currentlyediting = [p, c];
+  }
 }
 
 function hideBlockMenu() {
