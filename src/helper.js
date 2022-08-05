@@ -238,7 +238,6 @@ function createElement(type, params) {
   if (params.hide == true) {
     elem.style.display = "none";
   }
-
   return elem;
 }
 

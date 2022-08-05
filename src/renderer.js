@@ -70,7 +70,7 @@ function generateMenubar(p, c) {
   // actions
   // delete file button
   let deleteFileBtn = createElement("button", {});
-  deleteFileBtn = tooltip("Delete File", "", deleteFileBtn, -24);
+  deleteFileBtn = tooltip("Delete File", "", deleteFileBtn, -30);
 
   deleteFileBtn.style.backgroundImage = "url(../assets/icons/navbars/trash1.svg)";
   deleteFileBtn.onclick = function () {
