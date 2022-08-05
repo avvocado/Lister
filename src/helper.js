@@ -125,46 +125,46 @@ function hideBlockMenu() {
 }
 
 function deleteFile(p, c) {
-  files.folders[p].files.splice(c, 1);
+  files[p].files.splice(c, 1);
   writeFiles(files);
 }
 
 function deleteFolder(p) {
-  files.folders.splice(p, 1);
+  files.splice(p, 1);
   writeFiles(files);
 }
 
 function newBlock(p, c, index, type) {
   let d = new Date();
   if (type == "text" || type == "heading" || type == "code") {
-    files.folders[p].files[c].blocks.splice(index, 0, {
+    files[p].files[c].blocks.splice(index, 0, {
       creationdate: d.getTime(),
       type: type,
       text: newTextBlockText,
     });
   } else if (type == "divider") {
-    files.folders[p].files[c].blocks.splice(index, 0, {
+    files[p].files[c].blocks.splice(index, 0, {
       creationdate: d.getTime(),
       type: type,
     });
   }
 
   // update last edited
-  files.folders[p].files[c].lastedited = d.getTime();
+  files[p].files[c].lastedited = d.getTime();
 
   writeFiles(files);
   generateFile(p, c);
 }
 
 function deleteBlock(p, c, b) {
-  files.folders[p].files[c].blocks.splice(b, 1);
+  files[p].files[c].blocks.splice(b, 1);
   writeFiles(files);
   generateFile(p, c);
 }
 
 function newFile(p) {
   let d = new Date();
-  files.folders[p].files.push({
+  files[p].files.push({
     name: newFileName,
     creationdate: d.getTime(),
     lastedited: d.getTime(),
@@ -178,7 +178,7 @@ function newFile(p) {
 }
 
 function newFolder() {
-  files.folders.push({
+  files.push({
     name: newFolderName,
     files: [],
   });

@@ -1,1 +1,62 @@
-{"folders":[{"name":"My Folder","files":[{"name":"My File","creationdate":1659548389747,"lastedited":1659585791102,"starred":false,"locked":false,"blocks":[{"creationdate":1659580541557,"type":"heading","text":"My Heading"},{"creationdate":1659580545568,"type":"text","text":"text block goes here"},{"creationdate":1659585789084,"type":"divider"},{"creationdate":1659585790050,"type":"text","text":"yes"}]}]},{"name":"Folder","files":[{"name":"New File","creationdate":1659548391370,"lastedited":1659659266048,"starred":false,"locked":false,"blocks":[{"creationdate":1659562430210,"type":"text","text":"text"},{"creationdate":1659562431176,"type":"heading","text":"heading"},{"creationdate":1659575871270,"type":"code","text":"$ npm i\n"},{"creationdate":1659575875991,"type":"text","text":"this is a tex tblock"},{"creationdate":1659577727472,"type":"divider"},{"creationdate":1659578611137,"type":"heading","text":"My Heading!"},{"creationdate":1659578836729,"type":"divider"}]},{"name":"File","creationdate":1659631388156,"lastedited":1659631388156,"starred":false,"locked":false,"blocks":[]}]},{"name":"New Folder","files":[{"name":"New File","creationdate":1659548390532,"lastedited":1659548390532,"starred":false,"locked":false,"blocks":[]}]}]}
+[
+    {
+      "name": "My Folder",
+      "files": [
+        {
+          "name": "My File",
+          "creationdate": 1659548389747,
+          "lastedited": 1659585791102,
+          "starred": false,
+          "locked": false,
+          "blocks": [
+            { "creationdate": 1659580541557, "type": "heading", "text": "My Heading" },
+            { "creationdate": 1659580545568, "type": "text", "text": "text block goes here" },
+            { "creationdate": 1659585789084, "type": "divider" },
+            { "creationdate": 1659585790050, "type": "text", "text": "yes" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Folder",
+      "files": [
+        {
+          "name": "New File",
+          "creationdate": 1659548391370,
+          "lastedited": 1659659266048,
+          "starred": false,
+          "locked": false,
+          "blocks": [
+            { "creationdate": 1659562430210, "type": "text", "text": "text" },
+            { "creationdate": 1659562431176, "type": "heading", "text": "heading" },
+            { "creationdate": 1659575871270, "type": "code", "text": "$ npm i\n" },
+            { "creationdate": 1659575875991, "type": "text", "text": "this is a tex tblock" },
+            { "creationdate": 1659577727472, "type": "divider" },
+            { "creationdate": 1659578611137, "type": "heading", "text": "My Heading!" },
+            { "creationdate": 1659578836729, "type": "divider" }
+          ]
+        },
+        {
+          "name": "File",
+          "creationdate": 1659631388156,
+          "lastedited": 1659631388156,
+          "starred": false,
+          "locked": false,
+          "blocks": []
+        }
+      ]
+    },
+    {
+      "name": "New Folder",
+      "files": [
+        {
+          "name": "New File",
+          "creationdate": 1659548390532,
+          "lastedited": 1659548390532,
+          "starred": false,
+          "locked": false,
+          "blocks": []
+        }
+      ]
+    }
+  ]
