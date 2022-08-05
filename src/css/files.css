@@ -17,7 +17,6 @@
   margin-bottom: 2px;
 }
 
-
 #filecontainer .filecontent .newblockbtns .newblockbtn {
   background-color: transparent;
   padding: 4px 8px 4px 27px;
@@ -70,7 +69,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 16px;
-  gap: 1px;
+  gap: 8px;
 }
 
 #filecontainer .filecontent .fileblocks .blockcontainer {
@@ -83,8 +82,24 @@
   visibility: visible;
 }
 
-#filecontainer  .block {
+#filecontainer .block {
   flex-grow: 1;
+
+}
+
+#filecontainer .block.inline {
+  flex-grow: 0 !important;
+}
+
+#filecontainer .block.inline_code {
+  background-color: var(--bg1);
+  font-size: 14px;
+  border-radius: 3px;
+  font-family: consolasfont;
+  display: inline;
+  padding: 1px 4px;
+  content: "Text Block";
+
 }
 
 #filecontainer .block.text {
@@ -101,7 +116,7 @@
   pointer-events: none;
 }
 
-#filecontainer  .block.code {
+#filecontainer .block.code {
   color: var(--text4);
   font-family: consolasfont;
   background-color: var(--bg1);
@@ -111,7 +126,7 @@
   border-radius: 6px;
 }
 
-#filecontainer  .block.code:empty:before {
+#filecontainer .block.code:empty:before {
   content: "Code Block";
   color: var(--text3);
   pointer-events: none;
@@ -125,7 +140,7 @@
   font-size: 20px;
 }
 
-#filecontainer  .block.heading:empty:before {
+#filecontainer .block.heading:empty:before {
   content: "Heading";
   color: var(--text3);
   pointer-events: none;
@@ -136,7 +151,7 @@
   height: 0;
 }
 
-#filecontainer  .blockmenubtn {
+#filecontainer .blockmenubtn {
   width: calc(var(--gutterwidth));
   height: 24px;
   visibility: hidden;
@@ -156,26 +171,6 @@
   background-color: var(--bg3);
   color: var(--text5);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* tags */
 .tag {

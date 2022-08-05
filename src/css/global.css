@@ -80,7 +80,7 @@ body {
 }
 
 #content {
-  padding: 24px 64px 0 var(--gutterwidth);
+  padding: calc(24px + var(--menubarheight)) 64px 0 var(--gutterwidth);
   margin-left: var(--sidenavwidth);
 }
 .box {

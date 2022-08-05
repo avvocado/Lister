@@ -29,17 +29,27 @@ var newFileName = "File";
 var newTextBlockText = "";
 var newHeadingBlockText = "";
 var newCodeBlockText = "";
+var newInlineCodeBlockText = "&nbsp;&nbsp;";
+
+var inlineBlockTypes = [
+  {
+    name: "Code",
+    type: "inline_code",
+    icon: "block_code",
+    allowedparents: ["text"],
+  },
+];
 
 var blockTypes = [
-  {
-    name: "Text",
-    type: "text",
-    icon: "block_text",
-  },
   {
     name: "Heading",
     type: "heading",
     icon: "block_heading",
+  },
+  {
+    name: "Text",
+    type: "text",
+    icon: "block_text",
   },
   {
     name: "Divider",
@@ -54,8 +64,53 @@ var blockTypes = [
 ];
 
 function blockMenu(p, c, b, activator) {
-  // toggle displaying the div
   let blockMenu = document.querySelector("#blockmenu");
+  document.querySelector("#blockmenu #newblockbtns").innerHTML = "";
+  document.querySelector("#blockmenu #newinlineblockbtns").innerHTML = "";
+  document.querySelector(".inline-blocks").style.display = "none";
+
+  // block buttons
+  for (let bt = 0; bt < blockTypes.length; bt++) {
+    let newBlockBtn = createElement("button", {
+      innerhtml: blockTypes[bt].name,
+      class: "newblockbtn " + blockTypes[bt].type,
+    });
+    newBlockBtn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[bt].icon}_4.svg)`;
+    newBlockBtn.onclick = function () {
+      newBlock(appstate.activefile[0], appstate.activefile[1], appstate.activeblockmenu, blockTypes[bt].type);
+      // get date
+      generateMenubar(appstate.activefile[0], appstate.activefile[1]);
+      // hide block menu
+      hideBlockMenu();
+    };
+    document.querySelector("#blockmenu #newblockbtns").append(newBlockBtn);
+  }
+
+  // inline block buttons
+  for (let bt = 0; bt < inlineBlockTypes.length; bt++) {
+    if (
+      inlineBlockTypes[bt].allowedparents.includes(
+        files[appstate.activefile[0]].files[appstate.activefile[1]].blocks[b].type
+      )
+    ) {
+      document.querySelector(".inline-blocks").style.display = "block";
+      let newBlockBtn = createElement("button", {
+        innerhtml: inlineBlockTypes[bt].name,
+        class: "newblockbtn " + inlineBlockTypes[bt].type,
+      });
+      newBlockBtn.style.backgroundImage = `url(../assets/icons/blocks/${inlineBlockTypes[bt].icon}_4.svg)`;
+      newBlockBtn.onclick = function () {
+        newBlock(appstate.activefile[0], appstate.activefile[1], appstate.activeblockmenu, inlineBlockTypes[bt].type);
+        // get date
+        generateMenubar(appstate.activefile[0], appstate.activefile[1]);
+        // hide block menu
+        hideBlockMenu();
+      };
+      document.querySelector("#blockmenu #newinlineblockbtns").append(newBlockBtn);
+    }
+  }
+
+  // toggle displaying the div
   blockMenu.style.display = blockMenu.style.display == "flex" ? "none" : "flex";
 
   // change active block menu
@@ -134,19 +189,23 @@ function deleteFolder(p) {
   writeFiles(files);
 }
 
-function newBlock(p, c, index, type) {
+function newBlock(p, c, b, type) {
   let d = new Date();
   if (type == "text" || type == "heading" || type == "code") {
-    files[p].files[c].blocks.splice(index, 0, {
+    files[p].files[c].blocks.splice(b, 0, {
       creationdate: d.getTime(),
       type: type,
       text: newTextBlockText,
     });
   } else if (type == "divider") {
-    files[p].files[c].blocks.splice(index, 0, {
+    files[p].files[c].blocks.splice(b, 0, {
       creationdate: d.getTime(),
       type: type,
     });
+  } else if (type == "inline_code") {
+    files[appstate.activefile[0]].files[appstate.activefile[1]].blocks[
+      b
+    ].text += `<div class="inline block ${type}">${newInlineCodeBlockText}</div>&nbsp;`;
   }
 
   // update last edited

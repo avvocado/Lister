@@ -41,23 +41,6 @@ function init() {
 function start() {
   // called after receiving files.json
   generateSidenav();
-
-  // create new block buttons for block menu
-  for (let bt = 0; bt < blockTypes.length; bt++) {
-    let newBlockBtn = createElement("button", {
-      innerhtml: blockTypes[bt].name,
-      class: "newblockbtn " + blockTypes[bt].type,
-    });
-    newBlockBtn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[bt].icon}_4.svg)`;
-    newBlockBtn.onclick = function () {
-      newBlock(appstate.activefile[0], appstate.activefile[1], appstate.activeblockmenu, blockTypes[bt].type);
-      // get date
-      generateMenubar(appstate.activefile[0], appstate.activefile[1]);
-      // hide block menu
-      hideBlockMenu();
-    };
-    document.querySelector("#blockmenu #newblockbtns").append(newBlockBtn);
-  }
 }
 
 // generates menubar for the file
@@ -70,7 +53,6 @@ function generateMenubar(p, c) {
   // actions
   // delete file button
   let deleteFileBtn = createElement("button", {});
-  deleteFileBtn = tooltip("Delete File", "", deleteFileBtn, -30);
 
   deleteFileBtn.style.backgroundImage = "url(../assets/icons/navbars/trash1.svg)";
   deleteFileBtn.onclick = function () {
@@ -80,12 +62,7 @@ function generateMenubar(p, c) {
   };
   // lock file button
   let lockBtn = createElement("button", {});
-  lockBtn = tooltip(
-    files[p].files[c].locked ? "Unlock File" : "Lock File",
-    "Ctrl + L",
-    lockBtn,
-    files[p].files[c].locked ? -32 : -26
-  );
+  
 
   lockBtn.style.backgroundImage = files[p].files[c].locked
     ? "url(../assets/icons/navbars/unlock.svg)"
@@ -97,20 +74,6 @@ function generateMenubar(p, c) {
       ? "url(../assets/icons/navbars/unlock.svg)"
       : "url(../assets/icons/navbars/lock.svg)";
 
-    lockBtn = tooltip(
-      files[p].files[c].locked ? "Unlock File" : "Lock File",
-      "Ctrl + L",
-      lockBtn,
-      files[p].files[c].locked ? -32 : -26
-    );
-
-    refreshTooltip(
-      files[p].files[c].locked ? "Unlock File" : "Lock File",
-      "Ctrl + L",
-      lockBtn,
-      files[p].files[c].locked ? -32 : -26
-    );
-
     writeFiles(files);
     // update sidenav
     generateSidenav();
@@ -118,12 +81,7 @@ function generateMenubar(p, c) {
   // edit file btn
 
   let editBtn = createElement("button", { class: "editbtn" });
-  editBtn = tooltip(
-    JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]) ? "Stop Editing" : "Edit File",
-    "Ctrl + E",
-    editBtn,
-    JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]) ? -36 : -22
-  );
+  
   editBtn.style.backgroundImage =
     JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c])
       ? "url(../assets/icons/navbars/pen_edit.svg)"
@@ -150,7 +108,7 @@ function generateMenubar(p, c) {
     contenteditable: JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]),
   });
   pathFolder.oninput = function () {
-    files[p].name = this.innerText;
+    files[p].name = this.innerHTML;
     writeFiles(files);
     generateSidenav();
   };
@@ -212,6 +170,11 @@ function generateMenubar(p, c) {
   document.querySelector("#fileactions").append(editBtn);
   document.querySelector("#fileactions").append(lockBtn);
   document.querySelector("#fileactions").append(deleteFileBtn);
+
+  // open file with edit mode on, will be an option in settings in the future
+  //if (!(JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]))) {
+    //editBtn.click();
+  //}
 }
 
 // generates file content
@@ -281,7 +244,7 @@ function generateFile(p, c) {
       block.spellcheck = false;
       block.oninput = function () {
         // edit file object
-        files[p].files[c].blocks[b].text = this.innerText;
+        files[p].files[c].blocks[b].text = this.innerHTML.replace(/<br>/g, '');
         // get date
         let d = new Date();
         // update last edited
@@ -298,6 +261,13 @@ function generateFile(p, c) {
           this.blur();
         }
       };
+    } else if (files[p].files[c].blocks[b].type == "inline_code") {
+      // inline code block
+      block.classList.add("editableonedit");
+      block.classList.add("inline");
+      block.innerHTML = files[p].files[c].blocks[b].text;
+      block.contentEditable = JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]);
+      block.spellcheck = false;
     }
 
     blockContainer.append(block);
@@ -315,7 +285,7 @@ function generateFile(p, c) {
     });
     newBlockBtn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[bt].icon}.svg)`;
     newBlockBtn.onclick = function () {
-      newBlock(p, c, files[p].files[c].blocks.length, blockTypes[bt].type);
+      newBlock(p, c, files[p].files[c].blocks.length, blockTypes[bt].type, blockTypes[bt].layout);
       generateMenubar(p, c);
     };
     newBlockDiv.append(newBlockBtn);
@@ -477,7 +447,12 @@ function generateSidenav() {
       document.querySelector(".sidenavbtn.active").classList.remove("active");
     }
 
-    btn.classList.add("active");
+    try{
+      btn.classList.add("active");
+
+    }catch(err){
+      console.log('created or deleted file, error handled')
+    }
   }
 }
 init();
