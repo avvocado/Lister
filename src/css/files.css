@@ -2,7 +2,7 @@
   display: none;
   position: absolute;
   flex-direction: column;
-  background-color: var(--bg3);
+  background-color: var(--bg4);
   border-radius: 4px;
   padding: 8px;
 }
@@ -13,11 +13,11 @@
 }
 
 #blockmenu .header {
-  color: var(--text1);
+  color: var(--text4);
   margin-bottom: 2px;
 }
 
-#blockmenu button,
+
 #filecontainer .filecontent .newblockbtns .newblockbtn {
   background-color: transparent;
   padding: 4px 8px 4px 27px;
@@ -25,11 +25,21 @@
   background-size: 14px 14px;
   transition: 100ms;
   background-position: 8px 4px;
-  color: var(--text2);
+  color: var(--text4);
+}
+
+#blockmenu button {
+  background-color: transparent;
+  padding: 4px 8px 4px 27px;
+  border-radius: 4px;
+  background-size: 14px 14px;
+  transition: 100ms;
+  background-position: 8px 4px;
+  color: var(--text5);
 }
 #blockmenu button:hover {
   background-color: var(--bg4);
-  color: var(--text3);
+  color: var(--text5);
 }
 
 #filecontainer .filecontent .newblockbtns {
@@ -43,7 +53,7 @@
 }
 
 #filecontainer .filecontent .filename {
-  color: var(--text4);
+  color: var(--text6);
   font-size: 24px;
   letter-spacing: 0.025em;
   font-weight: bold;
@@ -51,7 +61,7 @@
 }
 
 #filecontainer .filecontent .filename:empty:before {
-  color: var(--text1);
+  color: var(--text3);
   content: "Untitled File";
   pointer-events: none;
 }
@@ -69,7 +79,7 @@
   gap: 8px;
 }
 
-#filecontainer .filecontent .fileblocks .blockcontainer:hover .actionsmenubtn {
+#filecontainer .filecontent .fileblocks .blockcontainer:hover .blockmenubtn {
   visibility: visible;
 }
 
@@ -81,18 +91,18 @@
   overflow-x: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
-  color: var(--text2);
+  color: var(--text5);
   font-size: 16px;
 }
 
 #filecontainer .block.text:empty:before {
   content: "Text Block";
-  color: var(--text1);
+  color: var(--text3);
   pointer-events: none;
 }
 
 #filecontainer  .block.code {
-  color: var(--text2);
+  color: var(--text4);
   font-family: consolasfont;
   background-color: var(--bg1);
   padding: 8px 16px;
@@ -103,7 +113,7 @@
 
 #filecontainer  .block.code:empty:before {
   content: "Code Block";
-  color: var(--text1);
+  color: var(--text3);
   pointer-events: none;
 }
 
@@ -111,13 +121,13 @@
   overflow-x: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
-  color: var(--text3);
+  color: var(--text6);
   font-size: 20px;
 }
 
 #filecontainer  .block.heading:empty:before {
   content: "Heading";
-  color: var(--text1);
+  color: var(--text3);
   pointer-events: none;
 }
 
@@ -126,7 +136,7 @@
   height: 0;
 }
 
-#filecontainer  .actionsmenubtn {
+#filecontainer  .blockmenubtn {
   width: calc(var(--gutterwidth));
   height: 24px;
   visibility: hidden;
@@ -135,12 +145,16 @@
   border-radius: 4px;
   background-color: transparent;
 }
-#filecontainer .actionsmenubtn:hover {
+#filecontainer .blockmenubtn:hover {
   background-color: var(--bg3);
+}
+
+#filecontainer .blockmenubtn:active {
+  background-color: var(--bg4);
 }
 #filecontainer .filecontent .newblockbtns .newblockbtn:hover {
   background-color: var(--bg3);
-  color: var(--text3);
+  color: var(--text5);
 }
 
 

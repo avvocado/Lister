@@ -46,7 +46,7 @@ select {
 
 *[contenteditable="true"]:empty:before {
   content: "...";
-  color: var(--text1);
+  color: var(--text3);
   pointer-events: none;
 }
 

@@ -53,24 +53,58 @@ var blockTypes = [
   },
 ];
 
-function blockMenu(p, c, b, btn) {
+function blockMenu(p, c, b, activator) {
   // toggle displaying the div
-  let actionsMenu = document.querySelector("#blockmenu");
-  actionsMenu.style.display = actionsMenu.style.display == "flex" ? "none" : "flex";
+  let blockMenu = document.querySelector("#blockmenu");
+  blockMenu.style.display = blockMenu.style.display == "flex" ? "none" : "flex";
 
   // change active block menu
   appstate.activeblockmenu = b;
 
   // change position
-  let btnRect = btn.getBoundingClientRect();
-  actionsMenu.style.top = window.scrollY + btnRect.top + 28 + "px";
-  actionsMenu.style.left = window.scrollX + btnRect.left + "px";
+  let activatorRect = activator.getBoundingClientRect();
+  blockMenu.style.top = window.scrollY + activatorRect.top + 28 + "px";
+  blockMenu.style.left = window.scrollX + activatorRect.left + "px";
 
   // delete block btn
   document.querySelector("#blockmenu #deleteblockbtn").onclick = function () {
     deleteBlock(p, c, b);
     hideBlockMenu();
   };
+}
+
+function tooltip(text, shortcut, activator, xoff) {
+  let tooltip = document.querySelector("#tooltip");
+
+  activator.onmouseover = function () {
+    // toggle displaying the div
+    tooltip.style.display = "flex";
+    // change text
+    document.querySelector("#tooltip #text").innerHTML = text;
+    document.querySelector("#tooltip #shortcut").innerHTML = shortcut;
+    // change position
+    let activatorRect = activator.getBoundingClientRect();
+    tooltip.style.top = window.scrollY + activatorRect.top + 28 + "px";
+    tooltip.style.left = window.scrollX + activatorRect.left + xoff + "px";
+  };
+  activator.onmouseleave = function () {
+    tooltip.style.display = "none";
+  };
+  return activator;
+}
+
+function refreshTooltip(text, shortcut, activator, xoff) {
+  let tooltip = document.querySelector("#tooltip");
+
+  // toggle displaying the div
+  tooltip.style.display = "flex";
+  // change text
+  document.querySelector("#tooltip #text").innerHTML = text;
+  document.querySelector("#tooltip #shortcut").innerHTML = shortcut;
+  // change position
+  let activatorRect = activator.getBoundingClientRect();
+  tooltip.style.top = window.scrollY + activatorRect.top + 28 + "px";
+  tooltip.style.left = window.scrollX + activatorRect.left + xoff + "px";
 }
 
 function editingFile(val, p, c) {

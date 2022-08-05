@@ -48,7 +48,7 @@ function start() {
       innerhtml: blockTypes[bt].name,
       class: "newblockbtn " + blockTypes[bt].type,
     });
-    newBlockBtn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[bt].icon}.svg)`;
+    newBlockBtn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[bt].icon}_4.svg)`;
     newBlockBtn.onclick = function () {
       newBlock(appstate.activefile[0], appstate.activefile[1], appstate.activeblockmenu, blockTypes[bt].type);
       // get date
@@ -70,6 +70,8 @@ function generateMenubar(p, c) {
   // actions
   // delete file button
   let deleteFileBtn = createElement("button", {});
+  deleteFileBtn = tooltip("Delete File", "", deleteFileBtn, -24);
+
   deleteFileBtn.style.backgroundImage = "url(../assets/icons/navbars/trash1.svg)";
   deleteFileBtn.onclick = function () {
     deleteFile(p, c);
@@ -78,6 +80,13 @@ function generateMenubar(p, c) {
   };
   // lock file button
   let lockBtn = createElement("button", {});
+  lockBtn = tooltip(
+    files.folders[p].files[c].locked ? "Unlock File" : "Lock File",
+    "Ctrl + L",
+    lockBtn,
+    files.folders[p].files[c].locked ? -32 : -26
+  );
+
   lockBtn.style.backgroundImage = files.folders[p].files[c].locked
     ? "url(../assets/icons/navbars/unlock.svg)"
     : "url(../assets/icons/navbars/lock.svg)";
@@ -87,12 +96,34 @@ function generateMenubar(p, c) {
     this.style.backgroundImage = files.folders[p].files[c].locked
       ? "url(../assets/icons/navbars/unlock.svg)"
       : "url(../assets/icons/navbars/lock.svg)";
+
+    lockBtn = tooltip(
+      files.folders[p].files[c].locked ? "Unlock File" : "Lock File",
+      "Ctrl + L",
+      lockBtn,
+      files.folders[p].files[c].locked ? -32 : -26
+    );
+
+    refreshTooltip(
+      files.folders[p].files[c].locked ? "Unlock File" : "Lock File",
+      "Ctrl + L",
+      lockBtn,
+      files.folders[p].files[c].locked ? -32 : -26
+    );
+
     writeFiles(files);
     // update sidenav
     generateSidenav();
   };
   // edit file btn
+
   let editBtn = createElement("button", { class: "editbtn" });
+  editBtn = tooltip(
+    JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]) ? "Stop Editing" : "Edit File",
+    "Ctrl + E",
+    editBtn,
+    JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]) ? -36 : -22
+  );
   editBtn.style.backgroundImage =
     JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c])
       ? "url(../assets/icons/navbars/pen_edit.svg)"
@@ -218,18 +249,18 @@ function generateFile(p, c) {
     let blockContainer = createElement("div", { class: `blockcontainer ${files.folders[p].files[c].blocks[b].type}` });
 
     // block menu
-    let actionsMenuBtn = createElement("button", {
-      class: "actionsmenubtn showonedit",
+    let blockMenuBtn = createElement("button", {
+      class: "blockmenubtn showonedit",
       disabled: !(JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c])),
     });
     if (!(JSON.stringify(appstate.currentlyediting) == JSON.stringify([p, c]))) {
-      actionsMenuBtn.style.opacity = "0";
+      blockMenuBtn.style.opacity = "0";
     }
-    actionsMenuBtn.style.backgroundImage = "url(../assets/icons/dots.svg)";
-    actionsMenuBtn.onclick = function () {
+    blockMenuBtn.style.backgroundImage = "url(../assets/icons/dots.svg)";
+    blockMenuBtn.onclick = function () {
       blockMenu(p, c, b, this);
     };
-    blockContainer.append(actionsMenuBtn);
+    blockContainer.append(blockMenuBtn);
 
     // block content div
     let block = createElement("pre", {
@@ -314,14 +345,14 @@ function gotoFile(p, c) {
     generateFile(p, c);
     generateMenubar(p, c);
   } else {
-    appstate.unlockedfile = [-1,-1];
+    appstate.unlockedfile = [-1, -1];
     // generate locked file
     // clear current file
     document.querySelector("#filecontainer").innerHTML = "";
 
     // show locked screen
     document.querySelector("#lockedfile").style.display = "flex";
-    document.querySelector("#pswdinput").focus()
+    document.querySelector("#pswdinput").focus();
 
     // path
     document.querySelector("#path").innerHTML = "";

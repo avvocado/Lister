@@ -13,7 +13,7 @@
   width: calc(var(--sidenavwidth) - 24px);
 }
 #sidenav .header {
-  color: var(--text2);
+  color: var(--text4);
 }
 
 #sidenav #filebtns .sidenavbtn {
@@ -59,7 +59,7 @@
   background-position: 0 1px; 
   flex-grow: 1;
   background-color: var(--bg1);
-  color: var(--text3);
+  color: var(--text5);
 }
 
 #sidenav #filebtns .folderbtn .newfile {
@@ -93,7 +93,7 @@
   background-position: 1px 2px;
   width: 100%;
   padding: 2px 0 2px 18px;
-  color: var(--text2);
+  color: var(--text4);
   font-size: 14px;
 }
 
@@ -103,7 +103,7 @@
   padding-left: 18px;
   margin-top: 12px;
   font-size: 12px;
-  color: var(--text2);
+  color: var(--text4);
 }
 
 #menubar {
@@ -116,7 +116,7 @@
   flex-wrap: nowrap;
   align-items: center;
   gap: 16px;
-  color: var(--text2);
+  color: var(--text4);
 }
 
 #menubar div {
@@ -137,7 +137,7 @@
   background-size: 20px 20px;
   background-color: transparent;
   transition: 100ms;
-  color: var(--text2);
+  color: var(--text4);
 }
 
 #menubar p, #menubar button {
@@ -171,14 +171,14 @@
   font-size: 0;
 }
 #menubar #path .path.folder:empty:before {
-  color: var(--text1);
+  color: var(--text3);
   content: "Untitled Folder";
   pointer-events: none;
 }
 
 
 #menubar #path .path.file:empty:before {
-  color: var(--text1);
+  color: var(--text3);
   content: "Untitled File";
   pointer-events: none;
 }
@@ -186,7 +186,7 @@
 #menubar #path .path.slash {
   font-size: 18px;
   margin: 0 4px 0 4px;
-  color: var(--text1);
+  color: var(--text3);
 }
 
 #menubar #lastedited {

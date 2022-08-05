@@ -25,14 +25,17 @@ blocks
      - url (smaller)
      - code block (smaller)
 
-collapse sidenav
 starred, priority, important, favorite, pinned files
-tooltips
-macos touch id for unlocking things
-locked files
+macos touch id for unlocking file
 reminders
+file icons
+shortcuts
+  - ctrl+l lock file
+  - ctrl+e edit file
+  - ctrl+n new file
 
 sidenav
+  - collapse
   - search
   - settings
     - always on top
@@ -43,3 +46,4 @@ sidenav
     - source code
     - reset settings
     - file content margin (right now it's 64px)
+    - list shortcuts (option to edit them?)

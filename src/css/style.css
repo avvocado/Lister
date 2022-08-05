@@ -3,12 +3,12 @@
   --bg2: #181b1f;
   --bg3: #1e2023;
   --bg4: #232528;
-  --text1: #303030;
-  --text2: #404040;
-  --text3: #505050;
-  --text4: #606060;
-  --text5: #707070;
-  --text6: #808080;
+  --text3: #303030;
+  --text4: #404040;
+  --text5: #505050;
+  --text6: #606060;
+  --text7: #707070;
+  --text8: #808080;
   --textwhite: #cecece;
   --green: #009966;
   --selection: #0099662f;
@@ -26,7 +26,7 @@
 
 #lockedfile {
   font-size: 20px;
-  color: var(--text2);
+  color: var(--text4);
   display: none;
   width: 100%;
   flex-wrap: wrap;
@@ -42,11 +42,11 @@
   transition: 100ms;
   background-color: var(--bg3);
   border-radius: 22px;
-  background-image: url('../../assets/icons/arrow.svg');
+  background-image: url("../../assets/icons/arrow.svg");
 }
 
 #lockedfile #pswdsubmit:hover {
-  background-image: url('../../assets/icons/arrow1.svg');
+  background-image: url("../../assets/icons/arrow1.svg");
 }
 
 #lockedfile #pswdsubmit:hover {
@@ -55,7 +55,7 @@
 
 #lockedfile #pswdinput {
   height: 20px;
-  color: var(--text3);
+  color: var(--text5);
   border-radius: 20px;
   padding: 1px 10px;
   width: 164px;
@@ -63,7 +63,7 @@
 }
 
 #lockedfile #pswdinput::placeholder {
-  color: var(--text2);
+  color: var(--text4);
 }
 
 #lockedfile div {
@@ -72,4 +72,25 @@
   flex-direction: row;
   gap: 4px;
   align-items: flex-start;
+}
+
+#tooltip {
+  display: none;
+  position: absolute;
+  flex-direction: column;
+  background-color: var(--bg4);
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+#tooltip #text {
+  color: var(--text5);
+  font-size: 16px;
+}
+
+#tooltip #shortcut {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--text4);
 }
