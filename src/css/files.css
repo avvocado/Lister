@@ -88,8 +88,8 @@
 }
 
 #filecontainer .block.inline {
-  flex-grow: 0 !important;
-}
+  vertical-align: top;
+  }
 
 #filecontainer .block.inline_code {
   background-color: var(--bg1);
@@ -97,9 +97,13 @@
   border-radius: 3px;
   font-family: consolasfont;
   display: inline;
-  padding: 1px 4px;
-  content: "Text Block";
+  padding: 1px 4px 1px 4px;
+}
 
+#filecontainer .block.inline_code:empty:before {
+  content: "Text Block";
+  color: var(--text3);
+  pointer-events: none;
 }
 
 #filecontainer .block.text {
