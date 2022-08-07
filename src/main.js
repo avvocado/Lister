@@ -26,6 +26,7 @@ const createWindow = () => {
     backgroundColor: "white",
     darkTheme: true,
     show: false,
+    titleBarStyle: "hidden-inset" /* inset the macos buttons */,
   });
 
   // and load the index.html of the app.
@@ -114,7 +115,13 @@ ipcMain.on("createTray", (evt, args) => {
   if (tray != null) {
     tray.destroy();
   }
-  tray = new Tray(path.join(__dirname, "../", "/assets/appicons/trayicon@2x.png"));
+  if (process.platform == "win32") {
+    tray = new Tray(path.join(__dirname, "../", "/assets/appicons/appicon_512x512.png"));
+  } else if (process.platform == "darwin") {
+    tray = new Tray(path.join(__dirname, "../", "/assets/appicons/trayicon@2x.png"));
+  } else {
+    tray = new Tray(path.join(__dirname, "../", "/assets/appicons/appicon_512x512.png"));
+  }
 
   // open on left click on windows
   if (process.platform == "win32") {
@@ -142,4 +149,13 @@ ipcMain.on("createTray", (evt, args) => {
 
   tray.setContextMenu(menu);
   tray.setToolTip("Lister");
+});
+
+ipcMain.on("requestSystem", (evt, args) => {
+  win.webContents.send("system", {
+    dirname: path.join(__dirname, "../"),
+    os: process.platform,
+    versions: process.versions,
+    touchid: process.platform == "darwin" ? systemPreferences.canPromptTouchID() : false,
+  });
 });

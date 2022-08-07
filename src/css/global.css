@@ -80,8 +80,10 @@ body {
 }
 
 #content {
-  padding: calc(24px + var(--menubarheight)) 64px 0 var(--gutterwidth);
+  padding: calc(var(--filecontentmargintop) + var(--menubarheight)) var(--filecontentmargin) 0 calc( var(--filecontentmargin) - var(--gutterwidth) - 8px);
   margin-left: var(--sidenavwidth);
+  display: flex;
+  justify-content: center;
 }
 .box {
   background-color: var(--bg3);

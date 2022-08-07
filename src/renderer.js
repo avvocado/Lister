@@ -35,12 +35,15 @@ document.getElementById("pswdinput").addEventListener("keydown", function (e) {
 function init() {
   // request files from main & create tray
   window.api.send("requestFiles", "");
+  window.api.send("requestSystem", "");
   window.api.send("createTray", "");
 }
 
 function start() {
   // called after receiving files.json
   generateSidenav();
+
+  console.log(system)
 }
 
 // generates menubar for the file

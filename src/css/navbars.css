@@ -157,6 +157,7 @@
 
 #menubar #osbtns {
   margin-right: 6px;
+  display: none;
 }
 
 #menubar #fileactions {
@@ -169,7 +170,7 @@
 }
 
 #menubar #path {
-  margin-left: calc(var(--sidenavwidth) + 8px);
+  margin-left: calc(var(--sidenavwidth) + 10px);
   font-size: 0;
 }
 #menubar #path .path.folder:empty:before {

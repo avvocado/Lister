@@ -17,6 +17,11 @@
   margin-bottom: 2px;
 }
 
+#filecontainer {
+  flex-grow: 1;
+  max-width: calc(var(--maxfilecontentwidth) + 8px + var(--gutterwidth));
+}
+
 #filecontainer .filecontent .newblockbtns .newblockbtn {
   background-color: transparent;
   padding: 4px 8px 4px 27px;
@@ -84,12 +89,11 @@
 
 #filecontainer .block {
   flex-grow: 1;
-
 }
 
 #filecontainer .block.inline {
   vertical-align: top;
-  }
+}
 
 #filecontainer .block.inline_code {
   background-color: var(--bg1);
@@ -98,12 +102,6 @@
   font-family: consolasfont;
   display: inline;
   padding: 1px 4px 1px 4px;
-}
-
-#filecontainer .block.inline_code:empty:before {
-  content: "Text Block";
-  color: var(--text3);
-  pointer-events: none;
 }
 
 #filecontainer .block.text {

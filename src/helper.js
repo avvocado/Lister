@@ -3,6 +3,9 @@
 // main list of folders & files
 var files = {};
 
+// system and app info
+var system = {}
+
 var appstate = {
   // index of the file the user is looking at currently
   activefile: [-1, -1],
