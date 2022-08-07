@@ -57,7 +57,7 @@
 }
 
 #filecontainer .filecontent .filename {
-  color: var(--text6);
+  color: var(--text8);
   font-size: 24px;
   letter-spacing: 0.025em;
   font-weight: bold;
@@ -65,7 +65,7 @@
 }
 
 #filecontainer .filecontent .filename:empty:before {
-  color: var(--text3);
+  color: var(--text4);
   content: "Untitled File";
   pointer-events: none;
 }
@@ -92,7 +92,7 @@
 }
 
 #filecontainer .block.inline {
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 #filecontainer .block.inline_code {
@@ -101,6 +101,7 @@
   border-radius: 3px;
   font-family: consolasfont;
   display: inline;
+  color: var(--text6);
   padding: 1px 4px 1px 4px;
 }
 
@@ -108,18 +109,18 @@
   overflow-x: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
-  color: var(--text5);
+  color: var(--text7);
   font-size: 16px;
 }
 
 #filecontainer .block.text:empty:before {
   content: "Text Block";
-  color: var(--text3);
+  color: var(--text4);
   pointer-events: none;
 }
 
 #filecontainer .block.code {
-  color: var(--text4);
+  color: var(--text6);
   font-family: consolasfont;
   background-color: var(--bg1);
   padding: 8px 16px;
@@ -130,7 +131,7 @@
 
 #filecontainer .block.code:empty:before {
   content: "Code Block";
-  color: var(--text3);
+  color: var(--text4);
   pointer-events: none;
 }
 
@@ -138,13 +139,13 @@
   overflow-x: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
-  color: var(--text6);
+  color: var(--text8);
   font-size: 20px;
 }
 
 #filecontainer .block.heading:empty:before {
   content: "Heading";
-  color: var(--text3);
+  color: var(--text4);
   pointer-events: none;
 }
 

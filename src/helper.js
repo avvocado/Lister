@@ -39,7 +39,7 @@ var inlineBlockTypes = [
     name: "Code",
     type: "inline_code",
     icon: "block_code",
-    allowedparents: ["text"],
+    allowedparents: ["text", 'heading'],
   },
 ];
 
@@ -193,16 +193,14 @@ function deleteFolder(p) {
 }
 
 function newBlock(p, c, b, type) {
-  let d = new Date();
+  let d= new Date()
   if (type == "text" || type == "heading" || type == "code") {
     files[p].files[c].blocks.splice(b, 0, {
-      creationdate: d.getTime(),
       type: type,
       text: newTextBlockText,
     });
   } else if (type == "divider") {
     files[p].files[c].blocks.splice(b, 0, {
-      creationdate: d.getTime(),
       type: type,
     });
   } else if (type == "inline_code") {

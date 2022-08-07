@@ -260,7 +260,7 @@ function generateFile(p, c) {
       block.onkeydown = function (e) {
         // exit on enter key with no shift
         // user can use lshift+enter to make a new line and not exit
-        if (e.code == "Enter" && keyMap.ShiftLeft == false) {
+        if (e.code == "Enter" && keyMap.ShiftLeft != true) {
           this.blur();
         }
       };
