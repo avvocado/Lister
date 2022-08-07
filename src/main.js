@@ -26,7 +26,7 @@ const createWindow = () => {
     backgroundColor: "white",
     darkTheme: true,
     show: false,
-    titleBarStyle: "hidden-inset" /* inset the macos buttons */,
+    titleBarStyle: "hiddenInset" /* inset the macos buttons */,
   });
 
   // and load the index.html of the app.
