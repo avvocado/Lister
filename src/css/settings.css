@@ -1,0 +1,52 @@
+.title {
+  color: var(--filenametextcolor);
+  font-size: 24px;
+  letter-spacing: 0.025em;
+  flex-grow: 1;
+  font-weight: bold;
+  width: 100%;
+}
+
+#settings {
+  padding-left: calc(var(--gutterwidth) + 8px);
+  display: none;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.settingsdiv {
+  border: 2px solid var(--bg1);
+  border-radius: 8px;
+  margin-top: 16px;
+  transition: 100ms;
+  padding: 16px 16px;
+  flex-grow: 1;
+}
+
+.settingsdiv .head {
+  color: var(--headingblocktextcolor);
+  font-size: 18px;
+  letter-spacing: 0.01em;
+}
+
+.settingsdiv .settingsoption {
+  width: 100%;
+transition: 100ms;
+    border-radius: 6px;
+  background-color: var(--bg3);
+  padding: 8px 16px 8px 32px;
+  color: var(--settingstextcolor);
+  background-position: 8px center;
+  background-size: 16px 16px;
+  margin-top: 8px;
+  border: 2px solid transparent;
+}
+
+.settingsdiv .settingsoption:hover {
+  border: 2px solid var(--bg1);
+
+}
+
+.settingsdiv .settingsoption.active {
+  border: 2px solid var(--green);
+}

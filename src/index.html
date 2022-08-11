@@ -16,16 +16,19 @@
   <!-- css for files -->
   <link rel="stylesheet" href="css/files.css">
 
+  <!-- css for settings -->
+  <link rel="stylesheet" href="css/settings.css">
+
   <title>Lister</title>
 </head>
 
 <body>
-  <div id="app">
+  <div id="app" style="display: none;">
 
     <!-- block menu -->
     <div id="blockmenu">
       <p class="header">BLOCK ACTIONS</p>
-      <button id="deleteblockbtn" style="background-image: url('../assets/icons/trash_4.svg')">Delete</button>
+      <button id="deleteblockbtn" class="newblockbtn">Delete</button>
       <p class="header" style="margin-top:4px">INSERT ABOVE</p>
       <div id="newblockbtns"></div>
       <p class="header inline-blocks" style="margin-top:4px; display: none;">INLINE BLOCKS</p>
@@ -35,12 +38,13 @@
 
     <!-- tooltip -->
     <div id="tooltip">
-        <p id="text"></p>
-        <p id="shortcut"></p>
+      <p id="text"></p>
+      <p id="shortcut"></p>
     </div>
 
     <!-- sidenav -->
     <div id="sidenav">
+      <button id="settingsbtn">Settings</button>
       <p class="header">FILES</p>
       <!-- inject file buttons here -->
       <div id="filebtns"></div>
@@ -54,23 +58,37 @@
       <div id="lastedited"></div>
       <!-- file action buttons injected here -->
       <div id="fileactions"></div>
-      <!-- buttons for closing & minimizing -->
-      <div id="osbtns">
+      <!-- buttons for closing & minimizing on windows -->
+      <div id="winbtns">
         <button id="minimizebtn" style="background-image: url(' ../assets/icons/navbars/minimize.svg');"></button>
         <button id="closebtn" style="background-image: url(' ../assets/icons/navbars/x.svg');"></button>
       </div>
-
 
     </div>
 
     <!-- main content -->
     <div id="content">
+
       <!-- show this if the file is locked -->
       <div id="lockedfile">
         <p>This File is Locked</p>
         <div>
           <input id="pswdinput" spellcheck="false" type='password' placeholder="Password...">
           <button id="pswdsubmit"></button>
+        </div>
+      </div>
+      <!-- settings -->
+      <div id="settings">
+        <p class="title">Settings</p>
+        <div class="settingsdiv">
+          <p class="head">Theme</p>
+          <button style="background-image: url('../assets/icons/settings/light.svg');" class='settingsoption light themebtn' onclick="theme('light')">Light</button>
+          <button style="background-image: url('../assets/icons/settings/dark.svg');" class='settingsoption themebtn dark' onclick="theme('dark')">Dark</button>
+          <button style="background-image: url('../assets/icons/settings/default.svg');" class='settingsoption themebtn default' onclick="theme('default')">Default (OS Settings)</button>
+          <button style="background-image: url('../assets/icons/settings/auto.svg');" class='settingsoption auto themebtn' onclick="theme('auto')">Auto (Time Based)</button>
+        </div>
+        <div class="settingsdiv">
+          <p class="head">Reset Settings</p>
         </div>
       </div>
       <!-- inject active file here from js -->

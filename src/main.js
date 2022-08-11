@@ -1,7 +1,18 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Tray, Menu, shell, ipcMain, dialog, systemPreferences } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  Tray,
+  Menu,
+  shell,
+  ipcMain,
+  dialog,
+  ShareMenu,
+  systemPreferences,
+  nativeTheme,
+} = require("electron");
 const path = require("path");
 const fs = require("fs");
 
@@ -23,10 +34,10 @@ const createWindow = () => {
     resizable: true,
     frame: false,
     icon: path.join(__dirname, "../", "/assets", "/appicons", "appicon_512x512.png"),
-    backgroundColor: "white",
+    backgroundColor: "#181b1f",
     darkTheme: true,
     show: false,
-    titleBarStyle: "hiddenInset" /* inset the macos buttons */,
+    titleBarStyle: "hidden" /* inset the macos buttons */,
   });
 
   // and load the index.html of the app.
@@ -39,13 +50,9 @@ const createWindow = () => {
     return { action: "deny" };
   });
 
-  if (process.platform !== "darwin") {
-    win.once("ready-to-show", () => {
-      win.show();
-    });
-  } else {
+  win.once("ready-to-show", () => {
     win.show();
-  }
+  });
 
   console.log("created main window");
 };
@@ -59,7 +66,7 @@ if (!gotTheLock) {
   app.on("second-instance", (event, commandLine, workingDirectory) => {
     // Someone tried to run a second instance, we should focus our window.
     if (win) {
-      console.log("app opened");
+      console.log("2nd instance opened, focusing main one");
       if (win.isMinimized()) {
         win.restore();
       }
@@ -103,8 +110,23 @@ ipcMain.on("requestFiles", (evt, args) => {
   });
 });
 
+ipcMain.on("requestSettings", (evt, args) => {
+  fs.readFile(path.join(__dirname, "../", "/resources/", "settings.json"), (err, data) => {
+    // return the contents of files.json
+    win.webContents.send("settings", JSON.parse(data));
+  });
+});
+
 ipcMain.on("writeFiles", (evt, args) => {
   fs.writeFile(path.join(__dirname, "../", "/resources/", "files.json"), args, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
+ipcMain.on("writeSettings", (evt, args) => {
+  fs.writeFile(path.join(__dirname, "../", "/resources/", "settings.json"), args, (err) => {
     if (err) {
       console.log(err);
     }
@@ -137,6 +159,16 @@ ipcMain.on("createTray", (evt, args) => {
         win.show();
       },
     },
+    {
+      label: "Settings",
+      click: function () {
+        win.show()
+        let s = new ShareMenu(["hello"]);
+
+        s.popup()
+        win.webContents.send("settingspage", null);
+      },
+    },
     { type: "separator" },
     {
       label: "Quit",
@@ -157,5 +189,9 @@ ipcMain.on("requestSystem", (evt, args) => {
     os: process.platform,
     versions: process.versions,
     touchid: process.platform == "darwin" ? systemPreferences.canPromptTouchID() : false,
+    darktheme: nativeTheme.shouldUseDarkColors,
+    highcontrast: nativeTheme.shouldUseHighContrastColors,
+    accentcolor: systemPreferences.getAccentColor(),
+    username: process.env.LOGNAME,
   });
 });

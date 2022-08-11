@@ -6,119 +6,168 @@
   padding: var(--menubarheight) 12px 0 12px;
   overflow-x: hidden;
   flex-shrink: 0;
+  transition: background-color 100ms;
   flex-grow: 0;
   z-index: 2;
   flex-direction: column;
   display: flex;
-  transition: 100ms;
   width: calc(var(--sidenavwidth) - 24px);
 }
 #sidenav .header {
-  color: var(--text4);
-}
-
-#sidenav #filebtns .sidenavbtn {
-  width: 100%;
-  margin: 0;
-  background-size: auto 16px;
-  background-color: var(--bg1);
-  border-radius: 6px;
-  font-size: 16px;
-}
-
-#sidenav #filebtns .sidenavbtn.file.active {
-  background-color: var(--green);
-  color: var(--textwhite);
-  background-image: url("../../assets/icons/navbars//dot1.svg");
+  color: var(--sidenavheadertextcolor);
+  margin-bottom: 2px;
+  user-select: none;
+  letter-spacing: 0.4px;
+  font-weight: bold;
+  display: block;
+  font-size: 12px;
 }
 
 #sidenav #filebtns .sidenavbtn.file.locked {
-  background-image: url("../../assets/icons/navbars/dot.svg"),url("../../assets/icons/navbars/lock_small.svg");
+  background-image: url("../../assets/icons/navbars/dot.svg"), url("../../assets/icons/navbars/lock_small.svg");
   background-position: 1px 2px, calc(100% - 4px) 2px;
-
-
 }
 #sidenav #filebtns .sidenavbtn.file.locked.active {
-  background-image: url("../../assets/icons/navbars/dot1.svg"),url("../../assets/icons/navbars/lock_small1.svg");
+  background-image: url("../../assets/icons/navbars/dot1.svg"), url("../../assets/icons/navbars/lock_small1.svg");
 }
 
+#sidenav #settingsbtn {
+  font-size: 13.3px;
+  width: 100%;
+  background-color: transparent;
+  transition: background-color 100ms;
+  border-radius: 6px;
+  padding: 1px 4px 1px 20px;
+  color: var(--sidenavfilebtntextcolor);
+  margin-bottom: 16px;
+  text-align: left;
+  background-image: url("../../assets/icons/settings.svg");
+  background-position: 2px 1px;
+  background-size: 15px 15px;
+  user-select: none;
+}
 
+#sidenav #settingsbtn:hover {
+  background-color: var(--bg2);
+}
 
-#sidenav #filebtns .folderbtn {
+#sidenav #filebtns {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#sidenav #filebtns .filebtndiv {
   display: flex;
   width: 100%;
-  margin: 0;
-  background-size: auto 16px;
-  background-color: var(--bg1);
-  font-size: 16px;
-  margin: 8px 0 2px 0;
-}
-
-#sidenav #filebtns .folderbtn .folder {
-  padding-left: 18px;
-  font-size: 16px;
-  background-position: 0 1px; 
   flex-grow: 1;
-  background-color: var(--bg1);
-  color: var(--text5);
+  background-color: transparent;
+  transition: background-color 100ms;
+  user-select: none;
+  min-width: 0;
+  border-radius: 6px;
+  padding: 1px 1px 1px 1px;
 }
 
-#sidenav #filebtns .folderbtn .newfile {
+#sidenav #filebtns .filebtndiv:hover {
+  background-color: var(--bg2);
+}
+
+#sidenav #filebtns .filebtndiv .filebtn {
+  background-color: transparent;
+  flex-grow: 1;
+  user-select: none;
+  text-overflow: ellipsis;
+  color: var(--sidenavfilebtntextcolor);
+  white-space: nowrap;
+  text-align: left;
+  overflow: hidden;
+}
+
+#sidenav #filebtns .filebtndiv .collapsebtn {
+  width: 16px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-color: transparent;
+}
+
+[theme="light"] #sidenav #filebtns .filebtndiv .collapsebtn.right {
+  background-image: url("../../assets/icons/sidenav/caret_right_l.svg");
+}
+
+[theme="light"] #sidenav #filebtns .filebtndiv .collapsebtn.down {
+  background-image: url("../../assets/icons/sidenav/caret_down_l.svg");
+}
+
+[theme="dark"] #sidenav #filebtns .filebtndiv .collapsebtn.right {
+  background-image: url("../../assets/icons/sidenav/caret_right_d.svg");
+}
+
+[theme="dark"] #sidenav #filebtns .filebtndiv .collapsebtn.down {
+  background-image: url("../../assets/icons/sidenav/caret_down_d.svg");
+}
+
+#sidenav #filebtns .filebtndiv .collapsebtn.off {
+  opacity: 0;
+}
+
+#sidenav #filebtns .childfiles {
+  background-color: transparent;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+#sidenav #filebtns .filebtndiv.active {
+  background-color: var(--green);
+  color: var(--textwhite);
+}
+
+#sidenav #filebtns .filebtndiv.active .filebtn {
+  color: var(--textwhite);
+}
+
+#sidenav #filebtns .filebtndiv .newfilebtn {
+  width: 16px;
+  background-size: cover;
+  margin-left: 1px;
+  min-width: 16px;
+  visibility: hidden;
+  border-radius: 6px;
   background-color: transparent;
   background-image: url("../../assets/icons/navbars/plus.svg");
-  background-position: 0px 0px;
-  background-size: contain;
-  width: 18px;
-  display: none;
-}
-#sidenav #filebtns .folderbtn .newfile:hover {
-  background-color: var(--bg2);
-  border-radius: 4px;
 }
 
-
-#sidenav #filebtns .folderbtn:hover .newfile {
-  display: inline-block;
+[theme="light"] #sidenav #filebtns .filebtndiv .newfilebtn {
+  background-image: url("../../assets/icons/sidenav/plus_l.svg");
 }
 
-#sidenav #filebtns .folderbtn .folder.down {
-  background-image: url("../../assets/icons/navbars/caretDown.svg");
+[theme="dark"] #sidenav #filebtns .filebtndiv .newfilebtn {
+  background-image: url("../../assets/icons/sidenav/plus_d.svg");
 }
 
-#sidenav #filebtns .folderbtn .folder.right {
-  background-image: url("../../assets/icons/navbars/caretRight.svg");
+#sidenav #filebtns .filebtndiv:hover .newfilebtn {
+  visibility: visible;
 }
 
-#sidenav #filebtns .sidenavbtn.file {
-  background-image: url("../../assets/icons/navbars/dot.svg");
-  background-position: 1px 2px;
-  width: 100%;
-  padding: 2px 0 2px 18px;
-  color: var(--text4);
-  font-size: 14px;
+#sidenav #filebtns .filebtndiv .newfilebtn:hover {
+  background-color: var(--bg4);
 }
 
-#sidenav #filebtns .sidenavbtn.newfolder {
-  background-image: url("../../assets/icons/navbars/plus.svg");
-  background-position: 0px -1px;
-  padding-left: 18px;
-  margin-top: 12px;
-  font-size: 12px;
-  color: var(--text4);
+#sidenav #filebtns .filebtndiv.active .newfilebtn:hover {
+  background-color: var(--green);
 }
 
 #menubar {
-  border-bottom: 2px solid var(--bg1);
   width: 100vw;
   -webkit-app-region: drag;
   background-color: var(--bg2);
   position: fixed;
+  transition: background-color 100ms;
   height: var(--menubarheight);
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   gap: 16px;
-  color: var(--text4);
 }
 
 #menubar div {
@@ -128,7 +177,7 @@
   height: 100%;
 }
 
-#menubar button {
+#menubar #fileactions button {
   margin: 0;
   min-width: calc(var(--menubarheight) - 4px);
   border-radius: 4px;
@@ -139,23 +188,20 @@
   background-size: 20px 20px;
   background-color: transparent;
   transition: 100ms;
-  color: var(--text4);
 }
 
-#menubar p, #menubar button {
+#menubar p,
+#menubar button {
   -webkit-app-region: no-drag;
   font-size: 12px;
+  color: var(--menubartextcolor);
 }
 
-#menubar button:hover {
-  background-color: var(--bg3);
-}
-
-#menubar button:active {
+#menubar #fileactions button:hover {
   background-color: var(--bg4);
 }
 
-#menubar #osbtns {
+#menubar #winbtns {
   margin-right: 6px;
   display: none;
 }
@@ -166,33 +212,40 @@
 
 #menubar #fileactions button {
   background-size: 14px 14px;
-
 }
 
 #menubar #path {
   margin-left: calc(var(--sidenavwidth) + 10px);
   font-size: 0;
 }
-#menubar #path .path.folder:empty:before {
-  color: var(--text3);
-  content: "Untitled Folder";
-  pointer-events: none;
+
+#menubar #path .pathbtn {
+  border-radius: 3px;
+  height: 100%;
+  background-color: transparent;
 }
 
-
-#menubar #path .path.file:empty:before {
-  color: var(--text3);
-  content: "Untitled File";
-  pointer-events: none;
+#menubar #path .pathbtn:hover {
+  text-decoration: underline;
 }
 
-#menubar #path .path.slash {
+#menubar #path .slash {
   font-size: 18px;
   margin: 0 4px 0 4px;
-  color: var(--text3);
+  color: var(--placeholdercolor);
 }
 
 #menubar #lastedited {
-  justify-content: center;
-  flex-grow: 1;
+  /* center on file */
+  position: absolute;
+  left: calc(((100vw - var(--sidenavwidth)) / 2) + var(--sidenavwidth));
+  transform: translateX(-50%);
+}
+
+[theme="light"] #menubar #fileactions .delfilebtn {
+  background-image: url("../../assets/icons/menubar/trash_l.svg");
+}
+
+[theme="dark"] #menubar #fileactions .delfilebtn {
+  background-image: url("../../assets/icons/menubar/trash_d.svg");
 }

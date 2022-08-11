@@ -2,8 +2,9 @@
   display: none;
   position: absolute;
   flex-direction: column;
-  background-color: var(--bg4);
+  background-color: var(--bg3);
   border-radius: 4px;
+  border: 1px solid var(--bg1);
   padding: 8px;
 }
 
@@ -13,42 +14,51 @@
 }
 
 #blockmenu .header {
-  color: var(--text4);
+  color: var(--sidenavheadertextcolor);
   margin-bottom: 2px;
+  user-select: none;
+  letter-spacing: 0.4px;
+  font-weight: bold;
+  display: block;
+  font-size: 12px;
 }
 
 #filecontainer {
   flex-grow: 1;
+  transition: background-color 100ms;
+  overflow: hidden;
   max-width: calc(var(--maxfilecontentwidth) + 8px + var(--gutterwidth));
 }
 
-#filecontainer .filecontent .newblockbtns .newblockbtn {
-  background-color: transparent;
-  padding: 4px 8px 4px 27px;
-  border-radius: 4px;
-  background-size: 14px 14px;
-  transition: 100ms;
-  background-position: 8px 4px;
-  color: var(--text4);
+#filecontainer .filecontent #newblockbtns {
+  margin-left: calc(var(--gutterwidth) + 8px);
 }
 
-#blockmenu button {
+
+
+ .newblockbtn {
   background-color: transparent;
-  padding: 4px 8px 4px 27px;
+  padding: 4px 8px 4px 30px;
   border-radius: 4px;
   background-size: 14px 14px;
   transition: 100ms;
   background-position: 8px 4px;
-  color: var(--text5);
+  color: var(--bottomnewblockbtntextcolor);
 }
-#blockmenu button:hover {
+
+#blockmenu .newblockbtn:hover {
   background-color: var(--bg4);
-  color: var(--text5);
 }
+
+#filecontainer .filecontent #newblockbtns .newblockbtn:hover {
+  background-color: var(--bg3);
+}
+
 
 #filecontainer .filecontent .newblockbtns {
   margin-left: calc(var(--gutterwidth) + 8px);
-  margin-top: 16px;
+  margin-top: -48px;
+  padding-bottom: 32px;
 }
 
 #filecontainer .filecontent {
@@ -57,7 +67,7 @@
 }
 
 #filecontainer .filecontent .filename {
-  color: var(--text8);
+  color: var(--filenametextcolor);
   font-size: 24px;
   letter-spacing: 0.025em;
   font-weight: bold;
@@ -65,7 +75,7 @@
 }
 
 #filecontainer .filecontent .filename:empty:before {
-  color: var(--text4);
+  color: var(--placeholdercolor);
   content: "Untitled File";
   pointer-events: none;
 }
@@ -73,7 +83,7 @@
 #filecontainer .filecontent .fileblocks {
   display: flex;
   flex-direction: column;
-  margin-top: 16px;
+  margin: 16px 0 16px 0;
   gap: 8px;
 }
 
@@ -101,7 +111,7 @@
   border-radius: 3px;
   font-family: consolasfont;
   display: inline;
-  color: var(--text6);
+  color: var(--codeblocktextcolor);
   padding: 1px 4px 1px 4px;
 }
 
@@ -109,18 +119,18 @@
   overflow-x: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
-  color: var(--text7);
+  color: var(--textblocktextcolor);
   font-size: 16px;
 }
 
 #filecontainer .block.text:empty:before {
   content: "Text Block";
-  color: var(--text4);
+  color: var(--placeholdercolor);
   pointer-events: none;
 }
 
 #filecontainer .block.code {
-  color: var(--text6);
+  color: var(--codeblocktextcolor);
   font-family: consolasfont;
   background-color: var(--bg1);
   padding: 8px 16px;
@@ -131,7 +141,7 @@
 
 #filecontainer .block.code:empty:before {
   content: "Code Block";
-  color: var(--text4);
+  color: var(--placeholdercolor);
   pointer-events: none;
 }
 
@@ -139,18 +149,18 @@
   overflow-x: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
-  color: var(--text8);
+  color: var(--headingblocktextcolor);
   font-size: 20px;
 }
 
 #filecontainer .block.heading:empty:before {
   content: "Heading";
-  color: var(--text4);
+  color: var(--placeholdercolor);
   pointer-events: none;
 }
 
 #filecontainer .block.divider {
-  border-top: 2px solid var(--bg4);
+  border-top: 2px solid var(--dividerblockcolor);
   height: 0;
 }
 
@@ -160,8 +170,27 @@
   visibility: hidden;
   background-size: 14px;
   align-self: flex-start;
+  transition: 100ms;
   border-radius: 4px;
   background-color: transparent;
+}
+
+#filecontainer .blockmenubtn.active {
+  visibility: visible;
+  background-color: var(--bg3);
+}
+
+#filecontainer .blockmenubtn.active:hover {
+  background-color: var(--bg4);
+}
+
+[theme='light'] #filecontainer .blockmenubtn {
+background-image: url('../../assets/icons/dots_l.svg');
+}
+
+[theme='dark'] #filecontainer .blockmenubtn {
+background-image: url('../../assets/icons/dots_d.svg');
+  
 }
 #filecontainer .blockmenubtn:hover {
   background-color: var(--bg3);
@@ -169,10 +198,6 @@
 
 #filecontainer .blockmenubtn:active {
   background-color: var(--bg4);
-}
-#filecontainer .filecontent .newblockbtns .newblockbtn:hover {
-  background-color: var(--bg3);
-  color: var(--text5);
 }
 
 /* tags */

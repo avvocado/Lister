@@ -46,7 +46,6 @@ select {
 
 *[contenteditable="true"]:empty:before {
   content: "...";
-  color: var(--text3);
   pointer-events: none;
 }
 
@@ -77,21 +76,16 @@ a {
 
 body {
   background-color: var(--bg2);
+  transition: background-color 100ms;
+
 }
 
 #content {
   padding: calc(var(--filecontentmargintop) + var(--menubarheight)) var(--filecontentmargin) 0 calc( var(--filecontentmargin) - var(--gutterwidth) - 8px);
   margin-left: var(--sidenavwidth);
   display: flex;
+  transition: background-color 100ms;
   justify-content: center;
-}
-.box {
-  background-color: var(--bg3);
-  box-shadow: 0 0 4px 0 var(--bg1);
-  border: 1px solid transparent;
-  border-radius: 8px;
-  padding: 16px;
-  vertical-align: top;
 }
 
 #appstate.activefile {
@@ -102,13 +96,3 @@ body {
   flex-wrap: wrap;
 }
 
-.header {
-  flex-grow: 0;
-  user-select: none;
-  letter-spacing: 0.4px;
-  font-weight: bold;
-  display: block;
-  transform: translateY(2px);
-  font-size: 12px;
-  margin: 0 0 -4px 0;
-}

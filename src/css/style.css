@@ -1,15 +1,8 @@
 :root {
-  --bg1: #131519;
-  --bg2: #181b1f;
-  --bg3: #1e2023;
-  --bg4: #232528;
-  --text3: #303030;
-  --text4: #404040;
-  --text5: #505050;
-  --text6: #606060;
-  --text7: #707070;
-  --text8: #808080;
-  --textwhite: #cecece;
+  --text2: #404040;
+  --text3: #505050;
+
+  /* general colors */
   --green: #009966;
   --selection: #0099662f;
   --greentransparent: #0099661a;
@@ -19,17 +12,69 @@
   --bluetransparent: #4a73db1a;
   --red: #bf2d4b;
   --redtransparent: #bf2d4b1a;
-  --sidenavwidth: 180px; /* width of sidenav */
-  --menubarheight: 32px; /* height of menubar */
-  --gutterwidth: 28px; /* width of file gutter (column with block menu button) */
+
+  --dividerblockcolor: var(--bg4);
+
+  /* sizing */
   --maxfilecontentwidth: 800px; /* max width of file content (doesn't include the gutter) */
+  --gutterwidth: 28px; /* width of file gutter (column with block menu button) */
   --filecontentmargintop: 3vw; /* margin top of the file content */
   --filecontentmargin: 64px; /* margin between file content and sidenav & edge of window*/
+  --sidenavwidth: 180px;
+  --menubarheight: 32px;
+}
+
+[theme="dark"] {
+  /* background */
+  --bg1: #131519;
+  --bg2: #181b1f;
+  --bg3: #1e2023;
+  --bg4: #232528;
+  /* file */
+  --filenametextcolor: #707070;
+  --headingblocktextcolor: #606060;
+  --textblocktextcolor: #505050;
+  --codeblocktextcolor: #505050;
+  --bottomnewblockbtntextcolor: #505050;
+  /* menubar */
+  --menubartextcolor: #505050;
+  /* sidenav */
+  --sidenavheadertextcolor: #404040;
+  --sidenavfilebtntextcolor: #505050;
+  /* settings */
+  --settingstextcolor: #505050;
+  /* other */
+  --placeholdercolor: #303030;
+  --textwhite: #cecece;
+}
+
+[theme="light"] {
+  /* background */
+  --bg1: #eaeaea;
+  --bg2: #f0f0f0;
+  --bg3: #f8f8f8;
+  --bg4: #ffffff;
+  /* file */
+  --filenametextcolor: #404040;
+  --headingblocktextcolor: #505050;
+  --textblocktextcolor: #606060;
+  --codeblocktextcolor: #606060;
+  --bottomnewblockbtntextcolor: #606060;
+  /* menubar */
+  --menubartextcolor: #606060;
+  /* sidenav */
+  --sidenavheadertextcolor: #707070;
+  --sidenavfilebtntextcolor: #606060;
+  /* settings */
+  --settingstextcolor: #606060;
+  /* other */
+  --placeholdercolor: #c0c0c0;
+  --textwhite: #eaeaea;
 }
 
 #lockedfile {
   font-size: 20px;
-  color: var(--text4);
+  color: var(--text2);
   display: none;
   width: 100%;
   flex-wrap: wrap;
@@ -58,7 +103,7 @@
 
 #lockedfile #pswdinput {
   height: 20px;
-  color: var(--text5);
+  color: var(--text3);
   border-radius: 20px;
   padding: 1px 10px;
   width: 164px;
@@ -66,7 +111,7 @@
 }
 
 #lockedfile #pswdinput::placeholder {
-  color: var(--text4);
+  color: var(--text2);
 }
 
 #lockedfile div {
@@ -87,7 +132,7 @@
 }
 
 #tooltip #text {
-  color: var(--text5);
+  color: var(--text3);
   font-size: 14px;
 }
 
@@ -95,5 +140,5 @@
   margin-top: 2px;
   font-size: 12px;
   font-weight: bold;
-  color: var(--text4);
+  color: var(--text2);
 }
