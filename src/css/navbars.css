@@ -19,7 +19,7 @@
   user-select: none;
   letter-spacing: 0.4px;
   font-weight: bold;
-  display: block;
+  display: inline-block;
   font-size: 12px;
 }
 
@@ -65,7 +65,7 @@
   user-select: none;
   min-width: 0;
   border-radius: 6px;
-  padding: 1px 1px 1px 1px;
+  padding: 2px 1px 2px 1px;
 }
 
 #sidenav #filebtns .filebtndiv:hover {
@@ -125,6 +125,29 @@
 #sidenav #filebtns .filebtndiv.active .filebtn {
   color: var(--textwhite);
 }
+
+#sidenav #newrootfile{
+  width: 16px;
+  float: right;
+  border-radius: 4px;
+  height: 16px;
+  background-color: transparent;
+  background-size: contain;
+}
+
+#sidenav #newrootfile:hover{
+  background-color: var(--bg2);
+}
+
+[theme="light"] #sidenav #newrootfile {
+  background-image: url("../../assets/icons/sidenav/plus_l.svg");
+}
+
+
+[theme="dark"] #sidenav #newrootfile {
+  background-image: url("../../assets/icons/sidenav/plus_d.svg");
+}
+
 
 #sidenav #filebtns .filebtndiv .newfilebtn {
   width: 16px;

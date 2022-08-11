@@ -32,7 +32,7 @@ var collapseState = [false, false, false];
 
 // new object defaults
 var newFolderName = "Folder";
-var newFileName = "File";
+var newFileName = "";
 var newTextBlockText = "";
 var newHeadingBlockText = "";
 var newCodeBlockText = "";
@@ -209,13 +209,21 @@ function editingFile(val, p, c) {
 
 function hideBlockMenu() {
   document.querySelector("#blockmenu").style.display = "none";
-  document.querySelector(".blockmenubtn.active").classList.remove("active");
+  try {
+    document.querySelector(".blockmenubtn.active").classList.remove("active");
+  } catch (err) {}
 }
 
 function deleteFile(path) {
-  let temp = path.pop();
-  let parent = getIndex(path);
-  parent.children.splice(temp, 1);
+  if (path.length == 1) {
+    console.log(path);
+    // root file
+    files.splice(path[0], 1);
+  } else {
+    let temp = path.pop();
+    let parent = getIndex(path);
+    parent.children.splice(temp, 1);
+  }
   writeFiles();
   generateSidenav();
 }
@@ -354,19 +362,38 @@ function deleteBlock(index, b) {
 
 function newFile(index) {
   let d = new Date();
-  if (index.children == null) {
-    index.children = [];
+  if (index == files) {
+    files.push({
+      name: newFileName,
+      creationdate: d.getTime(),
+      lastedited: d.getTime(),
+      path: [files.length],
+      starred: false,
+      locked: false,
+      blocks: [],
+      children: [],
+    });
+  newBlock(files[index.length - 1], 0, "text");
+
+  } else {
+    if (index.children == null) {
+      index.children = [];
+    }
+    index.children.push({
+      name: newFileName,
+      creationdate: d.getTime(),
+      lastedited: d.getTime(),
+      path: index.path.concat(index.children.length),
+      starred: false,
+      locked: false,
+      blocks: [],
+      children: [],
+    });
+    // text block to start with
+  newBlock(index.children[index.children.length - 1], 0, "text");
   }
-  index.children.push({
-    name: newFileName,
-    creationdate: d.getTime(),
-    lastedited: d.getTime(),
-    path: index.path.concat(index.children.length),
-    starred: false,
-    locked: false,
-    blocks: [],
-    children: [],
-  });
+
+  
 
   writeFiles();
   generateSidenav();

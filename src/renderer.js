@@ -188,6 +188,7 @@ function gotoFile(index) {
 
   generateFile(index);
   generateMenubar(index);
+  hideBlockMenu()
   // handleSidenavBtn(index);
 }
 
@@ -258,7 +259,7 @@ function generateSidenavBtn(index, path) {
   fileBtnDiv.append(newFileBtn);
 
   // indenting child files
-  fileBtnDiv.style.padding = `1px 1px 1px ${1 + filetreeindent * (index.path.length - 1)}px`;
+  fileBtnDiv.style.padding = `2px 1px 2px ${1 + filetreeindent * (index.path.length - 1)}px`;
 
   if (index.children != null && index.children.length > 0) {
     // has children
