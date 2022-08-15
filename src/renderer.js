@@ -11,6 +11,31 @@ document.getElementById("settingsbtn").addEventListener("click", function () {
   showSettings();
 });
 
+document.getElementById("togglesidenavbtn").addEventListener("click", function () {
+  if (document.querySelector("#sidenav").style.display == "none") {
+    // show
+    document.querySelector("#sidenav").style.display = "flex";
+    document.querySelector("#content").style.marginLeft = "var(--sidenavwidth)";
+    document.querySelector("#leftbtns").style.marginLeft = "var(--sidenavwidth)";
+  } else {
+    // hide
+    document.querySelector("#sidenav").style.display = "none";
+    document.querySelector("#content").style.marginLeft = "0";
+    document.querySelector("#leftbtns").style.marginLeft = "62px";
+  }
+});
+
+document.getElementById("openresources").addEventListener("click", function () {
+  window.api.send("openResources", "");
+});
+
+document.getElementById("filetreeindentslider").addEventListener("click", function () {
+  settings.filetreeindentation = document.querySelector("#filetreeindentslider").value;
+  document.querySelector("#filetreeindentdisplay").innerHTML = "(" + settings.filetreeindentation + "px)";
+  writeSettings();
+  generateSidenav();
+});
+
 // init
 function init() {
   // request files from main & create tray
@@ -68,6 +93,34 @@ function generateFile(index) {
 
   // file content container
   let fileContent = createElement("div", { class: "filecontent" });
+
+  let fileNameDiv = createElement("div", {});
+
+  // file icon
+  let fileIcon;
+  if (index.icon == null) {
+    // broken files
+    index.icon = "";
+  }
+  if (index.icon == "") {
+    // no icon
+    fileIcon = createElement("button", {
+      class: "fileicon none",
+    });
+  } else {
+    // icon
+    fileIcon = createElement("button", {
+      class: "fileicon",
+      backgroundimage: `url(../assets/icons/fileicons/${index.icon}_${appstate.currthemeshort}.svg)`,
+    });
+  }
+
+  fileIcon.onclick = function () {
+    fileIconMenu(index, this);
+    writeFiles();
+  };
+
+  fileNameDiv.append(fileIcon);
 
   // file name
   let fileName = createElement("p", {
@@ -161,14 +214,10 @@ function generateFile(index) {
 
   // new block buttons
   let newBlockBtns = createElement("div", { id: "newblockbtns" });
-  console.log(blockTypes);
   for (let t = 0; t < blockTypes.length; t++) {
     let btn = createElement("button", { class: "newblockbtn", innerhtml: blockTypes[t].name });
-    if (currtheme == "dark") {
-      btn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[t].icon}_d.svg)`;
-    } else if (currtheme == "light") {
-      btn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[t].icon}_l.svg)`;
-    }
+    btn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[t].icon}_${appstate.currthemeshort}.svg)`;
+
     btn.onclick = function () {
       newBlock(index, index.blocks.length, blockTypes[t].type);
     };
@@ -176,7 +225,8 @@ function generateFile(index) {
   }
 
   // append
-  fileContent.append(fileName);
+  fileNameDiv.append(fileName);
+  fileContent.append(fileNameDiv);
   fileContent.append(fileBlocks);
   fileContent.append(newBlockBtns);
   document.querySelector("#filecontainer").append(fileContent);
@@ -188,7 +238,8 @@ function gotoFile(index) {
 
   generateFile(index);
   generateMenubar(index);
-  hideBlockMenu()
+  hideBlockMenu();
+  hideFileIconMenu();
   // handleSidenavBtn(index);
 }
 
@@ -223,9 +274,15 @@ function generateSidenavBtn(index, path) {
   // main button
   let fileBtnDiv = createElement("div", { class: "filebtndiv" });
   let fileBtn = createElement("button", {
-    class: "filebtn",
+    class: `filebtn icon`,
     innerhtml: index.name.replace(/ /g, "") == "" ? "Untitled File" : index.name,
   });
+  if (index.icon != null && index.icon != "") {
+    console.log()
+    fileBtn.style.backgroundImage =
+      "url(../assets/icons/fileicons/" + index.icon + "_" + (appstate.currthemeshort == "l" ? "d" : "l") + ".svg)";
+    fileBtn.style.paddingLeft = "18px";
+  }
   fileBtnDiv.onclick = function () {
     // go to file
     gotoFile(index, fileBtnDiv);
@@ -239,6 +296,8 @@ function generateSidenavBtn(index, path) {
     if (index.children != null && index.children.length) {
       // override clicking container
       e.stopPropagation();
+      // change collapsed file
+
       // show/hide child files
       let cc = childrenContainer.style.display;
       childrenContainer.style.display = cc == "none" ? (cc = "flex") : (cc = "none");
@@ -259,7 +318,7 @@ function generateSidenavBtn(index, path) {
   fileBtnDiv.append(newFileBtn);
 
   // indenting child files
-  fileBtnDiv.style.padding = `2px 1px 2px ${1 + filetreeindent * (index.path.length - 1)}px`;
+  fileBtnDiv.style.padding = `3px 1px 3px ${1 + settings.filetreeindentation * (index.path.length - 1)}px`;
 
   if (index.children != null && index.children.length > 0) {
     // has children
@@ -287,6 +346,9 @@ function showSettings() {
   button.onclick = function () {
     showSettings();
   };
+
+  hideFileIconMenu();
+  hideBlockMenu();
 
   document.querySelector("#path").append(button);
   document.querySelector("#lastedited").innerHTML = "";

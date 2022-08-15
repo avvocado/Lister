@@ -1,11 +1,34 @@
-#blockmenu {
+.popup {
   display: none;
   position: absolute;
   flex-direction: column;
   background-color: var(--bg3);
   border-radius: 4px;
   border: 1px solid var(--bg1);
+  flex-wrap: wrap;
   padding: 8px;
+}
+
+#fileiconbtns {
+  display: flex;
+  max-width: 25vw;
+  flex-wrap: wrap;
+}
+
+.fileiconbtn {
+  background-size: 100%;
+  background-position: center;
+  background-color: transparent;
+  min-width: 32px;
+  min-height: 32px;
+  color: var(--textblocktextcolor);
+  padding: 8px;
+  border-radius: 4px;
+  background-size: 16px;
+}
+
+.fileiconbtn:hover {
+  background-color: var(--bg2);
 }
 
 #blockmenu #newblockbtns {
@@ -13,7 +36,7 @@
   flex-direction: column;
 }
 
-#blockmenu .header {
+.popup .header {
   color: var(--sidenavheadertextcolor);
   margin-bottom: 2px;
   user-select: none;
@@ -27,16 +50,16 @@
   flex-grow: 1;
   transition: background-color 100ms;
   overflow: hidden;
+  padding-bottom: 240px;
   max-width: calc(var(--maxfilecontentwidth) + 8px + var(--gutterwidth));
 }
 
 #filecontainer .filecontent #newblockbtns {
   margin-left: calc(var(--gutterwidth) + 8px);
+  margin-bottom: 32px;
 }
 
-
-
- .newblockbtn {
+.newblockbtn {
   background-color: transparent;
   padding: 4px 8px 4px 30px;
   border-radius: 4px;
@@ -54,7 +77,6 @@
   background-color: var(--bg3);
 }
 
-
 #filecontainer .filecontent .newblockbtns {
   margin-left: calc(var(--gutterwidth) + 8px);
   margin-top: -48px;
@@ -70,14 +92,37 @@
   color: var(--filenametextcolor);
   font-size: 24px;
   letter-spacing: 0.025em;
+  margin-top: 4px;
+  display: inline-block;
   font-weight: bold;
-  margin-left: calc(var(--gutterwidth) + 8px);
 }
 
 #filecontainer .filecontent .filename:empty:before {
   color: var(--placeholdercolor);
   content: "Untitled File";
   pointer-events: none;
+}
+
+#filecontainer .filecontent .fileicon {
+  background-color: transparent;
+  display: inline-block;
+  height: 32px;
+  background-size: 24px 24px;
+  width: 32px;
+  transition: 100ms;
+  background-position: center;
+  margin-right: 10px;
+  margin-left: calc(var(--gutterwidth) + 8px);
+  vertical-align: top;
+  z-index: 100;
+  border-radius: 4px
+}
+#filecontainer .filecontent .fileicon.none {
+  border: 1px solid var(--bg1);
+
+}
+#filecontainer .filecontent .fileicon:hover {
+  background-color: var(--bg1)
 }
 
 #filecontainer .filecontent .fileblocks {
@@ -145,6 +190,10 @@
   pointer-events: none;
 }
 
+#filecontainer .blockcontainer.heading {
+  margin-top: 16px;
+}
+
 #filecontainer .block.heading {
   overflow-x: auto;
   white-space: pre-wrap;
@@ -184,13 +233,12 @@
   background-color: var(--bg4);
 }
 
-[theme='light'] #filecontainer .blockmenubtn {
-background-image: url('../../assets/icons/dots_l.svg');
+[theme="light"] #filecontainer .blockmenubtn {
+  background-image: url("../../assets/icons/dots_l.svg");
 }
 
-[theme='dark'] #filecontainer .blockmenubtn {
-background-image: url('../../assets/icons/dots_d.svg');
-  
+[theme="dark"] #filecontainer .blockmenubtn {
+  background-image: url("../../assets/icons/dots_d.svg");
 }
 #filecontainer .blockmenubtn:hover {
   background-color: var(--bg3);

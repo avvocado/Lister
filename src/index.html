@@ -23,17 +23,23 @@
 </head>
 
 <body>
+  <div id="error"></div>
   <div id="app" style="display: none;">
 
     <!-- block menu -->
-    <div id="blockmenu">
+    <div id="blockmenu" class="popup">
       <p class="header">BLOCK ACTIONS</p>
       <button id="deleteblockbtn" class="newblockbtn">Delete</button>
       <p class="header" style="margin-top:4px">INSERT ABOVE</p>
       <div id="newblockbtns"></div>
       <p class="header inline-blocks" style="margin-top:4px; display: none;">INLINE BLOCKS</p>
       <div id="newinlineblockbtns"></div>
+    </div>
 
+    <!-- file icon menu -->
+    <div id="fileiconmenu" class="popup">
+      <p class="header">FILE ICONS</p>
+      <div id="fileiconbtns"></div>
     </div>
 
     <!-- tooltip -->
@@ -56,18 +62,22 @@
 
     <!-- menu bar -->
     <div id="menubar">
+      <!-- buttons on the left side -->
+      <div id="leftbtns">
+        <button id="togglesidenavbtn"></button>
+      </div>
       <!-- file path injected here -->
       <div id="path"></div>
       <!-- last edited injected here -->
       <div id="lastedited"></div>
       <!-- file action buttons injected here -->
       <div id="fileactions"></div>
-      <!-- buttons for closing & minimizing on windows -->
-      <div id="winbtns">
-        <button id="minimizebtn" style="background-image: url(' ../assets/icons/navbars/minimize.svg');"></button>
-        <button id="closebtn" style="background-image: url(' ../assets/icons/navbars/x.svg');"></button>
+      <!-- buttons on the right side -->
+        <!-- buttons for closing & minimizing on windows -->
+        <div id="winbtns">
+          <button id="minimizebtn" style="background-image: url(' ../assets/icons/navbars/minimize.svg');"></button>
+          <button id="closebtn" style="background-image: url(' ../assets/icons/navbars/x.svg');"></button>
       </div>
-
     </div>
 
     <!-- main content -->
@@ -84,7 +94,8 @@
       <!-- settings -->
       <div id="settings">
         <p class="title">Settings</p>
-        <div class="settingsdiv">
+        <p class="subtitle">App Appearance</p>
+        <div class="settingsdiv column">
           <p class="head">Theme</p>
           <button style="background-image: url('../assets/icons/settings/light.svg');" class='settingsoption light themebtn' onclick="theme('light')">Light</button>
           <button style="background-image: url('../assets/icons/settings/dark.svg');" class='settingsoption themebtn dark' onclick="theme('dark')">Dark</button>
@@ -92,7 +103,18 @@
           <button style="background-image: url('../assets/icons/settings/auto.svg');" class='settingsoption auto themebtn' onclick="theme('auto')">Auto (Time Based)</button>
         </div>
         <div class="settingsdiv">
-          <p class="head">Reset Settings</p>
+          <p class="head">File Tree Indentation</p>
+          <p id="filetreeindentdisplay"></p>
+          <input type="range" min="4" max="20" value="12" id="filetreeindentslider">
+        </div>
+        <p class="subtitle">Other</p>
+        <div class="settingsdiv">
+          <p class="head">Open Resources Folder</p>
+          <button id="openresources" class="settingsbtn"></button>
+        </div>
+        <div class="settingsdiv column">
+          <p class="head">Source Code</p>
+          <a href="https://github.com/devinmd/Lister/">https://github.com/devinmd/Lister/</a>
         </div>
       </div>
       <!-- inject active file here from js -->

@@ -96,3 +96,38 @@ body {
   flex-wrap: wrap;
 }
 
+#error {
+  height: 100%;
+  color: var(--filenametextcolor);
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 10vw;
+  width: 100%;
+  justify-content: center;
+  display: none;
+  align-items: center;
+}
+
+/* range sliders */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: var(--placeholdercolor);
+  border-radius: 8px;
+  height: 8px;
+  transition: 100ms;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -2px;
+  background-color: var(--green);
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+}

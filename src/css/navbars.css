@@ -37,7 +37,7 @@
   background-color: transparent;
   transition: background-color 100ms;
   border-radius: 6px;
-  padding: 1px 4px 1px 20px;
+  padding: 3px 4px 3px 20px;
   color: var(--sidenavfilebtntextcolor);
   margin-bottom: 16px;
   text-align: left;
@@ -61,11 +61,11 @@
   width: 100%;
   flex-grow: 1;
   background-color: transparent;
-  transition: background-color 100ms;
+  transition: 100ms;
   user-select: none;
   min-width: 0;
   border-radius: 6px;
-  padding: 2px 1px 2px 1px;
+  padding: 3px 1px 3px 1px;
 }
 
 #sidenav #filebtns .filebtndiv:hover {
@@ -78,7 +78,9 @@
   user-select: none;
   text-overflow: ellipsis;
   color: var(--sidenavfilebtntextcolor);
+  background-position: 0 1px;
   white-space: nowrap;
+  background-size: 13px 13px;
   text-align: left;
   overflow: hidden;
 }
@@ -86,6 +88,7 @@
 #sidenav #filebtns .filebtndiv .collapsebtn {
   width: 16px;
   flex-shrink: 0;
+  margin-right: 2px;
   background-size: cover;
   background-color: transparent;
 }
@@ -113,20 +116,13 @@
 #sidenav #filebtns .childfiles {
   background-color: transparent;
   display: flex;
+  margin-bottom: 4px;
   flex-wrap: wrap;
   width: 100%;
 }
 
-#sidenav #filebtns .filebtndiv.active {
-  background-color: var(--green);
-  color: var(--textwhite);
-}
 
-#sidenav #filebtns .filebtndiv.active .filebtn {
-  color: var(--textwhite);
-}
-
-#sidenav #newrootfile{
+#sidenav #newrootfile {
   width: 16px;
   float: right;
   border-radius: 4px;
@@ -135,7 +131,7 @@
   background-size: contain;
 }
 
-#sidenav #newrootfile:hover{
+#sidenav #newrootfile:hover {
   background-color: var(--bg2);
 }
 
@@ -143,17 +139,15 @@
   background-image: url("../../assets/icons/sidenav/plus_l.svg");
 }
 
-
 [theme="dark"] #sidenav #newrootfile {
   background-image: url("../../assets/icons/sidenav/plus_d.svg");
 }
-
 
 #sidenav #filebtns .filebtndiv .newfilebtn {
   width: 16px;
   background-size: cover;
   margin-left: 1px;
-  min-width: 16px;
+  margin-right: 2px;
   visibility: hidden;
   border-radius: 6px;
   background-color: transparent;
@@ -173,7 +167,7 @@
 }
 
 #sidenav #filebtns .filebtndiv .newfilebtn:hover {
-  background-color: var(--bg4);
+  background-color: var(--bg3);
 }
 
 #sidenav #filebtns .filebtndiv.active .newfilebtn:hover {
@@ -190,7 +184,6 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  gap: 16px;
 }
 
 #menubar div {
@@ -200,7 +193,7 @@
   height: 100%;
 }
 
-#menubar #fileactions button {
+#menubar button {
   margin: 0;
   min-width: calc(var(--menubarheight) - 4px);
   border-radius: 4px;
@@ -220,30 +213,39 @@
   color: var(--menubartextcolor);
 }
 
-#menubar #fileactions button:hover {
+#menubar button:hover {
   background-color: var(--bg4);
 }
 
 #menubar #winbtns {
-  margin-right: 6px;
   display: none;
+  margin-right: 6px;
 }
 
 #menubar #fileactions {
   margin-left: auto;
 }
 
-#menubar #fileactions button {
+#menubar button {
   background-size: 14px 14px;
 }
 
+#menubar #leftbtns {
+  padding-left: 6px;
+  margin-right: 8px;
+  margin-left: calc(var(--sidenavwidth));
+}
+
 #menubar #path {
-  margin-left: calc(var(--sidenavwidth) + 10px);
   font-size: 0;
 }
 
 #menubar #path .pathbtn {
   border-radius: 3px;
+  text-align: left;
+  padding: 0;
+  background-position: 0 9px;
+  background-size: 12px 12px;
   height: 100%;
   background-color: transparent;
 }
@@ -259,16 +261,12 @@
 }
 
 #menubar #lastedited {
-  /* center on file */
-  position: absolute;
-  left: calc(((100vw - var(--sidenavwidth)) / 2) + var(--sidenavwidth));
-  transform: translateX(-50%);
+  flex-grow: 1;
+  justify-content: center;
 }
-
-[theme="light"] #menubar #fileactions .delfilebtn {
-  background-image: url("../../assets/icons/menubar/trash_l.svg");
+[theme="dark"] #menubar #togglesidenavbtn {
+  background-image: url("../../assets/icons/menubar/sidenav_d.svg");
 }
-
-[theme="dark"] #menubar #fileactions .delfilebtn {
-  background-image: url("../../assets/icons/menubar/trash_d.svg");
-}
+[theme="light"] #menubar #togglesidenavbtn {
+  background-image: url("../../assets/icons/menubar/sidenav_l.svg");
+  }

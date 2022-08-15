@@ -1,5 +1,11 @@
 // receiving data from main.js
 
+window.api.receive("error", (args) => {
+  document.querySelector("#error").style.display = "flex";
+  document.querySelector("#error").innerHTML = args;
+  document.querySelector("#app").style.opacity = "0";
+});
+
 window.api.receive("files", (args) => {
   // receiving list.json
   files = args;
@@ -10,15 +16,20 @@ window.api.receive("files", (args) => {
 window.api.receive("settings", (args) => {
   // receiving settings.json
   settings = args;
-  console.log(settings)
+  console.log(settings);
 
   // theme
   theme(settings.theme);
+
+  // file tree indentation
+  document.querySelector("#filetreeindentslider").value = settings.filetreeindentation;
+  document.querySelector("#filetreeindentdisplay").innerHTML = "(" + settings.filetreeindentation + "px)";
 
   setTimeout(() => {
     // allow time for theme to load
     document.querySelector("#app").style.display = "block";
   }, 100);
+  generateSidenav();
 });
 
 window.api.receive("system", (args) => {
@@ -35,8 +46,7 @@ window.api.receive("system", (args) => {
   console.log(system);
 });
 
-
 window.api.receive("settingspage", (args) => {
   // go to settings page
-  showSettings()
+  showSettings();
 });

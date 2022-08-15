@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 400 400" stroke='#707070' stroke-width="36px" stroke-linecap="round" stroke-linejoin="round" fill="none">
+
+  <rect x="18" y="51.409" width="364" height="206" rx="36" ry="36"></rect>
+  <path d="M 102 348.59 L 302 348.414"></path>
+  <path d="M 241.971 266.449 L 242.03 346.449" transform="matrix(0.996195, -0.087156, 0.087156, 0.996195, -25.787974, 22.257928)"></path>
+  <path d="M 161.97 259.133 L 162.029 339.133" transform="matrix(0.996195, 0.087156, -0.087156, 0.996195, 26.687691, -12.980928)"></path>
+  
+</svg>

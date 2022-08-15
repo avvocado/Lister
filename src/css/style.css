@@ -13,14 +13,12 @@
   --red: #bf2d4b;
   --redtransparent: #bf2d4b1a;
 
-  --dividerblockcolor: var(--bg4);
-
   /* sizing */
   --maxfilecontentwidth: 800px; /* max width of file content (doesn't include the gutter) */
   --gutterwidth: 28px; /* width of file gutter (column with block menu button) */
   --filecontentmargintop: 3vw; /* margin top of the file content */
   --filecontentmargin: 64px; /* margin between file content and sidenav & edge of window*/
-  --sidenavwidth: 180px;
+  --sidenavwidth: 200px;
   --menubarheight: 32px;
 }
 
@@ -46,12 +44,13 @@
   /* other */
   --placeholdercolor: #303030;
   --textwhite: #cecece;
+  --dividerblockcolor: var(--bg4);
 }
 
 [theme="light"] {
   /* background */
-  --bg1: #eaeaea;
-  --bg2: #f0f0f0;
+  --bg1: #e2e2e2;
+  --bg2: #ececec;
   --bg3: #f8f8f8;
   --bg4: #ffffff;
   /* file */
@@ -70,6 +69,7 @@
   /* other */
   --placeholdercolor: #c0c0c0;
   --textwhite: #eaeaea;
+  --dividerblockcolor: var(--bg1);
 }
 
 #lockedfile {

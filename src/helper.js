@@ -1,34 +1,26 @@
 //
 // global variables
-// main list of folders & files
+
+// list of files from json
 var files = {};
 
 // system and app info
 var system = {};
 
-var appstate = {
-  // index of the file the user is looking at currently
-  activefile: [-1, -1],
-  // index of the file which has edit mode currently on
-  currentlyediting: [-1, -1],
-  // index of the block which currently has the block menu active
-  activeblockmenu: -1,
-  // index of the currently unlocked file
-  unlockedfile: [-1, -1],
-  // current theme
-  currtheme: null,
-};
-
-// settings
+// settings from json
 var settings = {};
 
-var filetreeindent = 10;
+// app states
+var appstate = {
+  // index of the block which currently has the block menu active
+  activeblockmenu: -1,
+  // current theme (dark or light)
+  currtheme: null,
+  currthemeshort: null,
+};
 
 // keypress map
 var keyMap = {};
-
-// save which folders are collapsed
-var collapseState = [false, false, false];
 
 // new object defaults
 var newFolderName = "Folder";
@@ -37,6 +29,30 @@ var newTextBlockText = "";
 var newHeadingBlockText = "";
 var newCodeBlockText = "";
 var newInlineCodeBlockText = "&nbsp;&nbsp;";
+
+fileIcons = [
+  { icon: "app_window" },
+  { icon: "asterisk" },
+  { icon: "audio" },
+  { icon: "boxes" },
+  { icon: "bug" },
+  { icon: "computers" },
+  { icon: "diamond" },
+  { icon: "dot_grid" },
+  { icon: "file" },
+  { icon: "file_text" },
+  { icon: "folder" },
+  { icon: "grid_1" },
+  { icon: "grid" },
+  { icon: "home" },
+  { icon: "image" },
+  { icon: "lightning" },
+  { icon: "monitor" },
+  { icon: "present" },
+  { icon: "shapes" },
+  { icon: "text" },
+  { icon: "video" },
+];
 
 var inlineBlockTypes = [
   {
@@ -83,6 +99,56 @@ function getIndex(path) {
   return obj;
 }
 
+function hideFileIconMenu() {
+  document.querySelector("#fileiconmenu").style.display = "none";
+}
+
+function fileIconMenu(index, activator) {
+  let menu = document.querySelector("#fileiconmenu");
+  document.querySelector("#fileiconbtns").innerHTML = "";
+  // toggle displaying the div
+  menu.style.display = menu.style.display == "flex" ? "none" : "flex";
+
+  // change position
+  let activatorRect = activator.getBoundingClientRect();
+  menu.style.top = window.scrollY + activatorRect.top + 32 + "px";
+  menu.style.left = window.scrollX + activatorRect.left - 4 + "px";
+
+  // create buttons
+  for (let i = 0; i < fileIcons.length; i++) {
+    let btn = createElement("button", {
+      class: "fileiconbtn",
+      backgroundimage: `url(../assets/icons/fileicons/${fileIcons[i].icon}_${
+        appstate.currthemeshort == "l" ? "d" : "l"
+      }.svg`,
+    });
+    btn.onclick = function () {
+      // change file's icon
+      index.icon = fileIcons[i].icon;
+      // write json
+      writeFiles();
+      // generate file
+      generateFile(index);
+      // generate sidenav
+      generateSidenav();
+      // generate menubar
+      generateMenubar(index)
+      // hide the menu
+      hideFileIconMenu()
+    };
+    document.querySelector("#fileiconbtns").append(btn);
+  }
+
+  let btn = createElement("button", { class: "fileiconbtn", innerhtml: "none" });
+  btn.onclick = function () {
+    index.icon = "";
+    writeFiles();
+    generateFile(index);
+    generateSidenav();
+  };
+  document.querySelector("#fileiconbtns").append(btn);
+}
+
 function blockMenu(index, b, activator) {
   try {
     document.querySelector(".blockmenubtn.active").classList.remove("active");
@@ -97,11 +163,8 @@ function blockMenu(index, b, activator) {
   // new block buttons
   for (let t = 0; t < blockTypes.length; t++) {
     let btn = createElement("button", { class: "newblockbtn", innerhtml: blockTypes[t].name });
-    if (currtheme == "dark") {
-      btn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[t].icon}_d.svg)`;
-    } else if (currtheme == "light") {
-      btn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[t].icon}_l.svg)`;
-    }
+    btn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[t].icon}_${appstate.currthemeshort}.svg)`;
+
     btn.onclick = function () {
       newBlock(index, appstate.activeblockmenu, blockTypes[t].type);
       generateMenubar(index);
@@ -117,11 +180,7 @@ function blockMenu(index, b, activator) {
       // if inline block is allowed in this parent block
       document.querySelector("#blockmenu .header.inline-blocks").style.display = "block";
       let btn = createElement("button", { class: "newblockbtn", innerhtml: inlineBlockTypes[t].name });
-      if (currtheme == "dark") {
-        btn.style.backgroundImage = `url(../assets/icons/blocks/${inlineBlockTypes[t].icon}_d.svg)`;
-      } else if (currtheme == "light") {
-        btn.style.backgroundImage = `url(../assets/icons/blocks/${inlineBlockTypes[t].icon}_l.svg)`;
-      }
+      btn.style.backgroundImage = `url(../assets/icons/blocks/${inlineBlockTypes[t].icon}_${appstate.currthemeshort}.svg)`;
       btn.onclick = function () {
         newBlock(index, appstate.activeblockmenu, inlineBlockTypes[t].type);
         generateMenubar(index);
@@ -155,9 +214,9 @@ function blockMenu(index, b, activator) {
     deleteBlock(index, b);
     hideBlockMenu();
   };
-  document.querySelector("#blockmenu #deleteblockbtn").style.backgroundImage = `url(../assets/icons/trash_${
-    currtheme == "dark" ? "d" : "l"
-  }.svg)`;
+  document.querySelector(
+    "#blockmenu #deleteblockbtn"
+  ).style.backgroundImage = `url(../assets/icons/trash_${appstate.currthemeshort}.svg)`;
 }
 
 function tooltip(text, shortcut, activator, xoff) {
@@ -260,35 +319,43 @@ function theme(t) {
   if (t == "dark") {
     // dark
     document.querySelector(":root").setAttribute("theme", "dark");
-    currtheme = "dark";
+    appstate.currtheme = "dark";
   } else if (t == "light") {
     // light
     document.querySelector(":root").setAttribute("theme", "light");
-    currtheme = "light";
+    appstate.currtheme = "light";
   } else if (t == "default") {
     // use os
     if (system.darktheme == true) {
       // dark
       document.querySelector(":root").setAttribute("theme", "dark");
-      currtheme = "dark";
+      appstate.currtheme = "dark";
     } else {
       // light
       document.querySelector(":root").setAttribute("theme", "light");
-      currtheme = "light";
+      appstate.currtheme = "light";
     }
   } else if (t == "auto") {
     // time based
     let d = new Date();
-    if (d.getHours() > 16 || d.getHours() < 9) {
-      // dark, 5:00pm - 8:59am
+    if (d.getHours() >= 19 || d.getHours() < 8) {
+      // dark, 7:00pm - 7:59am
       document.querySelector(":root").setAttribute("theme", "dark");
-      currtheme = "dark";
+      appstate.currtheme = "dark";
     } else {
-      // light 9:00am - 4:59pm
+      // light 8:00am - 6:59pm
       document.querySelector(":root").setAttribute("theme", "light");
-      currtheme = "light";
+      appstate.currtheme = "light";
     }
   }
+
+  if (appstate.currtheme == "dark") {
+    appstate.currthemeshort = "d";
+  } else {
+    appstate.currthemeshort = "l";
+  }
+
+  generateSidenav();
 }
 
 function generatePath(index) {
@@ -312,6 +379,12 @@ function generatePath(index) {
       class: "pathbtn",
       innerhtml: store[b].name.replace(/ /g, "") == "" ? "Untitled File" : store[b].name,
     });
+
+    if (store[b].icon != null && store[b].icon != "") {
+      button.style.backgroundImage =
+        "url(../assets/icons/fileicons/" + store[b].icon + "_" + (appstate.currthemeshort == "l" ? "d" : "l") + ".svg)";
+      button.style.paddingLeft = "15px";
+    }
 
     button.onclick = function () {
       gotoFile(store[b]);
@@ -370,11 +443,11 @@ function newFile(index) {
       path: [files.length],
       starred: false,
       locked: false,
+      icon: "",
       blocks: [],
       children: [],
     });
-  newBlock(files[index.length - 1], 0, "text");
-
+    newBlock(files[index.length - 1], 0, "text");
   } else {
     if (index.children == null) {
       index.children = [];
@@ -385,15 +458,14 @@ function newFile(index) {
       lastedited: d.getTime(),
       path: index.path.concat(index.children.length),
       starred: false,
+      icon: "",
       locked: false,
       blocks: [],
       children: [],
     });
     // text block to start with
-  newBlock(index.children[index.children.length - 1], 0, "text");
+    newBlock(index.children[index.children.length - 1], 0, "text");
   }
-
-  
 
   writeFiles();
   generateSidenav();

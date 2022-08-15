@@ -106,7 +106,12 @@ ipcMain.on("close", (evt, args) => {
 ipcMain.on("requestFiles", (evt, args) => {
   fs.readFile(path.join(__dirname, "../", "/resources/", "files.json"), (err, data) => {
     // return the contents of files.json
-    win.webContents.send("files", JSON.parse(data));
+    try{
+      win.webContents.send("files", JSON.parse(data));
+
+    }catch(err){
+      win.webContents.send("error", err);
+    }
   });
 });
 
@@ -194,4 +199,10 @@ ipcMain.on("requestSystem", (evt, args) => {
     accentcolor: systemPreferences.getAccentColor(),
     username: process.env.LOGNAME,
   });
+});
+
+
+ipcMain.on("openResources", (evt, args) => {
+  // required to select a file to highlight, highlight files.json
+  shell.showItemInFolder(path.join(__dirname, "../", "/resources/", 'files.json'));
 });
