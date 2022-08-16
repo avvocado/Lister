@@ -233,19 +233,24 @@ function generateFile(index) {
 }
 
 // goes to a certain file
-function gotoFile(index) {
+function gotoFile(index, btn = null) {
+  // hide settings
   document.querySelector("#settings").style.display = "none";
 
-  generateFile(index);
-  generateMenubar(index);
   hideBlockMenu();
   hideFileIconMenu();
-  // handleSidenavBtn(index);
+  handleSidenavBtn(btn);
+
+  if (index.locked == false) {
+    // not locked
+    generateFile(index);
+    generateMenubar(index);
+  } else {
+    // locked
+  }
 }
 
-function handleSidenavBtn(index) {
-  let sbtn = getSidenavBtn(index.path);
-
+function handleSidenavBtn(sbtn) {
   try {
     document.querySelector(".filebtndiv.active").classList.remove("active");
   } catch (err) {
@@ -272,13 +277,12 @@ function generateSidenavBtn(index, path) {
   getIndex(path).path = path;
 
   // main button
-  let fileBtnDiv = createElement("div", { class: "filebtndiv" });
+  let fileBtnDiv = createElement("div", { class: path.length == 1 ? "filebtndiv root" : "filebtndiv" });
   let fileBtn = createElement("button", {
-    class: `filebtn icon`,
+    class: "filebtn",
     innerhtml: index.name.replace(/ /g, "") == "" ? "Untitled File" : index.name,
   });
   if (index.icon != null && index.icon != "") {
-    console.log()
     fileBtn.style.backgroundImage =
       "url(../assets/icons/fileicons/" + index.icon + "_" + (appstate.currthemeshort == "l" ? "d" : "l") + ".svg)";
     fileBtn.style.paddingLeft = "18px";

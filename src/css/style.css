@@ -68,8 +68,8 @@
   --settingstextcolor: #606060;
   /* other */
   --placeholdercolor: #c0c0c0;
-  --textwhite: #eaeaea;
   --dividerblockcolor: var(--bg1);
+  --textwhite: #eaeaea;
 }
 
 #lockedfile {

@@ -16,6 +16,7 @@ var appstate = {
   activeblockmenu: -1,
   // current theme (dark or light)
   currtheme: null,
+  // current theme (d or l)
   currthemeshort: null,
 };
 
@@ -30,28 +31,34 @@ var newHeadingBlockText = "";
 var newCodeBlockText = "";
 var newInlineCodeBlockText = "&nbsp;&nbsp;";
 
+// file icons, name is unused
 fileIcons = [
-  { icon: "app_window" },
-  { icon: "asterisk" },
-  { icon: "audio" },
-  { icon: "boxes" },
-  { icon: "bug" },
-  { icon: "computers" },
-  { icon: "diamond" },
-  { icon: "dot_grid" },
-  { icon: "file" },
-  { icon: "file_text" },
-  { icon: "folder" },
-  { icon: "grid_1" },
-  { icon: "grid" },
-  { icon: "home" },
-  { icon: "image" },
-  { icon: "lightning" },
-  { icon: "monitor" },
-  { icon: "present" },
-  { icon: "shapes" },
-  { icon: "text" },
-  { icon: "video" },
+  { icon: "app_window", name: "App Window" },
+  { icon: "asterisk", name: "Asterisk" },
+  { icon: "audio", name: "Audio" },
+  { icon: "boxes", name: "Boxes" },
+  { icon: "bug", name: "Bug" },
+  { icon: "check_circle", name: "Check Circle" },
+  { icon: "circle", name: "Circle" },
+  { icon: "clock", name: "Clock" },
+  { icon: "code", name: "Code" },
+  { icon: "computers", name: "Computer" },
+  { icon: "diamond", name: "Diamond" },
+  { icon: "dot_grid", name: "Dots" },
+  { icon: "file", name: "File" },
+  { icon: "file_text", name: "Text File" },
+  { icon: "folder", name: "Folder" },
+  { icon: "grid_1", name: "Grid" },
+  { icon: "grid", name: "Grid" },
+  { icon: "home", name: "Home" },
+  { icon: "image", name: "Image" },
+  { icon: "laptop", name: "Laptop" },
+  { icon: "lightning", name: "Lightning" },
+  { icon: "monitor", name: "Monitor" },
+  { icon: "present", name: "Gift Box" },
+  { icon: "shapes", name: "Shapes" },
+  { icon: "text", name: "Text" },
+  { icon: "video", name: "Video"},
 ];
 
 var inlineBlockTypes = [
@@ -132,9 +139,9 @@ function fileIconMenu(index, activator) {
       // generate sidenav
       generateSidenav();
       // generate menubar
-      generateMenubar(index)
+      generateMenubar(index);
       // hide the menu
-      hideFileIconMenu()
+      hideFileIconMenu();
     };
     document.querySelector("#fileiconbtns").append(btn);
   }
@@ -289,7 +296,10 @@ function deleteFile(path) {
 
 function getSidenavBtn(path) {
   let btn = "";
-  btn = document.querySelectorAll("#filebtns .filebtndiv")[path[0]];
+
+  console.log(path);
+  document.querySelectorAll(".childfiles")[path[0]];
+  /* btn = document.querySelectorAll("#filebtns .filebtndiv")[path[0]];
   if (path.length > 1) {
     for (let i = 0; i < path.length; i++) {
       if (i == path.length - 1) {
@@ -302,8 +312,8 @@ function getSidenavBtn(path) {
     }
   } else {
     // root parent file
-    btn = document.querySelectorAll("#filebtns .filebtndiv")[path[0]];
-  }
+    btn = document.querySelectorAll("#filebtns .filebtndiv.root")[path[0]];
+  }*/
   return btn;
 }
 

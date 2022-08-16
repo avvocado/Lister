@@ -68,9 +68,11 @@
   padding: 3px 1px 3px 1px;
 }
 
+
 #sidenav #filebtns .filebtndiv:hover {
   background-color: var(--bg2);
 }
+
 
 #sidenav #filebtns .filebtndiv .filebtn {
   background-color: transparent;
@@ -120,7 +122,6 @@
   flex-wrap: wrap;
   width: 100%;
 }
-
 
 #sidenav #newrootfile {
   width: 16px;
@@ -269,4 +270,4 @@
 }
 [theme="light"] #menubar #togglesidenavbtn {
   background-image: url("../../assets/icons/menubar/sidenav_l.svg");
-  }
+}

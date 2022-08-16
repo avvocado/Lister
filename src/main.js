@@ -168,9 +168,6 @@ ipcMain.on("createTray", (evt, args) => {
       label: "Settings",
       click: function () {
         win.show()
-        let s = new ShareMenu(["hello"]);
-
-        s.popup()
         win.webContents.send("settingspage", null);
       },
     },
