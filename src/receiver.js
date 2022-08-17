@@ -10,7 +10,7 @@ window.api.receive("files", (args) => {
   // receiving list.json
   files = args;
   console.log(files);
-  start();
+  generateSidenav();
 });
 
 window.api.receive("settings", (args) => {

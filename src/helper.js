@@ -58,7 +58,7 @@ fileIcons = [
   { icon: "present", name: "Gift Box" },
   { icon: "shapes", name: "Shapes" },
   { icon: "text", name: "Text" },
-  { icon: "video", name: "Video"},
+  { icon: "video", name: "Video" },
 ];
 
 var inlineBlockTypes = [

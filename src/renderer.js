@@ -39,16 +39,17 @@ document.getElementById("filetreeindentslider").addEventListener("click", functi
 // init
 function init() {
   // request files from main & create tray
-  window.api.send("requestSettings", "");
-  window.api.send("requestFiles", "");
-  window.api.send("requestSystem", "");
-  window.api.send("createTray", "");
+  try{
+    window.api.send("requestSettings", "");
+    window.api.send("requestFiles", "");
+    window.api.send("requestSystem", "");
+    window.api.send("createTray", "");
+  }catch(err){
+    console.warn(err)
+  }
+  
 }
 
-function start() {
-  // called after receiving files.json
-  generateSidenav();
-}
 
 // generates menubar for the file
 function generateMenubar(index) {

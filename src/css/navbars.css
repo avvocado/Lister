@@ -171,9 +171,6 @@
   background-color: var(--bg3);
 }
 
-#sidenav #filebtns .filebtndiv.active .newfilebtn:hover {
-  background-color: var(--green);
-}
 
 #menubar {
   width: 100vw;
