@@ -21,7 +21,12 @@ document.getElementById("togglesidenavbtn").addEventListener("click", function (
     // hide
     document.querySelector("#sidenav").style.display = "none";
     document.querySelector("#content").style.marginLeft = "0";
+    if(system.os == 'darwin'){
     document.querySelector("#leftbtns").style.marginLeft = "62px";
+
+    }else{
+    document.querySelector("#leftbtns").style.marginLeft = "2px";
+    }
   }
 });
 

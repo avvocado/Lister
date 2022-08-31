@@ -33,7 +33,7 @@ const createWindow = () => {
     autoHideMenuBar: true,
     resizable: true,
     frame: false,
-    icon: path.join(__dirname, "../", "/assets", "/appicons", "appicon_512x512.png"),
+    icon: path.join(__dirname, "../", "/assets", "/appicons", "appicon_1024x1024.png"),
     backgroundColor: "#181b1f",
     darkTheme: true,
     show: false,
@@ -143,11 +143,11 @@ ipcMain.on("createTray", (evt, args) => {
     tray.destroy();
   }
   if (process.platform == "win32") {
-    tray = new Tray(path.join(__dirname, "../", "/assets/appicons/appicon_512x512.png"));
+    tray = new Tray(path.join(__dirname, "../", "/assets/appicons/appicon_1024x1024.png"));
   } else if (process.platform == "darwin") {
     tray = new Tray(path.join(__dirname, "../", "/assets/appicons/trayicon@2x.png"));
   } else {
-    tray = new Tray(path.join(__dirname, "../", "/assets/appicons/appicon_512x512.png"));
+    tray = new Tray(path.join(__dirname, "../", "/assets/appicons/appicon_1024x1024.png"));
   }
 
   // open on left click on windows
