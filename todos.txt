@@ -3,12 +3,21 @@ files
  - archived files
  - file outline
  - date created & last edited
+ - scroll to top
+ - pinned/starred/favorite files
+
+sidenav
+ - search
 
 blocks
+ - paste without formatting
  - date created
  - types
     - link another file
     - embed external file
+       - image
+       - video
+       - audio file
     - url
     - heading
     - text
@@ -16,16 +25,27 @@ blocks
     - divider
     - code block
     - table
+    - lists
+       - bullet list
+       - number list
+       - checklist
 
 inline blocks
  - types
     - code block
     - link another file
+    - timestamp
  
 settings
  - theme
  - file content width
- 
+ - process versions
+ - app version
+ - spellcheck
+ - always on top
+ - shortcuts
+
  other
   - quick notes / drafts
   - import files
+  - app footer
