@@ -1,23 +1,4 @@
-.title {
-  color: var(--filenametextcolor);
-  font-size: 24px;
-  letter-spacing: 0.025em;
-  flex-grow: 1;
-  font-weight: bold;
-  width: 100%;
-  margin-bottom: -8px;
-}
 
-.subtitle {
-  color: var(--headingblocktextcolor);
-  font-size: 20px;
-  letter-spacing: 0.015em;
-  flex-grow: 1;
-  font-weight: bold;
-  width: 100%;
-  margin-top: 32px;
-  margin-bottom: -8px;
-}
 
 #settings {
   padding-left: calc(var(--gutterwidth) + 8px);
@@ -75,11 +56,11 @@
   background-color: var(--bg3);
   margin-left: auto;
   flex-grow: 0;
-  padding: 16px 24px 16px 24px;
+  padding: 12px 24px 12px 24px;
   color: var(--settingstextcolor);
   background-position: center center;
   float: right;
-  background-size: 24px 24px;
+  background-size: 20px 20px;
   border: 2px solid transparent;
 }
 

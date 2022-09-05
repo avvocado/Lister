@@ -106,22 +106,32 @@ ipcMain.on("close", (evt, args) => {
 ipcMain.on("requestFiles", (evt, args) => {
   fs.readFile(path.join(__dirname, "../", "/resources/", "files.json"), (err, data) => {
     // return the contents of files.json
-    win.webContents.send("files", JSON.parse(data));
+    try {
+      win.webContents.send("files", JSON.parse(data));
+    } catch (err) {
+      win.webContents.send("error", 'Error in "files.json":<br>' + err);
+    }
   });
 });
 
 ipcMain.on("requestDrafts", (evt, args) => {
   fs.readFile(path.join(__dirname, "../", "/resources/", "drafts.json"), (err, data) => {
     // return the contents of drafts.json
-    win.webContents.send("drafts", JSON.parse(data));
-  });
+    try {
+      win.webContents.send("drafts", JSON.parse(data));
+    } catch (err) {
+      win.webContents.send("error", 'Error in "drafts.json":<br>' + err);
+    }  });
 });
 
 ipcMain.on("requestSettings", (evt, args) => {
   fs.readFile(path.join(__dirname, "../", "/resources/", "settings.json"), (err, data) => {
     // return the contents of settings.json
-    win.webContents.send("settings", JSON.parse(data));
-  });
+    try {
+      win.webContents.send("settings", JSON.parse(data));
+    } catch (err) {
+      win.webContents.send("error", 'Error in "settings.json":<br>' + err);
+    }  });
 });
 
 ipcMain.on("writeFiles", (evt, args) => {

@@ -51,9 +51,10 @@
 
 #sidenav #draftsbtn #draftcount {
   color: var(--bg1);
-  background-color: var(--textblocktextcolor);
-  border-radius:12px ;
+  background-color: var(--sidenavheadertextcolor);
+  border-radius: 12px;
   flex-grow: 0;
+  font-weight: bold;
   margin-top: 1px;
   float: right;
   padding: 1px 4px;
@@ -63,7 +64,7 @@
 }
 
 #sidenav #draftsbtn {
-white-space: nowrap;
+  white-space: nowrap;
 }
 
 [theme="light"] #sidenav #draftsbtn {
@@ -80,7 +81,7 @@ white-space: nowrap;
 
 #sidenav #filebtns {
   display: flex;
-margin-bottom: 48px;
+  margin-bottom: 48px;
   flex-wrap: wrap;
 }
 
@@ -298,4 +299,3 @@ margin-bottom: 48px;
 [theme="light"] #menubar #togglesidenavbtn {
   background-image: url("../../assets/icons/menubar/sidenav_l.svg");
 }
-

@@ -96,6 +96,11 @@ var blockTypes = [
     type: "code",
     icon: "block_code",
   },
+  {
+    name: "Checklist",
+    type: "checklist",
+    icon: "block_checklist",
+  },
 ];
 
 // return file based of a path, eg: [0, 0, 0]
@@ -395,9 +400,11 @@ function generatePath(index) {
       innerhtml: store[b].name.replace(/ /g, "") == "" ? "Untitled File" : store[b].name,
     });
 
+    console.log(appstate.currthemeshort);
+
     if (store[b].icon != null && store[b].icon != "") {
       button.style.backgroundImage =
-        "url(../assets/icons/fileicons/" + store[b].icon + "_" + appstate.currthemeshort + ".svg)";
+        "url(../assets/icons/fileicons/" + store[b].icon + "_" + (appstate.currthemeshort == "l" ? "d" : "l") + ".svg)";
       button.style.paddingLeft = "15px";
     }
 
@@ -413,6 +420,18 @@ function generatePath(index) {
   }
 }
 
+function newChecklistItem(index, b) {
+  index.blocks[b].items.push({ text: "", checked: false });
+  writeFiles();
+  generateFile(index);
+}
+
+function deleteChecklistItem(index, b,z) {
+  index.blocks[b].items.splice(z+1, 1);
+  writeFiles();
+  generateFile(index);
+}
+
 function newBlock(index, b, type) {
   let d = new Date();
   if (type == "text" || type == "heading" || type == "code") {
@@ -424,6 +443,12 @@ function newBlock(index, b, type) {
     index.blocks.splice(b, 0, {
       type: type,
     });
+  } else if (type == "checklist") {
+    index.blocks.splice(b, 0, {
+      type: type,
+      items: [],
+    });
+    newChecklistItem(index, b)
   } else if (type == "inline_code") {
     console.log(" new inlnien coe edelbock");
     index.blocks[b].text += `&nbsp;<div class="inline block ${type}">${newInlineCodeBlockText}</div>&nbsp;`;
@@ -452,9 +477,9 @@ function deleteDraft(b) {
 
 function doDraftCount() {
   document.querySelector("#draftcount").innerHTML = drafts.length;
-  document.querySelector("#draftcount").style.display = 'block'
+  document.querySelector("#draftcount").style.display = "block";
   if (drafts.length == 0) {
-    document.querySelector("#draftcount").style.display = 'none'
+    document.querySelector("#draftcount").style.display = "none";
   }
 }
 

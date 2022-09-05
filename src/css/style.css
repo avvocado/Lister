@@ -28,21 +28,27 @@
   --bg2: #181b1f;
   --bg3: #1e2023;
   --bg4: #232528;
+
+  /* text colors */
+  --text1: #707070;
+  --text2: #606060;
+  --text3: #505050;
+  --text4: #404040;
+  --text5: #303030;
+
   /* file */
-  --filenametextcolor: #707070;
-  --headingblocktextcolor: #606060;
-  --textblocktextcolor: #505050;
-  --codeblocktextcolor: #505050;
-  --bottomnewblockbtntextcolor: #505050;
+  --textblocktextcolor: var(--text3);
+  --codeblocktextcolor: var(--text3);
+  --bottomnewblockbtntextcolor: var(--text3);
   /* menubar */
-  --menubartextcolor: #505050;
+  --menubartextcolor: var(--text3);
   /* sidenav */
-  --sidenavheadertextcolor: #404040;
-  --sidenavfilebtntextcolor: #505050;
+  --sidenavheadertextcolor: var(--text4);
+  --sidenavfilebtntextcolor: var(--text3);
   /* settings */
-  --settingstextcolor: #505050;
+  --settingstextcolor: var(--text3);
   /* other */
-  --placeholdercolor: #303030;
+  --placeholdercolor: var(--text5);
   --textwhite: #cecece;
   --dividerblockcolor: var(--bg4);
 }
@@ -53,23 +59,29 @@
   --bg2: #ececec;
   --bg3: #f8f8f8;
   --bg4: #ffffff;
+
+  /* text colors */
+  --text1: #404040;
+  --text2: #505050;
+  --text3: #606060;
+  --text4: #707070;
+  --text5: #808080;
+
   /* file */
-  --filenametextcolor: #404040;
-  --headingblocktextcolor: #505050;
-  --textblocktextcolor: #606060;
-  --codeblocktextcolor: #606060;
-  --bottomnewblockbtntextcolor: #606060;
+  --textblocktextcolor: var(--text3);
+  --codeblocktextcolor: var(--text3);
+  --bottomnewblockbtntextcolor: var(--text3);
   /* menubar */
-  --menubartextcolor: #606060;
+  --menubartextcolor: var(--text3);
   /* sidenav */
-  --sidenavheadertextcolor: #707070;
-  --sidenavfilebtntextcolor: #606060;
+  --sidenavheadertextcolor: var(--text4);
+  --sidenavfilebtntextcolor: var(--text3);
   /* settings */
-  --settingstextcolor: #606060;
+  --settingstextcolor: var(--text3);
   /* other */
-  --placeholdercolor: #c0c0c0;
-  --dividerblockcolor: var(--bg1);
-  --textwhite: #eaeaea;
+  --placeholdercolor: var(--text5);
+  --textwhite: #cecece;
+  --dividerblockcolor: var(--bg4);
 }
 
 #lockedfile {

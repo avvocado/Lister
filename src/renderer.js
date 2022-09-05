@@ -214,6 +214,46 @@ function generateFile(index) {
       block.innerHTML = index.blocks[b].text;
       block.contentEditable = true;
       block.spellcheck = false;
+    } else if (index.blocks[b].type == "checklist") {
+      for (let z = 0; z < index.blocks[b].items.length; z++) {
+        let itemdiv = createElement("div", {});
+        let btn = createElement("button", {
+          class: `checkbox ${index.blocks[b].items[z].checked ? "checked" : "unchecked"}`,
+        });
+        btn.onclick = function () {
+          index.blocks[b].items[z].checked = !index.blocks[b].items[z].checked;
+          writeFiles();
+          generateFile(index);
+        };
+        let text = createElement("p", {
+          innerhtml: index.blocks[b].items[z].text,
+          class: index.blocks[b].items[z].checked ? "checked" : "unchecked",
+          contenteditable: true,
+        });
+
+        text.oninput = function () {
+          index.blocks[b].items[z].text = this.innerHTML;
+          writeFiles();
+        };
+
+        text.onblur = function(){
+          if(index.blocks[b].items[z].text == ''){
+            deleteChecklistItem(index, b,z)
+          }
+        }
+
+        text.onkeydown = function (e) {
+          if (e.code == "Enter") {
+            if (z == index.blocks[b].items.length - 1) {
+              newChecklistItem(index, b);
+            }
+            this.blur();
+          }
+        };
+        itemdiv.append(btn);
+        itemdiv.append(text);
+        block.append(itemdiv);
+      }
     }
 
     blockContainer.append(block);

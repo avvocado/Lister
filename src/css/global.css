@@ -98,7 +98,7 @@ body {
 
 #error {
   height: 100%;
-  color: var(--filenametextcolor);
+  color: var(--text1);
   font-weight: bold;
   font-size: 18px;
   margin-top: 10vw;
@@ -134,8 +134,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* headers */
 h1 {
-  color: var(--filenametextcolor);
-  font-size: 24px;
+  color: var(--text1);  font-size: 24px;
   letter-spacing: 0.025em;
   margin-bottom: 16px;
   display: inline-block;
@@ -143,7 +142,7 @@ h1 {
 }
 
 h2 {
-  color: var(--headingblocktextcolor);
+  color: var(--text2);
   font-size: 20px;
   letter-spacing: 0.015em;
   font-weight: bold;
@@ -152,7 +151,7 @@ h2 {
 
 h3,
 .block.heading {
-  color: var(--headingblocktextcolor);
+  color: var(--text2);
   font-size: 18px;
   width: auto;
   letter-spacing: 0.01em;
