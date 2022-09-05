@@ -2,7 +2,10 @@
 // global variables
 
 // list of files from json
-var files = {};
+var files = [];
+
+// list of drafts from json
+var drafts = [];
 
 // system and app info
 var system = {};
@@ -23,9 +26,11 @@ var appstate = {
 // keypress map
 var keyMap = {};
 
-// new object defaults
-var newFolderName = "Folder";
+// new file defaults
 var newFileName = "";
+var newFileIcon = "file";
+
+// new block defaults
 var newTextBlockText = "";
 var newHeadingBlockText = "";
 var newCodeBlockText = "";
@@ -392,7 +397,7 @@ function generatePath(index) {
 
     if (store[b].icon != null && store[b].icon != "") {
       button.style.backgroundImage =
-        "url(../assets/icons/fileicons/" + store[b].icon + "_" + (appstate.currthemeshort == "l" ? "d" : "l") + ".svg)";
+        "url(../assets/icons/fileicons/" + store[b].icon + "_" + appstate.currthemeshort + ".svg)";
       button.style.paddingLeft = "15px";
     }
 
@@ -406,11 +411,6 @@ function generatePath(index) {
       container.append(slash);
     }
   }
-}
-
-function deleteFolder(p) {
-  files.splice(p, 1);
-  writeFiles();
 }
 
 function newBlock(index, b, type) {
@@ -443,6 +443,35 @@ function deleteBlock(index, b) {
   generateFile(index);
 }
 
+function deleteDraft(b) {
+  drafts.splice(b, 1);
+  writeDrafts();
+  generateDrafts();
+  doDraftCount();
+}
+
+function doDraftCount() {
+  document.querySelector("#draftcount").innerHTML = drafts.length;
+  document.querySelector("#draftcount").style.display = 'block'
+  if (drafts.length == 0) {
+    document.querySelector("#draftcount").style.display = 'none'
+  }
+}
+
+function newDraft() {
+  let d = new Date();
+  drafts.unshift({
+    name: "",
+    text: "",
+    creationdate: d.getTime(),
+    lastedited: d.getTime(),
+  });
+
+  writeDrafts();
+  generateDrafts();
+  doDraftCount();
+}
+
 function newFile(index) {
   let d = new Date();
   if (index == files) {
@@ -453,7 +482,7 @@ function newFile(index) {
       path: [files.length],
       starred: false,
       locked: false,
-      icon: "",
+      icon: newFileIcon,
       blocks: [],
       children: [],
     });
@@ -468,7 +497,7 @@ function newFile(index) {
       lastedited: d.getTime(),
       path: index.path.concat(index.children.length),
       starred: false,
-      icon: "",
+      icon: newFileIcon,
       locked: false,
       blocks: [],
       children: [],
@@ -494,6 +523,11 @@ function newFolder() {
 // writing files.json
 function writeFiles() {
   window.api.send("writeFiles", JSON.stringify(files));
+}
+
+// writing drafts.json
+function writeDrafts() {
+  window.api.send("writeDrafts", JSON.stringify(drafts));
 }
 
 // writing settings.json

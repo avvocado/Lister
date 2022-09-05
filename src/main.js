@@ -106,24 +106,34 @@ ipcMain.on("close", (evt, args) => {
 ipcMain.on("requestFiles", (evt, args) => {
   fs.readFile(path.join(__dirname, "../", "/resources/", "files.json"), (err, data) => {
     // return the contents of files.json
-    try{
-      win.webContents.send("files", JSON.parse(data));
+    win.webContents.send("files", JSON.parse(data));
+  });
+});
 
-    }catch(err){
-      win.webContents.send("error", err);
-    }
+ipcMain.on("requestDrafts", (evt, args) => {
+  fs.readFile(path.join(__dirname, "../", "/resources/", "drafts.json"), (err, data) => {
+    // return the contents of drafts.json
+    win.webContents.send("drafts", JSON.parse(data));
   });
 });
 
 ipcMain.on("requestSettings", (evt, args) => {
   fs.readFile(path.join(__dirname, "../", "/resources/", "settings.json"), (err, data) => {
-    // return the contents of files.json
+    // return the contents of settings.json
     win.webContents.send("settings", JSON.parse(data));
   });
 });
 
 ipcMain.on("writeFiles", (evt, args) => {
   fs.writeFile(path.join(__dirname, "../", "/resources/", "files.json"), args, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
+ipcMain.on("writeDrafts", (evt, args) => {
+  fs.writeFile(path.join(__dirname, "../", "/resources/", "drafts.json"), args, (err) => {
     if (err) {
       console.log(err);
     }
@@ -167,7 +177,7 @@ ipcMain.on("createTray", (evt, args) => {
     {
       label: "Settings",
       click: function () {
-        win.show()
+        win.show();
         win.webContents.send("settingspage", null);
       },
     },
@@ -198,8 +208,7 @@ ipcMain.on("requestSystem", (evt, args) => {
   });
 });
 
-
 ipcMain.on("openResources", (evt, args) => {
   // required to select a file to highlight, highlight files.json
-  shell.showItemInFolder(path.join(__dirname, "../", "/resources/", 'files.json'));
+  shell.showItemInFolder(path.join(__dirname, "../", "/resources/", "files.json"));
 });

@@ -10,31 +10,35 @@ sidenav
  - search
 
 blocks
- - paste without formatting
- - date created
- - types
-    - link another file
-    - embed external file
-       - image
-       - video
-       - audio file
-    - url
-    - heading
-    - text
-       - handle urls
-    - divider
-    - code block
-    - table
-    - lists
-       - bullet list
-       - number list
-       - checklist
+   - paste without formatting
+   - date created
+   - types
+      - link another file
+      - embed external file
+         - image
+         - video
+         - audio file
+      - url
+      - table
+      - handle urls in text blocks
+      - lists
+         - bullet list
+         - number list
+         - checklist
+    - implemented
+      - heading
+      - text
+      - code block
+      - divider
+   
 
 inline blocks
- - types
-    - code block
-    - link another file
-    - timestamp
+   - types
+      - link another file
+      - timestamp
+      - implemented 
+         - code block
+
  
 settings
  - theme

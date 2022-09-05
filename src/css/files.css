@@ -88,15 +88,6 @@
   flex-direction: column;
 }
 
-#filecontainer .filecontent .filename {
-  color: var(--filenametextcolor);
-  font-size: 24px;
-  letter-spacing: 0.025em;
-  margin-top: 4px;
-  display: inline-block;
-  font-weight: bold;
-}
-
 #filecontainer .filecontent .filename:empty:before {
   color: var(--placeholdercolor);
   content: "Untitled File";
@@ -128,7 +119,7 @@
 #filecontainer .filecontent .fileblocks {
   display: flex;
   flex-direction: column;
-  margin: 16px 0 16px 0;
+  margin: 4px 0 16px 0;
   gap: 8px;
 }
 
@@ -192,14 +183,6 @@
 
 #filecontainer .blockcontainer.heading {
   margin-top: 16px;
-}
-
-#filecontainer .block.heading {
-  overflow-x: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  color: var(--headingblocktextcolor);
-  font-size: 20px;
 }
 
 #filecontainer .block.heading:empty:before {

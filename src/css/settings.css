@@ -47,13 +47,6 @@
   flex-direction: column;
 }
 
-.settingsdiv .head {
-  color: var(--headingblocktextcolor);
-  font-size: 18px;
-  width: auto;
-  letter-spacing: 0.01em;
-}
-
 .settingsdiv .settingsoption {
   width: 100%;
   transition: 100ms;

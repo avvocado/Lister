@@ -77,11 +77,11 @@ a {
 body {
   background-color: var(--bg2);
   transition: background-color 100ms;
-
 }
 
 #content {
-  padding: calc(var(--filecontentmargintop) + var(--menubarheight)) var(--filecontentmargin) 0 calc( var(--filecontentmargin) - var(--gutterwidth) - 8px);
+  padding: calc(var(--filecontentmargintop) + var(--menubarheight)) var(--filecontentmargin) 0
+    calc(var(--filecontentmargin) - var(--gutterwidth) - 8px);
   margin-left: var(--sidenavwidth);
   display: flex;
   transition: background-color 100ms;
@@ -130,4 +130,33 @@ input[type="range"]::-webkit-slider-thumb {
   height: 12px;
   width: 12px;
   border-radius: 50%;
+}
+
+/* headers */
+h1 {
+  color: var(--filenametextcolor);
+  font-size: 24px;
+  letter-spacing: 0.025em;
+  margin-bottom: 16px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+h2 {
+  color: var(--headingblocktextcolor);
+  font-size: 20px;
+  letter-spacing: 0.015em;
+  font-weight: bold;
+  width: 100%;
+}
+
+h3,
+.block.heading {
+  color: var(--headingblocktextcolor);
+  font-size: 18px;
+  width: auto;
+  letter-spacing: 0.01em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-weight: normal;
 }

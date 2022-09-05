@@ -7,6 +7,9 @@
   <!-- all css things -->
   <link rel="stylesheet" href="css/global.css">
 
+  <!-- drafts -->
+  <link rel="stylesheet" href="css/drafts.css">
+
   <!-- sidenav & menubar -->
   <link rel="stylesheet" href="css/navbars.css">
 
@@ -50,7 +53,12 @@
 
     <!-- sidenav -->
     <div id="sidenav">
-      <button id="settingsbtn">Settings</button>
+      <div id="topbtns">
+        <button id="settingsbtn">Settings</button>
+        <button id="draftsbtn">Drafts <p id="draftcount"></p></button>
+        <button id="searchbtn" style="margin-bottom: 16px;">Search...</button>
+      </div>
+
       <div>
         <p class="header">FILES</p>
         <button id="newrootfile" onclick="newFile(files)"></button>
@@ -73,10 +81,10 @@
       <!-- file action buttons injected here -->
       <div id="fileactions"></div>
       <!-- buttons on the right side -->
-        <!-- buttons for closing & minimizing on windows -->
-        <div id="winbtns">
-          <button id="minimizebtn" style="background-image: url(' ../assets/icons/menubar/minimize.svg');"></button>
-          <button id="closebtn" style="background-image: url(' ../assets/icons/menubar/x.svg');"></button>
+      <!-- buttons for closing & minimizing on windows -->
+      <div id="winbtns">
+        <button id="minimizebtn" style="background-image: url(' ../assets/icons/menubar/minimize.svg');"></button>
+        <button id="closebtn" style="background-image: url(' ../assets/icons/menubar/x.svg');"></button>
       </div>
     </div>
 
@@ -85,7 +93,7 @@
 
       <!-- show this if the file is locked -->
       <div id="lockedfile">
-        <p>This File is Locked</p>
+        <h1>This File is Locked</h1>
         <div>
           <input id="pswdinput" spellcheck="false" type='password' placeholder="Password...">
           <button id="pswdsubmit"></button>
@@ -93,29 +101,35 @@
       </div>
       <!-- settings -->
       <div id="settings">
-        <p class="title">Settings</p>
-        <p class="subtitle">App Appearance</p>
+        <h1>Settings</h1>
+        <h2>App Appearance</h2>
         <div class="settingsdiv column">
-          <p class="head">Theme</p>
+          <h3>Theme</h3>
           <button style="background-image: url('../assets/icons/settings/light.svg');" class='settingsoption light themebtn' onclick="theme('light')">Light</button>
           <button style="background-image: url('../assets/icons/settings/dark.svg');" class='settingsoption themebtn dark' onclick="theme('dark')">Dark</button>
           <button style="background-image: url('../assets/icons/settings/default.svg');" class='settingsoption themebtn default' onclick="theme('default')">Default (OS Settings)</button>
           <button style="background-image: url('../assets/icons/settings/auto.svg');" class='settingsoption auto themebtn' onclick="theme('auto')">Auto (Time Based)</button>
         </div>
         <div class="settingsdiv">
-          <p class="head">File Tree Indentation</p>
+          <h3>File Tree Indentation</h3>
           <p id="filetreeindentdisplay"></p>
           <input type="range" min="4" max="20" value="12" id="filetreeindentslider">
         </div>
-        <p class="subtitle">Other</p>
+        <h2>Other</h2>
         <div class="settingsdiv">
-          <p class="head">Open Resources Folder</p>
+          <h3>Open Resources Folder</h3>
           <button id="openresources" class="settingsbtn"></button>
         </div>
         <div class="settingsdiv column">
-          <p class="head">Source Code</p>
-          <a href="https://github.com/devinmd/Lister/">https://github.com/devinmd/Lister/</a>
+          <h3>Source Code</h3>
+          <a href="https://github.com/devinmd/lister/" target="_blank">https://github.com/devinmd/lister/</a>
         </div>
+      </div>
+      <!-- drafts -->
+      <div id="drafts">
+        <h1>Drafts</h1>
+        <button onclick="newDraft()">new draft</button>
+        <div id="draftscontainer"></div>
       </div>
       <!-- inject active file here from js -->
       <div id="filecontainer"></div>

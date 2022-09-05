@@ -1,16 +1,24 @@
 // receiving data from main.js
 
 window.api.receive("error", (args) => {
+  // error in one of the json files
   document.querySelector("#error").style.display = "flex";
   document.querySelector("#error").innerHTML = args;
   document.querySelector("#app").style.opacity = "0";
 });
 
 window.api.receive("files", (args) => {
-  // receiving list.json
+  // receiving files.json
   files = args;
   console.log(files);
   generateSidenav();
+});
+
+window.api.receive("drafts", (args) => {
+  // receiving drafts.json
+  drafts = args;
+  console.log(drafts);
+  doDraftCount();
 });
 
 window.api.receive("settings", (args) => {

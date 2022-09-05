@@ -31,28 +31,56 @@
   background-image: url("../../assets/icons/navbars/dot1.svg"), url("../../assets/icons/navbars/lock_small1.svg");
 }
 
-#sidenav #settingsbtn {
+#sidenav #topbtns button {
   font-size: 13.3px;
   width: 100%;
   background-color: transparent;
   transition: background-color 100ms;
   border-radius: 6px;
-  padding: 3px 4px 3px 20px;
+  padding: 3px 4px 3px 24px;
   color: var(--sidenavfilebtntextcolor);
-  margin-bottom: 16px;
   text-align: left;
-  background-image: url("../../assets/icons/settings.svg");
-  background-position: 2px 1px;
-  background-size: 15px 15px;
+  background-position: 6px center;
+  background-size: 13px 13px;
   user-select: none;
 }
 
-#sidenav #settingsbtn:hover {
+#sidenav #settingsbtn {
+  background-image: url("../../assets/icons/settings.svg");
+}
+
+#sidenav #draftsbtn #draftcount {
+  color: var(--bg1);
+  background-color: var(--textblocktextcolor);
+  border-radius:12px ;
+  flex-grow: 0;
+  margin-top: 1px;
+  float: right;
+  padding: 1px 4px;
+  font-size: 10px;
+  width: auto;
+  text-align: center;
+}
+
+#sidenav #draftsbtn {
+white-space: nowrap;
+}
+
+[theme="light"] #sidenav #draftsbtn {
+  background-image: url("../../assets/icons/sidenav/drafts_l.svg");
+}
+
+[theme="dark"] #sidenav #draftsbtn {
+  background-image: url("../../assets/icons/sidenav/drafts_d.svg");
+}
+
+#sidenav #topbtns button:hover {
   background-color: var(--bg2);
 }
 
 #sidenav #filebtns {
   display: flex;
+margin-bottom: 48px;
   flex-wrap: wrap;
 }
 
@@ -68,11 +96,9 @@
   padding: 3px 1px 3px 1px;
 }
 
-
 #sidenav #filebtns .filebtndiv:hover {
   background-color: var(--bg2);
 }
-
 
 #sidenav #filebtns .filebtndiv .filebtn {
   background-color: transparent;
@@ -171,7 +197,6 @@
   background-color: var(--bg3);
 }
 
-
 #menubar {
   width: 100vw;
   -webkit-app-region: drag;
@@ -225,7 +250,6 @@
   background-size: 16px;
 }
 
-
 #menubar #fileactions {
   margin-left: auto;
 }
@@ -274,3 +298,4 @@
 [theme="light"] #menubar #togglesidenavbtn {
   background-image: url("../../assets/icons/menubar/sidenav_l.svg");
 }
+

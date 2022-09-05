@@ -11,6 +11,10 @@ document.getElementById("settingsbtn").addEventListener("click", function () {
   showSettings();
 });
 
+document.getElementById("draftsbtn").addEventListener("click", function () {
+  showDrafts();
+});
+
 document.getElementById("togglesidenavbtn").addEventListener("click", function () {
   if (document.querySelector("#sidenav").style.display == "none") {
     // show
@@ -21,11 +25,10 @@ document.getElementById("togglesidenavbtn").addEventListener("click", function (
     // hide
     document.querySelector("#sidenav").style.display = "none";
     document.querySelector("#content").style.marginLeft = "0";
-    if(system.os == 'darwin'){
-    document.querySelector("#leftbtns").style.marginLeft = "62px";
-
-    }else{
-    document.querySelector("#leftbtns").style.marginLeft = "2px";
+    if (system.os == "darwin") {
+      document.querySelector("#leftbtns").style.marginLeft = "62px";
+    } else {
+      document.querySelector("#leftbtns").style.marginLeft = "2px";
     }
   }
 });
@@ -34,7 +37,7 @@ document.getElementById("openresources").addEventListener("click", function () {
   window.api.send("openResources", "");
 });
 
-document.getElementById("filetreeindentslider").addEventListener("click", function () {
+document.getElementById("filetreeindentslider").addEventListener("input", function () {
   settings.filetreeindentation = document.querySelector("#filetreeindentslider").value;
   document.querySelector("#filetreeindentdisplay").innerHTML = "(" + settings.filetreeindentation + "px)";
   writeSettings();
@@ -44,17 +47,16 @@ document.getElementById("filetreeindentslider").addEventListener("click", functi
 // init
 function init() {
   // request files from main & create tray
-  try{
+  try {
     window.api.send("requestSettings", "");
+    window.api.send("requestDrafts", "");
     window.api.send("requestFiles", "");
     window.api.send("requestSystem", "");
     window.api.send("createTray", "");
-  }catch(err){
-    console.warn(err)
+  } catch (err) {
+    console.warn(err);
   }
-  
 }
-
 
 // generates menubar for the file
 function generateMenubar(index) {
@@ -129,7 +131,7 @@ function generateFile(index) {
   fileNameDiv.append(fileIcon);
 
   // file name
-  let fileName = createElement("p", {
+  let fileName = createElement("h1", {
     class: "filename",
     innerhtml: index.name,
     contenteditable: true,
@@ -242,6 +244,7 @@ function generateFile(index) {
 function gotoFile(index, btn = null) {
   // hide settings
   document.querySelector("#settings").style.display = "none";
+  document.querySelector("#drafts").style.display = "none";
 
   hideBlockMenu();
   hideFileIconMenu();
@@ -347,6 +350,7 @@ init();
 
 function showSettings() {
   document.querySelector("#filecontainer").innerHTML = "";
+  document.querySelector("#drafts").style.display = "none";
   document.querySelector("#settings").style.display = "flex";
 
   // menubar
@@ -363,4 +367,83 @@ function showSettings() {
   document.querySelector("#path").append(button);
   document.querySelector("#lastedited").innerHTML = "";
   document.querySelector("#fileactions").innerHTML = "";
+}
+
+function showDrafts() {
+  document.querySelector("#filecontainer").innerHTML = "";
+  document.querySelector("#drafts").style.display = "flex";
+  document.querySelector("#settings").style.display = "none";
+
+  // menubar
+  document.querySelector("#path").innerHTML = "";
+
+  let button = createElement("button", { class: "pathbtn", innerhtml: "Drafts" });
+  button.onclick = function () {
+    showDrafts();
+  };
+
+  button.style.backgroundImage = "url(../assets/icons/sidenav/" + "drafts" + "_" + appstate.currthemeshort + ".svg)";
+  button.style.paddingLeft = "15px";
+
+  hideFileIconMenu();
+  hideBlockMenu();
+
+  document.querySelector("#path").append(button);
+  document.querySelector("#lastedited").innerHTML = "";
+  document.querySelector("#fileactions").innerHTML = "";
+
+  generateDrafts();
+}
+
+function generateDrafts() {
+  document.querySelector("#draftscontainer").innerHTML = "";
+  for (let i = 0; i < drafts.length; i++) {
+    // for each draft
+    let container = createElement("div", { class: "draft-container" });
+    let name = createElement("h3", { class: "draft-name", innerhtml: drafts[i].name, contenteditable: "true" });
+    name.oninput = function () {
+      drafts[i].name = this.innerHTML.replace(/<br>/g, "");
+      // get date
+      let d = new Date();
+      // update last edited
+      drafts[i].lastedited = d.getTime();
+      writeDrafts();
+    };
+    name.onblur = function () {
+      generateDrafts();
+    };
+    let text = createElement("p", { class: "draft-text", innerhtml: drafts[i].text, contenteditable: "true" });
+    text.oninput = function () {
+      drafts[i].text = this.innerHTML.replace(/<br>/g, "");
+      // get date
+      let d = new Date();
+      // update last edited
+      drafts[i].lastedited = d.getTime();
+      writeDrafts();
+    };
+    text.onblur = function () {
+      generateDrafts();
+    };
+    let dates = createElement("p", {
+      class: "draft-footer-text",
+      innerhtml: timeAgo(drafts[i].lastedited) + " - " + timeAgo(drafts[i].creationdate),
+    });
+
+    let deletebtn = createElement("button", {
+      backgroundimage: "url(../assets/icons/menubar/trash_" + appstate.currthemeshort + ".svg)",
+    });
+    deletebtn.onclick = function () {
+      deleteDraft(i);
+    };
+    let div = createElement("div", {});
+    div.style.display = "flex";
+    div.append(name);
+    div.append(deletebtn);
+    container.append(div);
+
+    container.append(text);
+    // edited and creation date is useless info ???
+    // container.append(dates);
+    document.querySelector("#draftscontainer").append(container);
+  }
 }
