@@ -94,7 +94,6 @@
   user-select: none;
   min-width: 0;
   border-radius: 6px;
-  padding: 3px 1px 3px 1px;
 }
 
 #sidenav #filebtns .filebtndiv:hover {
@@ -219,10 +218,10 @@
 
 #menubar button {
   margin: 0;
-  min-width: calc(var(--menubarheight) - 4px);
+  min-width: 28px;
   border-radius: 4px;
   padding: 0 8px;
-  height: calc(var(--menubarheight) - 8px);
+  height: 24px;
   text-align: center;
   white-space: nowrap;
   background-size: 20px 20px;
@@ -238,7 +237,7 @@
 }
 
 #menubar button:hover {
-  background-color: var(--bg4);
+  background-color: var(--bg3);
 }
 
 #menubar #winbtns {
