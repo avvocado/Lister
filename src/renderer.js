@@ -207,13 +207,6 @@ function generateFile(index) {
           }
         }
       };
-    } else if (index.blocks[b].type == "inline_code") {
-      // inline code block
-      block.classList.add("editableonedit");
-      block.classList.add("inline");
-      block.innerHTML = index.blocks[b].text;
-      block.contentEditable = true;
-      block.spellcheck = false;
     } else if (index.blocks[b].type == "checklist") {
       for (let z = 0; z < index.blocks[b].items.length; z++) {
         let itemdiv = createElement("div", {});
@@ -236,23 +229,57 @@ function generateFile(index) {
           writeFiles();
         };
 
-        text.onblur = function(){
-          if(index.blocks[b].items[z].text == ''){
-            deleteChecklistItem(index, b,z)
-          }
-        }
-
         text.onkeydown = function (e) {
           if (e.code == "Enter") {
             if (z == index.blocks[b].items.length - 1) {
+              // if is last item
               newChecklistItem(index, b);
             }
             this.blur();
+          } else if (e.code == "Backspace") {
+            if (index.blocks[b].items[z].text == "") {
+              // if it's empty
+              console.log("hello");
+              deleteChecklistItem(index, b, z);
+            }
           }
         };
         itemdiv.append(btn);
         itemdiv.append(text);
         block.append(itemdiv);
+      }
+    } else if (index.blocks[b].type == "embed_file") {
+      if (
+        index.blocks[b].src.endsWith(".png") ||
+        index.blocks[b].src.endsWith(".jpeg") ||
+        index.blocks[b].src.endsWith(".gif") ||
+        index.blocks[b].src.endsWith(".svg") ||
+        index.blocks[b].src.endsWith(".webp") ||
+        index.blocks[b].src.endsWith(".jpg")
+      ) {
+        // image - png jpeg jpg
+        let container = createElement("image", { src: `../resources/media/${index.blocks[b].src}` });
+        block.append(container);
+      } else if (
+        index.blocks[b].src.endsWith(".mov") ||
+        index.blocks[b].src.endsWith(".mp4") ||
+        index.blocks[b].src.endsWith(".webm")
+      ) {
+        // video - mp4 mov webm
+        let container = createElement("video", { src: `../resources/media/${index.blocks[b].src}` });
+        container.controls = true;
+        container.disablePictureInPicture = true;
+        container.controlsList = "nodownload noremoteplayback noplaybackrate";
+        block.append(container);
+      } else if (
+        index.blocks[b].src.endsWith(".wav") ||
+        index.blocks[b].src.endsWith(".mp3") ||
+        index.blocks[b].src.endsWith(".ogg")
+      ) {
+        // audio - wav mp3 ogg
+        let container = createElement("audio", { src: `../resources/media/${index.blocks[b].src}` });
+        container.controls = true;
+        block.append(container);
       }
     }
 

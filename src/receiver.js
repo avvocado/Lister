@@ -4,7 +4,27 @@ window.api.receive("error", (args) => {
   // error in one of the json files
   document.querySelector("#error").style.display = "flex";
   document.querySelector("#error").innerHTML = args;
+  let openresourcesbtn = createElement("button", { innerhtml: "Open Resources Folder" });
+  openresourcesbtn.onclick = function () {
+    window.api.send("openResources", "");
+  };
+  document.querySelector("#error").append(openresourcesbtn);
   document.querySelector("#app").style.opacity = "0";
+});
+
+window.api.receive("media", (args) => {
+  // finished copying media
+
+  let index = getIndex(args.path);
+
+  index.blocks.splice(args.b, 0, {
+    type: "embed_file",
+    src: args.filename,
+  });
+
+  writeFiles();
+  generateFile(index);
+  generateMenubar(index);
 });
 
 window.api.receive("files", (args) => {

@@ -154,3 +154,8 @@
   font-weight: bold;
   color: var(--text2);
 }
+
+
+video::-webkit-media-controls-panel {
+  background-image: none !important;
+}

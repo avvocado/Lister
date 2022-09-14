@@ -101,6 +101,11 @@ var blockTypes = [
     type: "checklist",
     icon: "block_checklist",
   },
+  {
+    name: "Embed File",
+    type: "embed_file",
+    icon: "block_embed_file",
+  },
 ];
 
 // return file based of a path, eg: [0, 0, 0]
@@ -383,6 +388,9 @@ function generatePath(index) {
   let obj = files;
   let store = [];
 
+
+  
+
   for (let i = 0; i < index.path.length; i++) {
     if (obj == files) {
       obj = obj[index.path[i]];
@@ -426,8 +434,12 @@ function newChecklistItem(index, b) {
   generateFile(index);
 }
 
-function deleteChecklistItem(index, b,z) {
-  index.blocks[b].items.splice(z+1, 1);
+function deleteChecklistItem(index, b, z) {
+  console.log(index);
+  console.log(b);
+  console.log(z);
+
+  index.blocks[b].items.splice(z, 1);
   writeFiles();
   generateFile(index);
 }
@@ -435,20 +447,26 @@ function deleteChecklistItem(index, b,z) {
 function newBlock(index, b, type) {
   let d = new Date();
   if (type == "text" || type == "heading" || type == "code") {
+    // text, heading, or code
     index.blocks.splice(b, 0, {
       type: type,
       text: newTextBlockText,
     });
   } else if (type == "divider") {
+    // divider
     index.blocks.splice(b, 0, {
       type: type,
     });
   } else if (type == "checklist") {
+    // checklist
     index.blocks.splice(b, 0, {
       type: type,
       items: [],
     });
-    newChecklistItem(index, b)
+    newChecklistItem(index, b);
+  } else if (type == "embed_file") {
+    // embed file
+    window.api.send("uploadMedia", { path: index.path, b: b });
   } else if (type == "inline_code") {
     console.log(" new inlnien coe edelbock");
     index.blocks[b].text += `&nbsp;<div class="inline block ${type}">${newInlineCodeBlockText}</div>&nbsp;`;
@@ -457,9 +475,11 @@ function newBlock(index, b, type) {
   // update last edited
   index.lastedited = d.getTime();
 
-  writeFiles();
-  generateFile(index);
-  generateMenubar(index);
+  if (type != "embed_file") {
+    writeFiles();
+    generateFile(index);
+    generateMenubar(index);
+  }
 }
 
 function deleteBlock(index, b) {
@@ -499,47 +519,31 @@ function newDraft() {
 
 function newFile(index) {
   let d = new Date();
+  let obj = {
+    name: newFileName,
+    creationdate: d.getTime(),
+    lastedited: d.getTime(),
+    starred: false,
+    locked: false,
+    archived: false,
+    icon: newFileIcon,
+    blocks: [],
+    children: [],
+  };
   if (index == files) {
-    files.push({
-      name: newFileName,
-      creationdate: d.getTime(),
-      lastedited: d.getTime(),
-      path: [files.length],
-      starred: false,
-      locked: false,
-      icon: newFileIcon,
-      blocks: [],
-      children: [],
-    });
+    obj.path = [files.length];
+    files.push(obj);
     newBlock(files[index.length - 1], 0, "text");
   } else {
-    if (index.children == null) {
+    /*if (index.children == null) {
       index.children = [];
-    }
-    index.children.push({
-      name: newFileName,
-      creationdate: d.getTime(),
-      lastedited: d.getTime(),
-      path: index.path.concat(index.children.length),
-      starred: false,
-      icon: newFileIcon,
-      locked: false,
-      blocks: [],
-      children: [],
-    });
+    }*/
+
+    obj.path = index.path.concat(index.children.length);
+    index.children.push(obj);
     // text block to start with
     newBlock(index.children[index.children.length - 1], 0, "text");
   }
-
-  writeFiles();
-  generateSidenav();
-}
-
-function newFolder() {
-  files.push({
-    name: newFolderName,
-    children: [],
-  });
 
   writeFiles();
   generateSidenav();

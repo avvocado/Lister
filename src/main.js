@@ -222,3 +222,52 @@ ipcMain.on("openResources", (evt, args) => {
   // required to select a file to highlight, highlight files.json
   shell.showItemInFolder(path.join(__dirname, "../", "/resources/", "files.json"));
 });
+
+ipcMain.on("uploadMedia", (evt, args) => {
+  // opens a window to choose file
+  dialog
+    .showOpenDialog({
+      properties: ["openFile"],
+      filters: [
+        {
+          name: "",
+          extensions: [
+            "png",
+            "svg",
+            "jpeg",
+            "jpg",
+            "webp",
+            "gif",
+            "mp4",
+            "webm",
+            "ogg",
+            "wav",
+            "mp3",
+          ],
+          // audio files, videos, and images
+        },
+      ],
+    })
+    .then((result) => {
+      // checks if window was closed
+      if (result.canceled) {
+        console.log("no file was selected");
+      } else {
+        // get first element in array which is path to file selected
+        let filePath = result.filePaths[0];
+
+        // get file name
+        let fileName = path.basename(filePath);
+
+        // copy file from original location to media folder
+        fs.copyFile(
+          filePath,
+          path.join(__dirname, "../", "/resources/", "/media/", fileName),
+          (err) => {
+            if (err) throw err;
+            win.webContents.send("media", {filename: fileName, path: args.path, b: args.b});
+          }
+        );
+      }
+    });
+});

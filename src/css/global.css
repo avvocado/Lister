@@ -99,6 +99,7 @@ body {
 #error {
   height: 100%;
   color: var(--text1);
+  flex-direction: column;
   font-weight: bold;
   font-size: 18px;
   margin-top: 10vw;
@@ -106,6 +107,12 @@ body {
   justify-content: center;
   display: none;
   align-items: center;
+}
+#error button {
+  padding: 12px 16px;
+  border-radius: 4px;
+  border: 2px solid var(--bg1);
+  margin-top: 16px;
 }
 
 /* range sliders */

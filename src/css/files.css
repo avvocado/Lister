@@ -142,12 +142,20 @@
 
 #filecontainer .block.inline_code {
   background-color: var(--bg1);
-  font-size: 14px;
+  font-size: calc(1em - 2px);
   border-radius: 3px;
   font-family: consolasfont;
   display: inline;
   color: var(--text3);
   padding: 1px 4px 1px 4px;
+}
+
+#filecontainer .block.embed_file {
+  width: calc(100% - var(--gutterwidth));
+}
+
+#filecontainer .block.embed_file video, #filecontainer .block.embed_file image, #filecontainer .block.embed_file audio {
+  width: 100%;
 }
 
 #filecontainer .block.checklist {
@@ -156,12 +164,12 @@
 }
 
 #filecontainer .block.checklist .checkbox {
-  width:1em;
+  width: 1em;
   border-radius: 0.25em;
   transition: 100ms;
   margin-right: 6px;
   background-size: 1.5em;
-  height: 1em
+  height: 1em;
 }
 
 #filecontainer .block.checklist .checkbox.checked {
@@ -170,17 +178,16 @@
 }
 
 [theme="dark"] #filecontainer .block.checklist .checkbox.checked {
-  background-image: url('../../assets/icons/file/check_d.svg');
+  background-image: url("../../assets/icons/file/check_d.svg");
 }
 
 [theme="light"] #filecontainer .block.checklist .checkbox.checked {
-  background-image: url('../../assets/icons/file/check_l.svg');
+  background-image: url("../../assets/icons/file/check_l.svg");
 }
 #filecontainer .block.checklist .checkbox.unchecked {
   background-color: transparent;
   border: 2px solid var(--text5);
 }
-
 
 #filecontainer .block.checklist .checkbox.unchecked:hover {
   border: 2px solid var(--text4);
@@ -189,6 +196,7 @@
 #filecontainer .block.checklist p {
   display: inline-block;
   transition: 100ms;
+  width: 100%;
 }
 
 #filecontainer .block.checklist p.unchecked {
@@ -202,6 +210,7 @@
 #filecontainer .block.text {
   overflow-x: auto;
   white-space: pre-wrap;
+  overflow-y: hidden;
   word-wrap: break-word;
   color: var(--textblocktextcolor);
   font-size: 16px;
