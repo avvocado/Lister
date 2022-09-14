@@ -154,7 +154,7 @@
   width: calc(100% - var(--gutterwidth));
 }
 
-#filecontainer .block.embed_file video, #filecontainer .block.embed_file image, #filecontainer .block.embed_file audio {
+#filecontainer .block.embed_file video, #filecontainer .block.embed_file img, #filecontainer .block.embed_file audio {
   width: 100%;
 }
 

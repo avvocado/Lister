@@ -258,7 +258,7 @@ function generateFile(index) {
         index.blocks[b].src.endsWith(".jpg")
       ) {
         // image - png jpeg jpg
-        let container = createElement("image", { src: `../resources/media/${index.blocks[b].src}` });
+        let container = createElement("img", { src: `../resources/media/${index.blocks[b].src}` });
         block.append(container);
       } else if (
         index.blocks[b].src.endsWith(".mov") ||
