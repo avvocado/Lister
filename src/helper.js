@@ -77,9 +77,19 @@ var inlineBlockTypes = [
 
 var blockTypes = [
   {
-    name: "Heading",
-    type: "heading",
-    icon: "block_heading",
+    name: "Heading 1",
+    type: "heading1",
+    icon: "block_heading1",
+  },
+  {
+    name: "Heading 2",
+    type: "heading2",
+    icon: "block_heading2",
+  },
+  {
+    name: "Heading 3",
+    type: "heading3",
+    icon: "block_heading3",
   },
   {
     name: "Text",
@@ -388,9 +398,6 @@ function generatePath(index) {
   let obj = files;
   let store = [];
 
-
-  
-
   for (let i = 0; i < index.path.length; i++) {
     if (obj == files) {
       obj = obj[index.path[i]];
@@ -446,8 +453,8 @@ function deleteChecklistItem(index, b, z) {
 
 function newBlock(index, b, type) {
   let d = new Date();
-  if (type == "text" || type == "heading" || type == "code") {
-    // text, heading, or code
+  if (type == "text" || type == "heading1" || type == "heading2" || type == "heading3" || type == "code") {
+    // text, h1, h2, h3, or code
     index.blocks.splice(b, 0, {
       type: type,
       text: newTextBlockText,
@@ -468,7 +475,7 @@ function newBlock(index, b, type) {
     // embed file
     window.api.send("uploadMedia", { path: index.path, b: b });
   } else if (type == "inline_code") {
-    console.log(" new inlnien coe edelbock");
+    // inline code block
     index.blocks[b].text += `&nbsp;<div class="inline block ${type}">${newInlineCodeBlockText}</div>&nbsp;`;
   }
 

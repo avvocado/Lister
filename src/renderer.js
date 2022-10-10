@@ -179,8 +179,8 @@ function generateFile(index) {
 
     if (index.blocks[b].type == "divider") {
       // divider block
-    } else if (index.blocks[b].type == "code" || index.blocks[b].type == "heading" || index.blocks[b].type == "text") {
-      // text, heading, or code
+    } else if (index.blocks[b].type == "code" || index.blocks[b].type == "heading1" ||index.blocks[b].type == "heading2" ||index.blocks[b].type == "heading3" || index.blocks[b].type == "text") {
+      // text, h1, h2, h3, or code
       block.classList.add("editableonedit");
       block.innerHTML = index.blocks[b].text;
       block.contentEditable = true;
