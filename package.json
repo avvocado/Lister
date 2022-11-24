@@ -6,7 +6,7 @@
     "start": "electron ."
   },
   "devDependencies": {
-    "electron": "^18.2.4"
+    "electron": "^18.3.7"
   },
   "dependencies": {
     "electron-packager": "^15.5.1"
