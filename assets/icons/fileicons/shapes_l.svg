@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 400 400" stroke='#404040' stroke-width="36px" stroke-linecap="round" stroke-linejoin="round" fill="none">
-  <rect style="fill: rgb(216, 216, 216); stroke-width: 36px; stroke-linecap: round; stroke-linejoin: round; stroke: 404040; fill-opacity: 0;" x="17.705" y="218.246" width="164" height="164" rx="36" ry="36"></rect>
-  <ellipse style="fill: rgb(216, 216, 216); stroke-linecap: round; stroke-linejoin: round; stroke-width: 36px; stroke: 404040; fill-opacity: 0;" cx="299.396" cy="100.132" rx="82" ry="82"></ellipse>
-  <path d="M 285.038 236.418 Q 303.143 200.21 321.247 236.418 L 375.559 345.043 Q 393.663 381.251 357.455 381.251 L 248.83 381.251 Q 212.622 381.251 230.726 345.043 Z" data-bx-shape="triangle 212.622 200.21 181.041 181.041 0.5 0.2 1@a332c331" style="fill: rgb(216, 216, 216); stroke: 404040; stroke-linecap: round; stroke-linejoin: round; stroke-width: 36px; fill-opacity: 0;"></path>
-  <rect x="184.819" y="91.993" width="116.761" height="114.87" style="fill: rgb(216, 216, 216); stroke-width: 36px; stroke: 404040; stroke-linecap: round; stroke-linejoin: round; fill-opacity: 0;" transform="matrix(0.707107, 0.707107, -0.707107, 0.707107, 33.69305, -176.917572)"></rect>
-</svg>

@@ -1,0 +1,64 @@
+#sidenav {
+  display: flex;
+  background-color: var(--bg-3);
+  flex-direction: column;
+  padding: var(--sidenav-padding);
+  top: 0;
+  left: 0;
+  width: calc(var(--sidenav-width) - (var(--sidenav-padding) * 2));
+  position: fixed;
+  height: 100vh;
+}
+
+#sidenav .sidenav-header {
+  font-size: 12px;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 16px 0 4px 0;
+  font-weight: bold;
+}
+
+#sidenav .sidenav-btn {
+  background-color: transparent;
+  letter-spacing: 0.01em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+}
+
+
+#sidenav .sidenav-btn:hover {
+  background-color: var(--bg-4);
+}
+
+
+#sidenav .sidenav-file-btn-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#sidenav .sidenav-file-btn-container .new {
+  visibility: hidden;
+  background-image: url("../assets/sidenav/plus.svg");
+  background-size: 100%;
+  background-color: transparent;
+  margin-left: auto;
+  height: 16px;
+  width: 16px;
+}
+
+#sidenav .sidenav-file-btn-container:hover .new {
+  visibility: visible;
+}
+
+#sidenav .sidenav-file-btn-container .name {
+  background-color: transparent;
+  overflow: hidden;
+
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}

@@ -1,0 +1,79 @@
+:root {
+  /* sidenav */
+  --sidenav-width: 200px;
+  --sidenav-padding: 16px;
+
+  /* topnav */
+  --topnav-height: 24px;
+  --topnav-padding: 16px;
+
+  /* content & file container*/
+  --content-padding: 32px;
+  --file-width: 90%;
+
+  /* context menu */
+  --context-menu-width: 180px;
+
+  /* background colors */
+  --bg-1: #ffffff; /* elevated things */
+  --bg-2: #efefef; /* main content */
+  --bg-3: #dfdfdf; /* sidenav */
+  --bg-4: #cfcfcf; /* highlight on bg-3 */
+
+
+  /* text color */
+  --placeholder: #a0a0a0;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-2);
+
+}
+
+
+#app {
+  height: 100vh;
+  width: 100vw;
+  font-family: Helvetica, sans-serif;
+}
+
+* {
+  border: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  outline: none;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#content {
+  background-color: var(--bg-2);
+  display: flex;
+  justify-content: space-around;
+  padding: var(--content-padding);
+  padding-left: calc(var(--sidenav-width) + var(--content-padding));
+  padding-top: calc(var(--topnav-height) + (var(--topnav-padding) * 2));
+}
+
+#context-menu {
+  display: none;
+  position: absolute;
+  padding: 8px;
+  background-color: var(--bg-1);
+  border-radius: 4px;
+  width: var(--context-menu-width);
+  flex-direction: column;
+  gap: 2px;
+}
+
+#context-menu button {
+  border-radius: 4px;
+  padding: 4px 8px;
+  background-color: transparent;
+}
+
+#context-menu button:hover {
+  background-color: var(--bg-2);
+}

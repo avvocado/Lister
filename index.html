@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listr</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/topnav.css" />
+  <link rel="stylesheet" href="css/sidenav.css" />
+  <link rel="stylesheet" href="css/file.css" />
+
+
+</head>
+
+<body>
+  <div id="app">
+
+    <div id="topnav">
+      
+      <button class="topnav-btn" id="collapse-sidenav-btn"></button>
+
+      <div id="file-path-container"></div>
+
+      <div style="margin-left: auto">
+        <button class="topnav-btn" id="file-path">Edited</button>
+        <button class="topnav-btn" id="undo-btn">Undo</button>
+        <button class="topnav-btn" id="redo-btn">Redo</button>
+        <button class="topnav-btn" id="share-file-btn">Share</button>
+        <button class="topnav-btn" id="star-file-btn"></button>
+        <button class="topnav-btn" id="lock-file-btn"></button>
+        <button class="topnav-btn" id="delete-file-btn"></button>
+      </div>
+
+
+    </div>
+
+    <div id="sidenav">
+      <button class="sidenav-btn">Listr</button>
+      <button class="sidenav-btn">Home</button>
+      <button class="sidenav-btn">Account</button>
+      <button class="sidenav-btn">Settings</button>
+      <button class="sidenav-btn">Search</button>
+      <p class="sidenav-header">Files</p>
+      <div id="sidenav-file-btn-container"></div>
+    </div>
+
+    <div id="content">
+      <div id="file-container">
+      </div>
+    </div>
+
+
+    <div id="context-menu"></div>
+  </div>
+
+  <script src="src/helper.js"></script>
+  <script src="src/script.js"></script>
+
+</body>
+
+</html>

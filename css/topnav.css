@@ -1,0 +1,43 @@
+#topnav {
+  display: flex;
+  position: fixed;
+  left: 0;
+  width: calc(100vw - var(--sidenav-width) - (var(--topnav-padding) * 2));
+  top: 0;
+  gap: 4px;
+  flex-direction: row;
+  height: var(--topnav-height);
+  align-items: center;
+  padding: var(--topnav-padding);
+  background-color: var(--bg-2);
+  padding-left: calc(var(--sidenav-width) + var(--topnav-padding));
+}
+
+#topnav .topnav-btn {
+  height: var(--topnav-height);
+  background-color: transparent;
+  border-radius: 4px;
+  min-width: 32px;
+  background-size: 16px;
+  padding: 0 8px 0 8px;
+}
+
+#topnav .topnav-btn:hover {
+  background-color: var(--bg-3);
+}
+
+#topnav .topnav-btn#collapse-sidenav-btn {
+  background-image: url('../assets/topnav/arrow_left.svg');
+}
+
+#topnav .topnav-btn#delete-file-btn {
+  background-image: url('../assets/topnav/trash.svg');
+}
+
+#topnav .topnav-btn#lock-file-btn {
+  background-image: url('../assets/topnav/lock.svg');
+}
+
+#topnav .topnav-btn#star-file-btn {
+  background-image: url('../assets/topnav/star.svg');
+}

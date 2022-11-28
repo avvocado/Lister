@@ -1,586 +1,68 @@
-//
-// global variables
-
-// list of files from json
-var files = [];
-
-// list of drafts from json
-var drafts = [];
-
-// system and app info
-var system = {};
-
-// settings from json
-var settings = {};
-
-// app states
-var appstate = {
-  // index of the block which currently has the block menu active
-  activeblockmenu: -1,
-  // current theme (dark or light)
-  currtheme: null,
-  // current theme (d or l)
-  currthemeshort: null,
-};
-
-// keypress map
-var keyMap = {};
-
-// new file defaults
-var newFileName = "";
-var newFileIcon = "file";
-
-// new block defaults
-var newTextBlockText = "";
-var newHeadingBlockText = "";
-var newCodeBlockText = "";
-var newInlineCodeBlockText = "&nbsp;&nbsp;";
-
-// file icons, name is unused
-fileIcons = [
-  { icon: "app_window", name: "App Window" },
-  { icon: "asterisk", name: "Asterisk" },
-  { icon: "audio", name: "Audio" },
-  { icon: "boxes", name: "Boxes" },
-  { icon: "bug", name: "Bug" },
-  { icon: "check_circle", name: "Check Circle" },
-  { icon: "circle", name: "Circle" },
-  { icon: "clock", name: "Clock" },
-  { icon: "code", name: "Code" },
-  { icon: "computers", name: "Computer" },
-  { icon: "diamond", name: "Diamond" },
-  { icon: "dot_grid", name: "Dots" },
-  { icon: "file", name: "File" },
-  { icon: "file_text", name: "Text File" },
-  { icon: "folder", name: "Folder" },
-  { icon: "grid_1", name: "Grid" },
-  { icon: "grid", name: "Grid" },
-  { icon: "home", name: "Home" },
-  { icon: "image", name: "Image" },
-  { icon: "laptop", name: "Laptop" },
-  { icon: "lightning", name: "Lightning" },
-  { icon: "monitor", name: "Monitor" },
-  { icon: "present", name: "Gift Box" },
-  { icon: "shapes", name: "Shapes" },
-  { icon: "text", name: "Text" },
-  { icon: "video", name: "Video" },
-];
-
-var inlineBlockTypes = [
+var blocktypes = [
+  // Headings
   {
-    name: "Code",
-    type: "inline_code",
-    icon: "block_code",
-    allowedparents: ["text", "heading"],
+    name: "Heading 1",
+    icon: "",
+    shorthand: "h1",
+    type: "heading1",
   },
-];
-
-var blockTypes = [
   {
-    name: "Heading",
-    type: "heading",
-    icon: "block_heading",
+    name: "Heading 2",
+    icon: "",
+    shorthand: "h2",
+    type: "heading2",
   },
+  {
+    name: "Heading 3",
+    icon: "h",
+    shorthand: "h3",
+    type: "heading3",
+  },
+  // Text
   {
     name: "Text",
+    icon: "",
+    shorthand: "p",
     type: "text",
-    icon: "block_text",
   },
+  // Divider
   {
     name: "Divider",
+    icon: "",
+    shorthand: "d",
     type: "divider",
-    icon: "block_divider",
   },
+  // Code Block
   {
-    name: "Code",
-    type: "code",
-    icon: "block_code",
+    name: "Code Block",
+    icon: "",
+    shorthand: "code",
+    type: "code_block",
   },
+  // URL
   {
-    name: "Checklist",
-    type: "checklist",
-    icon: "block_checklist",
+    name: "URL",
+    icon: "",
+    shorthand: "url",
+    type: "url",
   },
+  // Table
   {
-    name: "Embed File",
-    type: "embed_file",
-    icon: "block_embed_file",
+    name: "Table",
+    icon: "",
+    shorthand: "table",
+    type: "table",
+  },
+  // Cards
+  {
+    name: "Cards",
+    icon: "",
+    shorthand: "cards",
+    type: "cards",
   },
 ];
 
-// return file based of a path, eg: [0, 0, 0]
-function getIndex(path) {
-  let obj = files;
-  for (let i = 0; i < path.length; i++) {
-    if (obj == files) {
-      obj = obj[path[i]];
-    } else {
-      obj = obj.children[path[i]];
-    }
-  }
-  return obj;
-}
-
-function hideFileIconMenu() {
-  document.querySelector("#fileiconmenu").style.display = "none";
-}
-
-function fileIconMenu(index, activator) {
-  let menu = document.querySelector("#fileiconmenu");
-  document.querySelector("#fileiconbtns").innerHTML = "";
-  // toggle displaying the div
-  menu.style.display = menu.style.display == "flex" ? "none" : "flex";
-
-  // change position
-  let activatorRect = activator.getBoundingClientRect();
-  menu.style.top = window.scrollY + activatorRect.top + 32 + "px";
-  menu.style.left = window.scrollX + activatorRect.left - 4 + "px";
-
-  // create buttons
-  for (let i = 0; i < fileIcons.length; i++) {
-    let btn = createElement("button", {
-      class: "fileiconbtn",
-      backgroundimage: `url(../assets/icons/fileicons/${fileIcons[i].icon}_${
-        appstate.currthemeshort == "l" ? "d" : "l"
-      }.svg`,
-    });
-    btn.onclick = function () {
-      // change file's icon
-      index.icon = fileIcons[i].icon;
-      // write json
-      writeFiles();
-      // generate file
-      generateFile(index);
-      // generate sidenav
-      generateSidenav();
-      // generate menubar
-      generateMenubar(index);
-      // hide the menu
-      hideFileIconMenu();
-    };
-    document.querySelector("#fileiconbtns").append(btn);
-  }
-
-  let btn = createElement("button", { class: "fileiconbtn", innerhtml: "none" });
-  btn.onclick = function () {
-    index.icon = "";
-    writeFiles();
-    generateFile(index);
-    generateSidenav();
-  };
-  document.querySelector("#fileiconbtns").append(btn);
-}
-
-function blockMenu(index, b, activator) {
-  try {
-    document.querySelector(".blockmenubtn.active").classList.remove("active");
-  } catch (err) {}
-  activator.classList.add("active");
-  let blockMenu = document.querySelector("#blockmenu");
-  document.querySelector("#blockmenu #newblockbtns").innerHTML = "";
-  document.querySelector("#blockmenu #newinlineblockbtns").innerHTML = "";
-  document.querySelector(".inline-blocks").style.display = "none";
-
-  // block buttons
-  // new block buttons
-  for (let t = 0; t < blockTypes.length; t++) {
-    let btn = createElement("button", { class: "newblockbtn", innerhtml: blockTypes[t].name });
-    btn.style.backgroundImage = `url(../assets/icons/blocks/${blockTypes[t].icon}_${appstate.currthemeshort}.svg)`;
-
-    btn.onclick = function () {
-      newBlock(index, appstate.activeblockmenu, blockTypes[t].type);
-      generateMenubar(index);
-      // hide block menu
-      hideBlockMenu();
-    };
-    document.querySelector("#blockmenu #newblockbtns").append(btn);
-  }
-
-  // new inline block buttons
-  for (let t = 0; t < inlineBlockTypes.length; t++) {
-    if (inlineBlockTypes[t].allowedparents.includes(index.blocks[b].type)) {
-      // if inline block is allowed in this parent block
-      document.querySelector("#blockmenu .header.inline-blocks").style.display = "block";
-      let btn = createElement("button", { class: "newblockbtn", innerhtml: inlineBlockTypes[t].name });
-      btn.style.backgroundImage = `url(../assets/icons/blocks/${inlineBlockTypes[t].icon}_${appstate.currthemeshort}.svg)`;
-      btn.onclick = function () {
-        newBlock(index, appstate.activeblockmenu, inlineBlockTypes[t].type);
-        generateMenubar(index);
-        // hide block menu
-        hideBlockMenu();
-      };
-      document.querySelector("#blockmenu #newinlineblockbtns").append(btn);
-    }
-  }
-
-  // toggle displaying the div
-  blockMenu.style.display = blockMenu.style.display == "flex" ? "none" : "flex";
-  if (blockMenu.style.display == "none") {
-    document.querySelector(".blockmenubtn.active").classList.remove("active");
-  }
-
-  // change active block menu
-  if (b != appstate.activeblockmenu) {
-    // if it's a different block, dont hide it,
-    blockMenu.style.display = blockMenu.style.display = "flex";
-  }
-  appstate.activeblockmenu = b;
-
-  // change position
-  let activatorRect = activator.getBoundingClientRect();
-  blockMenu.style.top = window.scrollY + activatorRect.top + 28 + "px";
-  blockMenu.style.left = window.scrollX + activatorRect.left + "px";
-
-  // delete block btn
-  document.querySelector("#blockmenu #deleteblockbtn").onclick = function () {
-    deleteBlock(index, b);
-    hideBlockMenu();
-  };
-  document.querySelector(
-    "#blockmenu #deleteblockbtn"
-  ).style.backgroundImage = `url(../assets/icons/trash_${appstate.currthemeshort}.svg)`;
-}
-
-function tooltip(text, shortcut, activator, xoff) {
-  let tooltip = document.querySelector("#tooltip");
-
-  activator.onmouseover = function () {
-    // toggle displaying the div
-    tooltip.style.display = "flex";
-    // change text
-    document.querySelector("#tooltip #text").innerHTML = text;
-    document.querySelector("#tooltip #shortcut").innerHTML = shortcut;
-    // change position
-    let activatorRect = activator.getBoundingClientRect();
-    tooltip.style.top = window.scrollY + activatorRect.top + 28 + "px";
-    tooltip.style.left = window.scrollX + activatorRect.left + xoff + "px";
-  };
-  activator.onmouseleave = function () {
-    tooltip.style.display = "none";
-  };
-  return activator;
-}
-
-function refreshTooltip(text, shortcut, activator, xoff) {
-  let tooltip = document.querySelector("#tooltip");
-
-  // toggle displaying the div
-  tooltip.style.display = "flex";
-  // change text
-  document.querySelector("#tooltip #text").innerHTML = text;
-  document.querySelector("#tooltip #shortcut").innerHTML = shortcut;
-  // change position
-  let activatorRect = activator.getBoundingClientRect();
-  tooltip.style.top = window.scrollY + activatorRect.top + 28 + "px";
-  tooltip.style.left = window.scrollX + activatorRect.left + xoff + "px";
-}
-
-function editingFile(val, p, c) {
-  if (val == false) {
-    // editing off
-    document.querySelector(".editbtn").style.backgroundImage = "url(../assets/icons/navbars/pen.svg)";
-    appstate.currentlyediting = [-1, -1];
-    hideBlockMenu();
-  } else {
-    // editing on
-    document.querySelector(".editbtn").style.backgroundImage = "url(../assets/icons/navbars/pen_edit.svg)";
-    appstate.currentlyediting = [p, c];
-  }
-}
-
-function hideBlockMenu() {
-  document.querySelector("#blockmenu").style.display = "none";
-  try {
-    document.querySelector(".blockmenubtn.active").classList.remove("active");
-  } catch (err) {}
-}
-
-function deleteFile(path) {
-  if (path.length == 1) {
-    console.log(path);
-    // root file
-    files.splice(path[0], 1);
-  } else {
-    let temp = path.pop();
-    let parent = getIndex(path);
-    parent.children.splice(temp, 1);
-  }
-  writeFiles();
-  generateSidenav();
-}
-
-function getSidenavBtn(path) {
-  let btn = "";
-
-  console.log(path);
-  document.querySelectorAll(".childfiles")[path[0]];
-  /* btn = document.querySelectorAll("#filebtns .filebtndiv")[path[0]];
-  if (path.length > 1) {
-    for (let i = 0; i < path.length; i++) {
-      if (i == path.length - 1) {
-        btn = btn.children[path[i]];
-      } else if (i == 0) {
-        btn = document.querySelectorAll(".childfiles")[path[i]];
-      } else {
-        btn = btn.querySelectorAll(".childfiles")[path[i]];
-      }
-    }
-  } else {
-    // root parent file
-    btn = document.querySelectorAll("#filebtns .filebtndiv.root")[path[0]];
-  }*/
-  return btn;
-}
-
-function theme(t) {
-  try {
-    document.querySelector(".themebtn.active").classList.remove("active");
-  } catch (err) {}
-
-  document.querySelector("." + t + ".themebtn").classList.add("active");
-
-  settings.theme = t;
-  writeSettings();
-  if (t == "dark") {
-    // dark
-    document.querySelector(":root").setAttribute("theme", "dark");
-    appstate.currtheme = "dark";
-  } else if (t == "light") {
-    // light
-    document.querySelector(":root").setAttribute("theme", "light");
-    appstate.currtheme = "light";
-  } else if (t == "default") {
-    // use os
-    if (system.darktheme == true) {
-      // dark
-      document.querySelector(":root").setAttribute("theme", "dark");
-      appstate.currtheme = "dark";
-    } else {
-      // light
-      document.querySelector(":root").setAttribute("theme", "light");
-      appstate.currtheme = "light";
-    }
-  } else if (t == "auto") {
-    // time based
-    let d = new Date();
-    if (d.getHours() >= 19 || d.getHours() < 8) {
-      // dark, 7:00pm - 7:59am
-      document.querySelector(":root").setAttribute("theme", "dark");
-      appstate.currtheme = "dark";
-    } else {
-      // light 8:00am - 6:59pm
-      document.querySelector(":root").setAttribute("theme", "light");
-      appstate.currtheme = "light";
-    }
-  }
-
-  if (appstate.currtheme == "dark") {
-    appstate.currthemeshort = "d";
-  } else {
-    appstate.currthemeshort = "l";
-  }
-
-  generateSidenav();
-}
-
-function generatePath(index) {
-  let container = document.querySelector("#path");
-  let obj = files;
-  let store = [];
-
-
-  
-
-  for (let i = 0; i < index.path.length; i++) {
-    if (obj == files) {
-      obj = obj[index.path[i]];
-    } else {
-      obj = obj.children[index.path[i]];
-    }
-    store.push(obj);
-  }
-
-  // store is now an array of the hierarchy
-  // create the buttons
-  for (let b = 0; b < store.length; b++) {
-    let button = createElement("button", {
-      class: "pathbtn",
-      innerhtml: store[b].name.replace(/ /g, "") == "" ? "Untitled File" : store[b].name,
-    });
-
-    console.log(appstate.currthemeshort);
-
-    if (store[b].icon != null && store[b].icon != "") {
-      button.style.backgroundImage =
-        "url(../assets/icons/fileicons/" + store[b].icon + "_" + (appstate.currthemeshort == "l" ? "d" : "l") + ".svg)";
-      button.style.paddingLeft = "15px";
-    }
-
-    button.onclick = function () {
-      gotoFile(store[b]);
-    };
-    container.append(button);
-
-    if (b != store.length - 1) {
-      let slash = createElement("p", { class: "slash", innerhtml: "/" });
-      container.append(slash);
-    }
-  }
-}
-
-function newChecklistItem(index, b) {
-  index.blocks[b].items.push({ text: "", checked: false });
-  writeFiles();
-  generateFile(index);
-}
-
-function deleteChecklistItem(index, b, z) {
-  console.log(index);
-  console.log(b);
-  console.log(z);
-
-  index.blocks[b].items.splice(z, 1);
-  writeFiles();
-  generateFile(index);
-}
-
-function newBlock(index, b, type) {
-  let d = new Date();
-  if (type == "text" || type == "heading" || type == "code") {
-    // text, heading, or code
-    index.blocks.splice(b, 0, {
-      type: type,
-      text: newTextBlockText,
-    });
-  } else if (type == "divider") {
-    // divider
-    index.blocks.splice(b, 0, {
-      type: type,
-    });
-  } else if (type == "checklist") {
-    // checklist
-    index.blocks.splice(b, 0, {
-      type: type,
-      items: [],
-    });
-    newChecklistItem(index, b);
-  } else if (type == "embed_file") {
-    // embed file
-    window.api.send("uploadMedia", { path: index.path, b: b });
-  } else if (type == "inline_code") {
-    console.log(" new inlnien coe edelbock");
-    index.blocks[b].text += `&nbsp;<div class="inline block ${type}">${newInlineCodeBlockText}</div>&nbsp;`;
-  }
-
-  // update last edited
-  index.lastedited = d.getTime();
-
-  if (type != "embed_file") {
-    writeFiles();
-    generateFile(index);
-    generateMenubar(index);
-  }
-}
-
-function deleteBlock(index, b) {
-  index.blocks.splice(b, 1);
-  writeFiles();
-  generateFile(index);
-}
-
-function deleteDraft(b) {
-  drafts.splice(b, 1);
-  writeDrafts();
-  generateDrafts();
-  doDraftCount();
-}
-
-function doDraftCount() {
-  document.querySelector("#draftcount").innerHTML = drafts.length;
-  document.querySelector("#draftcount").style.display = "block";
-  if (drafts.length == 0) {
-    document.querySelector("#draftcount").style.display = "none";
-  }
-}
-
-function newDraft() {
-  let d = new Date();
-  drafts.unshift({
-    name: "",
-    text: "",
-    creationdate: d.getTime(),
-    lastedited: d.getTime(),
-  });
-
-  writeDrafts();
-  generateDrafts();
-  doDraftCount();
-}
-
-function newFile(index) {
-  let d = new Date();
-  let obj = {
-    name: newFileName,
-    creationdate: d.getTime(),
-    lastedited: d.getTime(),
-    starred: false,
-    locked: false,
-    archived: false,
-    icon: newFileIcon,
-    blocks: [],
-    children: [],
-  };
-  if (index == files) {
-    obj.path = [files.length];
-    files.push(obj);
-    newBlock(files[index.length - 1], 0, "text");
-  } else {
-    /*if (index.children == null) {
-      index.children = [];
-    }*/
-
-    obj.path = index.path.concat(index.children.length);
-    index.children.push(obj);
-    // text block to start with
-    newBlock(index.children[index.children.length - 1], 0, "text");
-  }
-
-  writeFiles();
-  generateSidenav();
-}
-
-// writing files.json
-function writeFiles() {
-  window.api.send("writeFiles", JSON.stringify(files));
-}
-
-// writing drafts.json
-function writeDrafts() {
-  window.api.send("writeDrafts", JSON.stringify(drafts));
-}
-
-// writing settings.json
-function writeSettings() {
-  window.api.send("writeSettings", JSON.stringify(settings));
-}
-
-// takes in an hour 0-24 and returns if that's am or pm in 12 hour time
-function getAmPm(time) {
-  let mod = "";
-  if (time.getHours() > 11) {
-    mod = "PM";
-  } else {
-    mod = "AM";
-  }
-  return mod;
-}
-
-function appendElements(parent, elems) {
-  for (let i = 0; i < elems.length; i++) {
-    parent.append(elems[i]);
-  }
-}
-
+// create element
 function createElement(type, params) {
   let elem = document.createElement(type);
 
@@ -601,20 +83,20 @@ function createElement(type, params) {
   }
   if (params.contenteditable) {
     elem.contentEditable = params.contenteditable;
-
     elem.spellcheck = false;
   }
   if (params.type) {
     elem.type = params.type;
+  }
+  if (params.href) {
+    elem.href = params.href;
+    elem.target = "_blank";
   }
   if (params.disabled) {
     elem.disabled = params.disabled;
   }
   if (params.title) {
     elem.title = params.title;
-  }
-  if (params.hide == true) {
-    elem.style.display = "none";
   }
   if (params.backgroundimage) {
     elem.style.backgroundImage = params.backgroundimage;
@@ -627,119 +109,98 @@ function createElement(type, params) {
   return elem;
 }
 
-// params: current time (ms), past/future time (ms)
-// returns: how long ago the date was OR in how long the date is
-// eg: "9 hours ago", "in 3 weeks"
-function timeAgo(date) {
-  var time = "";
-  let d = new Date();
-  let now = d.getTime();
-  if (now - date > -1000 && now - date < 1000) {
-    // within 1 second
-    time = "Now";
+// append array of html elements
+function appendElements(parent, elems) {
+  for (let i = 0; i < elems.length; i++) {
+    parent.append(elems[i]);
   }
-  if (now - date > 1000 * 60 * 60 * 24 * 30) {
-    // months ago, uses 30 days per month
-    let time1 = Math.floor((now - date) / (1000 * 60 * 60 * 24 * 30));
-    if (time1 == 1) {
-      time = time1 + " month ago";
-    } else {
-      time = time1 + " months ago";
-    }
-  } else if (now - date > 1000 * 60 * 60 * 24 * 7) {
-    // weeks ago
-    let time1 = Math.floor((now - date) / (1000 * 60 * 60 * 24 * 7));
-    if (time1 == 1) {
-      time = time1 + " week ago";
-    } else {
-      time = time1 + " weeks ago";
-    }
-  } else if (now - date > 1000 * 60 * 60 * 24) {
-    // days ago
-    let time1 = Math.floor((now - date) / (1000 * 60 * 60 * 24));
-    if (time1 == 1) {
-      time = time1 + " day ago";
-    } else {
-      time = time1 + " days ago";
-    }
-  } else if (now - date > 1000 * 60 * 60) {
-    // hours ago
-    let time1 = Math.floor((now - date) / (1000 * 60 * 60));
-    if (time1 == 1) {
-      time = time1 + " hour ago";
-    } else {
-      time = time1 + " hours ago";
-    }
-  } else if (now - date > 1000 * 60) {
-    // minutes ago
-    let time1 = Math.floor((now - date) / (1000 * 60));
-    if (time1 == 1) {
-      time = time1 + " minute ago";
-    } else {
-      time = time1 + " minutes ago";
-    }
-  } else if (now - date > 1000) {
-    // seconds ago
-    let time1 = Math.floor((now - date) / 1000);
-    if (time1 == 1) {
-      time = time1 + " second ago";
-    } else {
-      time = time1 + " seconds ago";
-    }
-  } else if (now - date < -(1000 * 60 * 60 * 24 * 30)) {
-    // in months, uses 30 days per month
-    let time1 = Math.floor((now - date) / -(1000 * 60 * 60 * 24 * 30));
-    if (time1 == 1) {
-      time = "in " + time1 + " month";
-    } else {
-      time = "in " + time1 + " months";
-    }
-  } else if (now - date < -(1000 * 60 * 60 * 24 * 7)) {
-    // in weeks
-    let time1 = Math.floor((now - date) / -(1000 * 60 * 60 * 24 * 7));
-    if (time1 == 1) {
-      time = "in " + time1 + " week";
-    } else {
-      time = "in " + time1 + " weeks";
-    }
-  } else if (now - date < -(1000 * 60 * 60 * 24)) {
-    // in days
-    let time1 = Math.floor((now - date) / -(1000 * 60 * 60 * 24));
-    if (time1 == 1) {
-      time = "in " + time1 + " day";
-    } else {
-      time = "in " + time1 + " days";
-    }
-  } else if (now - date < -(1000 * 60 * 60)) {
-    // in hours
-    let time1 = Math.floor((now - date) / -(1000 * 60 * 60));
-    if (time1 == 1) {
-      time = "in " + time1 + " hour";
-    } else {
-      time = "in " + time1 + " hours";
-    }
-  } else if (now - date < -(1000 * 60)) {
-    // in minutes
-    let time1 = Math.floor((now - date) / -(1000 * 60));
-    if (time1 == 1) {
-      time = "in " + time1 + " minute";
-    } else {
-      time = "in " + time1 + " minutes";
-    }
-  } else if (now - date < -1000) {
-    // in seconds
-    let time1 = Math.floor((now - date) / -1000);
-    if (time1 == 1) {
-      time = "in " + time1 + " second";
-    } else {
-      time = "in " + time1 + " seconds";
-    }
-  }
-
-  return time;
 }
 
-// keypresses
-onkeydown = onkeyup = function (e) {
-  keyMap[e.code] = e.type == "keydown";
+function pathToFile(path) {
+  let file = files;
+  for (let f = 0; f < path.length; f++) {
+    // for each number in the path
+    // go down the file strucutre using [path] and find the correct file
+    if (file == files) {
+      file = file[path[f]];
+    } else {
+      file = file.children[path[f]];
+    }
+  }
+  return file;
+}
+
+function newBlock(path, type) {
+  pathToFile(path).blocks.push({ type: type, data: "" });
+}
+
+function newFile(path) {
+  let d = new Date();
+
+  pathToFile(path).children.push({
+    name: `File`,
+    icon: "file",
+    creationdate: d.getTime(),
+    lastedited: d.getTime(),
+    children: [],
+    blocks: [],
+    starred: false,
+    locked: false,
+    archived: false,
+  });
+  generateSidenav();
+}
+
+// block context menu with file path, block index, mouse x, mouse y
+function openBlockContextMenu(path, b, x, y) {
+  document.querySelector("#context-menu").style.display = "flex";
+
+  // get context menu
+  let cm = document.querySelector("#context-menu");
+  // clear
+  cm.innerHTML = "";
+  // change position
+  cm.style.top = window.scrollY + y + "px";
+  cm.style.left = window.scrollX + x + "px";
+  // create buttons
+  // delete
+  let delete_btn = createElement("button", { innerhtml: "Delete" });
+  delete_btn.onclick = function () {
+    deleteBlock(path, b);
+    hideContextMenu();
+  };
+  // duplicate
+  let duplicate_btn = createElement("button", { innerhtml: "Duplicate" });
+  duplicate_btn.onclick = function () {
+    duplicateBlock(path, b);
+    hideContextMenu();
+  };
+  // append
+  cm.append(delete_btn);
+  cm.append(duplicate_btn);
+}
+
+function duplicateBlock(path, b) {
+  let file = pathToFile(path);
+  file.blocks.splice(b, 0, file.blocks[b]);
+  showFile(path);
+}
+
+function deleteBlock(path, b) {
+  pathToFile(path).blocks.splice(b, 1);
+  showFile(path);
+}
+
+function hideContextMenu() {
+  document.querySelector("#context-menu").style.display = "none";
+}
+
+onclick = (e) => {
+  if (document.querySelector("#context-menu").style.display == "flex") {
+    // if context menu is open
+    if (document.elementFromPoint(e.clientX, e.clientY) != document.querySelector("#context-menu")) {
+      // if you didn't click the context menu, hide it
+      hideContextMenu();
+    }
+  }
 };

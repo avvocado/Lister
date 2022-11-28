@@ -1,0 +1,163 @@
+#file-container {
+  width: var(--file-width);
+  display: flex;
+  flex-direction: column;
+}
+
+#file-container #file-name,
+h1 {
+  margin: 8px 0 24px 0;
+  font-size: 32px;
+  font-weight: bold;
+}
+#file-container #file-name:empty:before {
+  content: "Untitled File";
+  color: var(--placeholder);
+  pointer-events: none;
+}
+
+.file-block.heading1,
+h2 {
+  margin: 0 0 2px 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+.file-block.heading1:empty:before {
+  content: "Heading 1";
+  color: var(--placeholder);
+  pointer-events: none;
+}
+
+.file-block.heading2,
+h3 {
+  margin: 0 0 2px 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+.file-block.heading2:empty:before {
+  content: "Heading 2";
+  color: var(--placeholder);
+  pointer-events: none;
+}
+
+.file-block.heading3,
+h4 {
+  margin: 0 0 2px 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+.file-block.heading3:empty:before {
+  content: "Heading 3";
+  color: var(--placeholder);
+  pointer-events: none;
+}
+
+.file-block.text,
+p {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.file-block.text:empty:before {
+  content: "Text";
+  color: var(--placeholder);
+  pointer-events: none;
+}
+
+.file-block.divider {
+  padding: 16px 0;
+}
+
+.file-block.divider div {
+  border: 1px solid black;
+}
+
+.file-block.code {
+  background-color: var(--bg-3);
+  padding: 16px 24px;
+  border-radius: 8px;
+  font-family: "Courier New", Courier, monospace;
+  margin: 8px 0 8px 0;
+}
+
+.file-block.code:empty:before {
+  content: "Code Block";
+  color: var(--placeholder);
+  pointer-events: none;
+}
+
+.file-block.url {
+  background-color: var(--bg-3);
+  padding: 16px 24px;
+  border-radius: 8px;
+  margin: 8px 0 8px 0;
+}
+
+.file-block.url a {
+  color: black;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.file-block.url a p {
+  margin: 0;
+}
+
+.file-block.url img {
+  height: 24px;
+}
+
+#file-container #file-block-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-block.cards {
+  margin: 8px 0 0 0;
+  padding: 8px 0 0 0;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  white-space: normal;
+  gap: 16px;
+}
+
+.file-block.cards .card-item {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  background-color: var(--bg-3);
+}
+
+.file-block.cards .card-item .title {
+  font-size: 18px;
+}
+
+.file-block.cards .card-item .title:empty:before {
+  content: "Untitled Card";
+  color: var(--placeholder);
+  pointer-events: none;
+}
+
+.file-block.cards .card-item .description {
+  font-size: 14px;
+  margin-top: 4px;
+  white-space: normal;
+}
+
+.file-block.cards .card-item .description:empty:before {
+  content: "Description";
+  color: var(--placeholder);
+  pointer-events: none;
+}
+
+
+.file-block.cards .card-item.newcard {
+  background-color: transparent;
+  border: 2px solid var(--bg-3);
+  align-items: center;
+  justify-content: center;
+}

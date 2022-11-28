@@ -1,8 +1,6 @@
-# node modules
-node_modules/
+
+# macos
+.ds_store
 
 # vscode files
 .vscode
-
-# macos files
-.ds_store
